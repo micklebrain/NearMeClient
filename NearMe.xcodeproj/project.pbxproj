@@ -7,14 +7,35 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A5281CBF1EAE9D76003B9489 /* LocationsTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5281CBE1EAE9D76003B9489 /* LocationsTable.swift */; };
+		A5281CC11EAEAF3D003B9489 /* NoSqlSampleDataGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5281CC01EAEAF3D003B9489 /* NoSqlSampleDataGenerator.swift */; };
+		A5281CC31EAEEBA8003B9489 /* NoSQLModelHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5281CC21EAEEBA8003B9489 /* NoSQLModelHelpers.swift */; };
 		A5A645B11EA6F4FB00D411E1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5A645B01EA6F4FB00D411E1 /* AppDelegate.swift */; };
-		A5A645B31EA6F4FB00D411E1 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5A645B21EA6F4FB00D411E1 /* ViewController.swift */; };
+		A5A645B31EA6F4FB00D411E1 /* MapTrackerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5A645B21EA6F4FB00D411E1 /* MapTrackerViewController.swift */; };
 		A5A645B61EA6F4FB00D411E1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A5A645B41EA6F4FB00D411E1 /* Main.storyboard */; };
 		A5A645B91EA6F4FB00D411E1 /* NearMe.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A5A645B71EA6F4FB00D411E1 /* NearMe.xcdatamodeld */; };
 		A5A645BB1EA6F4FB00D411E1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A5A645BA1EA6F4FB00D411E1 /* Assets.xcassets */; };
 		A5A645BE1EA6F4FB00D411E1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A5A645BC1EA6F4FB00D411E1 /* LaunchScreen.storyboard */; };
 		A5A645C91EA6F4FB00D411E1 /* NearMeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5A645C81EA6F4FB00D411E1 /* NearMeTests.swift */; };
 		A5A645D41EA6F4FB00D411E1 /* NearMeUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5A645D31EA6F4FB00D411E1 /* NearMeUITests.swift */; };
+		A5A645E41EA6F9CE00D411E1 /* PeopleTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5A645E31EA6F9CE00D411E1 /* PeopleTableViewController.swift */; };
+		A5A645E61EA6FADF00D411E1 /* Person.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5A645E51EA6FADF00D411E1 /* Person.swift */; };
+		A5A645E81EA720BF00D411E1 /* Student.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5A645E71EA720BF00D411E1 /* Student.swift */; };
+		A5A645EA1EA724DD00D411E1 /* EmployedPerson.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5A645E91EA724DD00D411E1 /* EmployedPerson.swift */; };
+		A5CAABB71EA9599000A16E98 /* AWSCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A5CAABB41EA9599000A16E98 /* AWSCore.framework */; };
+		A5CAABB81EA9599000A16E98 /* AWSDynamoDB.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A5CAABB51EA9599000A16E98 /* AWSDynamoDB.framework */; };
+		A5CAABB91EA9599000A16E98 /* CheckXcodeVersion.sh in Resources */ = {isa = PBXBuildFile; fileRef = A5CAABB61EA9599000A16E98 /* CheckXcodeVersion.sh */; };
+		A5CAABBA1EA959BD00A16E98 /* AWSCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A5CAABB41EA9599000A16E98 /* AWSCore.framework */; };
+		A5CAABBB1EA959BD00A16E98 /* AWSCore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A5CAABB41EA9599000A16E98 /* AWSCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		A5CAABBC1EA959BD00A16E98 /* AWSDynamoDB.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A5CAABB51EA9599000A16E98 /* AWSDynamoDB.framework */; };
+		A5CAABBD1EA959BD00A16E98 /* AWSDynamoDB.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A5CAABB51EA9599000A16E98 /* AWSDynamoDB.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		A5CAABC51EA959F600A16E98 /* AWSMobileClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5CAABC01EA959F600A16E98 /* AWSMobileClient.swift */; };
+		A5CAABC61EA959F600A16E98 /* AWSMobileHubHelper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A5CAABC11EA959F600A16E98 /* AWSMobileHubHelper.framework */; };
+		A5CAABCA1EA95AA500A16E98 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = A5CAABC91EA95AA500A16E98 /* libsqlite3.tbd */; };
+		A5CAABCC1EA95AB700A16E98 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = A5CAABCB1EA95AB700A16E98 /* libz.tbd */; };
+		A5CAABCE1EA95B6800A16E98 /* UserIdentityAccess.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5CAABCD1EA95B6800A16E98 /* UserIdentityAccess.swift */; };
+		A5CAABD01EA95C5A00A16E98 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A5CAABCF1EA95C5A00A16E98 /* Default-568h@2x.png */; };
+		A5CAABD21EAA7DF000A16E98 /* Locations.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5CAABD11EAA7DF000A16E98 /* Locations.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -34,10 +55,28 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		A5CAABBE1EA959BD00A16E98 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				A5CAABBD1EA959BD00A16E98 /* AWSDynamoDB.framework in Embed Frameworks */,
+				A5CAABBB1EA959BD00A16E98 /* AWSCore.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		A5281CBE1EAE9D76003B9489 /* LocationsTable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationsTable.swift; sourceTree = "<group>"; };
+		A5281CC01EAEAF3D003B9489 /* NoSqlSampleDataGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoSqlSampleDataGenerator.swift; sourceTree = "<group>"; };
+		A5281CC21EAEEBA8003B9489 /* NoSQLModelHelpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoSQLModelHelpers.swift; sourceTree = "<group>"; };
 		A5A645AD1EA6F4FB00D411E1 /* NearMe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NearMe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A5A645B01EA6F4FB00D411E1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		A5A645B21EA6F4FB00D411E1 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		A5A645B21EA6F4FB00D411E1 /* MapTrackerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapTrackerViewController.swift; sourceTree = "<group>"; };
 		A5A645B51EA6F4FB00D411E1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		A5A645B81EA6F4FB00D411E1 /* NearMe.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = NearMe.xcdatamodel; sourceTree = "<group>"; };
 		A5A645BA1EA6F4FB00D411E1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -49,6 +88,21 @@
 		A5A645CF1EA6F4FB00D411E1 /* NearMeUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NearMeUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A5A645D31EA6F4FB00D411E1 /* NearMeUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NearMeUITests.swift; sourceTree = "<group>"; };
 		A5A645D51EA6F4FB00D411E1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A5A645E31EA6F9CE00D411E1 /* PeopleTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PeopleTableViewController.swift; sourceTree = "<group>"; };
+		A5A645E51EA6FADF00D411E1 /* Person.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Person.swift; sourceTree = "<group>"; };
+		A5A645E71EA720BF00D411E1 /* Student.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Student.swift; sourceTree = "<group>"; };
+		A5A645E91EA724DD00D411E1 /* EmployedPerson.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EmployedPerson.swift; path = ../EmployedPerson.swift; sourceTree = "<group>"; };
+		A5CAABB41EA9599000A16E98 /* AWSCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AWSCore.framework; sourceTree = "<group>"; };
+		A5CAABB51EA9599000A16E98 /* AWSDynamoDB.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AWSDynamoDB.framework; sourceTree = "<group>"; };
+		A5CAABB61EA9599000A16E98 /* CheckXcodeVersion.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = CheckXcodeVersion.sh; sourceTree = "<group>"; };
+		A5CAABC01EA959F600A16E98 /* AWSMobileClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AWSMobileClient.swift; sourceTree = "<group>"; };
+		A5CAABC11EA959F600A16E98 /* AWSMobileHubHelper.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AWSMobileHubHelper.framework; sourceTree = "<group>"; };
+		A5CAABC41EA959F600A16E98 /* Locations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Locations.swift; sourceTree = "<group>"; };
+		A5CAABC91EA95AA500A16E98 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
+		A5CAABCB1EA95AB700A16E98 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
+		A5CAABCD1EA95B6800A16E98 /* UserIdentityAccess.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserIdentityAccess.swift; sourceTree = "<group>"; };
+		A5CAABCF1EA95C5A00A16E98 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		A5CAABD11EAA7DF000A16E98 /* Locations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Locations.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +110,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A5CAABCC1EA95AB700A16E98 /* libz.tbd in Frameworks */,
+				A5CAABCA1EA95AA500A16E98 /* libsqlite3.tbd in Frameworks */,
+				A5CAABC61EA959F600A16E98 /* AWSMobileHubHelper.framework in Frameworks */,
+				A5CAABB81EA9599000A16E98 /* AWSDynamoDB.framework in Frameworks */,
+				A5CAABB71EA9599000A16E98 /* AWSCore.framework in Frameworks */,
+				A5CAABBC1EA959BD00A16E98 /* AWSDynamoDB.framework in Frameworks */,
+				A5CAABBA1EA959BD00A16E98 /* AWSCore.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -79,10 +140,14 @@
 		A5A645A41EA6F4FB00D411E1 = {
 			isa = PBXGroup;
 			children = (
+				A5CAABCF1EA95C5A00A16E98 /* Default-568h@2x.png */,
+				A5CAABCD1EA95B6800A16E98 /* UserIdentityAccess.swift */,
 				A5A645AF1EA6F4FB00D411E1 /* NearMe */,
 				A5A645C71EA6F4FB00D411E1 /* NearMeTests */,
 				A5A645D21EA6F4FB00D411E1 /* NearMeUITests */,
 				A5A645AE1EA6F4FB00D411E1 /* Products */,
+				A5CAABB21EA9599000A16E98 /* Sdk */,
+				A5CAABC81EA95AA500A16E98 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -100,12 +165,20 @@
 			isa = PBXGroup;
 			children = (
 				A5A645B01EA6F4FB00D411E1 /* AppDelegate.swift */,
-				A5A645B21EA6F4FB00D411E1 /* ViewController.swift */,
 				A5A645B41EA6F4FB00D411E1 /* Main.storyboard */,
 				A5A645BA1EA6F4FB00D411E1 /* Assets.xcassets */,
 				A5A645BC1EA6F4FB00D411E1 /* LaunchScreen.storyboard */,
 				A5A645BF1EA6F4FB00D411E1 /* Info.plist */,
 				A5A645B71EA6F4FB00D411E1 /* NearMe.xcdatamodeld */,
+				A5A645B21EA6F4FB00D411E1 /* MapTrackerViewController.swift */,
+				A5A645E31EA6F9CE00D411E1 /* PeopleTableViewController.swift */,
+				A5A645E91EA724DD00D411E1 /* EmployedPerson.swift */,
+				A5A645E51EA6FADF00D411E1 /* Person.swift */,
+				A5A645E71EA720BF00D411E1 /* Student.swift */,
+				A5CAABD11EAA7DF000A16E98 /* Locations.swift */,
+				A5281CBE1EAE9D76003B9489 /* LocationsTable.swift */,
+				A5281CC21EAEEBA8003B9489 /* NoSQLModelHelpers.swift */,
+				A5281CC01EAEAF3D003B9489 /* NoSqlSampleDataGenerator.swift */,
 			);
 			path = NearMe;
 			sourceTree = "<group>";
@@ -128,6 +201,60 @@
 			path = NearMeUITests;
 			sourceTree = "<group>";
 		};
+		A5CAABB21EA9599000A16E98 /* Sdk */ = {
+			isa = PBXGroup;
+			children = (
+				A5CAABBF1EA959F600A16E98 /* AmazonAws */,
+				A5CAABB31EA9599000A16E98 /* Aws */,
+				A5CAABB61EA9599000A16E98 /* CheckXcodeVersion.sh */,
+			);
+			path = Sdk;
+			sourceTree = "<group>";
+		};
+		A5CAABB31EA9599000A16E98 /* Aws */ = {
+			isa = PBXGroup;
+			children = (
+				A5CAABB41EA9599000A16E98 /* AWSCore.framework */,
+				A5CAABB51EA9599000A16E98 /* AWSDynamoDB.framework */,
+			);
+			path = Aws;
+			sourceTree = "<group>";
+		};
+		A5CAABBF1EA959F600A16E98 /* AmazonAws */ = {
+			isa = PBXGroup;
+			children = (
+				A5CAABC01EA959F600A16E98 /* AWSMobileClient.swift */,
+				A5CAABC11EA959F600A16E98 /* AWSMobileHubHelper.framework */,
+				A5CAABC21EA959F600A16E98 /* Models */,
+			);
+			path = AmazonAws;
+			sourceTree = "<group>";
+		};
+		A5CAABC21EA959F600A16E98 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				A5CAABC31EA959F600A16E98 /* NoSQL */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		A5CAABC31EA959F600A16E98 /* NoSQL */ = {
+			isa = PBXGroup;
+			children = (
+				A5CAABC41EA959F600A16E98 /* Locations.swift */,
+			);
+			path = NoSQL;
+			sourceTree = "<group>";
+		};
+		A5CAABC81EA95AA500A16E98 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				A5CAABCB1EA95AB700A16E98 /* libz.tbd */,
+				A5CAABC91EA95AA500A16E98 /* libsqlite3.tbd */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -138,6 +265,7 @@
 				A5A645A91EA6F4FB00D411E1 /* Sources */,
 				A5A645AA1EA6F4FB00D411E1 /* Frameworks */,
 				A5A645AB1EA6F4FB00D411E1 /* Resources */,
+				A5CAABBE1EA959BD00A16E98 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -196,6 +324,7 @@
 				TargetAttributes = {
 					A5A645AC1EA6F4FB00D411E1 = {
 						CreatedOnToolsVersion = 8.3.1;
+						DevelopmentTeam = NV5PR33GEL;
 						ProvisioningStyle = Automatic;
 					};
 					A5A645C31EA6F4FB00D411E1 = {
@@ -235,8 +364,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A5CAABB91EA9599000A16E98 /* CheckXcodeVersion.sh in Resources */,
 				A5A645BE1EA6F4FB00D411E1 /* LaunchScreen.storyboard in Resources */,
 				A5A645BB1EA6F4FB00D411E1 /* Assets.xcassets in Resources */,
+				A5CAABD01EA95C5A00A16E98 /* Default-568h@2x.png in Resources */,
 				A5A645B61EA6F4FB00D411E1 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -262,8 +393,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A5A645B31EA6F4FB00D411E1 /* ViewController.swift in Sources */,
+				A5281CC31EAEEBA8003B9489 /* NoSQLModelHelpers.swift in Sources */,
+				A5A645E61EA6FADF00D411E1 /* Person.swift in Sources */,
+				A5A645EA1EA724DD00D411E1 /* EmployedPerson.swift in Sources */,
+				A5CAABC51EA959F600A16E98 /* AWSMobileClient.swift in Sources */,
+				A5A645E81EA720BF00D411E1 /* Student.swift in Sources */,
+				A5A645B31EA6F4FB00D411E1 /* MapTrackerViewController.swift in Sources */,
+				A5CAABCE1EA95B6800A16E98 /* UserIdentityAccess.swift in Sources */,
+				A5281CBF1EAE9D76003B9489 /* LocationsTable.swift in Sources */,
 				A5A645B11EA6F4FB00D411E1 /* AppDelegate.swift in Sources */,
+				A5A645E41EA6F9CE00D411E1 /* PeopleTableViewController.swift in Sources */,
+				A5CAABD21EAA7DF000A16E98 /* Locations.swift in Sources */,
+				A5281CC11EAEAF3D003B9489 /* NoSqlSampleDataGenerator.swift in Sources */,
 				A5A645B91EA6F4FB00D411E1 /* NearMe.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -418,6 +559,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = NV5PR33GEL;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Sdk/Aws",
+					"$(PROJECT_DIR)/Sdk/AmazonAws",
+				);
 				INFOPLIST_FILE = NearMe/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = crystal.NearMe;
@@ -430,6 +577,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = NV5PR33GEL;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Sdk/Aws",
+					"$(PROJECT_DIR)/Sdk/AmazonAws",
+				);
 				INFOPLIST_FILE = NearMe/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = crystal.NearMe;
@@ -511,6 +664,7 @@
 				A5A645DA1EA6F4FC00D411E1 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		A5A645DB1EA6F4FC00D411E1 /* Build configuration list for PBXNativeTarget "NearMeTests" */ = {
 			isa = XCConfigurationList;
@@ -519,6 +673,7 @@
 				A5A645DD1EA6F4FC00D411E1 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		A5A645DE1EA6F4FC00D411E1 /* Build configuration list for PBXNativeTarget "NearMeUITests" */ = {
 			isa = XCConfigurationList;
@@ -527,6 +682,7 @@
 				A5A645E01EA6F4FC00D411E1 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
