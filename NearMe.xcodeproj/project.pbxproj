@@ -36,6 +36,10 @@
 		A5CAABCE1EA95B6800A16E98 /* UserIdentityAccess.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5CAABCD1EA95B6800A16E98 /* UserIdentityAccess.swift */; };
 		A5CAABD01EA95C5A00A16E98 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A5CAABCF1EA95C5A00A16E98 /* Default-568h@2x.png */; };
 		A5CAABD21EAA7DF000A16E98 /* Locations.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5CAABD11EAA7DF000A16E98 /* Locations.swift */; };
+		A5E446461ED68A8A00791822 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E446451ED68A8A00791822 /* LoginViewController.swift */; };
+		A5E446491ED7A81300791822 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E446481ED7A81300791822 /* User.swift */; };
+		A5E4464B1ED7BA9200791822 /* SignupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E4464A1ED7BA9200791822 /* SignupViewController.swift */; };
+		A5E4464D1ED7CA6100791822 /* Access.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A5E4464C1ED7CA6100791822 /* Access.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -103,6 +107,10 @@
 		A5CAABCD1EA95B6800A16E98 /* UserIdentityAccess.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserIdentityAccess.swift; sourceTree = "<group>"; };
 		A5CAABCF1EA95C5A00A16E98 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		A5CAABD11EAA7DF000A16E98 /* Locations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Locations.swift; sourceTree = "<group>"; };
+		A5E446451ED68A8A00791822 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		A5E446481ED7A81300791822 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		A5E4464A1ED7BA9200791822 /* SignupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignupViewController.swift; sourceTree = "<group>"; };
+		A5E4464C1ED7CA6100791822 /* Access.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Access.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -164,6 +172,7 @@
 		A5A645AF1EA6F4FB00D411E1 /* NearMe */ = {
 			isa = PBXGroup;
 			children = (
+				A5E446471ED68A9500791822 /* Model */,
 				A5A645B01EA6F4FB00D411E1 /* AppDelegate.swift */,
 				A5A645B41EA6F4FB00D411E1 /* Main.storyboard */,
 				A5A645BA1EA6F4FB00D411E1 /* Assets.xcassets */,
@@ -173,12 +182,12 @@
 				A5A645B21EA6F4FB00D411E1 /* MapTrackerViewController.swift */,
 				A5A645E31EA6F9CE00D411E1 /* PeopleTableViewController.swift */,
 				A5A645E91EA724DD00D411E1 /* EmployedPerson.swift */,
-				A5A645E51EA6FADF00D411E1 /* Person.swift */,
-				A5A645E71EA720BF00D411E1 /* Student.swift */,
-				A5CAABD11EAA7DF000A16E98 /* Locations.swift */,
 				A5281CBE1EAE9D76003B9489 /* LocationsTable.swift */,
 				A5281CC21EAEEBA8003B9489 /* NoSQLModelHelpers.swift */,
 				A5281CC01EAEAF3D003B9489 /* NoSqlSampleDataGenerator.swift */,
+				A5E446451ED68A8A00791822 /* LoginViewController.swift */,
+				A5E4464A1ED7BA9200791822 /* SignupViewController.swift */,
+				A5E4464C1ED7CA6100791822 /* Access.storyboard */,
 			);
 			path = NearMe;
 			sourceTree = "<group>";
@@ -253,6 +262,17 @@
 				A5CAABC91EA95AA500A16E98 /* libsqlite3.tbd */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		A5E446471ED68A9500791822 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				A5A645E51EA6FADF00D411E1 /* Person.swift */,
+				A5A645E71EA720BF00D411E1 /* Student.swift */,
+				A5CAABD11EAA7DF000A16E98 /* Locations.swift */,
+				A5E446481ED7A81300791822 /* User.swift */,
+			);
+			name = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -364,6 +384,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A5E4464D1ED7CA6100791822 /* Access.storyboard in Resources */,
 				A5CAABB91EA9599000A16E98 /* CheckXcodeVersion.sh in Resources */,
 				A5A645BE1EA6F4FB00D411E1 /* LaunchScreen.storyboard in Resources */,
 				A5A645BB1EA6F4FB00D411E1 /* Assets.xcassets in Resources */,
@@ -393,14 +414,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A5E446461ED68A8A00791822 /* LoginViewController.swift in Sources */,
 				A5281CC31EAEEBA8003B9489 /* NoSQLModelHelpers.swift in Sources */,
 				A5A645E61EA6FADF00D411E1 /* Person.swift in Sources */,
 				A5A645EA1EA724DD00D411E1 /* EmployedPerson.swift in Sources */,
 				A5CAABC51EA959F600A16E98 /* AWSMobileClient.swift in Sources */,
+				A5E446491ED7A81300791822 /* User.swift in Sources */,
 				A5A645E81EA720BF00D411E1 /* Student.swift in Sources */,
 				A5A645B31EA6F4FB00D411E1 /* MapTrackerViewController.swift in Sources */,
 				A5CAABCE1EA95B6800A16E98 /* UserIdentityAccess.swift in Sources */,
 				A5281CBF1EAE9D76003B9489 /* LocationsTable.swift in Sources */,
+				A5E4464B1ED7BA9200791822 /* SignupViewController.swift in Sources */,
 				A5A645B11EA6F4FB00D411E1 /* AppDelegate.swift in Sources */,
 				A5A645E41EA6F9CE00D411E1 /* PeopleTableViewController.swift in Sources */,
 				A5CAABD21EAA7DF000A16E98 /* Locations.swift in Sources */,
