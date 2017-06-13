@@ -10,19 +10,12 @@
 		069EBADDB184895F28B99E42 /* Pods_NearMeUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6D2179C332989954E7D7C2CE /* Pods_NearMeUITests.framework */; };
 		24247AB0F656F70965942791 /* Pods_NearMe.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 99959E346438FBCA9C46674C /* Pods_NearMe.framework */; };
 		253E97FF426A86D9232D70CF /* Pods_NearMe_NearMe.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6EA3EFFF73148BAB82C315E4 /* Pods_NearMe_NearMe.framework */; };
-		A5281CBF1EAE9D76003B9489 /* LocationsTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5281CBE1EAE9D76003B9489 /* LocationsTable.swift */; };
 		A5281CC11EAEAF3D003B9489 /* NoSqlSampleDataGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5281CC01EAEAF3D003B9489 /* NoSqlSampleDataGenerator.swift */; };
 		A5281CC31EAEEBA8003B9489 /* NoSQLModelHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5281CC21EAEEBA8003B9489 /* NoSQLModelHelpers.swift */; };
-		A58D4FDB1EEEF243003A9365 /* AWSCognito.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A58D4FDA1EEEF243003A9365 /* AWSCognito.framework */; };
 		A58D4FE01EEF1CC1003A9365 /* Sdk in Resources */ = {isa = PBXBuildFile; fileRef = A58D4FDF1EEF1CC1003A9365 /* Sdk */; };
-		A58D4FE31EEF1D0C003A9365 /* AWSCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A58D4FE11EEF1D0C003A9365 /* AWSCore.framework */; };
 		A58D4FE41EEF1D0C003A9365 /* AWSCore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A58D4FE11EEF1D0C003A9365 /* AWSCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		A58D4FE51EEF1D0C003A9365 /* AWSDynamoDB.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A58D4FE21EEF1D0C003A9365 /* AWSDynamoDB.framework */; };
 		A58D4FE61EEF1D0C003A9365 /* AWSDynamoDB.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A58D4FE21EEF1D0C003A9365 /* AWSDynamoDB.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		A58D4FEA1EEF1D6E003A9365 /* AWSMobileClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = A58D4FE81EEF1D6E003A9365 /* AWSMobileClient.swift */; };
-		A58D4FEB1EEF1D6E003A9365 /* AWSMobileHubHelper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A58D4FE91EEF1D6E003A9365 /* AWSMobileHubHelper.framework */; };
 		A5A645B11EA6F4FB00D411E1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5A645B01EA6F4FB00D411E1 /* AppDelegate.swift */; };
-		A5A645B31EA6F4FB00D411E1 /* MapTrackerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5A645B21EA6F4FB00D411E1 /* MapTrackerViewController.swift */; };
 		A5A645B61EA6F4FB00D411E1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A5A645B41EA6F4FB00D411E1 /* Main.storyboard */; };
 		A5A645B91EA6F4FB00D411E1 /* NearMe.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A5A645B71EA6F4FB00D411E1 /* NearMe.xcdatamodeld */; };
 		A5A645BB1EA6F4FB00D411E1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A5A645BA1EA6F4FB00D411E1 /* Assets.xcassets */; };
@@ -42,7 +35,6 @@
 		A5E446491ED7A81300791822 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E446481ED7A81300791822 /* User.swift */; };
 		A5E4464B1ED7BA9200791822 /* SignupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E4464A1ED7BA9200791822 /* SignupViewController.swift */; };
 		A5E4464D1ED7CA6100791822 /* Access.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A5E4464C1ED7CA6100791822 /* Access.storyboard */; };
-		A5E446511EDF170200791822 /* GeorgiaTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E446501EDF170200791822 /* GeorgiaTable.swift */; };
 		A5E446531EDF6ECC00791822 /* AccountsTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E446521EDF6ECC00791822 /* AccountsTable.swift */; };
 		DE7DC087F2821644C8D01EE6 /* Pods_NearMeTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87C21848C16F9703E7FD2286 /* Pods_NearMeTests.framework */; };
 /* End PBXBuildFile section */
@@ -101,7 +93,6 @@
 		A58D4FE91EEF1D6E003A9365 /* AWSMobileHubHelper.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AWSMobileHubHelper.framework; sourceTree = "<group>"; };
 		A5A645AD1EA6F4FB00D411E1 /* NearMe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NearMe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A5A645B01EA6F4FB00D411E1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		A5A645B21EA6F4FB00D411E1 /* MapTrackerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapTrackerViewController.swift; sourceTree = "<group>"; };
 		A5A645B51EA6F4FB00D411E1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		A5A645B81EA6F4FB00D411E1 /* NearMe.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = NearMe.xcdatamodel; sourceTree = "<group>"; };
 		A5A645BA1EA6F4FB00D411E1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -138,10 +129,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A58D4FDB1EEEF243003A9365 /* AWSCognito.framework in Frameworks */,
-				A58D4FE31EEF1D0C003A9365 /* AWSCore.framework in Frameworks */,
-				A58D4FEB1EEF1D6E003A9365 /* AWSMobileHubHelper.framework in Frameworks */,
-				A58D4FE51EEF1D0C003A9365 /* AWSDynamoDB.framework in Frameworks */,
 				A5CAABCC1EA95AB700A16E98 /* libz.tbd in Frameworks */,
 				A5CAABCA1EA95AA500A16E98 /* libsqlite3.tbd in Frameworks */,
 				24247AB0F656F70965942791 /* Pods_NearMe.framework in Frameworks */,
@@ -301,7 +288,6 @@
 				A5E4464A1ED7BA9200791822 /* SignupViewController.swift */,
 				A5E446451ED68A8A00791822 /* LoginViewController.swift */,
 				A5A645E31EA6F9CE00D411E1 /* PeopleTableViewController.swift */,
-				A5A645B21EA6F4FB00D411E1 /* MapTrackerViewController.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -610,14 +596,10 @@
 				A5281CC31EAEEBA8003B9489 /* NoSQLModelHelpers.swift in Sources */,
 				A5A645E61EA6FADF00D411E1 /* Person.swift in Sources */,
 				A5A645EA1EA724DD00D411E1 /* EmployedPerson.swift in Sources */,
-				A5E446511EDF170200791822 /* GeorgiaTable.swift in Sources */,
 				A5E446531EDF6ECC00791822 /* AccountsTable.swift in Sources */,
 				A5E446491ED7A81300791822 /* User.swift in Sources */,
 				A5A645E81EA720BF00D411E1 /* Student.swift in Sources */,
-				A58D4FEA1EEF1D6E003A9365 /* AWSMobileClient.swift in Sources */,
-				A5A645B31EA6F4FB00D411E1 /* MapTrackerViewController.swift in Sources */,
 				A5CAABCE1EA95B6800A16E98 /* UserIdentityAccess.swift in Sources */,
-				A5281CBF1EAE9D76003B9489 /* LocationsTable.swift in Sources */,
 				A5E4464B1ED7BA9200791822 /* SignupViewController.swift in Sources */,
 				A5A645B11EA6F4FB00D411E1 /* AppDelegate.swift in Sources */,
 				A5A645E41EA6F9CE00D411E1 /* PeopleTableViewController.swift in Sources */,
@@ -782,22 +764,12 @@
 				ENABLE_BITCODE = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$PODS_CONFIGURATION_BUILD_DIR/AWSAutoScaling\"",
-					"\"$PODS_CONFIGURATION_BUILD_DIR/AWSCloudWatch\"",
 					"\"$PODS_CONFIGURATION_BUILD_DIR/AWSCognitoIdentityProvider\"",
 					"\"$PODS_CONFIGURATION_BUILD_DIR/AWSCore\"",
 					"\"$PODS_CONFIGURATION_BUILD_DIR/AWSDynamoDB\"",
 					"\"$PODS_CONFIGURATION_BUILD_DIR/AWSEC2\"",
-					"\"$PODS_CONFIGURATION_BUILD_DIR/AWSElasticLoadBalancing\"",
-					"\"$PODS_CONFIGURATION_BUILD_DIR/AWSIoT\"",
-					"\"$PODS_CONFIGURATION_BUILD_DIR/AWSKinesis\"",
-					"\"$PODS_CONFIGURATION_BUILD_DIR/AWSLambda\"",
-					"\"$PODS_CONFIGURATION_BUILD_DIR/AWSLex\"",
-					"\"$PODS_CONFIGURATION_BUILD_DIR/AWSMachineLearning\"",
 					"\"$PODS_CONFIGURATION_BUILD_DIR/AWSMobileAnalytics\"",
 					"\"$PODS_CONFIGURATION_BUILD_DIR/AWSPinpoint\"",
-					"\"$PODS_CONFIGURATION_BUILD_DIR/AWSPolly\"",
-					"\"$PODS_CONFIGURATION_BUILD_DIR/AWSRekognition\"",
 					"\"$PODS_CONFIGURATION_BUILD_DIR/AWSS3\"",
 					"\"$PODS_CONFIGURATION_BUILD_DIR/AWSSES\"",
 					"\"$PODS_CONFIGURATION_BUILD_DIR/AWSSNS\"",
@@ -812,8 +784,6 @@
 					"$(inherited)",
 					"-ObjC",
 					"-framework",
-					"\"AWSCloudWatch\"",
-					"-framework",
 					"\"AWSCognito\"",
 					"-framework",
 					"\"AWSCognitoIdentityProvider\"",
@@ -822,35 +792,11 @@
 					"-framework",
 					"\"AWSDynamoDB\"",
 					"-framework",
-					"\"AWSEC2\"",
-					"-framework",
-					"\"AWSElasticLoadBalancing\"",
-					"-framework",
-					"\"AWSIoT\"",
-					"-framework",
-					"\"AWSKinesis\"",
-					"-framework",
-					"\"AWSLambda\"",
-					"-framework",
-					"\"AWSLex\"",
-					"-framework",
-					"\"AWSMachineLearning\"",
-					"-framework",
 					"\"AWSMobileAnalytics\"",
-					"-framework",
-					"\"AWSPinpoint\"",
-					"-framework",
-					"\"AWSPolly\"",
-					"-framework",
-					"\"AWSRekognition\"",
 					"-framework",
 					"\"AWSS3\"",
 					"-framework",
 					"\"AWSSES\"",
-					"-framework",
-					"\"AWSSNS\"",
-					"-framework",
-					"\"AWSSQS\"",
 					"-framework",
 					"\"AWSSimpleDB\"",
 				);
@@ -877,8 +823,6 @@
 					"$(inherited)",
 					"-ObjC",
 					"-framework",
-					"\"AWSCloudWatch\"",
-					"-framework",
 					"\"AWSCognito\"",
 					"-framework",
 					"\"AWSCognitoIdentityProvider\"",
@@ -887,35 +831,11 @@
 					"-framework",
 					"\"AWSDynamoDB\"",
 					"-framework",
-					"\"AWSEC2\"",
-					"-framework",
-					"\"AWSElasticLoadBalancing\"",
-					"-framework",
-					"\"AWSIoT\"",
-					"-framework",
-					"\"AWSKinesis\"",
-					"-framework",
-					"\"AWSLambda\"",
-					"-framework",
-					"\"AWSLex\"",
-					"-framework",
-					"\"AWSMachineLearning\"",
-					"-framework",
 					"\"AWSMobileAnalytics\"",
-					"-framework",
-					"\"AWSPinpoint\"",
-					"-framework",
-					"\"AWSPolly\"",
-					"-framework",
-					"\"AWSRekognition\"",
 					"-framework",
 					"\"AWSS3\"",
 					"-framework",
 					"\"AWSSES\"",
-					"-framework",
-					"\"AWSSNS\"",
-					"-framework",
-					"\"AWSSQS\"",
 					"-framework",
 					"\"AWSSimpleDB\"",
 				);
