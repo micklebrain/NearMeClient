@@ -20,6 +20,34 @@
                ReferencedContainer = "container:NearMe.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "NO"
+            buildForProfiling = "NO"
+            buildForArchiving = "NO"
+            buildForAnalyzing = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "A5A645C31EA6F4FB00D411E1"
+               BuildableName = "NearMeTests.xctest"
+               BlueprintName = "NearMeTests"
+               ReferencedContainer = "container:NearMe.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "NO"
+            buildForProfiling = "NO"
+            buildForArchiving = "NO"
+            buildForAnalyzing = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "A5A645CE1EA6F4FB00D411E1"
+               BuildableName = "NearMeUITests.xctest"
+               BlueprintName = "NearMeUITests"
+               ReferencedContainer = "container:NearMe.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
       </BuildActionEntries>
    </BuildAction>
    <TestAction
@@ -28,26 +56,6 @@
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "A5A645C31EA6F4FB00D411E1"
-               BuildableName = "NearMeTests.xctest"
-               BlueprintName = "NearMeTests"
-               ReferencedContainer = "container:NearMe.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "A5A645CE1EA6F4FB00D411E1"
-               BuildableName = "NearMeUITests.xctest"
-               BlueprintName = "NearMeUITests"
-               ReferencedContainer = "container:NearMe.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference

@@ -7,9 +7,20 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		069EBADDB184895F28B99E42 /* Pods_NearMeUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6D2179C332989954E7D7C2CE /* Pods_NearMeUITests.framework */; };
+		24247AB0F656F70965942791 /* Pods_NearMe.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 99959E346438FBCA9C46674C /* Pods_NearMe.framework */; };
+		253E97FF426A86D9232D70CF /* Pods_NearMe_NearMe.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6EA3EFFF73148BAB82C315E4 /* Pods_NearMe_NearMe.framework */; };
 		A5281CBF1EAE9D76003B9489 /* LocationsTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5281CBE1EAE9D76003B9489 /* LocationsTable.swift */; };
 		A5281CC11EAEAF3D003B9489 /* NoSqlSampleDataGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5281CC01EAEAF3D003B9489 /* NoSqlSampleDataGenerator.swift */; };
 		A5281CC31EAEEBA8003B9489 /* NoSQLModelHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5281CC21EAEEBA8003B9489 /* NoSQLModelHelpers.swift */; };
+		A58D4FDB1EEEF243003A9365 /* AWSCognito.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A58D4FDA1EEEF243003A9365 /* AWSCognito.framework */; };
+		A58D4FE01EEF1CC1003A9365 /* Sdk in Resources */ = {isa = PBXBuildFile; fileRef = A58D4FDF1EEF1CC1003A9365 /* Sdk */; };
+		A58D4FE31EEF1D0C003A9365 /* AWSCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A58D4FE11EEF1D0C003A9365 /* AWSCore.framework */; };
+		A58D4FE41EEF1D0C003A9365 /* AWSCore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A58D4FE11EEF1D0C003A9365 /* AWSCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		A58D4FE51EEF1D0C003A9365 /* AWSDynamoDB.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A58D4FE21EEF1D0C003A9365 /* AWSDynamoDB.framework */; };
+		A58D4FE61EEF1D0C003A9365 /* AWSDynamoDB.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A58D4FE21EEF1D0C003A9365 /* AWSDynamoDB.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		A58D4FEA1EEF1D6E003A9365 /* AWSMobileClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = A58D4FE81EEF1D6E003A9365 /* AWSMobileClient.swift */; };
+		A58D4FEB1EEF1D6E003A9365 /* AWSMobileHubHelper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A58D4FE91EEF1D6E003A9365 /* AWSMobileHubHelper.framework */; };
 		A5A645B11EA6F4FB00D411E1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5A645B01EA6F4FB00D411E1 /* AppDelegate.swift */; };
 		A5A645B31EA6F4FB00D411E1 /* MapTrackerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5A645B21EA6F4FB00D411E1 /* MapTrackerViewController.swift */; };
 		A5A645B61EA6F4FB00D411E1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A5A645B41EA6F4FB00D411E1 /* Main.storyboard */; };
@@ -22,15 +33,6 @@
 		A5A645E61EA6FADF00D411E1 /* Person.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5A645E51EA6FADF00D411E1 /* Person.swift */; };
 		A5A645E81EA720BF00D411E1 /* Student.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5A645E71EA720BF00D411E1 /* Student.swift */; };
 		A5A645EA1EA724DD00D411E1 /* EmployedPerson.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5A645E91EA724DD00D411E1 /* EmployedPerson.swift */; };
-		A5CAABB71EA9599000A16E98 /* AWSCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A5CAABB41EA9599000A16E98 /* AWSCore.framework */; };
-		A5CAABB81EA9599000A16E98 /* AWSDynamoDB.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A5CAABB51EA9599000A16E98 /* AWSDynamoDB.framework */; };
-		A5CAABB91EA9599000A16E98 /* CheckXcodeVersion.sh in Resources */ = {isa = PBXBuildFile; fileRef = A5CAABB61EA9599000A16E98 /* CheckXcodeVersion.sh */; };
-		A5CAABBA1EA959BD00A16E98 /* AWSCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A5CAABB41EA9599000A16E98 /* AWSCore.framework */; };
-		A5CAABBB1EA959BD00A16E98 /* AWSCore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A5CAABB41EA9599000A16E98 /* AWSCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		A5CAABBC1EA959BD00A16E98 /* AWSDynamoDB.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A5CAABB51EA9599000A16E98 /* AWSDynamoDB.framework */; };
-		A5CAABBD1EA959BD00A16E98 /* AWSDynamoDB.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A5CAABB51EA9599000A16E98 /* AWSDynamoDB.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		A5CAABC51EA959F600A16E98 /* AWSMobileClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5CAABC01EA959F600A16E98 /* AWSMobileClient.swift */; };
-		A5CAABC61EA959F600A16E98 /* AWSMobileHubHelper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A5CAABC11EA959F600A16E98 /* AWSMobileHubHelper.framework */; };
 		A5CAABCA1EA95AA500A16E98 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = A5CAABC91EA95AA500A16E98 /* libsqlite3.tbd */; };
 		A5CAABCC1EA95AB700A16E98 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = A5CAABCB1EA95AB700A16E98 /* libz.tbd */; };
 		A5CAABCE1EA95B6800A16E98 /* UserIdentityAccess.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5CAABCD1EA95B6800A16E98 /* UserIdentityAccess.swift */; };
@@ -40,6 +42,9 @@
 		A5E446491ED7A81300791822 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E446481ED7A81300791822 /* User.swift */; };
 		A5E4464B1ED7BA9200791822 /* SignupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E4464A1ED7BA9200791822 /* SignupViewController.swift */; };
 		A5E4464D1ED7CA6100791822 /* Access.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A5E4464C1ED7CA6100791822 /* Access.storyboard */; };
+		A5E446511EDF170200791822 /* GeorgiaTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E446501EDF170200791822 /* GeorgiaTable.swift */; };
+		A5E446531EDF6ECC00791822 /* AccountsTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E446521EDF6ECC00791822 /* AccountsTable.swift */; };
+		DE7DC087F2821644C8D01EE6 /* Pods_NearMeTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87C21848C16F9703E7FD2286 /* Pods_NearMeTests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -60,14 +65,14 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		A5CAABBE1EA959BD00A16E98 /* Embed Frameworks */ = {
+		A58D4FDE1EEEF8B6003A9365 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				A5CAABBD1EA959BD00A16E98 /* AWSDynamoDB.framework in Embed Frameworks */,
-				A5CAABBB1EA959BD00A16E98 /* AWSCore.framework in Embed Frameworks */,
+				A58D4FE61EEF1D0C003A9365 /* AWSDynamoDB.framework in Embed Frameworks */,
+				A58D4FE41EEF1D0C003A9365 /* AWSCore.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -75,9 +80,25 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		151C842C815E077C5DA13581 /* Pods-NearMe-NearMe.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NearMe-NearMe.debug.xcconfig"; path = "Pods/Target Support Files/Pods-NearMe-NearMe/Pods-NearMe-NearMe.debug.xcconfig"; sourceTree = "<group>"; };
+		25F11A12CBAC0E7A7F26C7F6 /* Pods-NearMe-NearMe.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NearMe-NearMe.release.xcconfig"; path = "Pods/Target Support Files/Pods-NearMe-NearMe/Pods-NearMe-NearMe.release.xcconfig"; sourceTree = "<group>"; };
+		367B6E6AAE824E61258E6144 /* Pods-NearMe.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NearMe.debug.xcconfig"; path = "Pods/Target Support Files/Pods-NearMe/Pods-NearMe.debug.xcconfig"; sourceTree = "<group>"; };
+		6D2179C332989954E7D7C2CE /* Pods_NearMeUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NearMeUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		6EA3EFFF73148BAB82C315E4 /* Pods_NearMe_NearMe.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NearMe_NearMe.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		76F2B9DC5B976E8CE124491E /* Pods-NearMeUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NearMeUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-NearMeUITests/Pods-NearMeUITests.release.xcconfig"; sourceTree = "<group>"; };
+		87C21848C16F9703E7FD2286 /* Pods_NearMeTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NearMeTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8C39FAD41AE982195E839DA3 /* Pods-NearMe.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NearMe.release.xcconfig"; path = "Pods/Target Support Files/Pods-NearMe/Pods-NearMe.release.xcconfig"; sourceTree = "<group>"; };
+		99959E346438FBCA9C46674C /* Pods_NearMe.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NearMe.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A5281CBE1EAE9D76003B9489 /* LocationsTable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationsTable.swift; sourceTree = "<group>"; };
 		A5281CC01EAEAF3D003B9489 /* NoSqlSampleDataGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoSqlSampleDataGenerator.swift; sourceTree = "<group>"; };
 		A5281CC21EAEEBA8003B9489 /* NoSQLModelHelpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoSQLModelHelpers.swift; sourceTree = "<group>"; };
+		A58D4F941EEC7CFA003A9365 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		A58D4FDA1EEEF243003A9365 /* AWSCognito.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AWSCognito.framework; path = "../../../Library/Developer/Xcode/DerivedData/NearMe-fhioujhlflcrvdgddecrtwhqsnic/Build/Products/Debug-iphonesimulator/AWSCognito/AWSCognito.framework"; sourceTree = "<group>"; };
+		A58D4FDF1EEF1CC1003A9365 /* Sdk */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Sdk; path = "../../Code/NearMe-integration-lib-aws-my-sample-app-ios-swift/Sdk"; sourceTree = "<group>"; };
+		A58D4FE11EEF1D0C003A9365 /* AWSCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AWSCore.framework; path = Sdk/Aws/AWSCore.framework; sourceTree = "<group>"; };
+		A58D4FE21EEF1D0C003A9365 /* AWSDynamoDB.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AWSDynamoDB.framework; path = Sdk/Aws/AWSDynamoDB.framework; sourceTree = "<group>"; };
+		A58D4FE81EEF1D6E003A9365 /* AWSMobileClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AWSMobileClient.swift; sourceTree = "<group>"; };
+		A58D4FE91EEF1D6E003A9365 /* AWSMobileHubHelper.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AWSMobileHubHelper.framework; sourceTree = "<group>"; };
 		A5A645AD1EA6F4FB00D411E1 /* NearMe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NearMe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A5A645B01EA6F4FB00D411E1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A5A645B21EA6F4FB00D411E1 /* MapTrackerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapTrackerViewController.swift; sourceTree = "<group>"; };
@@ -96,12 +117,7 @@
 		A5A645E51EA6FADF00D411E1 /* Person.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Person.swift; sourceTree = "<group>"; };
 		A5A645E71EA720BF00D411E1 /* Student.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Student.swift; sourceTree = "<group>"; };
 		A5A645E91EA724DD00D411E1 /* EmployedPerson.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EmployedPerson.swift; path = ../EmployedPerson.swift; sourceTree = "<group>"; };
-		A5CAABB41EA9599000A16E98 /* AWSCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AWSCore.framework; sourceTree = "<group>"; };
-		A5CAABB51EA9599000A16E98 /* AWSDynamoDB.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AWSDynamoDB.framework; sourceTree = "<group>"; };
-		A5CAABB61EA9599000A16E98 /* CheckXcodeVersion.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = CheckXcodeVersion.sh; sourceTree = "<group>"; };
-		A5CAABC01EA959F600A16E98 /* AWSMobileClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AWSMobileClient.swift; sourceTree = "<group>"; };
-		A5CAABC11EA959F600A16E98 /* AWSMobileHubHelper.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AWSMobileHubHelper.framework; sourceTree = "<group>"; };
-		A5CAABC41EA959F600A16E98 /* Locations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Locations.swift; sourceTree = "<group>"; };
+		A5BCE97EECA2A21F7B9A65FC /* Pods-NearMeUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NearMeUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-NearMeUITests/Pods-NearMeUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		A5CAABC91EA95AA500A16E98 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		A5CAABCB1EA95AB700A16E98 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		A5CAABCD1EA95B6800A16E98 /* UserIdentityAccess.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserIdentityAccess.swift; sourceTree = "<group>"; };
@@ -111,6 +127,10 @@
 		A5E446481ED7A81300791822 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		A5E4464A1ED7BA9200791822 /* SignupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignupViewController.swift; sourceTree = "<group>"; };
 		A5E4464C1ED7CA6100791822 /* Access.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Access.storyboard; sourceTree = "<group>"; };
+		A5E446501EDF170200791822 /* GeorgiaTable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeorgiaTable.swift; sourceTree = "<group>"; };
+		A5E446521EDF6ECC00791822 /* AccountsTable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountsTable.swift; sourceTree = "<group>"; };
+		B4E065AB22BA44167177A62E /* Pods-NearMeTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NearMeTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-NearMeTests/Pods-NearMeTests.debug.xcconfig"; sourceTree = "<group>"; };
+		BDD40AEF01C44B856CF0D421 /* Pods-NearMeTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NearMeTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-NearMeTests/Pods-NearMeTests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -118,13 +138,14 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A58D4FDB1EEEF243003A9365 /* AWSCognito.framework in Frameworks */,
+				A58D4FE31EEF1D0C003A9365 /* AWSCore.framework in Frameworks */,
+				A58D4FEB1EEF1D6E003A9365 /* AWSMobileHubHelper.framework in Frameworks */,
+				A58D4FE51EEF1D0C003A9365 /* AWSDynamoDB.framework in Frameworks */,
 				A5CAABCC1EA95AB700A16E98 /* libz.tbd in Frameworks */,
 				A5CAABCA1EA95AA500A16E98 /* libsqlite3.tbd in Frameworks */,
-				A5CAABC61EA959F600A16E98 /* AWSMobileHubHelper.framework in Frameworks */,
-				A5CAABB81EA9599000A16E98 /* AWSDynamoDB.framework in Frameworks */,
-				A5CAABB71EA9599000A16E98 /* AWSCore.framework in Frameworks */,
-				A5CAABBC1EA959BD00A16E98 /* AWSDynamoDB.framework in Frameworks */,
-				A5CAABBA1EA959BD00A16E98 /* AWSCore.framework in Frameworks */,
+				24247AB0F656F70965942791 /* Pods_NearMe.framework in Frameworks */,
+				253E97FF426A86D9232D70CF /* Pods_NearMe_NearMe.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -132,6 +153,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DE7DC087F2821644C8D01EE6 /* Pods_NearMeTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -139,23 +161,53 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				069EBADDB184895F28B99E42 /* Pods_NearMeUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A2C2DF2A228BFCD37941843B /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				367B6E6AAE824E61258E6144 /* Pods-NearMe.debug.xcconfig */,
+				8C39FAD41AE982195E839DA3 /* Pods-NearMe.release.xcconfig */,
+				151C842C815E077C5DA13581 /* Pods-NearMe-NearMe.debug.xcconfig */,
+				25F11A12CBAC0E7A7F26C7F6 /* Pods-NearMe-NearMe.release.xcconfig */,
+				B4E065AB22BA44167177A62E /* Pods-NearMeTests.debug.xcconfig */,
+				BDD40AEF01C44B856CF0D421 /* Pods-NearMeTests.release.xcconfig */,
+				A5BCE97EECA2A21F7B9A65FC /* Pods-NearMeUITests.debug.xcconfig */,
+				76F2B9DC5B976E8CE124491E /* Pods-NearMeUITests.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		A58D4FE71EEF1D6E003A9365 /* AmazonAws */ = {
+			isa = PBXGroup;
+			children = (
+				A58D4FE81EEF1D6E003A9365 /* AWSMobileClient.swift */,
+				A58D4FE91EEF1D6E003A9365 /* AWSMobileHubHelper.framework */,
+			);
+			name = AmazonAws;
+			path = "../../Code/NearMe-integration-lib-aws-my-sample-app-ios-swift/AmazonAws";
+			sourceTree = "<group>";
+		};
 		A5A645A41EA6F4FB00D411E1 = {
 			isa = PBXGroup;
 			children = (
+				A58D4FE11EEF1D0C003A9365 /* AWSCore.framework */,
+				A58D4FE21EEF1D0C003A9365 /* AWSDynamoDB.framework */,
 				A5CAABCF1EA95C5A00A16E98 /* Default-568h@2x.png */,
 				A5CAABCD1EA95B6800A16E98 /* UserIdentityAccess.swift */,
 				A5A645AF1EA6F4FB00D411E1 /* NearMe */,
 				A5A645C71EA6F4FB00D411E1 /* NearMeTests */,
 				A5A645D21EA6F4FB00D411E1 /* NearMeUITests */,
+				A58D4FE71EEF1D6E003A9365 /* AmazonAws */,
+				A58D4FDF1EEF1CC1003A9365 /* Sdk */,
 				A5A645AE1EA6F4FB00D411E1 /* Products */,
-				A5CAABB21EA9599000A16E98 /* Sdk */,
 				A5CAABC81EA95AA500A16E98 /* Frameworks */,
+				A2C2DF2A228BFCD37941843B /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -172,22 +224,18 @@
 		A5A645AF1EA6F4FB00D411E1 /* NearMe */ = {
 			isa = PBXGroup;
 			children = (
+				A5E4464F1EDF169D00791822 /* ViewControllers */,
+				A5E4464E1EDF166400791822 /* AWS Tables */,
 				A5E446471ED68A9500791822 /* Model */,
 				A5A645B01EA6F4FB00D411E1 /* AppDelegate.swift */,
+				A5A645BC1EA6F4FB00D411E1 /* LaunchScreen.storyboard */,
+				A5E4464C1ED7CA6100791822 /* Access.storyboard */,
 				A5A645B41EA6F4FB00D411E1 /* Main.storyboard */,
 				A5A645BA1EA6F4FB00D411E1 /* Assets.xcassets */,
-				A5A645BC1EA6F4FB00D411E1 /* LaunchScreen.storyboard */,
 				A5A645BF1EA6F4FB00D411E1 /* Info.plist */,
 				A5A645B71EA6F4FB00D411E1 /* NearMe.xcdatamodeld */,
-				A5A645B21EA6F4FB00D411E1 /* MapTrackerViewController.swift */,
-				A5A645E31EA6F9CE00D411E1 /* PeopleTableViewController.swift */,
-				A5A645E91EA724DD00D411E1 /* EmployedPerson.swift */,
-				A5281CBE1EAE9D76003B9489 /* LocationsTable.swift */,
 				A5281CC21EAEEBA8003B9489 /* NoSQLModelHelpers.swift */,
 				A5281CC01EAEAF3D003B9489 /* NoSqlSampleDataGenerator.swift */,
-				A5E446451ED68A8A00791822 /* LoginViewController.swift */,
-				A5E4464A1ED7BA9200791822 /* SignupViewController.swift */,
-				A5E4464C1ED7CA6100791822 /* Access.storyboard */,
 			);
 			path = NearMe;
 			sourceTree = "<group>";
@@ -210,56 +258,17 @@
 			path = NearMeUITests;
 			sourceTree = "<group>";
 		};
-		A5CAABB21EA9599000A16E98 /* Sdk */ = {
-			isa = PBXGroup;
-			children = (
-				A5CAABBF1EA959F600A16E98 /* AmazonAws */,
-				A5CAABB31EA9599000A16E98 /* Aws */,
-				A5CAABB61EA9599000A16E98 /* CheckXcodeVersion.sh */,
-			);
-			path = Sdk;
-			sourceTree = "<group>";
-		};
-		A5CAABB31EA9599000A16E98 /* Aws */ = {
-			isa = PBXGroup;
-			children = (
-				A5CAABB41EA9599000A16E98 /* AWSCore.framework */,
-				A5CAABB51EA9599000A16E98 /* AWSDynamoDB.framework */,
-			);
-			path = Aws;
-			sourceTree = "<group>";
-		};
-		A5CAABBF1EA959F600A16E98 /* AmazonAws */ = {
-			isa = PBXGroup;
-			children = (
-				A5CAABC01EA959F600A16E98 /* AWSMobileClient.swift */,
-				A5CAABC11EA959F600A16E98 /* AWSMobileHubHelper.framework */,
-				A5CAABC21EA959F600A16E98 /* Models */,
-			);
-			path = AmazonAws;
-			sourceTree = "<group>";
-		};
-		A5CAABC21EA959F600A16E98 /* Models */ = {
-			isa = PBXGroup;
-			children = (
-				A5CAABC31EA959F600A16E98 /* NoSQL */,
-			);
-			path = Models;
-			sourceTree = "<group>";
-		};
-		A5CAABC31EA959F600A16E98 /* NoSQL */ = {
-			isa = PBXGroup;
-			children = (
-				A5CAABC41EA959F600A16E98 /* Locations.swift */,
-			);
-			path = NoSQL;
-			sourceTree = "<group>";
-		};
 		A5CAABC81EA95AA500A16E98 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				A58D4FDA1EEEF243003A9365 /* AWSCognito.framework */,
+				A58D4F941EEC7CFA003A9365 /* MobileCoreServices.framework */,
 				A5CAABCB1EA95AB700A16E98 /* libz.tbd */,
 				A5CAABC91EA95AA500A16E98 /* libsqlite3.tbd */,
+				99959E346438FBCA9C46674C /* Pods_NearMe.framework */,
+				6EA3EFFF73148BAB82C315E4 /* Pods_NearMe_NearMe.framework */,
+				87C21848C16F9703E7FD2286 /* Pods_NearMeTests.framework */,
+				6D2179C332989954E7D7C2CE /* Pods_NearMeUITests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -267,12 +276,34 @@
 		A5E446471ED68A9500791822 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				A5E446481ED7A81300791822 /* User.swift */,
 				A5A645E51EA6FADF00D411E1 /* Person.swift */,
+				A5A645E91EA724DD00D411E1 /* EmployedPerson.swift */,
 				A5A645E71EA720BF00D411E1 /* Student.swift */,
 				A5CAABD11EAA7DF000A16E98 /* Locations.swift */,
-				A5E446481ED7A81300791822 /* User.swift */,
 			);
 			name = Model;
+			sourceTree = "<group>";
+		};
+		A5E4464E1EDF166400791822 /* AWS Tables */ = {
+			isa = PBXGroup;
+			children = (
+				A5281CBE1EAE9D76003B9489 /* LocationsTable.swift */,
+				A5E446501EDF170200791822 /* GeorgiaTable.swift */,
+				A5E446521EDF6ECC00791822 /* AccountsTable.swift */,
+			);
+			name = "AWS Tables";
+			sourceTree = "<group>";
+		};
+		A5E4464F1EDF169D00791822 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				A5E4464A1ED7BA9200791822 /* SignupViewController.swift */,
+				A5E446451ED68A8A00791822 /* LoginViewController.swift */,
+				A5A645E31EA6F9CE00D411E1 /* PeopleTableViewController.swift */,
+				A5A645B21EA6F4FB00D411E1 /* MapTrackerViewController.swift */,
+			);
+			name = ViewControllers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -282,10 +313,14 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = A5A645D81EA6F4FC00D411E1 /* Build configuration list for PBXNativeTarget "NearMe" */;
 			buildPhases = (
+				0F4CD9F2D5DC8E4749D60AD2 /* [CP] Check Pods Manifest.lock */,
 				A5A645A91EA6F4FB00D411E1 /* Sources */,
 				A5A645AA1EA6F4FB00D411E1 /* Frameworks */,
 				A5A645AB1EA6F4FB00D411E1 /* Resources */,
-				A5CAABBE1EA959BD00A16E98 /* Embed Frameworks */,
+				96F013F89170EE38581E0333 /* [CP] Embed Pods Frameworks */,
+				7941623DE6BD70ECD8C1A263 /* [CP] Copy Pods Resources */,
+				A58D4FB91EEE122C003A9365 /* ShellScript */,
+				A58D4FDE1EEEF8B6003A9365 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -300,9 +335,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = A5A645DB1EA6F4FC00D411E1 /* Build configuration list for PBXNativeTarget "NearMeTests" */;
 			buildPhases = (
+				E2CA4629064EBEB0EB47EA80 /* [CP] Check Pods Manifest.lock */,
 				A5A645C01EA6F4FB00D411E1 /* Sources */,
 				A5A645C11EA6F4FB00D411E1 /* Frameworks */,
 				A5A645C21EA6F4FB00D411E1 /* Resources */,
+				9947F9DDBBBE05F85666D088 /* [CP] Embed Pods Frameworks */,
+				6EAD495122922AA1A8772E42 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -318,9 +356,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = A5A645DE1EA6F4FC00D411E1 /* Build configuration list for PBXNativeTarget "NearMeUITests" */;
 			buildPhases = (
+				696D62229EB91D9C5FAC5B1D /* [CP] Check Pods Manifest.lock */,
 				A5A645CB1EA6F4FB00D411E1 /* Sources */,
 				A5A645CC1EA6F4FB00D411E1 /* Frameworks */,
 				A5A645CD1EA6F4FB00D411E1 /* Resources */,
+				F5A3DD8E5BC66B42A92E1D57 /* [CP] Embed Pods Frameworks */,
+				71049E8471FBCB46E4F661CC /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -385,9 +426,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				A5E4464D1ED7CA6100791822 /* Access.storyboard in Resources */,
-				A5CAABB91EA9599000A16E98 /* CheckXcodeVersion.sh in Resources */,
 				A5A645BE1EA6F4FB00D411E1 /* LaunchScreen.storyboard in Resources */,
 				A5A645BB1EA6F4FB00D411E1 /* Assets.xcassets in Resources */,
+				A58D4FE01EEF1CC1003A9365 /* Sdk in Resources */,
 				A5CAABD01EA95C5A00A16E98 /* Default-568h@2x.png in Resources */,
 				A5A645B61EA6F4FB00D411E1 /* Main.storyboard in Resources */,
 			);
@@ -409,6 +450,157 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		0F4CD9F2D5DC8E4749D60AD2 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		696D62229EB91D9C5FAC5B1D /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		6EAD495122922AA1A8772E42 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-NearMeTests/Pods-NearMeTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		71049E8471FBCB46E4F661CC /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-NearMeUITests/Pods-NearMeUITests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		7941623DE6BD70ECD8C1A263 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-NearMe-NearMe/Pods-NearMe-NearMe-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		96F013F89170EE38581E0333 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-NearMe-NearMe/Pods-NearMe-NearMe-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		9947F9DDBBBE05F85666D088 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-NearMeTests/Pods-NearMeTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		A58D4FB91EEE122C003A9365 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "";
+		};
+		E2CA4629064EBEB0EB47EA80 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		F5A3DD8E5BC66B42A92E1D57 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-NearMeUITests/Pods-NearMeUITests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		A5A645A91EA6F4FB00D411E1 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -418,9 +610,11 @@
 				A5281CC31EAEEBA8003B9489 /* NoSQLModelHelpers.swift in Sources */,
 				A5A645E61EA6FADF00D411E1 /* Person.swift in Sources */,
 				A5A645EA1EA724DD00D411E1 /* EmployedPerson.swift in Sources */,
-				A5CAABC51EA959F600A16E98 /* AWSMobileClient.swift in Sources */,
+				A5E446511EDF170200791822 /* GeorgiaTable.swift in Sources */,
+				A5E446531EDF6ECC00791822 /* AccountsTable.swift in Sources */,
 				A5E446491ED7A81300791822 /* User.swift in Sources */,
 				A5A645E81EA720BF00D411E1 /* Student.swift in Sources */,
+				A58D4FEA1EEF1D6E003A9365 /* AWSMobileClient.swift in Sources */,
 				A5A645B31EA6F4FB00D411E1 /* MapTrackerViewController.swift in Sources */,
 				A5CAABCE1EA95B6800A16E98 /* UserIdentityAccess.swift in Sources */,
 				A5281CBF1EAE9D76003B9489 /* LocationsTable.swift in Sources */,
@@ -581,16 +775,85 @@
 		};
 		A5A645D91EA6F4FC00D411E1 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 151C842C815E077C5DA13581 /* Pods-NearMe-NearMe.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = NV5PR33GEL;
+				ENABLE_BITCODE = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$PODS_CONFIGURATION_BUILD_DIR/AWSAutoScaling\"",
+					"\"$PODS_CONFIGURATION_BUILD_DIR/AWSCloudWatch\"",
+					"\"$PODS_CONFIGURATION_BUILD_DIR/AWSCognitoIdentityProvider\"",
+					"\"$PODS_CONFIGURATION_BUILD_DIR/AWSCore\"",
+					"\"$PODS_CONFIGURATION_BUILD_DIR/AWSDynamoDB\"",
+					"\"$PODS_CONFIGURATION_BUILD_DIR/AWSEC2\"",
+					"\"$PODS_CONFIGURATION_BUILD_DIR/AWSElasticLoadBalancing\"",
+					"\"$PODS_CONFIGURATION_BUILD_DIR/AWSIoT\"",
+					"\"$PODS_CONFIGURATION_BUILD_DIR/AWSKinesis\"",
+					"\"$PODS_CONFIGURATION_BUILD_DIR/AWSLambda\"",
+					"\"$PODS_CONFIGURATION_BUILD_DIR/AWSLex\"",
+					"\"$PODS_CONFIGURATION_BUILD_DIR/AWSMachineLearning\"",
+					"\"$PODS_CONFIGURATION_BUILD_DIR/AWSMobileAnalytics\"",
+					"\"$PODS_CONFIGURATION_BUILD_DIR/AWSPinpoint\"",
+					"\"$PODS_CONFIGURATION_BUILD_DIR/AWSPolly\"",
+					"\"$PODS_CONFIGURATION_BUILD_DIR/AWSRekognition\"",
+					"\"$PODS_CONFIGURATION_BUILD_DIR/AWSS3\"",
+					"\"$PODS_CONFIGURATION_BUILD_DIR/AWSSES\"",
+					"\"$PODS_CONFIGURATION_BUILD_DIR/AWSSNS\"",
+					"\"$PODS_CONFIGURATION_BUILD_DIR/AWSSQS\"",
+					"\"$PODS_CONFIGURATION_BUILD_DIR/AWSSimpleDB\"",
+					"$(SRCROOT)/**",
 					"$(PROJECT_DIR)/Sdk/Aws",
-					"$(PROJECT_DIR)/Sdk/AmazonAws",
 				);
 				INFOPLIST_FILE = NearMe/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-framework",
+					"\"AWSCloudWatch\"",
+					"-framework",
+					"\"AWSCognito\"",
+					"-framework",
+					"\"AWSCognitoIdentityProvider\"",
+					"-framework",
+					"\"AWSCore\"",
+					"-framework",
+					"\"AWSDynamoDB\"",
+					"-framework",
+					"\"AWSEC2\"",
+					"-framework",
+					"\"AWSElasticLoadBalancing\"",
+					"-framework",
+					"\"AWSIoT\"",
+					"-framework",
+					"\"AWSKinesis\"",
+					"-framework",
+					"\"AWSLambda\"",
+					"-framework",
+					"\"AWSLex\"",
+					"-framework",
+					"\"AWSMachineLearning\"",
+					"-framework",
+					"\"AWSMobileAnalytics\"",
+					"-framework",
+					"\"AWSPinpoint\"",
+					"-framework",
+					"\"AWSPolly\"",
+					"-framework",
+					"\"AWSRekognition\"",
+					"-framework",
+					"\"AWSS3\"",
+					"-framework",
+					"\"AWSSES\"",
+					"-framework",
+					"\"AWSSNS\"",
+					"-framework",
+					"\"AWSSQS\"",
+					"-framework",
+					"\"AWSSimpleDB\"",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = crystal.NearMe;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
@@ -599,16 +862,63 @@
 		};
 		A5A645DA1EA6F4FC00D411E1 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 25F11A12CBAC0E7A7F26C7F6 /* Pods-NearMe-NearMe.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = NV5PR33GEL;
+				ENABLE_BITCODE = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Sdk/Aws",
-					"$(PROJECT_DIR)/Sdk/AmazonAws",
 				);
 				INFOPLIST_FILE = NearMe/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-framework",
+					"\"AWSCloudWatch\"",
+					"-framework",
+					"\"AWSCognito\"",
+					"-framework",
+					"\"AWSCognitoIdentityProvider\"",
+					"-framework",
+					"\"AWSCore\"",
+					"-framework",
+					"\"AWSDynamoDB\"",
+					"-framework",
+					"\"AWSEC2\"",
+					"-framework",
+					"\"AWSElasticLoadBalancing\"",
+					"-framework",
+					"\"AWSIoT\"",
+					"-framework",
+					"\"AWSKinesis\"",
+					"-framework",
+					"\"AWSLambda\"",
+					"-framework",
+					"\"AWSLex\"",
+					"-framework",
+					"\"AWSMachineLearning\"",
+					"-framework",
+					"\"AWSMobileAnalytics\"",
+					"-framework",
+					"\"AWSPinpoint\"",
+					"-framework",
+					"\"AWSPolly\"",
+					"-framework",
+					"\"AWSRekognition\"",
+					"-framework",
+					"\"AWSS3\"",
+					"-framework",
+					"\"AWSSES\"",
+					"-framework",
+					"\"AWSSNS\"",
+					"-framework",
+					"\"AWSSQS\"",
+					"-framework",
+					"\"AWSSimpleDB\"",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = crystal.NearMe;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
@@ -617,6 +927,7 @@
 		};
 		A5A645DC1EA6F4FC00D411E1 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B4E065AB22BA44167177A62E /* Pods-NearMeTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -631,6 +942,7 @@
 		};
 		A5A645DD1EA6F4FC00D411E1 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = BDD40AEF01C44B856CF0D421 /* Pods-NearMeTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -645,6 +957,7 @@
 		};
 		A5A645DF1EA6F4FC00D411E1 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A5BCE97EECA2A21F7B9A65FC /* Pods-NearMeUITests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				INFOPLIST_FILE = NearMeUITests/Info.plist;
@@ -658,6 +971,7 @@
 		};
 		A5A645E01EA6F4FC00D411E1 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 76F2B9DC5B976E8CE124491E /* Pods-NearMeUITests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				INFOPLIST_FILE = NearMeUITests/Info.plist;
