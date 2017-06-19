@@ -12,6 +12,11 @@
 		253E97FF426A86D9232D70CF /* Pods_NearMe_NearMe.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6EA3EFFF73148BAB82C315E4 /* Pods_NearMe_NearMe.framework */; };
 		A5281CC11EAEAF3D003B9489 /* NoSqlSampleDataGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5281CC01EAEAF3D003B9489 /* NoSqlSampleDataGenerator.swift */; };
 		A5281CC31EAEEBA8003B9489 /* NoSQLModelHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5281CC21EAEEBA8003B9489 /* NoSQLModelHelpers.swift */; };
+		A5462D761EF0A0ED000970EB /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5462D751EF0A0ED000970EB /* ProfileViewController.swift */; };
+		A5462D781EF0A4A6000970EB /* NearbyTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5462D771EF0A4A6000970EB /* NearbyTableView.swift */; };
+		A5462D7A1EF0A54C000970EB /* NearbyPeopleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5462D791EF0A54C000970EB /* NearbyPeopleViewController.swift */; };
+		A5462D7C1EF0AB3F000970EB /* UserTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5462D7B1EF0AB3F000970EB /* UserTableViewCell.swift */; };
+		A5462D7E1EF0B5CE000970EB /* userLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5462D7D1EF0B5CE000970EB /* userLocation.swift */; };
 		A58D4FE01EEF1CC1003A9365 /* Sdk in Resources */ = {isa = PBXBuildFile; fileRef = A58D4FDF1EEF1CC1003A9365 /* Sdk */; };
 		A58D4FE41EEF1D0C003A9365 /* AWSCore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A58D4FE11EEF1D0C003A9365 /* AWSCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		A58D4FE61EEF1D0C003A9365 /* AWSDynamoDB.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A58D4FE21EEF1D0C003A9365 /* AWSDynamoDB.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -84,6 +89,11 @@
 		A5281CBE1EAE9D76003B9489 /* LocationsTable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationsTable.swift; sourceTree = "<group>"; };
 		A5281CC01EAEAF3D003B9489 /* NoSqlSampleDataGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoSqlSampleDataGenerator.swift; sourceTree = "<group>"; };
 		A5281CC21EAEEBA8003B9489 /* NoSQLModelHelpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoSQLModelHelpers.swift; sourceTree = "<group>"; };
+		A5462D751EF0A0ED000970EB /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		A5462D771EF0A4A6000970EB /* NearbyTableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NearbyTableView.swift; sourceTree = "<group>"; };
+		A5462D791EF0A54C000970EB /* NearbyPeopleViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NearbyPeopleViewController.swift; sourceTree = "<group>"; };
+		A5462D7B1EF0AB3F000970EB /* UserTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserTableViewCell.swift; sourceTree = "<group>"; };
+		A5462D7D1EF0B5CE000970EB /* userLocation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = userLocation.swift; sourceTree = "<group>"; };
 		A58D4F941EEC7CFA003A9365 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		A58D4FDA1EEEF243003A9365 /* AWSCognito.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AWSCognito.framework; path = "../../../Library/Developer/Xcode/DerivedData/NearMe-fhioujhlflcrvdgddecrtwhqsnic/Build/Products/Debug-iphonesimulator/AWSCognito/AWSCognito.framework"; sourceTree = "<group>"; };
 		A58D4FDF1EEF1CC1003A9365 /* Sdk */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Sdk; path = "../../Code/NearMe-integration-lib-aws-my-sample-app-ios-swift/Sdk"; sourceTree = "<group>"; };
@@ -218,6 +228,7 @@
 				A5A645BC1EA6F4FB00D411E1 /* LaunchScreen.storyboard */,
 				A5E4464C1ED7CA6100791822 /* Access.storyboard */,
 				A5A645B41EA6F4FB00D411E1 /* Main.storyboard */,
+				A5462D771EF0A4A6000970EB /* NearbyTableView.swift */,
 				A5A645BA1EA6F4FB00D411E1 /* Assets.xcassets */,
 				A5A645BF1EA6F4FB00D411E1 /* Info.plist */,
 				A5A645B71EA6F4FB00D411E1 /* NearMe.xcdatamodeld */,
@@ -263,11 +274,13 @@
 		A5E446471ED68A9500791822 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				A5462D7B1EF0AB3F000970EB /* UserTableViewCell.swift */,
 				A5E446481ED7A81300791822 /* User.swift */,
 				A5A645E51EA6FADF00D411E1 /* Person.swift */,
 				A5A645E91EA724DD00D411E1 /* EmployedPerson.swift */,
 				A5A645E71EA720BF00D411E1 /* Student.swift */,
 				A5CAABD11EAA7DF000A16E98 /* Locations.swift */,
+				A5462D7D1EF0B5CE000970EB /* userLocation.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -288,6 +301,8 @@
 				A5E4464A1ED7BA9200791822 /* SignupViewController.swift */,
 				A5E446451ED68A8A00791822 /* LoginViewController.swift */,
 				A5A645E31EA6F9CE00D411E1 /* PeopleTableViewController.swift */,
+				A5462D751EF0A0ED000970EB /* ProfileViewController.swift */,
+				A5462D791EF0A54C000970EB /* NearbyPeopleViewController.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -596,16 +611,21 @@
 				A5281CC31EAEEBA8003B9489 /* NoSQLModelHelpers.swift in Sources */,
 				A5A645E61EA6FADF00D411E1 /* Person.swift in Sources */,
 				A5A645EA1EA724DD00D411E1 /* EmployedPerson.swift in Sources */,
+				A5462D781EF0A4A6000970EB /* NearbyTableView.swift in Sources */,
 				A5E446531EDF6ECC00791822 /* AccountsTable.swift in Sources */,
 				A5E446491ED7A81300791822 /* User.swift in Sources */,
 				A5A645E81EA720BF00D411E1 /* Student.swift in Sources */,
 				A5CAABCE1EA95B6800A16E98 /* UserIdentityAccess.swift in Sources */,
 				A5E4464B1ED7BA9200791822 /* SignupViewController.swift in Sources */,
+				A5462D7C1EF0AB3F000970EB /* UserTableViewCell.swift in Sources */,
 				A5A645B11EA6F4FB00D411E1 /* AppDelegate.swift in Sources */,
+				A5462D7E1EF0B5CE000970EB /* userLocation.swift in Sources */,
 				A5A645E41EA6F9CE00D411E1 /* PeopleTableViewController.swift in Sources */,
 				A5CAABD21EAA7DF000A16E98 /* Locations.swift in Sources */,
+				A5462D761EF0A0ED000970EB /* ProfileViewController.swift in Sources */,
 				A5281CC11EAEAF3D003B9489 /* NoSqlSampleDataGenerator.swift in Sources */,
 				A5A645B91EA6F4FB00D411E1 /* NearMe.xcdatamodeld in Sources */,
+				A5462D7A1EF0A54C000970EB /* NearbyPeopleViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
