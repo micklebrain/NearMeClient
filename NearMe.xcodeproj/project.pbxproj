@@ -19,7 +19,6 @@
 		A5462D7E1EF0B5CE000970EB /* userLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5462D7D1EF0B5CE000970EB /* userLocation.swift */; };
 		A58D4FE01EEF1CC1003A9365 /* Sdk in Resources */ = {isa = PBXBuildFile; fileRef = A58D4FDF1EEF1CC1003A9365 /* Sdk */; };
 		A58D4FE41EEF1D0C003A9365 /* AWSCore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A58D4FE11EEF1D0C003A9365 /* AWSCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		A58D4FE61EEF1D0C003A9365 /* AWSDynamoDB.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A58D4FE21EEF1D0C003A9365 /* AWSDynamoDB.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		A5A645B11EA6F4FB00D411E1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5A645B01EA6F4FB00D411E1 /* AppDelegate.swift */; };
 		A5A645B61EA6F4FB00D411E1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A5A645B41EA6F4FB00D411E1 /* Main.storyboard */; };
 		A5A645B91EA6F4FB00D411E1 /* NearMe.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A5A645B71EA6F4FB00D411E1 /* NearMe.xcdatamodeld */; };
@@ -68,7 +67,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				A58D4FE61EEF1D0C003A9365 /* AWSDynamoDB.framework in Embed Frameworks */,
 				A58D4FE41EEF1D0C003A9365 /* AWSCore.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
@@ -98,7 +96,6 @@
 		A58D4FDA1EEEF243003A9365 /* AWSCognito.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AWSCognito.framework; path = "../../../Library/Developer/Xcode/DerivedData/NearMe-fhioujhlflcrvdgddecrtwhqsnic/Build/Products/Debug-iphonesimulator/AWSCognito/AWSCognito.framework"; sourceTree = "<group>"; };
 		A58D4FDF1EEF1CC1003A9365 /* Sdk */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Sdk; path = "../../Code/NearMe-integration-lib-aws-my-sample-app-ios-swift/Sdk"; sourceTree = "<group>"; };
 		A58D4FE11EEF1D0C003A9365 /* AWSCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AWSCore.framework; path = Sdk/Aws/AWSCore.framework; sourceTree = "<group>"; };
-		A58D4FE21EEF1D0C003A9365 /* AWSDynamoDB.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AWSDynamoDB.framework; path = Sdk/Aws/AWSDynamoDB.framework; sourceTree = "<group>"; };
 		A58D4FE81EEF1D6E003A9365 /* AWSMobileClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AWSMobileClient.swift; sourceTree = "<group>"; };
 		A58D4FE91EEF1D6E003A9365 /* AWSMobileHubHelper.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AWSMobileHubHelper.framework; sourceTree = "<group>"; };
 		A5A645AD1EA6F4FB00D411E1 /* NearMe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NearMe.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -180,6 +177,14 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		A577C3071EF9CF33005D4258 /* legacy */ = {
+			isa = PBXGroup;
+			children = (
+				A5A645E31EA6F9CE00D411E1 /* PeopleTableViewController.swift */,
+			);
+			name = legacy;
+			sourceTree = "<group>";
+		};
 		A58D4FE71EEF1D6E003A9365 /* AmazonAws */ = {
 			isa = PBXGroup;
 			children = (
@@ -194,7 +199,6 @@
 			isa = PBXGroup;
 			children = (
 				A58D4FE11EEF1D0C003A9365 /* AWSCore.framework */,
-				A58D4FE21EEF1D0C003A9365 /* AWSDynamoDB.framework */,
 				A5CAABCF1EA95C5A00A16E98 /* Default-568h@2x.png */,
 				A5CAABCD1EA95B6800A16E98 /* UserIdentityAccess.swift */,
 				A5A645AF1EA6F4FB00D411E1 /* NearMe */,
@@ -234,6 +238,7 @@
 				A5A645B71EA6F4FB00D411E1 /* NearMe.xcdatamodeld */,
 				A5281CC21EAEEBA8003B9489 /* NoSQLModelHelpers.swift */,
 				A5281CC01EAEAF3D003B9489 /* NoSqlSampleDataGenerator.swift */,
+				A577C3071EF9CF33005D4258 /* legacy */,
 			);
 			path = NearMe;
 			sourceTree = "<group>";
@@ -300,7 +305,6 @@
 			children = (
 				A5E4464A1ED7BA9200791822 /* SignupViewController.swift */,
 				A5E446451ED68A8A00791822 /* LoginViewController.swift */,
-				A5A645E31EA6F9CE00D411E1 /* PeopleTableViewController.swift */,
 				A5462D751EF0A0ED000970EB /* ProfileViewController.swift */,
 				A5462D791EF0A54C000970EB /* NearbyPeopleViewController.swift */,
 			);
