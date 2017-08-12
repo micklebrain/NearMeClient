@@ -7,9 +7,22 @@
 //
 
 import Foundation
+import CoreLocation
+import UIKit
 
 func ==(lhs: Person, rhs: Person) -> Bool {
     return lhs.hashValue == rhs.hashValue
+}
+
+enum sex : String {
+    case male = "male"
+    case female = "female"
+}
+
+enum relationshipStatus {
+    case single
+    case married
+    case taken
 }
 
 class Person : Hashable {
@@ -17,10 +30,19 @@ class Person : Hashable {
     var firstName : String?
     var middleName : String?
     var lastName : String?
+    var sex : sex?
     var userId : String?
+    var username : String?
+    var location : CLLocation?
+    var locality : String?
+    var friends : [String]?
     
+    var headshotImage: UIImage?
+    
+    var facebookId : String?
     var online : Bool = true
     
+    //    Has to change first name will not be unique
     var hashValue: Int {
         get {
             return (firstName?.hashValue)!

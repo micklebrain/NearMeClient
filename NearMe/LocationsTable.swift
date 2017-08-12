@@ -24,7 +24,6 @@ class LocationsTable: NSObject, Table {
         return produceOrderedAttributeKeys(model)
     }
     var tableDisplayName: String {
-        
         return "Locations"
     }
     
@@ -81,7 +80,7 @@ class LocationsTable: NSObject, Table {
     func scanWithCompletionHandler(_ completionHandler: @escaping (_ response: AWSDynamoDBPaginatedOutput?, _ error: NSError?) -> Void) {
         let objectMapper = AWSDynamoDBObjectMapper.default()
         let scanExpression = AWSDynamoDBScanExpression()
-        scanExpression.limit = 5
+//        scanExpression.limit = 5
         
         objectMapper.scan(Locations.self, expression: scanExpression) { (response: AWSDynamoDBPaginatedOutput?, error: Error?) in
             DispatchQueue.main.async(execute: {
@@ -95,17 +94,18 @@ class LocationsTable: NSObject, Table {
         return "Find all items with latitude < \(scanFilterValue)."
     }
     
+    // Scan for Taito
     func scanWithFilterWithCompletionHandler(_ completionHandler: @escaping (_ response: AWSDynamoDBPaginatedOutput?, _ error: NSError?) -> Void) {
         let objectMapper = AWSDynamoDBObjectMapper.default()
         let scanExpression = AWSDynamoDBScanExpression()
         
-        scanExpression.filterExpression = "#latitude < :latitude"
-        scanExpression.expressionAttributeNames = ["#latitude": "latitude" ,]
-        scanExpression.expressionAttributeValues = [":latitude": 1111500000 ,]
+        scanExpression.filterExpression = "#userId = :userId"
+        scanExpression.expressionAttributeNames = ["#userId": "userId" ,]
+        scanExpression.expressionAttributeValues = [":userId": "us-east-1:f010eb24-60f4-4896-b08b-6ce65e35fb39" ,]
         
         objectMapper.scan(Locations.self, expression: scanExpression) { (response: AWSDynamoDBPaginatedOutput?, error: Error?) in
             DispatchQueue.main.async(execute: {
-                completionHandler(response, error as? NSError)
+                completionHandler(response, error as NSError?)
             })
         }
     }
@@ -131,7 +131,7 @@ class LocationsTable: NSObject, Table {
         
         
         objectMapper.save(itemForGet, completionHandler: {(error: Error?) -> Void in
-            if let error = error as? NSError {
+            if let error = error as NSError? {
                 DispatchQueue.main.async(execute: {
                     errors.append(error)
                 })
@@ -179,7 +179,7 @@ class LocationsTable: NSObject, Table {
         queryExpression.expressionAttributeValues = [":userId": AWSIdentityManager.default().identityId!,]
         
         objectMapper.query(Locations.self, expression: queryExpression) { (response: AWSDynamoDBPaginatedOutput?, error: Error?) in
-            if let error = error as? NSError {
+            if let error = error as NSError? {
                 DispatchQueue.main.async(execute: {
                     completionHandler([error]);
                 })
@@ -189,7 +189,7 @@ class LocationsTable: NSObject, Table {
                 for item in response!.items {
                     group.enter()
                     objectMapper.remove(item, completionHandler: {(error: Error?) in
-                        if let error = error as? NSError {
+                        if let error = error as NSError? {
                             DispatchQueue.main.async(execute: {
                                 errors.append(error)
                             })
@@ -222,7 +222,7 @@ class LocationsTable: NSObject, Table {
         
         objectMapper.save(itemToUpdate, completionHandler: {(error: Error?) in
             DispatchQueue.main.async(execute: {
-                completionHandler(error as? NSError)
+                completionHandler(error as NSError?)
             })
         })
     }
@@ -232,7 +232,7 @@ class LocationsTable: NSObject, Table {
         
         objectMapper.remove(item, completionHandler: {(error: Error?) in
             DispatchQueue.main.async(execute: {
-                completionHandler(error as? NSError)
+                completionHandler(error as NSError?)
             })
         })
     }
@@ -265,11 +265,10 @@ class LocationsPrimaryIndex: NSObject, Index {
         queryExpression.keyConditionExpression = "#userId = :userId"
         queryExpression.expressionAttributeNames = ["#userId": "userId",]
         queryExpression.expressionAttributeValues = [":userId": "us-east-1:4b61e13c-d551-4242-9ccf-fc300788885f",]
-        print(AWSIdentityManager.default().identityId!)
         
         objectMapper.query(Locations.self, expression: queryExpression) { (response: AWSDynamoDBPaginatedOutput?, error: Error?) in
             DispatchQueue.main.async(execute: {
-                completionHandler(response, error as? NSError)
+                completionHandler(response, error as NSError?)
             })
         }
         
@@ -293,14 +292,16 @@ class LocationsPrimaryIndex: NSObject, Index {
         ]
         queryExpression.expressionAttributeValues = [
             //":userId": AWSIdentityManager.default().identityId!,
-            ":userId": "us-east-1:b3625c1e-f62e-4e01-8dde-ee5f2603949e",
-        //  ":username": "tester",
+            // Dont use userId
+                ":userId": "us-east-1:b3625c1e-f62e-4e01-8dde-ee5f2603949e",
+            // ":userId": "us-east-1:4b61e13c-d551-4242-9ccf-fc300788885f",
+            //  ":username": "tester",
         ]
         
         
         objectMapper.query(Locations.self, expression: queryExpression, completionHandler: {(response: AWSDynamoDBPaginatedOutput?, error: Error?) in
             DispatchQueue.main.async(execute: {
-                completionHandler(response, error as? NSError)
+                completionHandler(response, error as NSError?)
             })
         })
     }
@@ -328,7 +329,7 @@ class LocationsPrimaryIndex: NSObject, Index {
         
         objectMapper.query(Locations.self, expression: queryExpression, completionHandler: {(response: AWSDynamoDBPaginatedOutput?, error: Error?) -> Void in
             DispatchQueue.main.async(execute: {
-                completionHandler(response, error as? NSError)
+                completionHandler(response, error as NSError?)
             })
         })
     }
@@ -360,7 +361,7 @@ class LocationsPrimaryIndex: NSObject, Index {
         
         objectMapper.query(Locations.self, expression: queryExpression, completionHandler: {(response: AWSDynamoDBPaginatedOutput?, error: Error?) in
             DispatchQueue.main.async(execute: {
-                completionHandler(response, error as? NSError)
+                completionHandler(response, error as NSError?)
             })
         })
     }
@@ -399,7 +400,7 @@ class LocationsCategories: NSObject, Index {
         
         objectMapper.query(Locations.self, expression: queryExpression) { (response: AWSDynamoDBPaginatedOutput?, error: Error?) in
             DispatchQueue.main.async(execute: {
-                completionHandler(response, error as? NSError)
+                completionHandler(response, error as NSError?)
             })
         }
     }
@@ -430,7 +431,7 @@ class LocationsCategories: NSObject, Index {
         
         objectMapper.query(Locations.self, expression: queryExpression, completionHandler: {(response: AWSDynamoDBPaginatedOutput?, error: Error?) in
             DispatchQueue.main.async(execute: {
-                completionHandler(response, error as? NSError)
+                completionHandler(response, error as NSError?)
             })
         })
     }
@@ -460,7 +461,7 @@ class LocationsCategories: NSObject, Index {
         
         objectMapper.query(Locations.self, expression: queryExpression, completionHandler: {(response: AWSDynamoDBPaginatedOutput?, error: Error?) -> Void in
             DispatchQueue.main.async(execute: {
-                completionHandler(response, error as? NSError)
+                completionHandler(response, error as NSError?)
             })
         })
     }
@@ -494,7 +495,7 @@ class LocationsCategories: NSObject, Index {
         
         objectMapper.query(Locations.self, expression: queryExpression, completionHandler: {(response: AWSDynamoDBPaginatedOutput?, error: Error?) in
             DispatchQueue.main.async(execute: {
-                completionHandler(response, error as? NSError)
+                completionHandler(response, error as NSError?)
             })
         })
     }
