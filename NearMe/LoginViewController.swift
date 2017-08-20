@@ -24,6 +24,8 @@ class LoginViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        password.resignFirstResponder()
+        
         let loginButton = LoginButton(readPermissions: [ .publicProfile, .email, .userFriends ])
         loginButton.center = view.center
         view.addSubview(loginButton)
@@ -56,8 +58,8 @@ class LoginViewController: UIViewController {
         }
     }
     
-    func action(sender:UIButton!) {
-        print("Button clicked")
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        password.resignFirstResponder()
     }
     
     @objc func loginButtonClicked() {

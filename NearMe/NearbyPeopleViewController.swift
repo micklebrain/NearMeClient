@@ -145,6 +145,7 @@ class NearbyPeopleViewController: UIViewController, UITableViewDelegate, UITable
         locationManager = CLLocationManager()
         locationManager!.delegate = self
         locationManager!.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.distanceFilter = kCLLocationAccuracyNearestTenMeters;
         locationManager!.requestAlwaysAuthorization()
         
         if CLLocationManager.locationServicesEnabled() {
@@ -198,20 +199,20 @@ class NearbyPeopleViewController: UIViewController, UITableViewDelegate, UITable
             let longitutde = userLocation.coordinate.longitude
             currentUserLocation = CLLocation(latitude: latitude, longitude: longitutde)
 //          userLoggedIn?.location = CLLocation(latitude: latitude, longitude: longitutde)
-//            userLoggedIn?.userID = AWSIdentityManager.default().identityId!
+//          userLoggedIn?.userID = AWSIdentityManager.default().identityId!
 //          userLoggedIn.itemId = NoSQLSampleDataGenerator.randomSampleStringWithAttributeName("itemId")
 //          userLoggedIn?.username = currentUser?.username
             
             userLoggedIn = User()
             
-                    userLoggedIn?.userID = 2 as NSNumber
+            userLoggedIn?.userID = 2 as NSNumber
             userLoggedIn?.username = "Sally"
-                   userLoggedIn?.firstName = userLoggedIn?.username
+            userLoggedIn?.firstName = userLoggedIn?.username
             //      userLoggedIn?.lastName = "Tracey"
             //        userLoggedIn?.occupation = "developer"
-//            userLoggedIn?.online = true as Bool as NSNumber
+//          userLoggedIn?.online = true as Bool as NSNumber
             //        userLoggedIn?.relationshipStatus = "single"
-                    userLoggedIn?.facebookId = 1367878021 as NSNumber
+            userLoggedIn?.facebookId = 1367878021 as NSNumber
             //        self.friendsAround.add(2)
             //        userLoggedIn?.friends = self.friendsAround
             
