@@ -53,8 +53,8 @@ class NearbyPeopleViewController: UIViewController, UITableViewDelegate, UITable
         super.viewWillAppear(animated)
         
         //Check if location services is on first
-        //determineMyCurrentLocation()
-        //downloadImages()
+        determineMyCurrentLocation()
+        downloadImages()
     
     }
 

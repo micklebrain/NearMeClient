@@ -15,34 +15,41 @@ class SignupViewController: UIViewController {
     @IBOutlet weak var lastNameTextField: UITextField!
     @IBOutlet weak var usernameTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
+    
+    let urlProtocol = "http://"
+    let localDomain = "localhost:8080/"
 
     override func viewDidLoad() {
         super.viewDidLoad()
     }
 
     @IBAction func signUp(_ sender: Any) {
-        let dynamoDBObjectMapper = AWSDynamoDBObjectMapper.default()
         
-        let newUser = User()
+        createAccount()
+//        let dynamoDBObjectMapper = AWSDynamoDBObjectMapper.default()
+//        
+//        let newUser = User()
+//        
+//        newUser?.firstName = firstNameTextField.text
+//        newUser?.lastName = lastNameTextField.text
+//        newUser?.username = usernameTextField.text
+//        newUser?.password = passwordTextField.text
+//        
+//        var newAccount = Account()
+//        newAccount.firstName = firstNameTextField.text
+//        newAccount.lastName = lastNameTextField.text
+//        newAccount.userName = usernameTextField.text
+//        newAccount.password = passwordTextField.text
+//        
+//        createAccount(newAccount: newAccount)
+//        
+//        dynamoDBObjectMapper.save(newUser!).continueWith(block: { (task:AWSTask<AnyObject>!) -> Void in
+//            if (task.error as NSError?) != nil {
+//                print("The request failed. Error: !(error)")
+//            }
+//        })
         
-        newUser?.firstName = firstNameTextField.text
-        newUser?.lastName = lastNameTextField.text
-        newUser?.username = usernameTextField.text
-        newUser?.password = passwordTextField.text
         
-        var newAccount = Account()
-        newAccount.firstName = firstNameTextField.text
-        newAccount.lastName = lastNameTextField.text
-        newAccount.userName = usernameTextField.text
-        newAccount.password = passwordTextField.text
-        
-        createAccount(newAccount: newAccount)
-        
-        dynamoDBObjectMapper.save(newUser!).continueWith(block: { (task:AWSTask<AnyObject>!) -> Void in
-            if (task.error as NSError?) != nil {
-                print("The request failed. Error: !(error)")
-            }
-        })
     }
     
     override func didReceiveMemoryWarning() {
@@ -50,34 +57,72 @@ class SignupViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    func createAccount(newAccount: Account) {
-        let url = URL(string: "localhost:8080/createAccount")
-        let session = URLSession.shared
+    func createAccount () {
+            let apiMethod = "createAccount/"
+            var urlString = urlProtocol + localDomain + apiMethod
+            let firstNameParamString = "firstname/" +
+                    firstNameTextField.text! + "/"
+            let lastNameParamString =
+                    "lastname/" + lastNameTextField.text! + "/"
+            let passwordParamString =
+                    "password/" + passwordTextField.text!
         
-        let request = NSMutableURLRequest(url: url!)
-        request.httpMethod = "POST"
+            urlString += firstNameParamString + lastNameParamString + passwordParamString
         
-        request.cachePolicy = NSURLRequest.CachePolicy.reloadIgnoringCacheData
-        let paramString = "{" +
-        "\"firstName\": \"Nathan\"," +
-        "\"lastName\": \"Nguyen\"" +
-        "}"
-//        let paramString = newAccount
-        request.httpBody = paramString.data(using: String.Encoding.utf8)
+            let url = URL(string: urlString)
+            let session = URLSession.shared
         
-        let task = session.dataTask(with: request as URLRequest) {
-            (data, response, error) in
-            guard let _: Data = data, let _: URLResponse = response, error == nil else {
-                print("*****error")
-                return
-            }
-            let dataString = NSString(data: data!, encoding: String.Encoding.utf8.rawValue)
-            print("*****This is the data 4: \(dataString)") //JSONSerialization
-        }
+            let request = NSMutableURLRequest(url: url!)
+            request.httpMethod = "GET"
+//          request.cachePolicy = NSURLRequest.CachePolicy.reloadIgnoringCacheData
         
-        task.resume()
+            let task = session.dataTask(with: request as URLRequest) {
+                (data, response, error) in
+                
+                // Check for error
+                if error != nil
+                {
+                    print("error=\(error)")
+                    return
+                }
 
+                let responseString = NSString(data: data!, encoding: String.Encoding.utf8.rawValue)
+                print("responseString = \(responseString)")
+            }
+                
+            task.resume()
+        
     }
+    
+    
+//    func createAccount(newAccount: Account) {
+//        let url = URL(string: "localhost:8080/createAccount")
+//        let session = URLSession.shared
+//        
+//        let request = NSMutableURLRequest(url: url!)
+//        request.httpMethod = "POST"
+//        
+//        request.cachePolicy = NSURLRequest.CachePolicy.reloadIgnoringCacheData
+//        let paramString = "{" +
+//        "\"firstName\": \"Nathan\"," +
+//        "\"lastName\": \"Nguyen\"" +
+//        "}"
+////        let paramString = newAccount
+//        request.httpBody = paramString.data(using: String.Encoding.utf8)
+//        
+//        let task = session.dataTask(with: request as URLRequest) {
+//            (data, response, error) in
+//            guard let _: Data = data, let _: URLResponse = response, error == nil else {
+//                print("*****error")
+//                return
+//            }
+//            let dataString = NSString(data: data!, encoding: String.Encoding.utf8.rawValue)
+//            print("*****This is the data 4: \(dataString)") //JSONSerialization
+//        }
+//        
+//        task.resume()
+//
+//    }
     
 
     /*

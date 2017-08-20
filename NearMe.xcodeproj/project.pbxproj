@@ -7,9 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		069EBADDB184895F28B99E42 /* Pods_NearMeUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6D2179C332989954E7D7C2CE /* Pods_NearMeUITests.framework */; };
-		24247AB0F656F70965942791 /* Pods_NearMe.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 99959E346438FBCA9C46674C /* Pods_NearMe.framework */; };
-		253E97FF426A86D9232D70CF /* Pods_NearMe_NearMe.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6EA3EFFF73148BAB82C315E4 /* Pods_NearMe_NearMe.framework */; };
+		021FD62700298EF1005D4956 /* Pods_NearMe_NearMe.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1BCBE980E97A5D8E503C0586 /* Pods_NearMe_NearMe.framework */; };
+		0CE85591E20A411A614C291E /* Pods_NearMe.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8ED9A6C543A4E92AB8B8EAE5 /* Pods_NearMe.framework */; };
 		A5281CC11EAEAF3D003B9489 /* NoSqlSampleDataGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5281CC01EAEAF3D003B9489 /* NoSqlSampleDataGenerator.swift */; };
 		A5281CC31EAEEBA8003B9489 /* NoSQLModelHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5281CC21EAEEBA8003B9489 /* NoSQLModelHelpers.swift */; };
 		A540DAA61F28AA8500883AB5 /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = A540DAA51F28AA8500883AB5 /* Account.swift */; };
@@ -19,8 +18,6 @@
 		A5462D7C1EF0AB3F000970EB /* UserTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5462D7B1EF0AB3F000970EB /* UserTableViewCell.swift */; };
 		A566FEE01F05669C0060105D /* IceBreakerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A566FEDF1F05669C0060105D /* IceBreakerViewController.swift */; };
 		A566FEE21F059C390060105D /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = A566FEE11F059C390060105D /* Location.swift */; };
-		A58D4FE01EEF1CC1003A9365 /* Sdk in Resources */ = {isa = PBXBuildFile; fileRef = A58D4FDF1EEF1CC1003A9365 /* Sdk */; };
-		A58D4FE41EEF1D0C003A9365 /* AWSCore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A58D4FE11EEF1D0C003A9365 /* AWSCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		A5A645B11EA6F4FB00D411E1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5A645B01EA6F4FB00D411E1 /* AppDelegate.swift */; };
 		A5A645B61EA6F4FB00D411E1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A5A645B41EA6F4FB00D411E1 /* Main.storyboard */; };
 		A5A645B91EA6F4FB00D411E1 /* NearMe.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A5A645B71EA6F4FB00D411E1 /* NearMe.xcdatamodeld */; };
@@ -43,7 +40,8 @@
 		A5E4464D1ED7CA6100791822 /* Access.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A5E4464C1ED7CA6100791822 /* Access.storyboard */; };
 		A5E446531EDF6ECC00791822 /* AccountsTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E446521EDF6ECC00791822 /* AccountsTable.swift */; };
 		A5F0431E1F0E932F00D0BBAD /* googleLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5F0431D1F0E932F00D0BBAD /* googleLocation.swift */; };
-		DE7DC087F2821644C8D01EE6 /* Pods_NearMeTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87C21848C16F9703E7FD2286 /* Pods_NearMeTests.framework */; };
+		A81AAC9FEBAC53EDDDDE887B /* Pods_NearMeTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E50A159BFDC4030841FC8FA /* Pods_NearMeTests.framework */; };
+		FAB61DED7A6316E6FF26E5D7 /* Pods_NearMeUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 89385DFBD3E5ACADB49CFA99 /* Pods_NearMeUITests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -70,7 +68,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				A58D4FE41EEF1D0C003A9365 /* AWSCore.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -79,14 +76,14 @@
 
 /* Begin PBXFileReference section */
 		151C842C815E077C5DA13581 /* Pods-NearMe-NearMe.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NearMe-NearMe.debug.xcconfig"; path = "Pods/Target Support Files/Pods-NearMe-NearMe/Pods-NearMe-NearMe.debug.xcconfig"; sourceTree = "<group>"; };
+		1BCBE980E97A5D8E503C0586 /* Pods_NearMe_NearMe.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NearMe_NearMe.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		25F11A12CBAC0E7A7F26C7F6 /* Pods-NearMe-NearMe.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NearMe-NearMe.release.xcconfig"; path = "Pods/Target Support Files/Pods-NearMe-NearMe/Pods-NearMe-NearMe.release.xcconfig"; sourceTree = "<group>"; };
 		367B6E6AAE824E61258E6144 /* Pods-NearMe.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NearMe.debug.xcconfig"; path = "Pods/Target Support Files/Pods-NearMe/Pods-NearMe.debug.xcconfig"; sourceTree = "<group>"; };
-		6D2179C332989954E7D7C2CE /* Pods_NearMeUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NearMeUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		6EA3EFFF73148BAB82C315E4 /* Pods_NearMe_NearMe.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NearMe_NearMe.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		76F2B9DC5B976E8CE124491E /* Pods-NearMeUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NearMeUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-NearMeUITests/Pods-NearMeUITests.release.xcconfig"; sourceTree = "<group>"; };
-		87C21848C16F9703E7FD2286 /* Pods_NearMeTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NearMeTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		89385DFBD3E5ACADB49CFA99 /* Pods_NearMeUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NearMeUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8C39FAD41AE982195E839DA3 /* Pods-NearMe.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NearMe.release.xcconfig"; path = "Pods/Target Support Files/Pods-NearMe/Pods-NearMe.release.xcconfig"; sourceTree = "<group>"; };
-		99959E346438FBCA9C46674C /* Pods_NearMe.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NearMe.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8E50A159BFDC4030841FC8FA /* Pods_NearMeTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NearMeTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8ED9A6C543A4E92AB8B8EAE5 /* Pods_NearMe.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NearMe.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A5281CBE1EAE9D76003B9489 /* LocationsTable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationsTable.swift; sourceTree = "<group>"; };
 		A5281CC01EAEAF3D003B9489 /* NoSqlSampleDataGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoSqlSampleDataGenerator.swift; sourceTree = "<group>"; };
 		A5281CC21EAEEBA8003B9489 /* NoSQLModelHelpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoSQLModelHelpers.swift; sourceTree = "<group>"; };
@@ -99,9 +96,7 @@
 		A566FEE11F059C390060105D /* Location.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
 		A566FEE31F0ADFD50060105D /* NearMe.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = NearMe.entitlements; sourceTree = "<group>"; };
 		A58D4F941EEC7CFA003A9365 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
-		A58D4FDA1EEEF243003A9365 /* AWSCognito.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AWSCognito.framework; path = "../../../Library/Developer/Xcode/DerivedData/NearMe-fhioujhlflcrvdgddecrtwhqsnic/Build/Products/Debug-iphonesimulator/AWSCognito/AWSCognito.framework"; sourceTree = "<group>"; };
 		A58D4FDF1EEF1CC1003A9365 /* Sdk */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Sdk; path = "../../Code/NearMe-integration-lib-aws-my-sample-app-ios-swift/Sdk"; sourceTree = "<group>"; };
-		A58D4FE11EEF1D0C003A9365 /* AWSCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AWSCore.framework; path = Sdk/Aws/AWSCore.framework; sourceTree = "<group>"; };
 		A58D4FE81EEF1D6E003A9365 /* AWSMobileClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AWSMobileClient.swift; sourceTree = "<group>"; };
 		A58D4FE91EEF1D6E003A9365 /* AWSMobileHubHelper.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AWSMobileHubHelper.framework; sourceTree = "<group>"; };
 		A5A645AD1EA6F4FB00D411E1 /* NearMe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NearMe.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -145,8 +140,8 @@
 			files = (
 				A5CAABCC1EA95AB700A16E98 /* libz.tbd in Frameworks */,
 				A5CAABCA1EA95AA500A16E98 /* libsqlite3.tbd in Frameworks */,
-				24247AB0F656F70965942791 /* Pods_NearMe.framework in Frameworks */,
-				253E97FF426A86D9232D70CF /* Pods_NearMe_NearMe.framework in Frameworks */,
+				0CE85591E20A411A614C291E /* Pods_NearMe.framework in Frameworks */,
+				021FD62700298EF1005D4956 /* Pods_NearMe_NearMe.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -154,7 +149,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DE7DC087F2821644C8D01EE6 /* Pods_NearMeTests.framework in Frameworks */,
+				A81AAC9FEBAC53EDDDDE887B /* Pods_NearMeTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -162,7 +157,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				069EBADDB184895F28B99E42 /* Pods_NearMeUITests.framework in Frameworks */,
+				FAB61DED7A6316E6FF26E5D7 /* Pods_NearMeUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -205,7 +200,6 @@
 		A5A645A41EA6F4FB00D411E1 = {
 			isa = PBXGroup;
 			children = (
-				A58D4FE11EEF1D0C003A9365 /* AWSCore.framework */,
 				A5CAABCF1EA95C5A00A16E98 /* Default-568h@2x.png */,
 				A5CAABCD1EA95B6800A16E98 /* UserIdentityAccess.swift */,
 				A5A645AF1EA6F4FB00D411E1 /* NearMe */,
@@ -272,14 +266,13 @@
 		A5CAABC81EA95AA500A16E98 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				A58D4FDA1EEEF243003A9365 /* AWSCognito.framework */,
 				A58D4F941EEC7CFA003A9365 /* MobileCoreServices.framework */,
 				A5CAABCB1EA95AB700A16E98 /* libz.tbd */,
 				A5CAABC91EA95AA500A16E98 /* libsqlite3.tbd */,
-				99959E346438FBCA9C46674C /* Pods_NearMe.framework */,
-				6EA3EFFF73148BAB82C315E4 /* Pods_NearMe_NearMe.framework */,
-				87C21848C16F9703E7FD2286 /* Pods_NearMeTests.framework */,
-				6D2179C332989954E7D7C2CE /* Pods_NearMeUITests.framework */,
+				8ED9A6C543A4E92AB8B8EAE5 /* Pods_NearMe.framework */,
+				1BCBE980E97A5D8E503C0586 /* Pods_NearMe_NearMe.framework */,
+				8E50A159BFDC4030841FC8FA /* Pods_NearMeTests.framework */,
+				89385DFBD3E5ACADB49CFA99 /* Pods_NearMeUITests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -449,7 +442,6 @@
 				A5E4464D1ED7CA6100791822 /* Access.storyboard in Resources */,
 				A5A645BE1EA6F4FB00D411E1 /* LaunchScreen.storyboard in Resources */,
 				A5A645BB1EA6F4FB00D411E1 /* Assets.xcassets in Resources */,
-				A58D4FE01EEF1CC1003A9365 /* Sdk in Resources */,
 				A5CAABD01EA95C5A00A16E98 /* Default-568h@2x.png in Resources */,
 				A5A645B61EA6F4FB00D411E1 /* Main.storyboard in Resources */,
 			);
@@ -478,13 +470,16 @@
 			files = (
 			);
 			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-NearMe-NearMe-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		696D62229EB91D9C5FAC5B1D /* [CP] Check Pods Manifest.lock */ = {
@@ -493,13 +488,16 @@
 			files = (
 			);
 			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-NearMeUITests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		6EAD495122922AA1A8772E42 /* [CP] Copy Pods Resources */ = {
@@ -553,9 +551,38 @@
 			files = (
 			);
 			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-NearMe-NearMe/Pods-NearMe-NearMe-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/AWSCognito/AWSCognito.framework",
+				"${BUILT_PRODUCTS_DIR}/AWSCognitoIdentityProvider/AWSCognitoIdentityProvider.framework",
+				"${BUILT_PRODUCTS_DIR}/AWSCore/AWSCore.framework",
+				"${BUILT_PRODUCTS_DIR}/AWSDynamoDB/AWSDynamoDB.framework",
+				"${BUILT_PRODUCTS_DIR}/AWSEC2/AWSEC2.framework",
+				"${BUILT_PRODUCTS_DIR}/AWSMobileAnalytics/AWSMobileAnalytics.framework",
+				"${BUILT_PRODUCTS_DIR}/AWSS3/AWSS3.framework",
+				"${BUILT_PRODUCTS_DIR}/AWSSES/AWSSES.framework",
+				"${BUILT_PRODUCTS_DIR}/AWSSimpleDB/AWSSimpleDB.framework",
+				"${BUILT_PRODUCTS_DIR}/Bolts/Bolts.framework",
+				"${BUILT_PRODUCTS_DIR}/FBSDKCoreKit/FBSDKCoreKit.framework",
+				"${BUILT_PRODUCTS_DIR}/FBSDKLoginKit/FBSDKLoginKit.framework",
+				"${BUILT_PRODUCTS_DIR}/FacebookCore/FacebookCore.framework",
+				"${BUILT_PRODUCTS_DIR}/FacebookLogin/FacebookLogin.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AWSCognito.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AWSCognitoIdentityProvider.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AWSCore.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AWSDynamoDB.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AWSEC2.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AWSMobileAnalytics.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AWSS3.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AWSSES.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AWSSimpleDB.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Bolts.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKCoreKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKLoginKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FacebookCore.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FacebookLogin.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -596,13 +623,16 @@
 			files = (
 			);
 			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-NearMeTests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		F5A3DD8E5BC66B42A92E1D57 /* [CP] Embed Pods Frameworks */ = {
