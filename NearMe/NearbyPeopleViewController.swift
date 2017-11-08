@@ -14,6 +14,8 @@ import FacebookCore
 import FacebookLogin
 import FacebookCore
 import FBSDKLoginKit
+import Alamofire
+import SwiftyJSON
 
 class NearbyPeopleViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, CLLocationManagerDelegate {
     
@@ -38,6 +40,8 @@ class NearbyPeopleViewController: UIViewController, UITableViewDelegate, UITable
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        getLocation()
+        
         self.PeopleNearbyTableView.delegate = self
         self.PeopleNearbyTableView.dataSource = self
         
@@ -45,8 +49,27 @@ class NearbyPeopleViewController: UIViewController, UITableViewDelegate, UITable
             print(AccessToken.current?.userId)
         }
     
-        let date = Date().addingTimeInterval(60)
-        let timer = Timer(timeInterval: 5, target: self, selector: #selector(pullNearByPeople), userInfo: 60, repeats: true)
+//        pullNearByPeople()
+        
+//        let date = Date().addingTimeInterval(60)
+//        let timer = Timer(timeInterval: 5, target: self, selector: #selector(pullNearByPeople), userInfo: 60, repeats: true)
+    }
+    
+    func getLocation() {
+        
+        Alamofire.request("https://httpbin.org/get").responseJSON { response in
+            print("Request: \(String(describing: response.request))")   // original url request
+            print("Response: \(String(describing: response.response))") // http url response
+            print("Result: \(response.result)")                         // response serialization result
+            
+            if let json = response.result.value {
+                print("JSON: \(json)") // serialized json response
+            }
+            
+            if let data = response.data, let utf8Text = String(data: data, encoding: .utf8) {
+                print("Data: \(utf8Text)") // original server data as UTF8 string
+            }
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {

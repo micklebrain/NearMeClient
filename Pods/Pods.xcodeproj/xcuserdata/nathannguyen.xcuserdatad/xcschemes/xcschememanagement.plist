@@ -49,6 +49,16 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>Alamofire.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>AlamofireSwiftyJSON.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Bolts.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -90,6 +100,11 @@
 			<false/>
 		</dict>
 		<key>Pods-NearMeUITests.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>SwiftyJSON.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
@@ -137,6 +152,16 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>60EF3DF232E22C21101F1D72444E7BC1</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>61E5C1379DC63FAC57AF48F891CFB123</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>7335E9C9689F3B8A16F063A884748533</key>
 		<dict>
 			<key>primary</key>
@@ -157,17 +182,22 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>88E9EC28B8B46C3631E6B242B50F4442</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>8CBCC7DD233CBFEAE43E073EE4D9710D</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>957CC2ECFDCB5B01D5949E8F64F98077</key>
+		<key>9F7098779713B711F6C591B62A41F242</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>9F7098779713B711F6C591B62A41F242</key>
+		<key>C68748E71A3DDB40B0AAF4BC0A8F9030</key>
 		<dict>
 			<key>primary</key>
 			<true/>

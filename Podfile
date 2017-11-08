@@ -18,6 +18,7 @@ target :’NearMe’ do
     pod 'AWSSimpleDB'
     pod 'FacebookCore'
     pod 'FacebookLogin'
+    pod 'AlamofireSwiftyJSON'
 end
 
 
