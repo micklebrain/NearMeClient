@@ -18,13 +18,18 @@ class ProfileViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
     //Pull from Cache 
     var resturantsAround : [String] = []
     
+    var latitude : String?
+    var longitude : String?
+    var radius : String?
+    var apiKey : String?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         self.FoodPickerView.delegate = self
         self.FoodPickerView.dataSource = self
         
-        pullSuggestedResturants()
+        locateNearby()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -38,6 +43,7 @@ class ProfileViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
     }
     
     func requestResturant () {
+    
         let urlString = URL(string: "https://nearmecrystal.appspot.com/requestResturant")
         
         if let url = urlString {
@@ -62,10 +68,43 @@ class ProfileViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
         
     }
     
+    func locateNearby() {
+        
+        
+        let gplacesURL = URL(string:"https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=37.779758,-122.404139&radius=31&key=AIzaSyBWdayUxe65RUQLv4QL6GcB_UXoxVlhaW0")
+        
+        if let url = gplacesURL {
+            let task = URLSession.shared.dataTask(with: gplacesURL!) { (data, response, error) in
+                if error != nil {
+                    print(error)
+                } else {
+                    if let usableData = data {
+                        let json = try? JSONSerialization.jsonObject(with: usableData, options: JSONSerialization.ReadingOptions.allowFragments)
+                        if let dictionary = json as? [String: Any] {
+                            if let nestedDictionary = dictionary["results"] as? [Any]{
+                                for nestednestedDictionary in nestedDictionary {
+                                    if let location = nestednestedDictionary as? [String: Any] {
+                                        self.resturantsAround.append(location["name"] as! String)
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            task.resume()
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 10.0, execute: {
+                self.FoodPickerView.reloadAllComponents()
+            })
+        }
+        
+    }
+    
     // Find Nearby resturant from Google
-    func pullSuggestedResturants () {
+    func locateNearbyGCloud () {
         // Getting nearby food locations
-        let urlString = URL(string:"https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=33.892260,-84.491042&radius=1000&type=restaurant&keyword=burgers&key=AIzaSyCSLA7M3BdjNuDVRMtvAq2LLcrkLbkDhE8")
+        let urlString = URL(string:"https://maps.googleapis.com/maps/api/place/nearbysearch/json?"+"location=33.892260,-84.491042"+"&radius=1000&type=restaurant&keyword=burgers&key=AIzaSyCSLA7M3BdjNuDVRMtvAq2LLcrkLbkDhE8")
         
         let resturantsUrl = URL(string:"https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=37.7806579%2C-122.4070832&radius=500&type=restaurant&key=AIzaSyBWdayUxe65RUQLv4QL6GcB_UXoxVlhaW0")
         

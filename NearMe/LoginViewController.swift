@@ -77,7 +77,7 @@ class LoginViewController: UIViewController {
     }
     
     func login(_ sender: Any) {
-        let nearbyPeopleVC:NearbyPeopleViewController = UIStoryboard(name: "Main", bundle: nil).instantiateInitialViewController() as! NearbyPeopleViewController
+        let nearbyPeopleVC:ProfileViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ProfileViewController") as! ProfileViewController
         self.present(nearbyPeopleVC, animated: false, completion: nil)
     }
     

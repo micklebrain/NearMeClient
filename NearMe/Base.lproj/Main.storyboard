@@ -98,7 +98,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VkU-QY-1es" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="622" y="36"/>
+            <point key="canvasLocation" x="3545" y="36"/>
         </scene>
         <!--PeopleNearbyVC-->
         <scene sceneID="Kdf-Cw-Rqi">
@@ -253,7 +253,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="j4i-Pp-Gby" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1640.5797101449277" y="35.869565217391305"/>
+            <point key="canvasLocation" x="1761" y="36"/>
         </scene>
         <!--ProfileViewController-->
         <scene sceneID="7tF-XG-GdW">
@@ -278,6 +278,14 @@
                                 <rect key="frame" x="0.0" y="146" width="414" height="325"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                             </pickerView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HgV-q5-Naj">
+                                <rect key="frame" x="184" y="504" width="47" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Sign In"/>
+                                <connections>
+                                    <segue destination="GNV-Q6-9WX" kind="show" id="zHj-Ob-62b"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
