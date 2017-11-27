@@ -11,6 +11,8 @@ import CoreData
 import FacebookCore
 import FBSDKCoreKit
 import UserNotifications
+import GooglePlaces
+import GoogleMaps
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -30,6 +32,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        GMSServices.provideAPIKey("AIzaSyCwYvhhN4aTMMGjXZvkRQJBcYoCfS74Rw0")
+        GMSPlacesClient.provideAPIKey("AIzaSyDNgLkA282boBZGcpNVuEsN9dJre7fjYeI")
         registerForPushNotifications()
         return FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
     }

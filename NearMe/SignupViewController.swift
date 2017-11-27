@@ -52,6 +52,10 @@ class SignupViewController: UIViewController {
         
     }
     
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        passwordTextField.resignFirstResponder()
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -93,7 +97,6 @@ class SignupViewController: UIViewController {
             task.resume()
         
     }
-    
     
 //    func createAccount(newAccount: Account) {
 //        let url = URL(string: "localhost:8080/createAccount")

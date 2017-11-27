@@ -34,6 +34,7 @@ class NearbyPeopleViewController: UIViewController, UITableViewDelegate, UITable
     @IBOutlet weak var PeopleNearbyTableView: UITableView!
     @IBOutlet weak var presenceSwitch: UISwitch!
     @IBOutlet weak var CurrentLocationLabel: UILabel!
+    var profileImage: UIImage?
 
 //  TODO: implement single signon
     
@@ -48,11 +49,20 @@ class NearbyPeopleViewController: UIViewController, UITableViewDelegate, UITable
         if let accessToken = AccessToken.current {
             print(AccessToken.current?.userId)
         }
-    
-//        pullNearByPeople()
+        
+        pullFacebookInfo()
         
 //        let date = Date().addingTimeInterval(60)
 //        let timer = Timer(timeInterval: 5, target: self, selector: #selector(pullNearByPeople), userInfo: 60, repeats: true)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        //Check if location services is on first
+        determineMyCurrentLocation()
+        downloadImages()
+        
     }
     
     func getLocation() {
@@ -71,15 +81,6 @@ class NearbyPeopleViewController: UIViewController, UITableViewDelegate, UITable
             }
         }
     }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        //Check if location services is on first
-        determineMyCurrentLocation()
-        downloadImages()
-    
-    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -90,27 +91,70 @@ class NearbyPeopleViewController: UIViewController, UITableViewDelegate, UITable
         
     }
     
+    struct MyProfileRequest: GraphRequestProtocol {
+        var graphPath: String
+        
+        var parameters: [String : Any]?
+        var accessToken: AccessToken?
+        var httpMethod: GraphRequestHTTPMethod = .GET
+        var apiVersion: GraphAPIVersion = .defaultVersion
+        
+        struct Response: GraphResponseProtocol {
+            init(rawResponse: Any?) {
+                
+            }
+        }
+    }
+    
     func pullFacebookInfo () {
+        let nathanFBId = "1367878021"
+        let nathan2FBId = "111006779636650"
+        let TraceyFBid = "109582432994026"
+        
+        let urlString = URL(string: "http://graph.facebook.com/1367878021/picture?type=large")
+        
+        if let url = urlString {
+            let task = URLSession.shared.dataTask(with: urlString!) { (data, response, error) in
+                if error != nil {
+                    print(error)
+                } else {
+                    if let usableData = data {
+                        self.profileImage = UIImage(data: usableData)!
+                    }
+                }
+            }
+            task.resume()
+        }
+        
         if(FBSDKAccessToken.current() != nil)
         {
             print(FBSDKAccessToken.current().permissions)
-            let nathanFBId = "1367878021"
-            let TraceyFBid = "109582432994026"
-            let graphRequest = FBSDKGraphRequest(graphPath: TraceyFBid, parameters: ["fields" : "id, name, email"])
-   
-            let connection = FBSDKGraphRequestConnection()
+            print(FBSDKAccessToken.current().tokenString)
             
+            let graphRequest = FBSDKGraphRequest(graphPath: nathanFBId, parameters: ["fields" : "id, name, email,picture"])
+
+            let connection = FBSDKGraphRequestConnection()
+
             connection.add(graphRequest, completionHandler: { (connection, result, error) -> Void in
                 let data = result as! [String : AnyObject]
                 let name = data["name"] as? String
                 let email = data["email"] as? String
+                let picture = data["picture"] as? Any
                 print("logged in user name is \(String(describing: name))")
-                
+
                 let FBid = data["id"] as? String
                 print("Facebook id is  \(String(describing: FBid))")
             })
             connection.start()
         }
+        
+//        let photographRequest = FBSDKGraphRequest(graphPath: nathanFBId, parameters: ["fields" : "photo"])
+//
+//        let connection2 = FBSDKGraphRequestConnection()
+//        connection2.add(photographRequest, completionHandler: { (connection, result, error) -> Void in
+//            let data = result as! [String: AnyObject]
+//        })
+//        connection2.start()
     }
     
     func downloadImages () {
@@ -226,10 +270,7 @@ class NearbyPeopleViewController: UIViewController, UITableViewDelegate, UITable
 //          userLoggedIn.itemId = NoSQLSampleDataGenerator.randomSampleStringWithAttributeName("itemId")
 //          userLoggedIn?.username = currentUser?.username
             
-            userLoggedIn = User()
-            
-            userLoggedIn?.userID = 2 as NSNumber
-            userLoggedIn?.username = "Sally"
+//            userLoggedIn?.username = "Sally"
             userLoggedIn?.firstName = userLoggedIn?.username
             //      userLoggedIn?.lastName = "Tracey"
             //        userLoggedIn?.occupation = "developer"
@@ -318,6 +359,7 @@ class NearbyPeopleViewController: UIViewController, UITableViewDelegate, UITable
                     
                     // newPerson.online = "\(modelDictionary["online"])"
                     
+                    //Check distance apart from user
                     if (newPerson.firstName != self.userLoggedIn?.firstName && isOnline == "1") {
                         let distanceApart = newPerson.location?.distance(from: (self.currentUserLocation)!)
                         
@@ -420,8 +462,10 @@ class NearbyPeopleViewController: UIViewController, UITableViewDelegate, UITable
             cell.connectButton.titleLabel?.text = "reconnect"
         } else {
             cell.nameLabel.text = self.strangersAround[strangersAround.index(self.strangersAround.startIndex, offsetBy: indexPath.row)].firstName
-            cell.headshotViewImage.image = self.strangersAround[strangersAround.index(self.strangersAround.startIndex, offsetBy: indexPath.row)].headshotImage
+//            cell.headshotViewImage.image = self.strangersAround[strangersAround.index(self.strangersAround.startIndex, offsetBy: indexPath.row)].headshotImage
 
+            cell.headshotViewImage.image = self.profileImage
+            
             cell.headshotViewImage.layer.cornerRadius = 15.0
             cell.headshotViewImage.layer.borderWidth = 3
             cell.headshotViewImage.layer.borderColor = UIColor.black.cgColor

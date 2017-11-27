@@ -7,10 +7,13 @@
 //
 
 import UIKit
+import CoreLocation
+import GoogleMaps
+import GooglePlaces
 
 class ProfileViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
 
-    @IBOutlet weak var FoodPickerView: UIPickerView!
+    @IBOutlet weak var placesTableView: UITableView!
     @IBOutlet weak var nameLabel: UILabel!
     
     public var currentUserProfile : User?
@@ -18,29 +21,84 @@ class ProfileViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
     //Pull from Cache 
     var resturantsAround : [String] = []
     
-    var latitude : String?
-    var longitude : String?
+    var latitude : Double?
+    var longitude : Double?
     var radius : String?
     var apiKey : String?
+    var locationManager : CLLocationManager!
+    var currentUserLocation: CLLocation?
+    var mapView: GMSMapView!
+    var placesClient: GMSPlacesClient!
+    var zoomLevel: Float = 15.0
+    var likelyPlaces: [GMSPlace] = []
+    var selectedPlace: GMSPlace?
+    // A default location to use when location permission is not granted.
+    let defaultLocation = CLLocation(latitude: -33.869405, longitude: 151.199)
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        self.FoodPickerView.delegate = self
-        self.FoodPickerView.dataSource = self
         
-        locateNearby()
+        locationManager = CLLocationManager()
+        locationManager!.delegate = self
+        locationManager!.desiredAccuracy = kCLLocationAccuracyBest
+//      locationManager.distanceFilter = kCLLocationAccuracyNearestTenMeters;
+        locationManager.distanceFilter = 50;
+        locationManager!.requestAlwaysAuthorization()
+        placesClient = GMSPlacesClient.shared()
+        
+        if CLLocationManager.locationServicesEnabled() {
+            locationManager?.startUpdatingLocation()
+        }
+        
+        let camera = GMSCameraPosition.camera(withLatitude: self.defaultLocation.coordinate.latitude,
+                                              longitude: self.defaultLocation.coordinate.longitude,
+                                              zoom: zoomLevel)
+        
+        mapView = GMSMapView.map(withFrame: view.bounds, camera: camera)
+        mapView.settings.myLocationButton = true
+        mapView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        
+        view.addSubview(mapView)
+        mapView.isHidden = true
+    
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        
-        nameLabel.text = currentUserProfile?.firstName
+//        nameLabel.text = currentUserProfile?.firstName
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    //  Multithreading? Concurrent?
+//    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+//
+//        let userLocation:CLLocation = locations[0] as CLLocation
+//        latitude = userLocation.coordinate.latitude
+//        longitude = userLocation.coordinate.longitude
+//
+//         locateNearby()
+//        //Shouldnt have both
+//        //    manager.stopUpdatingLocation()
+//        //   locationManager.stopUpdatingLocation()
+//
+//        //Update to get user's current location not managers
+//        CLGeocoder().reverseGeocodeLocation(userLocation, completionHandler: {(placemarks, error)->Void in
+//
+//            if (error != nil) {
+//                print("Reverse geocoder failed with error: " + (error?.localizedDescription)!)
+//                return
+//            }
+//
+//            if (placemarks?.count)! > 0 {
+//                let pm = placemarks?[0]
+//            } else {
+//                print("Problem with the data received from geocoder")
+//            }
+//        })
+//    }
     
     func requestResturant () {
     
@@ -70,8 +128,7 @@ class ProfileViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
     
     func locateNearby() {
         
-        
-        let gplacesURL = URL(string:"https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=37.779758,-122.404139&radius=31&key=AIzaSyBWdayUxe65RUQLv4QL6GcB_UXoxVlhaW0")
+        let gplacesURL = URL(string:"https://maps.googleapis.com/maps/api/place/nearbysearch/json?location="+String(describing: latitude!)+","+String(describing: longitude!)+"&radius=31&key=AIzaSyBWdayUxe65RUQLv4QL6GcB_UXoxVlhaW0")
         
         if let url = gplacesURL {
             let task = URLSession.shared.dataTask(with: gplacesURL!) { (data, response, error) in
@@ -81,12 +138,17 @@ class ProfileViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
                     if let usableData = data {
                         let json = try? JSONSerialization.jsonObject(with: usableData, options: JSONSerialization.ReadingOptions.allowFragments)
                         if let dictionary = json as? [String: Any] {
+                            self.resturantsAround.removeAll()
                             if let nestedDictionary = dictionary["results"] as? [Any]{
                                 for nestednestedDictionary in nestedDictionary {
                                     if let location = nestednestedDictionary as? [String: Any] {
-                                        self.resturantsAround.append(location["name"] as! String)
+                                        let types: [String] = location["types"] as! [String]
+                                            if (!types.contains("locality") && !types.contains("route")) {
+                                                self.resturantsAround.append(location["name"] as! String)
+                                            }
                                     }
                                 }
+                                self.resturantsAround.append( "Others")
                             }
                         }
                     }
@@ -94,9 +156,6 @@ class ProfileViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
             }
             task.resume()
             
-            DispatchQueue.main.asyncAfter(deadline: .now() + 10.0, execute: {
-                self.FoodPickerView.reloadAllComponents()
-            })
         }
         
     }
@@ -149,20 +208,36 @@ class ProfileViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
                                     self.resturantsAround.append(location["name"] as! String)
                                 }
                             }
-             
                         }
                     }
                 }
             }
             task.resume()
 
-            DispatchQueue.main.asyncAfter(deadline: .now() + 10.0, execute: {
-                self.FoodPickerView.reloadAllComponents()
-            })
         }
     }
     
+    func listLikelyPlaces() {
+        likelyPlaces.removeAll()
 
+        placesClient.currentPlace(callback:  { (placeLikelihoods, error) -> Void in
+            if let error = error {
+                print("Current Place error: \(error.localizedDescription)")
+                return
+            }
+
+            if let likelihoodList = placeLikelihoods {
+                for likelihood in likelihoodList.likelihoods {
+                    let place = likelihood.place
+                    if (!self.likelyPlaces.contains(place)) {
+                        self.likelyPlaces.append(place)
+                    }
+                }
+                self.placesTableView.reloadData()
+            }
+        })
+        
+    }
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
@@ -187,4 +262,102 @@ class ProfileViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
     }
     */
 
+}
+
+extension ProfileViewController: CLLocationManagerDelegate {
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        let location: CLLocation = locations.last!
+        print("Location: \(location)")
+        
+        let camera = GMSCameraPosition.camera(withLatitude: location.coordinate.latitude,
+            longitude: location.coordinate.longitude,
+            zoom: zoomLevel)
+        
+        if mapView.isHidden {
+            mapView.isHidden = true
+            mapView.camera = camera
+        } else {
+            mapView.animate(to: camera)
+        }
+        
+        listLikelyPlaces()
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        switch status {
+        case .restricted:
+            print("Location access was restricted.")
+        case .denied:
+            print("User denied access to location.")
+            // Display the map using the default location.
+            mapView.isHidden = false
+        case .notDetermined:
+            print("Location status not determined.")
+        case .authorizedAlways: fallthrough
+        case .authorizedWhenInUse:
+            print("Location status is OK.")
+        }
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        locationManager.stopUpdatingLocation()
+        print("Error: \(error)")
+    }
+    
+}
+
+extension ProfileViewController : UITableViewDataSource, UITableViewDelegate {
+    override func viewDidAppear(_ animated: Bool) {
+        placesTableView.delegate = self as? UITableViewDelegate
+        placesTableView.dataSource = self
+        
+        placesTableView.reloadData()
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return likelyPlaces.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = placesTableView.dequeueReusableCell(withIdentifier: "place", for: indexPath)
+        let collectionItem = likelyPlaces[indexPath.row]
+        
+        cell.textLabel?.text = collectionItem.name
+        
+        return cell
+    }
+    
+    // Show only the first five items in the table (scrolling is disabled in IB).
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return self.placesTableView.frame.size.height/5
+    }
+    
+    // Make table rows display at proper height if there are less than 5 items.
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        if (section == placesTableView.numberOfSections - 1) {
+            return 1
+        }
+        return 0
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        selectedPlace = likelyPlaces[indexPath.row]
+        
+        mapView.clear()
+        if selectedPlace != nil {
+            let marker = GMSMarker(position: (self.selectedPlace?.coordinate)!)
+            marker.title = selectedPlace?.name
+            marker.snippet = selectedPlace?.formattedAddress
+            marker.map = mapView
+            mapView.isHidden = false
+        }
+        
+        let nearbyPeopleVC:NearbyPeopleViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "NearbyPeopleViewController") as! NearbyPeopleViewController
+        nearbyPeopleVC.userLoggedIn = User()
+        nearbyPeopleVC.userLoggedIn?.buildingOccupied = placesTableView.cellForRow(at: indexPath)?.textLabel?.text
+        nearbyPeopleVC.userLoggedIn?.username = self.currentUserProfile?.username
+        self.present(nearbyPeopleVC, animated: false, completion: nil)
+        
+//      listLikelyPlaces()
+    }
 }

@@ -40,6 +40,7 @@ class User : AWSDynamoDBObjectModel,AWSDynamoDBModeling {
     var locality: String?
     var latitude: NSNumber?
     var longitude: NSNumber?
+    var buildingOccupied: String?
     
     class func dynamoDBTableName() -> String {
         return "accounts"

@@ -18,7 +18,7 @@ class LoginViewController: UIViewController {
    
     @IBOutlet weak var username: UITextField!
     @IBOutlet weak var password: UITextField!
-
+    
     
     // TODO: Logout facebook
     override func viewDidLoad() {
@@ -29,7 +29,6 @@ class LoginViewController: UIViewController {
         let loginButton = LoginButton(readPermissions: [ .publicProfile, .email, .userFriends ])
         loginButton.center = view.center
         view.addSubview(loginButton)
-//        loginButton.addTar
         
         if let accessToken = AccessToken.current {
            print(AccessToken.current?.userId)
@@ -77,16 +76,15 @@ class LoginViewController: UIViewController {
     }
     
     func login(_ sender: Any) {
-        let nearbyPeopleVC:ProfileViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ProfileViewController") as! ProfileViewController
-        self.present(nearbyPeopleVC, animated: false, completion: nil)
+        authenticateUser()
     }
     
     func scanUsers (_ completeionHandler: @escaping (_ response: AWSDynamoDBPaginatedOutput?, _ error: NSError?) -> Void) {
         
         let objectMapper = AWSDynamoDBObjectMapper.default()
         let scanExpression = AWSDynamoDBScanExpression()
-        //      scanExpression.filterExpression = "online = :val"
-        //      scanExpression.expressionAttributeValues = [":val": "true"]
+        scanExpression.filterExpression = "firstName = :val"
+        scanExpression.expressionAttributeValues = [":val": username.text]
         
         objectMapper.scan(User.self, expression: scanExpression) { (response: AWSDynamoDBPaginatedOutput?, error: Error?) in
             DispatchQueue.main.async(execute: {
@@ -109,7 +107,11 @@ class LoginViewController: UIViewController {
             print("No items match your criteria. Insert more sample data and try again.")
         }
         else {
-            self.results = response?.items
+            let nearbyPeopleVC:ProfileViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ProfileViewController") as! ProfileViewController
+            let currentUser = User()
+            currentUser?.username = self.username.text
+            nearbyPeopleVC.currentUserProfile = currentUser
+            self.present(nearbyPeopleVC, animated: false, completion: nil)
         }
         }
         

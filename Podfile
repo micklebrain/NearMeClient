@@ -19,6 +19,8 @@ target :’NearMe’ do
     pod 'FacebookCore'
     pod 'FacebookLogin'
     pod 'AlamofireSwiftyJSON'
+    pod 'GooglePlaces'
+    pod 'GoogleMaps'
 end
 
 

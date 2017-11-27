@@ -308,8 +308,8 @@
 			children = (
 				A5E4464A1ED7BA9200791822 /* SignupViewController.swift */,
 				A5E446451ED68A8A00791822 /* LoginViewController.swift */,
-				A5462D791EF0A54C000970EB /* NearbyPeopleViewController.swift */,
 				A5462D751EF0A0ED000970EB /* ProfileViewController.swift */,
+				A5462D791EF0A54C000970EB /* NearbyPeopleViewController.swift */,
 				A566FEDF1F05669C0060105D /* IceBreakerViewController.swift */,
 			);
 			name = ViewControllers;
@@ -536,9 +536,13 @@
 			files = (
 			);
 			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-NearMe-NearMe/Pods-NearMe-NearMe-resources.sh",
+				"${PODS_ROOT}/GoogleMaps/Maps/Frameworks/GoogleMaps.framework/Resources/GoogleMaps.bundle",
+				"${PODS_ROOT}/GooglePlaces/Frameworks/GooglePlaces.framework/Resources/GooglePlaces.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
