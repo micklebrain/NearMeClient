@@ -13,6 +13,7 @@ class UserTableViewCell: UITableViewCell {
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var headshotViewImage: UIImageView!
     @IBOutlet weak var connectButton: UIButton!
+    @IBOutlet weak var occupationLabel: UILabel!
     
     var user : User?
 

@@ -36,7 +36,7 @@ class NearbyPeopleViewController: UIViewController, UITableViewDelegate, UITable
     @IBOutlet weak var CurrentLocationLabel: UILabel!
     var profileImage: UIImage?
 
-//  TODO: implement single signon
+//  TODO: implement single sign-on
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -49,6 +49,7 @@ class NearbyPeopleViewController: UIViewController, UITableViewDelegate, UITable
         if let accessToken = AccessToken.current {
             print(AccessToken.current?.userId)
         }
+        
         
         pullFacebookInfo()
         
@@ -85,10 +86,6 @@ class NearbyPeopleViewController: UIViewController, UITableViewDelegate, UITable
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
-    }
-    
-    @IBAction func viewProfile(_ sender: Any) {
-        
     }
     
     struct MyProfileRequest: GraphRequestProtocol {
@@ -193,6 +190,8 @@ class NearbyPeopleViewController: UIViewController, UITableViewDelegate, UITable
     
     //  MARK: - Location tracking
     @IBAction func presenceSwitch(_ sender: Any) {
+        let nearbyPeopleVC:UserProfileViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "UserProfileViewController") as! UserProfileViewController
+        self.present(nearbyPeopleVC, animated: false, completion: nil)
         self.userLoggedIn?.online = !(self.userLoggedIn?.online as! (Bool)) as NSNumber
         updateOnlineStatus()
     }
@@ -296,7 +295,7 @@ class NearbyPeopleViewController: UIViewController, UITableViewDelegate, UITable
                 }
             })
             
-            self.CurrentLocationLabel.text = locality
+            self.CurrentLocationLabel.text = userLoggedIn?.buildingOccupied
             
             pullNearByPeople()
         }
@@ -364,8 +363,8 @@ class NearbyPeopleViewController: UIViewController, UITableViewDelegate, UITable
                         let distanceApart = newPerson.location?.distance(from: (self.currentUserLocation)!)
                         
                         var aMile = CLLocationDistance()
-                        aMile.add(1609)
-                        
+//                        aMile.add(1609)
+                          aMile.add(10000)
                         if (self.currentUserLocation != nil) {
                             if (distanceApart?.isLess(than: aMile))!{
                                 self.strangersAround.insert(newPerson)
@@ -383,7 +382,7 @@ class NearbyPeopleViewController: UIViewController, UITableViewDelegate, UITable
     }
 
     @IBAction func connect(_ sender: Any) {
-        let profileVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ProfileViewController") as! ProfileViewController
+        let profileVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ProfileViewController") as! NearbyLocations
         self.present(profileVC, animated: false, completion: nil)
     }
     
@@ -462,10 +461,12 @@ class NearbyPeopleViewController: UIViewController, UITableViewDelegate, UITable
             cell.connectButton.titleLabel?.text = "reconnect"
         } else {
             cell.nameLabel.text = self.strangersAround[strangersAround.index(self.strangersAround.startIndex, offsetBy: indexPath.row)].firstName
+//            cell.occupationLabel.text = self.strangersAround[strangersAround.index(self.strangersAround.startIndex, offsetBy: indexPath.row)].
+            
 //            cell.headshotViewImage.image = self.strangersAround[strangersAround.index(self.strangersAround.startIndex, offsetBy: indexPath.row)].headshotImage
+            
 
             cell.headshotViewImage.image = self.profileImage
-            
             cell.headshotViewImage.layer.cornerRadius = 15.0
             cell.headshotViewImage.layer.borderWidth = 3
             cell.headshotViewImage.layer.borderColor = UIColor.black.cgColor
@@ -475,7 +476,7 @@ class NearbyPeopleViewController: UIViewController, UITableViewDelegate, UITable
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let profileVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ProfileViewController") as! ProfileViewController
+        let profileVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ProfileViewController") as! NearbyLocations
         
         let selectedUser = User()
         let selectedCell = PeopleNearbyTableView.cellForRow(at: indexPath) as! UserTableViewCell

@@ -10,8 +10,9 @@ import UIKit
 import CoreLocation
 import GoogleMaps
 import GooglePlaces
+import AWSDynamoDB
 
-class ProfileViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
+class NearbyLocations: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
 
     @IBOutlet weak var placesTableView: UITableView!
     @IBOutlet weak var nameLabel: UILabel!
@@ -60,6 +61,27 @@ class ProfileViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
         
         view.addSubview(mapView)
         mapView.isHidden = true
+        
+        let objectMapper = AWSDynamoDBObjectMapper.default()
+        
+//        for index in 1...47 {
+//            let newUser = User()
+//            newUser?.firstName = "Tester" + String(index)
+//            newUser?.latitude = 37.787358
+//            newUser?.longitude = -122.408227
+//            newUser?.locality = "Nothing"
+//            newUser?.username = newUser?.firstName
+//            newUser?.lastName = "Tester"
+//            var errors: [NSError] = []
+//            objectMapper.save(newUser!, completionHandler: { (error: Error?) -> Void in
+//                if (error != nil) {
+//                    DispatchQueue.main.async {
+//                        errors.append(error as! NSError)
+//                    }
+//                }
+//            })
+//        }
+        
     
     }
     
@@ -264,7 +286,7 @@ class ProfileViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
 
 }
 
-extension ProfileViewController: CLLocationManagerDelegate {
+extension NearbyLocations: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         let location: CLLocation = locations.last!
         print("Location: \(location)")
@@ -306,7 +328,7 @@ extension ProfileViewController: CLLocationManagerDelegate {
     
 }
 
-extension ProfileViewController : UITableViewDataSource, UITableViewDelegate {
+extension NearbyLocations : UITableViewDataSource, UITableViewDelegate {
     override func viewDidAppear(_ animated: Bool) {
         placesTableView.delegate = self as? UITableViewDelegate
         placesTableView.dataSource = self

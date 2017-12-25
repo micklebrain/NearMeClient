@@ -26,6 +26,23 @@ class LoginViewController: UIViewController {
         
         password.resignFirstResponder()
         
+//        let urlString = URL(string: "http://10.12.228.178:8080/_ah/health")
+        let urlString = URL(string: "http://localhost:8080/_ah/health")
+        if let url = urlString {
+            let task = URLSession.shared.dataTask(with: url) { (data,
+                                                                response, error) in
+                if error != nil {
+                    print (error)
+                } else {
+                    if let usuableData = data {
+                        print(usuableData)
+                    }
+                }
+            }
+            task.resume()
+        }
+    
+        
         let loginButton = LoginButton(readPermissions: [ .publicProfile, .email, .userFriends ])
         loginButton.center = view.center
         view.addSubview(loginButton)
@@ -107,7 +124,7 @@ class LoginViewController: UIViewController {
             print("No items match your criteria. Insert more sample data and try again.")
         }
         else {
-            let nearbyPeopleVC:ProfileViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ProfileViewController") as! ProfileViewController
+            let nearbyPeopleVC:NearbyLocations = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ProfileViewController") as! NearbyLocations
             let currentUser = User()
             currentUser?.username = self.username.text
             nearbyPeopleVC.currentUserProfile = currentUser
