@@ -27,7 +27,7 @@ class LoginViewController: UIViewController {
         password.resignFirstResponder()
         
 //        let urlString = URL(string: "http://10.12.228.178:8080/_ah/health")
-        let urlString = URL(string: "http://localhost:8080/_ah/health")
+        let urlString = URL(string: "http://localhost:8080/pullAccounts")
         if let url = urlString {
             let task = URLSession.shared.dataTask(with: url) { (data,
                                                                 response, error) in
@@ -35,7 +35,9 @@ class LoginViewController: UIViewController {
                     print (error)
                 } else {
                     if let usuableData = data {
-                        print(usuableData)
+                        if let stringData = String(data: usuableData, encoding: String.Encoding.utf8) {
+                            print(stringData) //JSONSerialization
+                        }
                     }
                 }
             }

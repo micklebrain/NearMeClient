@@ -22,20 +22,6 @@ class SignupViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let urlString = URL(string: "http://localhost:8080/_ah/health")
-        
-        if let url = urlString {
-            let task = URLSession.shared.dataTask(with: urlString!) {
-                (data, response, error) in
-                if error != nil {
-                    print(error)
-                } else {
-                    if let usableData = data {
-                        print(usableData)
-                    }
-                }
-            }
-        }
     }
 
     @IBAction func signUp(_ sender: Any) {
