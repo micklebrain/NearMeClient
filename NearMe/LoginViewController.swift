@@ -26,25 +26,6 @@ class LoginViewController: UIViewController {
         
         password.resignFirstResponder()
         
-//        let urlString = URL(string: "http://10.12.228.178:8080/_ah/health")
-        let urlString = URL(string: "http://localhost:8080/pullAccounts")
-        if let url = urlString {
-            let task = URLSession.shared.dataTask(with: url) { (data,
-                                                                response, error) in
-                if error != nil {
-                    print (error)
-                } else {
-                    if let usuableData = data {
-                        if let stringData = String(data: usuableData, encoding: String.Encoding.utf8) {
-                            print(stringData) //JSONSerialization
-                        }
-                    }
-                }
-            }
-            task.resume()
-        }
-    
-        
         let loginButton = LoginButton(readPermissions: [ .publicProfile, .email, .userFriends ])
         loginButton.center = view.center
         view.addSubview(loginButton)
@@ -52,7 +33,7 @@ class LoginViewController: UIViewController {
         if let accessToken = AccessToken.current {
            print(AccessToken.current?.userId)
         }
-        
+    
     }
     
     override func viewWillAppear(_ animated: Bool) {

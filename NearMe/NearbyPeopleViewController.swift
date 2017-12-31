@@ -50,7 +50,6 @@ class NearbyPeopleViewController: UIViewController, UITableViewDelegate, UITable
             print(AccessToken.current?.userId)
         }
         
-        
         pullFacebookInfo()
         
 //        let date = Date().addingTimeInterval(60)
@@ -64,6 +63,10 @@ class NearbyPeopleViewController: UIViewController, UITableViewDelegate, UITable
         determineMyCurrentLocation()
         downloadImages()
         
+    }
+    
+    @IBAction func refresh(_ sender: Any) {
+        self.PeopleNearbyTableView.reloadData()
     }
     
     func getLocation() {
@@ -243,6 +246,9 @@ class NearbyPeopleViewController: UIViewController, UITableViewDelegate, UITable
                 print("Problem with the data received from geocoder")
             }
         })
+        
+        //How to put this on the main thread
+        self.PeopleNearbyTableView.reloadData()
     }
     
     func updateCurrentUserLocation (placemark: CLPlacemark?, userLocation: CLLocation) {
@@ -320,64 +326,93 @@ class NearbyPeopleViewController: UIViewController, UITableViewDelegate, UITable
         
         //table = LocationsTable()
         
-        let completionHandler = {(response: AWSDynamoDBPaginatedOutput?, error: NSError?) -> Void in
-            
-            if let error = error {
-                var errorMessage = "Failed to retrieve items. \(error.localizedDescription)"
-                if (error.domain == AWSServiceErrorDomain && error.code == AWSServiceErrorType.accessDeniedException.rawValue) {
-                    errorMessage = "Access denied. You are not allowed to perform this operation."
-                    print(errorMessage)
-                }
-            }
-            else if response!.items.count == 0 {
-                print("No items match your criteria. Insert more sample data and try again.")
-            }
-            else {
-                self.results = response?.items
-                for result in self.results! {
-                    let model = result
-                    let modelDictionary: [AnyHashable: Any] = model.dictionaryValue
-
-                    // _ = self.table?.tableAttributeName!(self.table!.orderedAttributeKeys[10])
-                    let newPerson = Person()
-                    
-                    let facebookId = "\(modelDictionary["facebookId"]!)"
-
-                    let userLatitude = CLLocationDegrees("\(modelDictionary["latitude"]!)")
-                    //  (self.table?.orderedAttributeKeys as Any)
-                    let userLongitude = CLLocationDegrees("\(modelDictionary["longitude"]!)")
-                    let userLocation = CLLocation(latitude: userLatitude!, longitude: userLongitude!)
-                    let isOnline = "\(modelDictionary["online"]!)"
-                    
-                    newPerson.location = userLocation
-                    newPerson.firstName = "\(modelDictionary["firstName"]!)"
-                    newPerson.sex = sex(rawValue: "\(modelDictionary["sex"]!)")
-                    newPerson.facebookId = facebookId
-                    
-                    newPerson.headshotImage = self.getUserPicture(facebookId: facebookId)
-                    
-                    // newPerson.online = "\(modelDictionary["online"])"
-                    
-                    //Check distance apart from user
-                    if (newPerson.firstName != self.userLoggedIn?.firstName && isOnline == "1") {
-                        let distanceApart = newPerson.location?.distance(from: (self.currentUserLocation)!)
-                        
-                        var aMile = CLLocationDistance()
-//                        aMile.add(1609)
-                          aMile.add(10000)
-                        if (self.currentUserLocation != nil) {
-                            if (distanceApart?.isLess(than: aMile))!{
+        //Move logic to Backend
+//        let completionHandler = {(response: AWSDynamoDBPaginatedOutput?, error: NSError?) -> Void in
+//
+//            if let error = error {
+//                var errorMessage = "Failed to retrieve items. \(error.localizedDescription)"
+//                if (error.domain == AWSServiceErrorDomain && error.code == AWSServiceErrorType.accessDeniedException.rawValue) {
+//                    errorMessage = "Access denied. You are not allowed to perform this operation."
+//                    print(errorMessage)
+//                }
+//            }
+//            else if response!.items.count == 0 {
+//                print("No items match your criteria. Insert more sample data and try again.")
+//            }
+//            else {
+//                self.results = response?.items
+//                for result in self.results! {
+//                    let model = result
+//                    let modelDictionary: [AnyHashable: Any] = model.dictionaryValue
+//
+//                    // _ = self.table?.tableAttributeName!(self.table!.orderedAttributeKeys[10])
+//                    let newPerson = Person()
+//
+//                    let facebookId = "\(modelDictionary["facebookId"]!)"
+//
+//                    let userLatitude = CLLocationDegrees("\(modelDictionary["latitude"]!)")
+//                    //  (self.table?.orderedAttributeKeys as Any)
+//                    let userLongitude = CLLocationDegrees("\(modelDictionary["longitude"]!)")
+//                    let userLocation = CLLocation(latitude: userLatitude!, longitude: userLongitude!)
+//                    let isOnline = "\(modelDictionary["online"]!)"
+//
+//                    newPerson.location = userLocation
+//                    newPerson.firstName = "\(modelDictionary["firstName"]!)"
+//                    newPerson.sex = sex(rawValue: "\(modelDictionary["sex"]!)")
+//                    newPerson.facebookId = facebookId
+//
+//                    newPerson.headshotImage = self.getUserPicture(facebookId: facebookId)
+//
+//                    // newPerson.online = "\(modelDictionary["online"])"
+//
+//                    //Check distance apart from user
+//                    if (newPerson.firstName != self.userLoggedIn?.firstName && isOnline == "1") {
+//                        let distanceApart = newPerson.location?.distance(from: (self.currentUserLocation)!)
+//
+//                        var aMile = CLLocationDistance()
+////                        aMile.add(1609)
+//                          aMile.add(10000)
+//                        if (self.currentUserLocation != nil) {
+//                            if (distanceApart?.isLess(than: aMile))!{
+//                                self.strangersAround.insert(newPerson)
+//                            }
+//                        }
+//                    }
+//                }
+//                self.PeopleNearbyTableView.reloadData()
+//            }
+//        }
+    
+        //Scan actualy Prod DynamoDB
+//       scanNearbyUsers(completionHandler)
+        
+//       let urlString = URL(string: "http://10.12.228.178:8080/_ah/health")
+////        let urlString = URL(string: "http://localhost:8080/pullAccountsLocal")
+        let urlString = URL(string: "http://192.168.1.18:8080/pullAccountsLocal")
+        if let url = urlString {
+            let task = URLSession.shared.dataTask(with: url) { (data,
+                response, error) in
+                if error != nil {
+                    print (error)
+                } else {
+                    if let usuableData = data {
+                        var json: [String: String]?
+                        do {
+                            json = try JSONSerialization.jsonObject(with: usuableData, options: JSONSerialization.ReadingOptions.allowFragments) as! [String : Any] as? [String :String]
+  
+                                var newPerson = Person()
+                                newPerson.firstName = json?["firstName"]
+                                newPerson.headshotImage = #imageLiteral(resourceName: "headshot1")
                                 self.strangersAround.insert(newPerson)
-                            }
+                            
+                        } catch {
+                            print(error)
                         }
                     }
                 }
-                self.PeopleNearbyTableView.reloadData()
             }
+            task.resume()
         }
-    
-        //  Scan accounts table
-        scanNearbyUsers(completionHandler)
         
     }
 

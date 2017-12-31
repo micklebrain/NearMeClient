@@ -10,6 +10,7 @@
 		021FD62700298EF1005D4956 /* Pods_NearMe_NearMe.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1BCBE980E97A5D8E503C0586 /* Pods_NearMe_NearMe.framework */; };
 		0CE85591E20A411A614C291E /* Pods_NearMe.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8ED9A6C543A4E92AB8B8EAE5 /* Pods_NearMe.framework */; };
 		2A27D5921FCFEAE200331A63 /* UserProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A27D5911FCFEAE200331A63 /* UserProfileViewController.swift */; };
+		2A9CDBDE1FF80DE7005AAF4F /* UserAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A9CDBDD1FF80DE7005AAF4F /* UserAccount.swift */; };
 		A5281CC11EAEAF3D003B9489 /* NoSqlSampleDataGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5281CC01EAEAF3D003B9489 /* NoSqlSampleDataGenerator.swift */; };
 		A5281CC31EAEEBA8003B9489 /* NoSQLModelHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5281CC21EAEEBA8003B9489 /* NoSQLModelHelpers.swift */; };
 		A540DAA61F28AA8500883AB5 /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = A540DAA51F28AA8500883AB5 /* Account.swift */; };
@@ -80,6 +81,7 @@
 		1BCBE980E97A5D8E503C0586 /* Pods_NearMe_NearMe.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NearMe_NearMe.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		25F11A12CBAC0E7A7F26C7F6 /* Pods-NearMe-NearMe.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NearMe-NearMe.release.xcconfig"; path = "Pods/Target Support Files/Pods-NearMe-NearMe/Pods-NearMe-NearMe.release.xcconfig"; sourceTree = "<group>"; };
 		2A27D5911FCFEAE200331A63 /* UserProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileViewController.swift; sourceTree = "<group>"; };
+		2A9CDBDD1FF80DE7005AAF4F /* UserAccount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAccount.swift; sourceTree = "<group>"; };
 		367B6E6AAE824E61258E6144 /* Pods-NearMe.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NearMe.debug.xcconfig"; path = "Pods/Target Support Files/Pods-NearMe/Pods-NearMe.debug.xcconfig"; sourceTree = "<group>"; };
 		76F2B9DC5B976E8CE124491E /* Pods-NearMeUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NearMeUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-NearMeUITests/Pods-NearMeUITests.release.xcconfig"; sourceTree = "<group>"; };
 		89385DFBD3E5ACADB49CFA99 /* Pods_NearMeUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NearMeUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -291,6 +293,7 @@
 				A566FEE11F059C390060105D /* Location.swift */,
 				A5F0431D1F0E932F00D0BBAD /* googleLocation.swift */,
 				A540DAA51F28AA8500883AB5 /* Account.swift */,
+				2A9CDBDD1FF80DE7005AAF4F /* UserAccount.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -678,6 +681,7 @@
 				A5A645E61EA6FADF00D411E1 /* Person.swift in Sources */,
 				A5A645EA1EA724DD00D411E1 /* EmployedPerson.swift in Sources */,
 				A5462D781EF0A4A6000970EB /* NearbyTableView.swift in Sources */,
+				2A9CDBDE1FF80DE7005AAF4F /* UserAccount.swift in Sources */,
 				A5E446531EDF6ECC00791822 /* AccountsTable.swift in Sources */,
 				A5E446491ED7A81300791822 /* User.swift in Sources */,
 				A5A645E81EA720BF00D411E1 /* Student.swift in Sources */,
