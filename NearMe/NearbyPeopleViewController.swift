@@ -19,6 +19,7 @@ import SwiftyJSON
 
 class NearbyPeopleViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, CLLocationManagerDelegate {
     
+    @IBOutlet weak var nameLabel: UILabel!
     let section = ["Friends", "Potential Friends"]
     //add collegaues, same school
     var locationManager : CLLocationManager!
@@ -41,6 +42,8 @@ class NearbyPeopleViewController: UIViewController, UITableViewDelegate, UITable
     override func viewDidLoad() {
         super.viewDidLoad()
         
+       nameLabel.text = userLoggedIn?.username
+        
         getLocation()
         
         self.PeopleNearbyTableView.delegate = self
@@ -61,7 +64,7 @@ class NearbyPeopleViewController: UIViewController, UITableViewDelegate, UITable
         
         //Check if location services is on first
         determineMyCurrentLocation()
-        downloadImages()
+//        downloadImages()
         
     }
     
@@ -275,17 +278,14 @@ class NearbyPeopleViewController: UIViewController, UITableViewDelegate, UITable
 //          userLoggedIn.itemId = NoSQLSampleDataGenerator.randomSampleStringWithAttributeName("itemId")
 //          userLoggedIn?.username = currentUser?.username
             
-//            userLoggedIn?.username = "Sally"
             userLoggedIn?.firstName = userLoggedIn?.username
-            //      userLoggedIn?.lastName = "Tracey"
-            //        userLoggedIn?.occupation = "developer"
 //          userLoggedIn?.online = true as Bool as NSNumber
             //        userLoggedIn?.relationshipStatus = "single"
             userLoggedIn?.facebookId = 1367878021 as NSNumber
             //        self.friendsAround.add(2)
             //        userLoggedIn?.friends = self.friendsAround
             
-//          User's Locaiton
+//          User's Location
             userLoggedIn?.postalCode = postalCode
             userLoggedIn?.administrativeArea = administrativeArea
             userLoggedIn?.country = country
@@ -293,13 +293,13 @@ class NearbyPeopleViewController: UIViewController, UITableViewDelegate, UITable
             userLoggedIn?.latitude = userLocation.coordinate.latitude as NSNumber
             userLoggedIn?.longitude = userLocation.coordinate.longitude as NSNumber
             
-            objectMapper.save(userLoggedIn!, completionHandler: {(error: Error?) -> Void in
-                if error != nil {
-                    DispatchQueue.main.async {
-                        errors.append(error! as NSError)
-                    }
-                }
-            })
+//            objectMapper.save(userLoggedIn!, completionHandler: {(error: Error?) -> Void in
+//                if error != nil {
+//                    DispatchQueue.main.async {
+//                        errors.append(error! as NSError)
+//                    }
+//                }
+//            })
             
             self.CurrentLocationLabel.text = userLoggedIn?.buildingOccupied
             
@@ -388,32 +388,25 @@ class NearbyPeopleViewController: UIViewController, UITableViewDelegate, UITable
         
 //       let urlString = URL(string: "http://10.12.228.178:8080/_ah/health")
 ////        let urlString = URL(string: "http://localhost:8080/pullAccountsLocal")
-        let urlString = URL(string: "http://192.168.1.18:8080/pullAccountsLocal")
-        if let url = urlString {
-            let task = URLSession.shared.dataTask(with: url) { (data,
-                response, error) in
-                if error != nil {
-                    print (error)
-                } else {
-                    if let usuableData = data {
-                        var json: [String: String]?
-                        do {
-                            json = try JSONSerialization.jsonObject(with: usuableData, options: JSONSerialization.ReadingOptions.allowFragments) as! [String : Any] as? [String :String]
-  
-                                var newPerson = Person()
-                                newPerson.firstName = json?["firstName"]
-                                newPerson.headshotImage = #imageLiteral(resourceName: "headshot1")
-                                self.strangersAround.insert(newPerson)
-                            
-                        } catch {
-                            print(error)
-                        }
-                    }
-                }
-            }
-            task.resume()
-        }
+        //this is roomwifi
+//        let url = URL(string: "http://192.168.1.18:8080/pullAccountsLocal")
+        //this is brannan lobby wifi
+        let url = URL(string: "http://10.12.228.178:8080/pullAccountsLocal")
         
+        let task = URLSession.shared.dataTask(with: url!) { (data, response, error) in
+
+            let json = try? JSONSerialization.jsonObject(with: data!, options: [])
+            print(json)
+            
+            let users = json as! [Any]
+            for someUser in users {
+                let userDetails = someUser as! [String: Any]
+                var newPerson = Person()
+                newPerson.firstName = userDetails["firstName"] as! String
+                self.strangersAround.insert(newPerson)
+            }
+        }
+        task.resume()
     }
 
     @IBAction func connect(_ sender: Any) {
@@ -456,9 +449,7 @@ class NearbyPeopleViewController: UIViewController, UITableViewDelegate, UITable
     func getUserPicture (facebookId : String) -> UIImage {
         
         var headshot = #imageLiteral(resourceName: "headshot2")
-    
         var pictureUrl = "http://graph.facebook.com/"
-        
         pictureUrl += facebookId
         pictureUrl += "/picture?type=large"
         
@@ -473,8 +464,7 @@ class NearbyPeopleViewController: UIViewController, UITableViewDelegate, UITable
                         headshot  = UIImage(data: usableData)!
                     }
                 }
-            }
-            
+        }
         
         task.resume()
             
@@ -496,12 +486,12 @@ class NearbyPeopleViewController: UIViewController, UITableViewDelegate, UITable
             cell.connectButton.titleLabel?.text = "reconnect"
         } else {
             cell.nameLabel.text = self.strangersAround[strangersAround.index(self.strangersAround.startIndex, offsetBy: indexPath.row)].firstName
-//            cell.occupationLabel.text = self.strangersAround[strangersAround.index(self.strangersAround.startIndex, offsetBy: indexPath.row)].
+//          cell.occupationLabel.text = self.strangersAround[strangersAround.index(self.strangersAround.startIndex, offsetBy: indexPath.row)].
+        
+//          cell.headshotViewImage.image = self.strangersAround[strangersAround.index(self.strangersAround.startIndex, offsetBy: indexPath.row)].headshotImage
             
-//            cell.headshotViewImage.image = self.strangersAround[strangersAround.index(self.strangersAround.startIndex, offsetBy: indexPath.row)].headshotImage
-            
-
-            cell.headshotViewImage.image = self.profileImage
+//          cell.headshotViewImage.image = self.profileImage
+            cell.headshotViewImage.image = randomImage()
             cell.headshotViewImage.layer.cornerRadius = 15.0
             cell.headshotViewImage.layer.borderWidth = 3
             cell.headshotViewImage.layer.borderColor = UIColor.black.cgColor
@@ -519,6 +509,15 @@ class NearbyPeopleViewController: UIViewController, UITableViewDelegate, UITable
         selectedUser?.location = userLoggedIn?.location
         profileVC.currentUserProfile = selectedUser
         self.present(profileVC, animated: false, completion: nil)
+    }
+    
+    func randomImage () -> UIImage {
+        
+        var images = [#imageLiteral(resourceName: "headshot2"), #imageLiteral(resourceName: "headshot3"), #imageLiteral(resourceName: "headshot1")]
+        let randomNumber:UInt32 = arc4random_uniform(3)
+        let index:Int = Int(randomNumber)
+        return images[index]
+        
     }
     
     /*
@@ -555,7 +554,6 @@ class NearbyPeopleViewController: UIViewController, UITableViewDelegate, UITable
      return true
      }
      */
-
     
     /*
     // MARK: - Navigation
@@ -566,7 +564,5 @@ class NearbyPeopleViewController: UIViewController, UITableViewDelegate, UITable
         // Pass the selected object to the new view controller.
     }
     */
-    
-    
 
 }

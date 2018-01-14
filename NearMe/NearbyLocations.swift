@@ -64,25 +64,6 @@ class NearbyLocations: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
         
         let objectMapper = AWSDynamoDBObjectMapper.default()
         
-//        for index in 1...47 {
-//            let newUser = User()
-//            newUser?.firstName = "Tester" + String(index)
-//            newUser?.latitude = 37.787358
-//            newUser?.longitude = -122.408227
-//            newUser?.locality = "Nothing"
-//            newUser?.username = newUser?.firstName
-//            newUser?.lastName = "Tester"
-//            var errors: [NSError] = []
-//            objectMapper.save(newUser!, completionHandler: { (error: Error?) -> Void in
-//                if (error != nil) {
-//                    DispatchQueue.main.async {
-//                        errors.append(error as! NSError)
-//                    }
-//                }
-//            })
-//        }
-        
-    
     }
     
     override func viewWillAppear(_ animated: Bool) {

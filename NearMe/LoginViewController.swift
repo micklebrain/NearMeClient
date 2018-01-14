@@ -76,21 +76,27 @@ class LoginViewController: UIViewController {
     }
     
     func login(_ sender: Any) {
-        authenticateUser()
+        //Dont authenticate user right now
+        //authenticateUser()
+        let nearbyPeopleVC:NearbyLocations = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ProfileViewController") as! NearbyLocations
+        let currentUser = User()
+        currentUser?.username = self.username.text
+        nearbyPeopleVC.currentUserProfile = currentUser
+        self.present(nearbyPeopleVC, animated: false, completion: nil)
     }
     
     func scanUsers (_ completeionHandler: @escaping (_ response: AWSDynamoDBPaginatedOutput?, _ error: NSError?) -> Void) {
         
-        let objectMapper = AWSDynamoDBObjectMapper.default()
-        let scanExpression = AWSDynamoDBScanExpression()
-        scanExpression.filterExpression = "firstName = :val"
-        scanExpression.expressionAttributeValues = [":val": username.text]
-        
-        objectMapper.scan(User.self, expression: scanExpression) { (response: AWSDynamoDBPaginatedOutput?, error: Error?) in
-            DispatchQueue.main.async(execute: {
-                completeionHandler(response, error as NSError?)
-            })
-        }
+//        let objectMapper = AWSDynamoDBObjectMapper.default()
+//        let scanExpression = AWSDynamoDBScanExpression()
+//        scanExpression.filterExpression = "firstName = :val"
+//        scanExpression.expressionAttributeValues = [":val": username.text]
+//
+//        objectMapper.scan(User.self, expression: scanExpression) { (response: AWSDynamoDBPaginatedOutput?, error: Error?) in
+//            DispatchQueue.main.async(execute: {
+//                completeionHandler(response, error as NSError?)
+//            })
+//        }
     }
     
     func authenticateUser () {
