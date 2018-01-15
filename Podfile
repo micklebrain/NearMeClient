@@ -21,8 +21,8 @@ target :’NearMe’ do
     pod 'AlamofireSwiftyJSON'
     pod 'GooglePlaces'
     pod 'GoogleMaps'
+    pod 'Alamofire'
 end
-
 
   target 'NearMeTests' do
     inherit! :search_paths

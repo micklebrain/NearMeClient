@@ -387,16 +387,16 @@ class NearbyPeopleViewController: UIViewController, UITableViewDelegate, UITable
 //       scanNearbyUsers(completionHandler)
         
 //       let urlString = URL(string: "http://10.12.228.178:8080/_ah/health")
-////        let urlString = URL(string: "http://localhost:8080/pullAccountsLocal")
+//       let urlString = URL(string: "http://localhost:8080/pullAccountsLocal")
         //this is roomwifi
 //        let url = URL(string: "http://192.168.1.18:8080/pullAccountsLocal")
         //this is brannan lobby wifi
-        let url = URL(string: "http://10.12.228.178:8080/pullAccountsLocal")
-        
+//        let url = URL(string: "http://10.12.228.178:8080/pullAccountsLocal")
+        let url = URL(string: "http://10.150.58.16:8080/pullAccountsLocal")
         let task = URLSession.shared.dataTask(with: url!) { (data, response, error) in
 
-            let json = try? JSONSerialization.jsonObject(with: data!, options: [])
-            print(json)
+            //add guard statement
+            let json = try? JSONSerialization.jsonObject(with: data!, options: []) 
             
             let users = json as! [Any]
             for someUser in users {
@@ -409,6 +409,15 @@ class NearbyPeopleViewController: UIViewController, UITableViewDelegate, UITable
         task.resume()
     }
 
+    @IBAction func viewProfile(_ sender: Any) {
+        
+        let profileVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "UserProfileViewController") as! UserProfileViewController
+        profileVC.userLoggedIn = self.userLoggedIn
+        
+        self.present(profileVC, animated: false, completion: nil)
+        
+    }
+    
     @IBAction func connect(_ sender: Any) {
         let profileVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ProfileViewController") as! NearbyLocations
         self.present(profileVC, animated: false, completion: nil)
@@ -519,7 +528,7 @@ class NearbyPeopleViewController: UIViewController, UITableViewDelegate, UITable
         return images[index]
         
     }
-    
+
     /*
      // Override to support conditional editing of the table view.
      override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
@@ -542,9 +551,7 @@ class NearbyPeopleViewController: UIViewController, UITableViewDelegate, UITable
     
     /*
      // Override to support rearranging the table view.
-     override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-     
-     }
+     override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {}
      */
     
     /*

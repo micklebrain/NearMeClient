@@ -11,6 +11,7 @@ import CoreLocation
 import GoogleMaps
 import GooglePlaces
 import AWSDynamoDB
+import Alamofire
 
 class NearbyLocations: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
 
@@ -65,10 +66,7 @@ class NearbyLocations: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
         let objectMapper = AWSDynamoDBObjectMapper.default()
         
     }
-    
-    override func viewWillAppear(_ animated: Bool) {
-//        nameLabel.text = currentUserProfile?.firstName
-    }
+
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -216,7 +214,6 @@ class NearbyLocations: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
                 }
             }
             task.resume()
-
         }
     }
     
@@ -254,7 +251,6 @@ class NearbyLocations: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
         return resturantsAround[row]
     }
     
-   
     /*
     // MARK: - Navigation
 
@@ -358,9 +354,11 @@ extension NearbyLocations : UITableViewDataSource, UITableViewDelegate {
         let nearbyPeopleVC:NearbyPeopleViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "NearbyPeopleViewController") as! NearbyPeopleViewController
         nearbyPeopleVC.userLoggedIn = User()
         nearbyPeopleVC.userLoggedIn?.buildingOccupied = placesTableView.cellForRow(at: indexPath)?.textLabel?.text
+//      updateLocation(locality: (nearbyPeopleVC.userLoggedIn?.buildingOccupied)!)
         nearbyPeopleVC.userLoggedIn?.username = self.currentUserProfile?.username
         self.present(nearbyPeopleVC, animated: false, completion: nil)
         
 //      listLikelyPlaces()
     }
+    
 }

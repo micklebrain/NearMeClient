@@ -19,6 +19,27 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var username: UITextField!
     @IBOutlet weak var password: UITextField!
     
+    override func viewWillAppear(_ animated: Bool) {
+        
+//        if(FBSDKAccessToken.current() == nil)
+//        {
+//            print(FBSDKAccessToken.current().permissions)
+//            // Graph Path : "me" is going to get current user logged in
+//            let graphRequest = FBSDKGraphRequest(graphPath: "me", parameters: ["fields" : "id, name, email"])
+//            let connection = FBSDKGraphRequestConnection()
+//
+//            connection.add(graphRequest, completionHandler: { (connection, result, error) -> Void in
+//                let data = result as! [String : AnyObject]
+//                let name = data["name"] as? String
+//                print("logged in user name is \(String(describing: name))")
+//
+//                let FBid = data["id"] as? String
+//                print("Facebook id is \(String(describing: FBid))")
+//            })
+//            connection.start()
+//        }
+        
+    }
     
     // TODO: Logout facebook
     override func viewDidLoad() {
@@ -26,6 +47,7 @@ class LoginViewController: UIViewController {
         
         password.resignFirstResponder()
         
+        //Facebook login button
         let loginButton = LoginButton(readPermissions: [ .publicProfile, .email, .userFriends ])
         loginButton.center = view.center
         view.addSubview(loginButton)
@@ -33,50 +55,31 @@ class LoginViewController: UIViewController {
         if let accessToken = AccessToken.current {
            print(AccessToken.current?.userId)
         }
-    
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
         
-        if(FBSDKAccessToken.current() != nil)
-        {
-        print(FBSDKAccessToken.current().permissions)
-//      Graph Path : "me" is going to get current user logged in
-        let graphRequest = FBSDKGraphRequest(graphPath: "me", parameters: ["fields" : "id, name, email"])
-        let connection = FBSDKGraphRequestConnection()
+        print("done")
         
-        connection.add(graphRequest, completionHandler: { (connection, result, error) -> Void in
-            let data = result as! [String : AnyObject]
-            let name = data["name"] as? String
-            print("logged in user name is \(String(describing: name))")
-            
-            let FBid = data["id"] as? String
-            print("Facebook id is \(String(describing: FBid))")
-        })
-        connection.start()
-        }
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         password.resignFirstResponder()
     }
     
-    @objc func loginButtonClicked() {
-        let loginManager = LoginManager()
-        loginManager.logIn([ .publicProfile ], viewController: self) { loginResult in
-            switch loginResult {
-            case .failed(let error):
-                print(error)
-            case .cancelled:
-                print("User cancelled login.")
-            case .success(let grantedPermissions, let declinedPermissions, let accessToken):
-                print("Logged in!")
-            }
-        }
-    }
+//    @objc func loginButtonClicked() {
+//        let loginManager = LoginManager()
+//        loginManager.logIn([ .publicProfile ], viewController: self) { loginResult in
+//            switch loginResult {
+//            case .failed(let error):
+//                print(error)
+//            case .cancelled:
+//                print("User cancelled login.")
+//            case .success(let grantedPermissions, let declinedPermissions, let accessToken):
+//                print("Logged in!")
+//            }
+//        }
+//    }
     
     func login(_ sender: Any) {
-        //Dont authenticate user right now
+
         //authenticateUser()
         let nearbyPeopleVC:NearbyLocations = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ProfileViewController") as! NearbyLocations
         let currentUser = User()
@@ -99,6 +102,7 @@ class LoginViewController: UIViewController {
 //        }
     }
     
+    //Security
     func authenticateUser () {
         
         let completionHandler = {(response: AWSDynamoDBPaginatedOutput?, error: NSError?) -> Void in
@@ -130,7 +134,6 @@ class LoginViewController: UIViewController {
             print("the delete permission is \(result)")
         })
     }
-    
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

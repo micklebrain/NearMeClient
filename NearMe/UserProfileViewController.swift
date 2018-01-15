@@ -10,10 +10,36 @@ import UIKit
 
 class UserProfileViewController: UIViewController {
 
+    @IBOutlet weak var friendRequestsLabel: UILabel!
+    var userLoggedIn: User?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        
+        
         // Do any additional setup after loading the view.
+    }
+    
+    func pullFriendRequests (user : String) -> String {
+        
+        var friendRequests = ""
+        
+        let url = URL(string: "http://10.12.228.178:8080/getFriendRequests/" + user)
+        let task = URLSession.shared.dataTask(with: url!) { (data, response, error) in
+            
+            let json = try? JSONSerialization.jsonObject(with: data!, options: [])
+            print(json)
+            
+            let users = json as! [String]
+            
+           friendRequests = users.joined(separator: ", ")
+           self.friendRequestsLabel.text = friendRequests
+        
+        }
+        task.resume()
+        return friendRequests
+        
     }
 
     override func didReceiveMemoryWarning() {

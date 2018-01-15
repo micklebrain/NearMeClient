@@ -1,53 +1,56 @@
 PODS:
-  - Alamofire (4.5.1)
+  - Alamofire (4.6.0)
   - AlamofireSwiftyJSON (1.0.0):
     - Alamofire (~> 4.0)
     - SwiftyJSON (~> 3.0)
-  - AWSCognito (2.6.1):
-    - AWSCore (= 2.6.1)
-  - AWSCognitoIdentityProvider (2.6.1):
-    - AWSCore (= 2.6.1)
-  - AWSCore (2.6.1)
-  - AWSDynamoDB (2.6.1):
-    - AWSCore (= 2.6.1)
-  - AWSEC2 (2.6.1):
-    - AWSCore (= 2.6.1)
-  - AWSMobileAnalytics (2.6.1):
-    - AWSCore (= 2.6.1)
-  - AWSS3 (2.6.1):
-    - AWSCore (= 2.6.1)
-  - AWSSES (2.6.1):
-    - AWSCore (= 2.6.1)
-  - AWSSimpleDB (2.6.1):
-    - AWSCore (= 2.6.1)
-  - Bolts (1.8.4):
-    - Bolts/AppLinks (= 1.8.4)
-    - Bolts/Tasks (= 1.8.4)
-  - Bolts/AppLinks (1.8.4):
+  - AWSCognito (2.6.10):
+    - AWSCore (= 2.6.10)
+  - AWSCognitoIdentityProvider (2.6.10):
+    - AWSCognitoIdentityProviderASF (= 1.0.1)
+    - AWSCore (= 2.6.10)
+  - AWSCognitoIdentityProviderASF (1.0.1)
+  - AWSCore (2.6.10)
+  - AWSDynamoDB (2.6.10):
+    - AWSCore (= 2.6.10)
+  - AWSEC2 (2.6.10):
+    - AWSCore (= 2.6.10)
+  - AWSMobileAnalytics (2.6.10):
+    - AWSCore (= 2.6.10)
+  - AWSS3 (2.6.10):
+    - AWSCore (= 2.6.10)
+  - AWSSES (2.6.10):
+    - AWSCore (= 2.6.10)
+  - AWSSimpleDB (2.6.10):
+    - AWSCore (= 2.6.10)
+  - Bolts (1.9.0):
+    - Bolts/AppLinks (= 1.9.0)
+    - Bolts/Tasks (= 1.9.0)
+  - Bolts/AppLinks (1.9.0):
     - Bolts/Tasks
-  - Bolts/Tasks (1.8.4)
-  - FacebookCore (0.2.0):
+  - Bolts/Tasks (1.9.0)
+  - FacebookCore (0.3.0):
     - Bolts (~> 1.8)
-    - FBSDKCoreKit (~> 4.15)
-  - FacebookLogin (0.2.0):
+    - FBSDKCoreKit (~> 4.27)
+  - FacebookLogin (0.3.0):
     - Bolts (~> 1.8)
-    - FacebookCore (~> 0.2)
-    - FBSDKCoreKit (~> 4.15)
-    - FBSDKLoginKit (~> 4.15)
-  - FBSDKCoreKit (4.26.0):
+    - FacebookCore (~> 0.3)
+    - FBSDKCoreKit (~> 4.27)
+    - FBSDKLoginKit (~> 4.27)
+  - FBSDKCoreKit (4.29.0):
     - Bolts (~> 1.7)
-  - FBSDKLoginKit (4.26.0):
+  - FBSDKLoginKit (4.29.0):
     - FBSDKCoreKit
-  - GoogleMaps (2.4.0):
-    - GoogleMaps/Maps (= 2.4.0)
-  - GoogleMaps/Base (2.4.0)
-  - GoogleMaps/Maps (2.4.0):
+  - GoogleMaps (2.5.0):
+    - GoogleMaps/Maps (= 2.5.0)
+  - GoogleMaps/Base (2.5.0)
+  - GoogleMaps/Maps (2.5.0):
     - GoogleMaps/Base
-  - GooglePlaces (2.4.0):
-    - GoogleMaps/Base (= 2.4.0)
+  - GooglePlaces (2.5.0):
+    - GoogleMaps/Base (= 2.5.0)
   - SwiftyJSON (3.1.4)
 
 DEPENDENCIES:
+  - Alamofire
   - AlamofireSwiftyJSON
   - AWSCognito
   - AWSCognitoIdentityProvider
@@ -63,26 +66,27 @@ DEPENDENCIES:
   - GooglePlaces
 
 SPEC CHECKSUMS:
-  Alamofire: 2d95912bf4c34f164fdfc335872e8c312acaea4a
+  Alamofire: f41a599bd63041760b26d393ec1069d9d7b917f4
   AlamofireSwiftyJSON: 78908b766483a28aa5cc90fd191a687467042973
-  AWSCognito: 9aad635e11de0febf026e8a8acbbd345b2016801
-  AWSCognitoIdentityProvider: a335678a0024fa2b44213bc4e86b46b21773e567
-  AWSCore: e7d37fa0715def975acf1b0d75556576780088b8
-  AWSDynamoDB: e873d66ccd547efad9a7e266b8803659a53e0ac9
-  AWSEC2: 5cf1ec29b12711baebe33ef9349bc413f623a7d1
-  AWSMobileAnalytics: e787c0a07a2a428ac27cc4a13be087b4bc667322
-  AWSS3: 2e18ede28199a5530955dc1a65434da43dcc4d2c
-  AWSSES: aba21100f333fbe5b187ad763da18d5946079be3
-  AWSSimpleDB: 6060ddb066ca25b28853a453471c926764c484e4
-  Bolts: 8a7995239dbe724f9cba2248b766d48b7ebdd322
-  FacebookCore: 2cb3f0fbff218e9d3119cec84bae983b232412de
-  FacebookLogin: c9d606504735780a9e3002465a615512e0a691a5
-  FBSDKCoreKit: c8b8582311ec11b145451d8b9717dc6cc2ae5a76
-  FBSDKLoginKit: f3f03b94c21eb834af243c0a881d48641f47ca60
-  GoogleMaps: 8436ab5d1c25e36915b2f7416d0c8e3fa2e76c61
-  GooglePlaces: aafe5990fa7951e98e078761bbdaaf236d7e0c65
+  AWSCognito: 94d97a52c51310dfd20f2db5dc4fce7ebce0e8dc
+  AWSCognitoIdentityProvider: f88d27fef26b131191da06c0a9a398e3c686945c
+  AWSCognitoIdentityProviderASF: f94f1a502e72ef3d0a1de93e10bf7a79c8698118
+  AWSCore: 5bb072a6b5b185f43ddbd239d6554d2f8a285ad2
+  AWSDynamoDB: 46c7d83862a8375fb824796dc60b04f9273c5d3f
+  AWSEC2: f4a8d15385450cf077f582379853dd378a71482c
+  AWSMobileAnalytics: db5e87cb7c17f5dd10ccbc5b81eaef182e15034a
+  AWSS3: 1124570c2c2dba6be7e6e67d123cc5181073c53d
+  AWSSES: 66850c2bbbaa8a9d8f1f3b3f4b976db0fb446aae
+  AWSSimpleDB: 0390a46fcc5de60920564944d3b1b434bae043be
+  Bolts: ac6567323eac61e203f6a9763667d0f711be34c8
+  FacebookCore: 3ffa190a3f1f96cec0e44d3fc221bc322c595ffa
+  FacebookLogin: 0af839ea858faef99550d16596b87b4a8e8906e6
+  FBSDKCoreKit: 6f139173dc63a1deaff4430a55f2fe5bb222d2af
+  FBSDKLoginKit: 56a057ca6822535ea0faa25f57a7c41edb697fd4
+  GoogleMaps: c087b8e5dfe87ca6ebf59adb9b4894a4146bec4f
+  GooglePlaces: dd70d9d71ea1c7944846afe67de3712c99b30a77
   SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
 
-PODFILE CHECKSUM: 19230dd5f242363aa3a9605196ad98c300f24567
+PODFILE CHECKSUM: 80ef474f2ebee1c8cbf63862e94394fe111cd537
 
 COCOAPODS: 1.3.1

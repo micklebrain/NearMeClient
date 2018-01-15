@@ -21,6 +21,7 @@ class User : AWSDynamoDBObjectModel,AWSDynamoDBModeling {
     var online : NSNumber = true
     var sex : String?
     var friends : NSMutableSet?
+    var friendRequests: [String]?
     
     var address : String?
     var facebookId : NSNumber?
