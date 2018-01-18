@@ -63,16 +63,16 @@
 		<dict>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>fb141814346387633</string>
+				<string>fb2063411443892257</string>
 			</array>
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
 	<string>1</string>
 	<key>FacebookAppID</key>
-	<string>141814346387633</string>
+	<string>2063411443892257</string>
 	<key>FacebookDisplayName</key>
-	<string>NearMe</string>
+	<string>SmallTalk</string>
 	<key>LSApplicationCategoryType</key>
 	<string></string>
 	<key>LSApplicationQueriesSchemes</key>

@@ -17,7 +17,7 @@ import FBSDKLoginKit
 import Alamofire
 import SwiftyJSON
 
-class NearbyPeopleViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, CLLocationManagerDelegate {
+class NearbyPeopleViewController: UIViewController {
     
     @IBOutlet weak var nameLabel: UILabel!
     let section = ["Friends", "Potential Friends"]
@@ -225,35 +225,6 @@ class NearbyPeopleViewController: UIViewController, UITableViewDelegate, UITable
         }
     }
     
-    //  Multithreading? Concurrent?
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        
-        let userLocation:CLLocation = locations[0] as CLLocation
-        
-        //Shouldnt have both
-        //    manager.stopUpdatingLocation()
-        //   locationManager.stopUpdatingLocation()
-        
-        //Update to get user's current location not managers
-        CLGeocoder().reverseGeocodeLocation(userLocation, completionHandler: {(placemarks, error)->Void in
-            
-            if (error != nil) {
-                print("Reverse geocoder failed with error: " + (error?.localizedDescription)!)
-                return
-            }
-            
-            if (placemarks?.count)! > 0 {
-                let pm = placemarks?[0]
-                self.updateCurrentUserLocation(placemark: pm, userLocation: userLocation)
-            } else {
-                print("Problem with the data received from geocoder")
-            }
-        })
-        
-        //How to put this on the main thread
-        self.PeopleNearbyTableView.reloadData()
-    }
-    
     func updateCurrentUserLocation (placemark: CLPlacemark?, userLocation: CLLocation) {
         
         if let containsPlacemark = placemark {
@@ -386,27 +357,34 @@ class NearbyPeopleViewController: UIViewController, UITableViewDelegate, UITable
         //Scan actualy Prod DynamoDB
 //       scanNearbyUsers(completionHandler)
         
-//       let urlString = URL(string: "http://10.12.228.178:8080/_ah/health")
-//       let urlString = URL(string: "http://localhost:8080/pullAccountsLocal")
         //this is roomwifi
 //        let url = URL(string: "http://192.168.1.18:8080/pullAccountsLocal")
         //this is brannan lobby wifi
 //        let url = URL(string: "http://10.12.228.178:8080/pullAccountsLocal")
-        let url = URL(string: "http://10.150.58.16:8080/pullAccountsLocal")
+        
+        let url = URL(string: "http://10.150.58.1:8080/pullAccountsLocal")
+        
         let task = URLSession.shared.dataTask(with: url!) { (data, response, error) in
 
-            //add guard statement
-            let json = try? JSONSerialization.jsonObject(with: data!, options: []) 
-            
-            let users = json as! [Any]
-            for someUser in users {
-                let userDetails = someUser as! [String: Any]
-                var newPerson = Person()
-                newPerson.firstName = userDetails["firstName"] as! String
-                self.strangersAround.insert(newPerson)
+            //add guard statement for unsuccessful requests
+            // Handle nil better
+            if (data != nil) {
+                if let json = try? JSONSerialization.jsonObject(with: data!, options: []) {
+                
+                let users = json as! [Any]
+                for someUser in users {
+                    let userDetails = someUser as! [String: Any]
+                    var newPerson = Person()
+                    newPerson.firstName = userDetails["firstName"] as! String
+                    if (newPerson.firstName != self.userLoggedIn?.firstName) {
+                        self.strangersAround.insert(newPerson)
+                    }
+                }
+                }
             }
         }
         task.resume()
+        
     }
 
     @IBAction func viewProfile(_ sender: Any) {
@@ -421,38 +399,6 @@ class NearbyPeopleViewController: UIViewController, UITableViewDelegate, UITable
     @IBAction func connect(_ sender: Any) {
         let profileVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ProfileViewController") as! NearbyLocations
         self.present(profileVC, animated: false, completion: nil)
-    }
-    
-//  Mark: Filter
-    @IBAction func filter(_ sender: Any) {
-        
-        while self.strangersAround.contains(where: { $0.sex == sex.male }) {
-        
-            let foundPerson = self.strangersAround.first(where: { $0.sex == sex.male })
-            strangersAround.remove(foundPerson!)
-        }
-        
-        self.PeopleNearbyTableView.reloadData()
-    
-    }
-    
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return self.section[section]
-    }
-    
-    //  MARK: - Table view data source
-    func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return self.section.count
-    }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    // TODO: Ternary Operator
-        if (section == 0) {
-            return self.friendsAround.count
-        } else {
-            return self.strangersAround.count
-        }
     }
     
     func getUserPicture (facebookId : String) -> UIImage {
@@ -473,53 +419,28 @@ class NearbyPeopleViewController: UIViewController, UITableViewDelegate, UITable
                         headshot  = UIImage(data: usableData)!
                     }
                 }
-        }
-        
-        task.resume()
+            }
             
-        return headshot
-    }
+            task.resume()
+            
+            return headshot
+        }
         return headshot
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "UserCell", for: indexPath) as! UserTableViewCell
+//  Mark: Filter
+    @IBAction func filter(_ sender: Any) {
         
-//      TODO: Check why view gets loaded without images - bug
-        if (indexPath.section == 0) {
-            cell.nameLabel.text = "Friend's Name"
-            cell.headshotViewImage.image = self.headshot
-            cell.headshotViewImage.layer.cornerRadius = 15.0
-            cell.headshotViewImage.layer.borderWidth = 3
-            cell.headshotViewImage.layer.borderColor = UIColor.black.cgColor
-            cell.connectButton.titleLabel?.text = "reconnect"
-        } else {
-            cell.nameLabel.text = self.strangersAround[strangersAround.index(self.strangersAround.startIndex, offsetBy: indexPath.row)].firstName
-//          cell.occupationLabel.text = self.strangersAround[strangersAround.index(self.strangersAround.startIndex, offsetBy: indexPath.row)].
+        while self.strangersAround.contains(where: { $0.sex == sex.male }) {
         
-//          cell.headshotViewImage.image = self.strangersAround[strangersAround.index(self.strangersAround.startIndex, offsetBy: indexPath.row)].headshotImage
-            
-//          cell.headshotViewImage.image = self.profileImage
-            cell.headshotViewImage.image = randomImage()
-            cell.headshotViewImage.layer.cornerRadius = 15.0
-            cell.headshotViewImage.layer.borderWidth = 3
-            cell.headshotViewImage.layer.borderColor = UIColor.black.cgColor
+            let foundPerson = self.strangersAround.first(where: { $0.sex == sex.male })
+            strangersAround.remove(foundPerson!)
         }
+        
+        self.PeopleNearbyTableView.reloadData()
+    
+    }
 
-        return cell
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let profileVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ProfileViewController") as! NearbyLocations
-        
-        let selectedUser = User()
-        let selectedCell = PeopleNearbyTableView.cellForRow(at: indexPath) as! UserTableViewCell
-        selectedUser?.firstName = selectedCell.nameLabel.text
-        selectedUser?.location = userLoggedIn?.location
-        profileVC.currentUserProfile = selectedUser
-        self.present(profileVC, animated: false, completion: nil)
-    }
-    
     func randomImage () -> UIImage {
         
         var images = [#imageLiteral(resourceName: "headshot2"), #imageLiteral(resourceName: "headshot3"), #imageLiteral(resourceName: "headshot1")]
@@ -528,7 +449,7 @@ class NearbyPeopleViewController: UIViewController, UITableViewDelegate, UITable
         return images[index]
         
     }
-
+    
     /*
      // Override to support conditional editing of the table view.
      override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
@@ -572,4 +493,97 @@ class NearbyPeopleViewController: UIViewController, UITableViewDelegate, UITable
     }
     */
 
+}
+
+extension NearbyPeopleViewController : CLLocationManagerDelegate {
+    
+    //  Multithreading? Concurrent?
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        
+        let userLocation:CLLocation = locations[0] as CLLocation
+        
+        //Shouldnt have both
+        //    manager.stopUpdatingLocation()
+        //   locationManager.stopUpdatingLocation()
+        
+        //Update to get user's current location not managers
+        CLGeocoder().reverseGeocodeLocation(userLocation, completionHandler: {(placemarks, error)->Void in
+            
+            if (error != nil) {
+                print("Reverse geocoder failed with error: " + (error?.localizedDescription)!)
+                return
+            }
+            
+            if (placemarks?.count)! > 0 {
+                let pm = placemarks?[0]
+                self.updateCurrentUserLocation(placemark: pm, userLocation: userLocation)
+            } else {
+                print("Problem with the data received from geocoder")
+            }
+        })
+        
+        //How to put this on the main thread
+        self.PeopleNearbyTableView.reloadData()
+    }
+    
+}
+
+extension NearbyPeopleViewController : UITableViewDataSource, UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return self.section[section]
+    }
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        // #warning Incomplete implementation, return the number of sections
+        return self.section.count
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        // TODO: Ternary Operator
+        if (section == 0) {
+            return self.friendsAround.count
+        } else {
+            return self.strangersAround.count
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "UserCell", for: indexPath) as! UserTableViewCell
+        
+        //      TODO: Check why view gets loaded without images - bug
+        if (indexPath.section == 0) {
+            cell.nameLabel.text = "Friend's Name"
+            cell.headshotViewImage.image = self.headshot
+            cell.headshotViewImage.layer.cornerRadius = 15.0
+            cell.headshotViewImage.layer.borderWidth = 3
+            cell.headshotViewImage.layer.borderColor = UIColor.black.cgColor
+            cell.connectButton.titleLabel?.text = "reconnect"
+        } else {
+            cell.nameLabel.text = self.strangersAround[strangersAround.index(self.strangersAround.startIndex, offsetBy: indexPath.row)].firstName
+            //          cell.occupationLabel.text = self.strangersAround[strangersAround.index(self.strangersAround.startIndex, offsetBy: indexPath.row)].
+            
+            //          cell.headshotViewImage.image = self.strangersAround[strangersAround.index(self.strangersAround.startIndex, offsetBy: indexPath.row)].headshotImage
+            
+            //          cell.headshotViewImage.image = self.profileImage
+            cell.headshotViewImage.image = randomImage()
+            cell.headshotViewImage.layer.cornerRadius = 15.0
+            cell.headshotViewImage.layer.borderWidth = 3
+            cell.headshotViewImage.layer.borderColor = UIColor.black.cgColor
+        }
+        
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let profileVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ProfileViewController") as! NearbyLocations
+        
+        let selectedUser = User()
+        let selectedCell = PeopleNearbyTableView.cellForRow(at: indexPath) as! UserTableViewCell
+        selectedUser?.firstName = selectedCell.nameLabel.text
+        selectedUser?.location = userLoggedIn?.location
+        profileVC.currentUserProfile = selectedUser
+        self.present(profileVC, animated: false, completion: nil)
+    }
+    
 }

@@ -15,8 +15,7 @@ class UserProfileViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        
+        pullFriendRequests(user: (userLoggedIn?.username)!)
         
         // Do any additional setup after loading the view.
     }
@@ -25,7 +24,11 @@ class UserProfileViewController: UIViewController {
         
         var friendRequests = ""
         
-        let url = URL(string: "http://10.12.228.178:8080/getFriendRequests/" + user)
+        //Brannan Lobby wifi
+//        let url = URL(string: "http://10.12.228.178:8080/getFriendRequests/" + user)
+//        let url = URL(string: "http://10.1.80.19:8080/getFriendRequests/" + user)
+        
+        let url = URL(string: "http://10.150.58.1:8080/getFriendRequests/" + user)
         let task = URLSession.shared.dataTask(with: url!) { (data, response, error) in
             
             let json = try? JSONSerialization.jsonObject(with: data!, options: [])

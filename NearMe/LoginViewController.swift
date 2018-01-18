@@ -21,23 +21,23 @@ class LoginViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         
-//        if(FBSDKAccessToken.current() == nil)
-//        {
-//            print(FBSDKAccessToken.current().permissions)
-//            // Graph Path : "me" is going to get current user logged in
-//            let graphRequest = FBSDKGraphRequest(graphPath: "me", parameters: ["fields" : "id, name, email"])
-//            let connection = FBSDKGraphRequestConnection()
-//
-//            connection.add(graphRequest, completionHandler: { (connection, result, error) -> Void in
-//                let data = result as! [String : AnyObject]
-//                let name = data["name"] as? String
-//                print("logged in user name is \(String(describing: name))")
-//
-//                let FBid = data["id"] as? String
-//                print("Facebook id is \(String(describing: FBid))")
-//            })
-//            connection.start()
-//        }
+        if(FBSDKAccessToken.current() != nil)
+        {
+            print(FBSDKAccessToken.current().permissions)
+            // Graph Path : "me" is going to get current user logged in
+            let graphRequest = FBSDKGraphRequest(graphPath: "me", parameters: ["fields" : "id, name, email"])
+            let connection = FBSDKGraphRequestConnection()
+
+            connection.add(graphRequest, completionHandler: { (connection, result, error) -> Void in
+                let data = result as! [String : AnyObject]
+                let name = data["name"] as? String
+                print("logged in user name is \(String(describing: name))")
+
+                let FBid = data["id"] as? String
+                print("Facebook id is \(String(describing: FBid))")
+            })
+            connection.start()
+        }
         
     }
     
@@ -81,11 +81,13 @@ class LoginViewController: UIViewController {
     func login(_ sender: Any) {
 
         //authenticateUser()
-        let nearbyPeopleVC:NearbyLocations = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ProfileViewController") as! NearbyLocations
-        let currentUser = User()
-        currentUser?.username = self.username.text
-        nearbyPeopleVC.currentUserProfile = currentUser
-        self.present(nearbyPeopleVC, animated: false, completion: nil)
+        let nearbyLocations:NearbyLocations = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ProfileViewController") as! NearbyLocations
+        var userloggedIn = User()
+        userloggedIn?.firstName = self.username.text
+        userloggedIn?.username = self.username.text
+        nearbyLocations.userloggedIn = userloggedIn
+        
+        self.present(nearbyLocations, animated: false, completion: nil)
     }
     
     func scanUsers (_ completeionHandler: @escaping (_ response: AWSDynamoDBPaginatedOutput?, _ error: NSError?) -> Void) {
@@ -120,6 +122,7 @@ class LoginViewController: UIViewController {
             let nearbyPeopleVC:NearbyLocations = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ProfileViewController") as! NearbyLocations
             let currentUser = User()
             currentUser?.username = self.username.text
+            currentUser?.firstName = self.username.text
             nearbyPeopleVC.currentUserProfile = currentUser
             self.present(nearbyPeopleVC, animated: false, completion: nil)
         }

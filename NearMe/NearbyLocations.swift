@@ -12,6 +12,7 @@ import GoogleMaps
 import GooglePlaces
 import AWSDynamoDB
 import Alamofire
+import AlamofireSwiftyJSON
 
 class NearbyLocations: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
 
@@ -34,6 +35,8 @@ class NearbyLocations: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
     var zoomLevel: Float = 15.0
     var likelyPlaces: [GMSPlace] = []
     var selectedPlace: GMSPlace?
+    var userloggedIn: User?
+    
     // A default location to use when location permission is not granted.
     let defaultLocation = CLLocation(latitude: -33.869405, longitude: 151.199)
     
@@ -264,6 +267,7 @@ class NearbyLocations: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
 }
 
 extension NearbyLocations: CLLocationManagerDelegate {
+    
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         let location: CLLocation = locations.last!
         print("Location: \(location)")
@@ -306,10 +310,10 @@ extension NearbyLocations: CLLocationManagerDelegate {
 }
 
 extension NearbyLocations : UITableViewDataSource, UITableViewDelegate {
+    
     override func viewDidAppear(_ animated: Bool) {
         placesTableView.delegate = self as? UITableViewDelegate
         placesTableView.dataSource = self
-        
         placesTableView.reloadData()
     }
     
@@ -354,11 +358,37 @@ extension NearbyLocations : UITableViewDataSource, UITableViewDelegate {
         let nearbyPeopleVC:NearbyPeopleViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "NearbyPeopleViewController") as! NearbyPeopleViewController
         nearbyPeopleVC.userLoggedIn = User()
         nearbyPeopleVC.userLoggedIn?.buildingOccupied = placesTableView.cellForRow(at: indexPath)?.textLabel?.text
-//      updateLocation(locality: (nearbyPeopleVC.userLoggedIn?.buildingOccupied)!)
+        updateLocation(locality: (nearbyPeopleVC.userLoggedIn?.buildingOccupied)!)
         nearbyPeopleVC.userLoggedIn?.username = self.currentUserProfile?.username
         self.present(nearbyPeopleVC, animated: false, completion: nil)
         
 //      listLikelyPlaces()
+    }
+    
+    func updateLocation(locality: String) {
+        
+        let localityTrimmed = locality.replacingOccurrences(of: " ", with: "")
+        
+        //this is brannan lobby wifi
+//        let url = URL(string: "http://10.12.228.178:8080/updateLocation")
+//        let url = URL(string: "http://192.168.1.18:8080/updateLocation")
+//        let url = URL(string: "http://10.150.58.16:8080/updateLocation")
+
+        let url = URL(string: "http://10.150.58.1:8080/updateLocation")
+        
+        let userDetails : Parameters = [
+            "firstName": self.userloggedIn?.firstName,
+            "username": self.userloggedIn?.username,
+            "locality": locality,
+            "sex": "MALE"
+        ]
+        
+
+        Alamofire.request(url!, method: .post, parameters: userDetails, encoding: JSONEncoding.default)
+            .response { response in
+                print(response.response?.statusCode)
+        }
+        
     }
     
 }
