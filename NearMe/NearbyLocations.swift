@@ -19,7 +19,6 @@ class NearbyLocations: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
     @IBOutlet weak var placesTableView: UITableView!
     @IBOutlet weak var nameLabel: UILabel!
     
-    public var currentUserProfile : User?
     var suggestedResturants : [googleLocation] = []
     //Pull from Cache 
     var resturantsAround : [String] = []
@@ -356,10 +355,9 @@ extension NearbyLocations : UITableViewDataSource, UITableViewDelegate {
         }
         
         let nearbyPeopleVC:NearbyPeopleViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "NearbyPeopleViewController") as! NearbyPeopleViewController
-        nearbyPeopleVC.userLoggedIn = User()
+        nearbyPeopleVC.userLoggedIn = self.userloggedIn
         nearbyPeopleVC.userLoggedIn?.buildingOccupied = placesTableView.cellForRow(at: indexPath)?.textLabel?.text
         updateLocation(locality: (nearbyPeopleVC.userLoggedIn?.buildingOccupied)!)
-        nearbyPeopleVC.userLoggedIn?.username = self.currentUserProfile?.username
         self.present(nearbyPeopleVC, animated: false, completion: nil)
         
 //      listLikelyPlaces()
@@ -369,12 +367,10 @@ extension NearbyLocations : UITableViewDataSource, UITableViewDelegate {
         
         let localityTrimmed = locality.replacingOccurrences(of: " ", with: "")
         
-        //this is brannan lobby wifi
+        //Brannan lobby wifi
 //        let url = URL(string: "http://10.12.228.178:8080/updateLocation")
-//        let url = URL(string: "http://192.168.1.18:8080/updateLocation")
-//        let url = URL(string: "http://10.150.58.16:8080/updateLocation")
-
-        let url = URL(string: "http://10.150.58.1:8080/updateLocation")
+        //Room Wifi
+        let url = URL(string: "http://192.168.1.18:8080/updateLocation")
         
         let userDetails : Parameters = [
             "firstName": self.userloggedIn?.firstName,

@@ -27,7 +27,7 @@ class NearbyPeopleViewController: UIViewController {
     var results: [AWSDynamoDBObjectModel]?
     var strangersAround = Set<Person>()
 //  Using NSMutableSet because AWS
-    var friendsAround = NSMutableSet()
+    var friendsAround = Set<Person>()
 //    var strangers = NSMutableSet()
     var userLoggedIn: User?
     var currentUserLocation: CLLocation?
@@ -61,6 +61,9 @@ class NearbyPeopleViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+        userLoggedIn?.headshot = #imageLiteral(resourceName: "headshot3")
+        getUserPicture(facebookId: (userLoggedIn?.facebookId?.stringValue)!)
         
         //Check if location services is on first
         determineMyCurrentLocation()
@@ -358,33 +361,63 @@ class NearbyPeopleViewController: UIViewController {
 //       scanNearbyUsers(completionHandler)
         
         //this is roomwifi
-//        let url = URL(string: "http://192.168.1.18:8080/pullAccountsLocal")
+        let url = URL(string: "http://192.168.1.18:8080/pullAccountsLocal")
         //this is brannan lobby wifi
 //        let url = URL(string: "http://10.12.228.178:8080/pullAccountsLocal")
+        userLoggedIn?.friends = ["Bob" ,"Nathan"]
         
-        let url = URL(string: "http://10.150.58.1:8080/pullAccountsLocal")
-        
-        let task = URLSession.shared.dataTask(with: url!) { (data, response, error) in
-
-            //add guard statement for unsuccessful requests
-            // Handle nil better
-            if (data != nil) {
-                if let json = try? JSONSerialization.jsonObject(with: data!, options: []) {
-                
+        Alamofire.request(url!).responseJSON {
+            response in
+            if let json = response.result.value {
+                print("JSON: \(json)")
                 let users = json as! [Any]
                 for someUser in users {
                     let userDetails = someUser as! [String: Any]
                     var newPerson = Person()
                     newPerson.firstName = userDetails["firstName"] as! String
+                    let friends: [String] = userDetails["friends"] as! [String]
                     if (newPerson.firstName != self.userLoggedIn?.firstName) {
-                        self.strangersAround.insert(newPerson)
+                        for friend in friends {
+                            if (self.userLoggedIn?.friends!.contains(friend))! {
+                                self.friendsAround.insert(newPerson)
+                            } else {
+                                self.strangersAround.insert(newPerson)
+                            }
+                        }
                     }
-                }
                 }
             }
         }
-        task.resume()
         
+//        let task = URLSession.shared.dataTask(with: url!) { (data, response, error) in
+//
+//            //add guard statement for unsuccessful requests
+//            // Handle nil better
+//
+//                if let json = try? JSONSerialization.jsonObject(with: data!, options: []) {
+//
+//                let users = json as! [String: Any]
+//                for someUser in users {
+//                    let userDetails = someUser as! [String: Any]
+//                    var newPerson = Person()
+//                    newPerson.firstName = userDetails["firstName"] as! String
+//                    let friends: [String] = userDetails["friends"] as! [String]
+//                    if (newPerson.firstName != self.userLoggedIn?.firstName) {
+//                        for friend in friends {
+//                            if (self.userLoggedIn?.friends!.contains(friend))! {
+//                                self.friendsAround.insert(newPerson)
+//                            } else {
+//                                self.strangersAround.insert(newPerson)
+//                            }
+//                        }
+//
+//                    }
+//                }
+//                }
+//
+//        }
+//        task.resume()
+
     }
 
     @IBAction func viewProfile(_ sender: Any) {
@@ -405,7 +438,7 @@ class NearbyPeopleViewController: UIViewController {
         
         var headshot = #imageLiteral(resourceName: "headshot2")
         var pictureUrl = "http://graph.facebook.com/"
-        pictureUrl += facebookId
+        pictureUrl += (userLoggedIn?.facebookId?.stringValue)!
         pictureUrl += "/picture?type=large"
         
         var url = URL(string: pictureUrl)
@@ -417,14 +450,18 @@ class NearbyPeopleViewController: UIViewController {
                 } else {
                     if let usableData = data {
                         headshot  = UIImage(data: usableData)!
+                        self.userLoggedIn?.headshot = headshot
+                        self.PeopleNearbyTableView.reloadData()
                     }
                 }
+                
+                
             }
-            
+
             task.resume()
-            
-            return headshot
+
         }
+        
         return headshot
     }
     
@@ -470,7 +507,7 @@ class NearbyPeopleViewController: UIViewController {
      }
      */
     
-    /*
+     /*
      // Override to support rearranging the table view.
      override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {}
      */
@@ -554,19 +591,19 @@ extension NearbyPeopleViewController : UITableViewDataSource, UITableViewDelegat
         //      TODO: Check why view gets loaded without images - bug
         if (indexPath.section == 0) {
             cell.nameLabel.text = "Friend's Name"
-            cell.headshotViewImage.image = self.headshot
+            cell.headshotViewImage.image = userLoggedIn?.headshot
             cell.headshotViewImage.layer.cornerRadius = 15.0
             cell.headshotViewImage.layer.borderWidth = 3
             cell.headshotViewImage.layer.borderColor = UIColor.black.cgColor
-            cell.connectButton.titleLabel?.text = "reconnect"
+            cell.connectButton.titleLabel?.text = "Reconnect"
         } else {
             cell.nameLabel.text = self.strangersAround[strangersAround.index(self.strangersAround.startIndex, offsetBy: indexPath.row)].firstName
-            //          cell.occupationLabel.text = self.strangersAround[strangersAround.index(self.strangersAround.startIndex, offsetBy: indexPath.row)].
+            //  cell.occupationLabel.text = self.strangersAround[strangersAround.index(self.strangersAround.startIndex, offsetBy: indexPath.row)].
             
-            //          cell.headshotViewImage.image = self.strangersAround[strangersAround.index(self.strangersAround.startIndex, offsetBy: indexPath.row)].headshotImage
+            //  cell.headshotViewImage.image = self.strangersAround[strangersAround.index(self.strangersAround.startIndex, offsetBy: indexPath.row)].headshotImage
             
-            //          cell.headshotViewImage.image = self.profileImage
-            cell.headshotViewImage.image = randomImage()
+            //  cell.headshotViewImage.image = self.profileImage
+            cell.headshotViewImage.image = userLoggedIn?.headshot
             cell.headshotViewImage.layer.cornerRadius = 15.0
             cell.headshotViewImage.layer.borderWidth = 3
             cell.headshotViewImage.layer.borderColor = UIColor.black.cgColor
@@ -582,7 +619,7 @@ extension NearbyPeopleViewController : UITableViewDataSource, UITableViewDelegat
         let selectedCell = PeopleNearbyTableView.cellForRow(at: indexPath) as! UserTableViewCell
         selectedUser?.firstName = selectedCell.nameLabel.text
         selectedUser?.location = userLoggedIn?.location
-        profileVC.currentUserProfile = selectedUser
+        profileVC.userloggedIn = selectedUser
         self.present(profileVC, animated: false, completion: nil)
     }
     

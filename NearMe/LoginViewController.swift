@@ -15,12 +15,14 @@ import FBSDKLoginKit
 class LoginViewController: UIViewController {
     
     var results: [AWSDynamoDBObjectModel]?
+    var userloggedIn = User()
    
     @IBOutlet weak var username: UITextField!
     @IBOutlet weak var password: UITextField!
     
     override func viewWillAppear(_ animated: Bool) {
         
+        //Login persistence
         if(FBSDKAccessToken.current() != nil)
         {
             print(FBSDKAccessToken.current().permissions)
@@ -35,6 +37,19 @@ class LoginViewController: UIViewController {
 
                 let FBid = data["id"] as? String
                 print("Facebook id is \(String(describing: FBid))")
+
+                let nearbyLocations:NearbyLocations = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ProfileViewController") as! NearbyLocations
+
+                self.userloggedIn?.firstName = name
+                self.userloggedIn?.username = name
+
+                if let facebookID = Int(FBid!) {
+                    let fbID = NSNumber(value: facebookID)
+                    self.userloggedIn?.facebookId = fbID
+                }
+                nearbyLocations.userloggedIn = self.userloggedIn
+
+                self.present(nearbyLocations, animated: false, completion: nil)
             })
             connection.start()
         }
@@ -123,7 +138,6 @@ class LoginViewController: UIViewController {
             let currentUser = User()
             currentUser?.username = self.username.text
             currentUser?.firstName = self.username.text
-            nearbyPeopleVC.currentUserProfile = currentUser
             self.present(nearbyPeopleVC, animated: false, completion: nil)
         }
         }

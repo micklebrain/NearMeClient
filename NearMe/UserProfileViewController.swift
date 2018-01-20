@@ -26,9 +26,9 @@ class UserProfileViewController: UIViewController {
         
         //Brannan Lobby wifi
 //        let url = URL(string: "http://10.12.228.178:8080/getFriendRequests/" + user)
-//        let url = URL(string: "http://10.1.80.19:8080/getFriendRequests/" + user)
+        //Room Wifi
+        let url = URL(string: "http://192.168.1.18:8080/getFriendRequests/" + user)
         
-        let url = URL(string: "http://10.150.58.1:8080/getFriendRequests/" + user)
         let task = URLSession.shared.dataTask(with: url!) { (data, response, error) in
             
             let json = try? JSONSerialization.jsonObject(with: data!, options: [])
