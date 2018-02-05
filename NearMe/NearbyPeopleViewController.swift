@@ -20,7 +20,7 @@ import SwiftyJSON
 class NearbyPeopleViewController: UIViewController {
     
     @IBOutlet weak var nameLabel: UILabel!
-    let section = ["Friends", "Potential Friends"]
+    let section = ["Friends", "Strangers"]
     //add collegaues, same school
     var locationManager : CLLocationManager!
     var people: [Person] = []
@@ -42,7 +42,7 @@ class NearbyPeopleViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-       nameLabel.text = userLoggedIn?.username
+       nameLabel.text = userLoggedIn?.firstName
         
         getLocation()
         
@@ -62,8 +62,11 @@ class NearbyPeopleViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        let tbc = tabBarController as! MainTabBarController
+        self.userLoggedIn = tbc.userloggedIn
+        
         userLoggedIn?.headshot = #imageLiteral(resourceName: "headshot3")
-        getUserPicture(facebookId: (userLoggedIn?.facebookId?.stringValue)!)
+        getUserPicture(facebookId: (userLoggedIn?.facebookId)!)
         
         //Check if location services is on first
         determineMyCurrentLocation()
@@ -196,7 +199,6 @@ class NearbyPeopleViewController: UIViewController {
         self.headshot = UIImage(contentsOfFile: downloadingFileUrl.path)
     }
     
-    
     //  MARK: - Location tracking
     @IBAction func presenceSwitch(_ sender: Any) {
         let nearbyPeopleVC:UserProfileViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "UserProfileViewController") as! UserProfileViewController
@@ -252,10 +254,9 @@ class NearbyPeopleViewController: UIViewController {
 //          userLoggedIn.itemId = NoSQLSampleDataGenerator.randomSampleStringWithAttributeName("itemId")
 //          userLoggedIn?.username = currentUser?.username
             
-            userLoggedIn?.firstName = userLoggedIn?.username
 //          userLoggedIn?.online = true as Bool as NSNumber
             //        userLoggedIn?.relationshipStatus = "single"
-            userLoggedIn?.facebookId = 1367878021 as NSNumber
+            userLoggedIn?.facebookId = "1367878021"
             //        self.friendsAround.add(2)
             //        userLoggedIn?.friends = self.friendsAround
             
@@ -282,7 +283,7 @@ class NearbyPeopleViewController: UIViewController {
     }
     
     //  Scans all of table
-    func scanNearbyUsers (_ completeionHandler: @escaping (_ response: AWSDynamoDBPaginatedOutput?, _ error: NSError?) -> Void) {
+    func scanNearbyUsers (_ completionHandler: @escaping (_ response: AWSDynamoDBPaginatedOutput?, _ error: NSError?) -> Void) {
         
         let objectMapper = AWSDynamoDBObjectMapper.default()
         let scanExpression = AWSDynamoDBScanExpression()
@@ -291,7 +292,7 @@ class NearbyPeopleViewController: UIViewController {
         
         objectMapper.scan(User.self, expression: scanExpression) { (response: AWSDynamoDBPaginatedOutput?, error: Error?) in
             DispatchQueue.main.async(execute: {
-                completeionHandler(response, error as NSError?)
+                completionHandler(response, error as NSError?)
             })
         }
     }
@@ -360,64 +361,56 @@ class NearbyPeopleViewController: UIViewController {
         //Scan actualy Prod DynamoDB
 //       scanNearbyUsers(completionHandler)
         
+        let utilities = Util()
+//        let wifiAddress = utilities.getWiFiAddress() as! String
+//        let url = URL(string: "http://" + wifiAddress + ":8080/updateLocation")
+        
         //this is roomwifi
-        let url = URL(string: "http://192.168.1.18:8080/pullAccountsLocal")
+//        let url = URL(string: "http://192.168.1.18:8080/pullAccountsLocal")
+        //NoiseBridge
+//        let url = URL(string: "http://10.20.1.137:8080/pullAccountsLocal")
         //this is brannan lobby wifi
 //        let url = URL(string: "http://10.12.228.178:8080/pullAccountsLocal")
-        userLoggedIn?.friends = ["Bob" ,"Nathan"]
+        let url = URL(string: "https://fathomless-gorge-73815.herokuapp.com/pullAccounts")
+        userLoggedIn?.friends = ["Nathan"]
         
-        Alamofire.request(url!).responseJSON {
-            response in
+        let userDetails : Parameters = [
+            "firstName": self.userLoggedIn?.firstName,
+            "username": self.userLoggedIn?.username,
+            "facebookId": self.userLoggedIn?.facebookId,
+            "locality": self.userLoggedIn?.buildingOccupied,
+            "sex": "MALE"
+        ]
+        
+        Alamofire.request(url!, method: .post, parameters: userDetails, encoding: JSONEncoding.default)
+            .responseJSON{ response in
             if let json = response.result.value {
                 print("JSON: \(json)")
                 let users = json as! [Any]
                 for someUser in users {
                     let userDetails = someUser as! [String: Any]
                     var newPerson = Person()
-                    newPerson.firstName = userDetails["firstName"] as! String
-                    let friends: [String] = userDetails["friends"] as! [String]
-                    if (newPerson.firstName != self.userLoggedIn?.firstName) {
-                        for friend in friends {
-                            if (self.userLoggedIn?.friends!.contains(friend))! {
-                                self.friendsAround.insert(newPerson)
-                            } else {
-                                self.strangersAround.insert(newPerson)
-                            }
+//                    newPerson.firstName = userDetails["firstName"] as! String
+                    newPerson.firstName = "Nathan"
+                    newPerson.facebookId = userDetails["facebookId"] as! String
+                    if (self.userLoggedIn?.facebookId != newPerson.facebookId) {
+                        if ((self.userLoggedIn?.friends!.contains(newPerson.firstName))!) {
+                            self.friendsAround.insert(newPerson)
+                        } else {
+                            self.strangersAround.insert(newPerson)
                         }
                     }
                 }
+                self.PeopleNearbyTableView.reloadData()
+            } else {
+                var person = Person()
+                person.firstName = "Nobody Around"
+                self.friendsAround.insert(person)
+                self.strangersAround.insert(person)
+                self.PeopleNearbyTableView.reloadData()
             }
         }
-        
-//        let task = URLSession.shared.dataTask(with: url!) { (data, response, error) in
-//
-//            //add guard statement for unsuccessful requests
-//            // Handle nil better
-//
-//                if let json = try? JSONSerialization.jsonObject(with: data!, options: []) {
-//
-//                let users = json as! [String: Any]
-//                for someUser in users {
-//                    let userDetails = someUser as! [String: Any]
-//                    var newPerson = Person()
-//                    newPerson.firstName = userDetails["firstName"] as! String
-//                    let friends: [String] = userDetails["friends"] as! [String]
-//                    if (newPerson.firstName != self.userLoggedIn?.firstName) {
-//                        for friend in friends {
-//                            if (self.userLoggedIn?.friends!.contains(friend))! {
-//                                self.friendsAround.insert(newPerson)
-//                            } else {
-//                                self.strangersAround.insert(newPerson)
-//                            }
-//                        }
-//
-//                    }
-//                }
-//                }
-//
-//        }
-//        task.resume()
-
+    
     }
 
     @IBAction func viewProfile(_ sender: Any) {
@@ -436,9 +429,9 @@ class NearbyPeopleViewController: UIViewController {
     
     func getUserPicture (facebookId : String) -> UIImage {
         
-        var headshot = #imageLiteral(resourceName: "headshot2")
+        var headshot = #imageLiteral(resourceName: "empty-headshot")
         var pictureUrl = "http://graph.facebook.com/"
-        pictureUrl += (userLoggedIn?.facebookId?.stringValue)!
+        pictureUrl += (userLoggedIn?.facebookId)!
         pictureUrl += "/picture?type=large"
         
         var url = URL(string: pictureUrl)
@@ -454,8 +447,6 @@ class NearbyPeopleViewController: UIViewController {
                         self.PeopleNearbyTableView.reloadData()
                     }
                 }
-                
-                
             }
 
             task.resume()
@@ -590,7 +581,7 @@ extension NearbyPeopleViewController : UITableViewDataSource, UITableViewDelegat
         
         //      TODO: Check why view gets loaded without images - bug
         if (indexPath.section == 0) {
-            cell.nameLabel.text = "Friend's Name"
+            cell.nameLabel.text = self.friendsAround[friendsAround.index(self.friendsAround.startIndex, offsetBy: indexPath.row)].firstName
             cell.headshotViewImage.image = userLoggedIn?.headshot
             cell.headshotViewImage.layer.cornerRadius = 15.0
             cell.headshotViewImage.layer.borderWidth = 3

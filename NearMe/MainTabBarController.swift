@@ -1,14 +1,16 @@
 //
-//  IceBreakerViewController.swift
+//  MainTabBarController.swift
 //  NearMe
 //
-//  Created by Nathan Nguyen on 6/29/17.
-//  Copyright © 2017 Nathan Nguyen. All rights reserved.
+//  Created by Nathan Thai Nguyen on 2/3/18.
+//  Copyright © 2018 Nathan Nguyen. All rights reserved.
 //
 
 import UIKit
 
-class IceBreakerViewController: UIViewController {
+class MainTabBarController: UITabBarController {
+    
+    var userloggedIn : User?
 
     override func viewDidLoad() {
         super.viewDidLoad()

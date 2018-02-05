@@ -25,7 +25,7 @@ class User : AWSDynamoDBObjectModel,AWSDynamoDBModeling {
     var headshot: UIImage?
     
     var address : String?
-    var facebookId : NSNumber?
+    var facebookId : String?
 //  var occupation : String?
 //  var relationshipStatus : String?
     var password : String?

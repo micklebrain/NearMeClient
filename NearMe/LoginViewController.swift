@@ -32,24 +32,23 @@ class LoginViewController: UIViewController {
 
             connection.add(graphRequest, completionHandler: { (connection, result, error) -> Void in
                 let data = result as! [String : AnyObject]
-                let name = data["name"] as? String
+                var name = data["name"] as! String
+                var splitName = name.components(separatedBy: " ")
+                let firstName = splitName.removeFirst()
                 print("logged in user name is \(String(describing: name))")
 
                 let FBid = data["id"] as? String
                 print("Facebook id is \(String(describing: FBid))")
 
-                let nearbyLocations:NearbyLocations = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ProfileViewController") as! NearbyLocations
+                let maintabbarVC:MainTabBarController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "MainTabBarController") as! MainTabBarController
 
-                self.userloggedIn?.firstName = name
-                self.userloggedIn?.username = name
+                self.userloggedIn?.firstName = firstName
+                self.userloggedIn?.username = "Tester"
+                self.userloggedIn?.facebookId = FBid
+  
+                maintabbarVC.userloggedIn = self.userloggedIn
 
-                if let facebookID = Int(FBid!) {
-                    let fbID = NSNumber(value: facebookID)
-                    self.userloggedIn?.facebookId = fbID
-                }
-                nearbyLocations.userloggedIn = self.userloggedIn
-
-                self.present(nearbyLocations, animated: false, completion: nil)
+                self.present(maintabbarVC, animated: false, completion: nil)
             })
             connection.start()
         }
@@ -72,7 +71,7 @@ class LoginViewController: UIViewController {
         }
         
         print("done")
-        
+    
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -97,10 +96,7 @@ class LoginViewController: UIViewController {
 
         //authenticateUser()
         let nearbyLocations:NearbyLocations = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ProfileViewController") as! NearbyLocations
-        var userloggedIn = User()
-        userloggedIn?.firstName = self.username.text
-        userloggedIn?.username = self.username.text
-        nearbyLocations.userloggedIn = userloggedIn
+        nearbyLocations.userloggedIn = self.userloggedIn
         
         self.present(nearbyLocations, animated: false, completion: nil)
     }

@@ -10,6 +10,10 @@
 		021FD62700298EF1005D4956 /* Pods_NearMe_NearMe.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1BCBE980E97A5D8E503C0586 /* Pods_NearMe_NearMe.framework */; };
 		0CE85591E20A411A614C291E /* Pods_NearMe.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8ED9A6C543A4E92AB8B8EAE5 /* Pods_NearMe.framework */; };
 		2A27D5921FCFEAE200331A63 /* UserProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A27D5911FCFEAE200331A63 /* UserProfileViewController.swift */; };
+		2A37F9E72026CFDE00CF79E4 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A37F9E62026CFDE00CF79E4 /* MainTabBarController.swift */; };
+		2A43C6DE2017F5370082C69C /* ifaddrs.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A43C6DD2017F5370082C69C /* ifaddrs.m */; };
+		2A43C6E02017F6450082C69C /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A43C6DF2017F6450082C69C /* Util.swift */; };
+		2A89C7322016D7D500C10AF2 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A89C7312016D7D500C10AF2 /* Constants.swift */; };
 		2A9CDBDE1FF80DE7005AAF4F /* UserAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A9CDBDD1FF80DE7005AAF4F /* UserAccount.swift */; };
 		A5281CC11EAEAF3D003B9489 /* NoSqlSampleDataGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5281CC01EAEAF3D003B9489 /* NoSqlSampleDataGenerator.swift */; };
 		A5281CC31EAEEBA8003B9489 /* NoSQLModelHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5281CC21EAEEBA8003B9489 /* NoSQLModelHelpers.swift */; };
@@ -18,7 +22,6 @@
 		A5462D781EF0A4A6000970EB /* NearbyTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5462D771EF0A4A6000970EB /* NearbyTableView.swift */; };
 		A5462D7A1EF0A54C000970EB /* NearbyPeopleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5462D791EF0A54C000970EB /* NearbyPeopleViewController.swift */; };
 		A5462D7C1EF0AB3F000970EB /* UserTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5462D7B1EF0AB3F000970EB /* UserTableViewCell.swift */; };
-		A566FEE01F05669C0060105D /* IceBreakerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A566FEDF1F05669C0060105D /* IceBreakerViewController.swift */; };
 		A566FEE21F059C390060105D /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = A566FEE11F059C390060105D /* Location.swift */; };
 		A5A645B11EA6F4FB00D411E1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5A645B01EA6F4FB00D411E1 /* AppDelegate.swift */; };
 		A5A645B61EA6F4FB00D411E1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A5A645B41EA6F4FB00D411E1 /* Main.storyboard */; };
@@ -81,6 +84,11 @@
 		1BCBE980E97A5D8E503C0586 /* Pods_NearMe_NearMe.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NearMe_NearMe.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		25F11A12CBAC0E7A7F26C7F6 /* Pods-NearMe-NearMe.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NearMe-NearMe.release.xcconfig"; path = "Pods/Target Support Files/Pods-NearMe-NearMe/Pods-NearMe-NearMe.release.xcconfig"; sourceTree = "<group>"; };
 		2A27D5911FCFEAE200331A63 /* UserProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileViewController.swift; sourceTree = "<group>"; };
+		2A37F9E62026CFDE00CF79E4 /* MainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
+		2A43C6DC2017F5360082C69C /* NearMe-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NearMe-Bridging-Header.h"; sourceTree = "<group>"; };
+		2A43C6DD2017F5370082C69C /* ifaddrs.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ifaddrs.m; sourceTree = "<group>"; };
+		2A43C6DF2017F6450082C69C /* Util.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
+		2A89C7312016D7D500C10AF2 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		2A9CDBDD1FF80DE7005AAF4F /* UserAccount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAccount.swift; sourceTree = "<group>"; };
 		367B6E6AAE824E61258E6144 /* Pods-NearMe.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NearMe.debug.xcconfig"; path = "Pods/Target Support Files/Pods-NearMe/Pods-NearMe.debug.xcconfig"; sourceTree = "<group>"; };
 		76F2B9DC5B976E8CE124491E /* Pods-NearMeUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NearMeUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-NearMeUITests/Pods-NearMeUITests.release.xcconfig"; sourceTree = "<group>"; };
@@ -96,7 +104,6 @@
 		A5462D771EF0A4A6000970EB /* NearbyTableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NearbyTableView.swift; sourceTree = "<group>"; };
 		A5462D791EF0A54C000970EB /* NearbyPeopleViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NearbyPeopleViewController.swift; sourceTree = "<group>"; };
 		A5462D7B1EF0AB3F000970EB /* UserTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserTableViewCell.swift; sourceTree = "<group>"; };
-		A566FEDF1F05669C0060105D /* IceBreakerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IceBreakerViewController.swift; sourceTree = "<group>"; };
 		A566FEE11F059C390060105D /* Location.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
 		A566FEE31F0ADFD50060105D /* NearMe.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = NearMe.entitlements; sourceTree = "<group>"; };
 		A58D4F941EEC7CFA003A9365 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
@@ -168,6 +175,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2A89C7302016D7C500C10AF2 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				2A89C7312016D7D500C10AF2 /* Constants.swift */,
+				2A43C6DF2017F6450082C69C /* Util.swift */,
+			);
+			name = Utils;
+			sourceTree = "<group>";
+		};
 		A2C2DF2A228BFCD37941843B /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -230,6 +246,7 @@
 		A5A645AF1EA6F4FB00D411E1 /* NearMe */ = {
 			isa = PBXGroup;
 			children = (
+				2A89C7302016D7C500C10AF2 /* Utils */,
 				A566FEE31F0ADFD50060105D /* NearMe.entitlements */,
 				A5E4464F1EDF169D00791822 /* ViewControllers */,
 				A5E4464E1EDF166400791822 /* AWS Tables */,
@@ -315,8 +332,10 @@
 				A5E446451ED68A8A00791822 /* LoginViewController.swift */,
 				A5462D751EF0A0ED000970EB /* NearbyLocations.swift */,
 				A5462D791EF0A54C000970EB /* NearbyPeopleViewController.swift */,
-				A566FEDF1F05669C0060105D /* IceBreakerViewController.swift */,
 				2A27D5911FCFEAE200331A63 /* UserProfileViewController.swift */,
+				2A43C6DD2017F5370082C69C /* ifaddrs.m */,
+				2A43C6DC2017F5360082C69C /* NearMe-Bridging-Header.h */,
+				2A37F9E62026CFDE00CF79E4 /* MainTabBarController.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -395,12 +414,13 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0830;
-				LastUpgradeCheck = 0830;
+				LastUpgradeCheck = 0920;
 				ORGANIZATIONNAME = "Nathan Nguyen";
 				TargetAttributes = {
 					A5A645AC1EA6F4FB00D411E1 = {
 						CreatedOnToolsVersion = 8.3.1;
 						DevelopmentTeam = DP8WZRYLZG;
+						LastSwiftMigration = 0920;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.Push = {
@@ -677,7 +697,6 @@
 			files = (
 				A5E446461ED68A8A00791822 /* LoginViewController.swift in Sources */,
 				A540DAA61F28AA8500883AB5 /* Account.swift in Sources */,
-				A566FEE01F05669C0060105D /* IceBreakerViewController.swift in Sources */,
 				A5281CC31EAEEBA8003B9489 /* NoSQLModelHelpers.swift in Sources */,
 				2A27D5921FCFEAE200331A63 /* UserProfileViewController.swift in Sources */,
 				A5A645E61EA6FADF00D411E1 /* Person.swift in Sources */,
@@ -685,14 +704,18 @@
 				A5462D781EF0A4A6000970EB /* NearbyTableView.swift in Sources */,
 				2A9CDBDE1FF80DE7005AAF4F /* UserAccount.swift in Sources */,
 				A5E446531EDF6ECC00791822 /* AccountsTable.swift in Sources */,
+				2A43C6E02017F6450082C69C /* Util.swift in Sources */,
 				A5E446491ED7A81300791822 /* User.swift in Sources */,
 				A5A645E81EA720BF00D411E1 /* Student.swift in Sources */,
 				A5F0431E1F0E932F00D0BBAD /* googleLocation.swift in Sources */,
 				A5CAABCE1EA95B6800A16E98 /* UserIdentityAccess.swift in Sources */,
 				A5E4464B1ED7BA9200791822 /* SignupViewController.swift in Sources */,
+				2A43C6DE2017F5370082C69C /* ifaddrs.m in Sources */,
 				A5462D7C1EF0AB3F000970EB /* UserTableViewCell.swift in Sources */,
 				A5A645B11EA6F4FB00D411E1 /* AppDelegate.swift in Sources */,
+				2A89C7322016D7D500C10AF2 /* Constants.swift in Sources */,
 				A566FEE21F059C390060105D /* Location.swift in Sources */,
+				2A37F9E72026CFDE00CF79E4 /* MainTabBarController.swift in Sources */,
 				A5A645E41EA6F9CE00D411E1 /* PeopleTableViewController.swift in Sources */,
 				A5CAABD21EAA7DF000A16E98 /* Locations.swift in Sources */,
 				A5462D761EF0A0ED000970EB /* NearbyLocations.swift in Sources */,
@@ -763,7 +786,9 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
@@ -771,7 +796,11 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -814,7 +843,9 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
@@ -822,7 +853,11 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -853,6 +888,7 @@
 			baseConfigurationReference = 151C842C815E077C5DA13581 /* Pods-NearMe-NearMe.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = NearMe/NearMe.entitlements;
 				DEVELOPMENT_TEAM = DP8WZRYLZG;
 				ENABLE_BITCODE = YES;
@@ -896,6 +932,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.crystal.NearMe;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "NearMe/NearMe-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
@@ -905,6 +943,7 @@
 			baseConfigurationReference = 25F11A12CBAC0E7A7F26C7F6 /* Pods-NearMe-NearMe.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = NearMe/NearMe.entitlements;
 				DEVELOPMENT_TEAM = DP8WZRYLZG;
 				ENABLE_BITCODE = YES;
@@ -936,6 +975,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.crystal.NearMe;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "NearMe/NearMe-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Release;

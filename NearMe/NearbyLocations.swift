@@ -29,7 +29,7 @@ class NearbyLocations: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
     var apiKey : String?
     var locationManager : CLLocationManager!
     var currentUserLocation: CLLocation?
-    var mapView: GMSMapView!
+//    var mapView: GMSMapView!
     var placesClient: GMSPlacesClient!
     var zoomLevel: Float = 15.0
     var likelyPlaces: [GMSPlace] = []
@@ -54,54 +54,30 @@ class NearbyLocations: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
             locationManager?.startUpdatingLocation()
         }
         
-        let camera = GMSCameraPosition.camera(withLatitude: self.defaultLocation.coordinate.latitude,
-                                              longitude: self.defaultLocation.coordinate.longitude,
-                                              zoom: zoomLevel)
+//        let camera = GMSCameraPosition.camera(withLatitude: self.defaultLocation.coordinate.latitude,
+//                                              longitude: self.defaultLocation.coordinate.longitude,
+//                                              zoom: zoomLevel)
         
-        mapView = GMSMapView.map(withFrame: view.bounds, camera: camera)
-        mapView.settings.myLocationButton = true
-        mapView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        
-        view.addSubview(mapView)
-        mapView.isHidden = true
+//        mapView = GMSMapView.map(withFrame: view.bounds, camera: camera)
+//        mapView.settings.myLocationButton = true
+//        mapView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+//
+//        view.addSubview(mapView)
+//        mapView.isHidden = true
         
         let objectMapper = AWSDynamoDBObjectMapper.default()
         
     }
-
+    
+    override func viewWillAppear(_ animated: Bool) {
+        let tbc = self.tabBarController as! MainTabBarController
+        self.userloggedIn = tbc.userloggedIn
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-    //  Multithreading? Concurrent?
-//    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-//
-//        let userLocation:CLLocation = locations[0] as CLLocation
-//        latitude = userLocation.coordinate.latitude
-//        longitude = userLocation.coordinate.longitude
-//
-//         locateNearby()
-//        //Shouldnt have both
-//        //    manager.stopUpdatingLocation()
-//        //   locationManager.stopUpdatingLocation()
-//
-//        //Update to get user's current location not managers
-//        CLGeocoder().reverseGeocodeLocation(userLocation, completionHandler: {(placemarks, error)->Void in
-//
-//            if (error != nil) {
-//                print("Reverse geocoder failed with error: " + (error?.localizedDescription)!)
-//                return
-//            }
-//
-//            if (placemarks?.count)! > 0 {
-//                let pm = placemarks?[0]
-//            } else {
-//                print("Problem with the data received from geocoder")
-//            }
-//        })
-//    }
     
     func requestResturant () {
     
@@ -128,97 +104,7 @@ class NearbyLocations: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
         }
         
     }
-    
-    func locateNearby() {
-        
-        let gplacesURL = URL(string:"https://maps.googleapis.com/maps/api/place/nearbysearch/json?location="+String(describing: latitude!)+","+String(describing: longitude!)+"&radius=31&key=AIzaSyBWdayUxe65RUQLv4QL6GcB_UXoxVlhaW0")
-        
-        if let url = gplacesURL {
-            let task = URLSession.shared.dataTask(with: gplacesURL!) { (data, response, error) in
-                if error != nil {
-                    print(error)
-                } else {
-                    if let usableData = data {
-                        let json = try? JSONSerialization.jsonObject(with: usableData, options: JSONSerialization.ReadingOptions.allowFragments)
-                        if let dictionary = json as? [String: Any] {
-                            self.resturantsAround.removeAll()
-                            if let nestedDictionary = dictionary["results"] as? [Any]{
-                                for nestednestedDictionary in nestedDictionary {
-                                    if let location = nestednestedDictionary as? [String: Any] {
-                                        let types: [String] = location["types"] as! [String]
-                                            if (!types.contains("locality") && !types.contains("route")) {
-                                                self.resturantsAround.append(location["name"] as! String)
-                                            }
-                                    }
-                                }
-                                self.resturantsAround.append( "Others")
-                            }
-                        }
-                    }
-                }
-            }
-            task.resume()
-            
-        }
-        
-    }
-    
-    // Find Nearby resturant from Google
-    func locateNearbyGCloud () {
-        // Getting nearby food locations
-        let urlString = URL(string:"https://maps.googleapis.com/maps/api/place/nearbysearch/json?"+"location=33.892260,-84.491042"+"&radius=1000&type=restaurant&keyword=burgers&key=AIzaSyCSLA7M3BdjNuDVRMtvAq2LLcrkLbkDhE8")
-        
-        let resturantsUrl = URL(string:"https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=37.7806579%2C-122.4070832&radius=500&type=restaurant&key=AIzaSyBWdayUxe65RUQLv4QL6GcB_UXoxVlhaW0")
-        
-        let localUrlString = URL(string:"http://nearmecrystal.appspot.com/pull")
-        
-        /*
-        let headers = [
-            "cache-control": "no-cache",
-            "postman-token": "1aeb2087-632a-fa1d-d41d-b986d65d4dfc"
-        ]
-        
-        let request = NSMutableURLRequest(url: NSURL(string: "https://nearmecrystal.appspot.com/pull")! as URL,
-                                          cachePolicy: .useProtocolCachePolicy,
-                                          timeoutInterval: 10.0)
-        request.httpMethod = "GET"
-        request.allHTTPHeaderFields = headers
-        
-        let session = URLSession.shared
-        let dataTask = session.dataTask(with: request as URLRequest, completionHandler: { (data, response, error) -> Void in
-            if (error != nil) {
-                print(error)
-            } else {
-                let httpResponse = response as? HTTPURLResponse
-                print(httpResponse)
-            }
-        })
-        
-        dataTask.resume()
- */
-        
-        //Completion Handler
-        if let url = localUrlString {
-            let task = URLSession.shared.dataTask(with: localUrlString!) { (data, response, error) in
-                if error != nil {
-                    print(error)
-                } else {
-                    if let usableData = data {
-                        let json = try? JSONSerialization.jsonObject(with: usableData, options: JSONSerialization.ReadingOptions.allowFragments)
-                        if let dictionary = json as? [Any] {
-                            for nestednestedDictionary in dictionary {
-                                if let location = nestednestedDictionary as? [String: Any] {
-                                    self.resturantsAround.append(location["name"] as! String)
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            task.resume()
-        }
-    }
-    
+
     func listLikelyPlaces() {
         likelyPlaces.removeAll()
 
@@ -231,7 +117,7 @@ class NearbyLocations: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
             if let likelihoodList = placeLikelihoods {
                 for likelihood in likelihoodList.likelihoods {
                     let place = likelihood.place
-                    if (!self.likelyPlaces.contains(place)) {
+                    if (!self.likelyPlaces.contains(place) && !place.name.contains("St") && !place.name.contains("street") && !place.name.contains("Ave")) {
                         self.likelyPlaces.append(place)
                     }
                 }
@@ -253,6 +139,13 @@ class NearbyLocations: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
         return resturantsAround[row]
     }
     
+    @IBAction func OpenProfile(_ sender: Any) {
+        
+        let userProfileVC:UserProfileViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "UserProfileViewController") as! UserProfileViewController
+        userProfileVC.userLoggedIn = self.userloggedIn
+        self.present(userProfileVC, animated: false, completion: nil)
+        
+    }
     /*
     // MARK: - Navigation
 
@@ -275,12 +168,12 @@ extension NearbyLocations: CLLocationManagerDelegate {
             longitude: location.coordinate.longitude,
             zoom: zoomLevel)
         
-        if mapView.isHidden {
-            mapView.isHidden = true
-            mapView.camera = camera
-        } else {
-            mapView.animate(to: camera)
-        }
+//        if mapView.isHidden {
+//            mapView.isHidden = true
+//            mapView.camera = camera
+//        } else {
+//            mapView.animate(to: camera)
+//        }
         
         listLikelyPlaces()
     }
@@ -292,7 +185,7 @@ extension NearbyLocations: CLLocationManagerDelegate {
         case .denied:
             print("User denied access to location.")
             // Display the map using the default location.
-            mapView.isHidden = false
+//            mapView.isHidden = false
         case .notDetermined:
             print("Location status not determined.")
         case .authorizedAlways: fallthrough
@@ -345,20 +238,25 @@ extension NearbyLocations : UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         selectedPlace = likelyPlaces[indexPath.row]
         
-        mapView.clear()
-        if selectedPlace != nil {
-            let marker = GMSMarker(position: (self.selectedPlace?.coordinate)!)
-            marker.title = selectedPlace?.name
-            marker.snippet = selectedPlace?.formattedAddress
-            marker.map = mapView
-            mapView.isHidden = false
-        }
+//        mapView.clear()
+//        if selectedPlace != nil {
+//            let marker = GMSMarker(position: (self.selectedPlace?.coordinate)!)
+//            marker.title = selectedPlace?.name
+//            marker.snippet = selectedPlace?.formattedAddress
+//            marker.map = mapView
+//            mapView.isHidden = false
+//        }
         
-        let nearbyPeopleVC:NearbyPeopleViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "NearbyPeopleViewController") as! NearbyPeopleViewController
-        nearbyPeopleVC.userLoggedIn = self.userloggedIn
-        nearbyPeopleVC.userLoggedIn?.buildingOccupied = placesTableView.cellForRow(at: indexPath)?.textLabel?.text
-        updateLocation(locality: (nearbyPeopleVC.userLoggedIn?.buildingOccupied)!)
-        self.present(nearbyPeopleVC, animated: false, completion: nil)
+        let tbc = self.tabBarController as! MainTabBarController
+        tbc.userloggedIn = self.userloggedIn
+        
+        tbc.selectedIndex = 2
+        
+//        let nearbyPeopleVC:NearbyPeopleViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "NearbyPeopleViewController") as! NearbyPeopleViewController
+//        nearbyPeopleVC.userLoggedIn = self.userloggedIn
+//        nearbyPeopleVC.userLoggedIn?.buildingOccupied = placesTableView.cellForRow(at: indexPath)?.textLabel?.text
+//        updateLocation(locality: (nearbyPeopleVC.userLoggedIn?.buildingOccupied)!)
+//        self.present(nearbyPeopleVC, animated: false, completion: nil)
         
 //      listLikelyPlaces()
     }
@@ -367,24 +265,34 @@ extension NearbyLocations : UITableViewDataSource, UITableViewDelegate {
         
         let localityTrimmed = locality.replacingOccurrences(of: " ", with: "")
         
-        //Brannan lobby wifi
-//        let url = URL(string: "http://10.12.228.178:8080/updateLocation")
-        //Room Wifi
-        let url = URL(string: "http://192.168.1.18:8080/updateLocation")
+//        let utilities = Util()
+//        let wifiAddress = utilities.getWiFiAddress() as! String
+//        let url = URL(string: "http://" + wifiAddress + ":8080/updateLocation")
+        let url = URL(string: "https://fathomless-gorge-73815.herokuapp.com/updateLocation")
+        
+        //this is roomwifi
+//        let url = URL(string: "http://192.168.1.18:8080/pullAccountsLocal")
+        //this is brannan lobby wifi
+//        let url = URL(string: "http://10.12.228.178:8080/pullAccountsLocal")
         
         let userDetails : Parameters = [
             "firstName": self.userloggedIn?.firstName,
             "username": self.userloggedIn?.username,
+            "facebookId": self.userloggedIn?.facebookId,
             "locality": locality,
             "sex": "MALE"
         ]
         
-
         Alamofire.request(url!, method: .post, parameters: userDetails, encoding: JSONEncoding.default)
             .response { response in
                 print(response.response?.statusCode)
         }
         
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let controller = segue.destination as! UserProfileViewController
+        controller.userLoggedIn = self.userloggedIn
     }
     
 }

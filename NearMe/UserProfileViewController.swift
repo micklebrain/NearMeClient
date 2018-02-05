@@ -10,24 +10,56 @@ import UIKit
 
 class UserProfileViewController: UIViewController {
 
-    @IBOutlet weak var friendRequestsLabel: UILabel!
+    @IBOutlet weak var UserProfilePicture: UIImageView!
     var userLoggedIn: User?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        pullFriendRequests(user: (userLoggedIn?.username)!)
         
-        // Do any additional setup after loading the view.
+        UserProfilePicture.image = #imageLiteral(resourceName: "empty-headshot")
+//        downloadProfilePic()
+    }
+    
+    private func downloadProfilePic () {
+        
+        var headshot = #imageLiteral(resourceName: "empty-headshot")
+        var pictureUrl = "http://graph.facebook.com/"
+        pictureUrl += (userLoggedIn?.facebookId)!
+        pictureUrl += "/picture?type=large"
+        
+        let url = URL(string: pictureUrl)
+        
+        if let url = url {
+            let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
+                if error != nil {
+                    print(error)
+                } else {
+                    if let usableData = data {
+                        headshot  = UIImage(data: usableData)!
+                        self.userLoggedIn?.headshot = headshot
+                        self.UserProfilePicture.image = headshot
+                    }
+                }
+            }
+            task.resume()
+        }
+        
     }
     
     func pullFriendRequests (user : String) -> String {
         
         var friendRequests = ""
         
-        //Brannan Lobby wifi
-//        let url = URL(string: "http://10.12.228.178:8080/getFriendRequests/" + user)
-        //Room Wifi
-        let url = URL(string: "http://192.168.1.18:8080/getFriendRequests/" + user)
+        let utilities = Util()
+        let wifiAddress = utilities.getWiFiAddress() as! String
+//        let url = URL(string: "http://" + wifiAddress + ":8080/updateLocation")
+        
+        //this is roomwifi
+        let url = URL(string: "http://192.168.1.18:8080/pullAccountsLocal")
+        //NoiseBridge
+        //        let url = URL(string: "http://10.20.1.137:8080/pullAccountsLocal")
+        //this is brannan lobby wifi
+        //        let url = URL(string: "http://10.12.228.178:8080/pullAccountsLocal")
         
         let task = URLSession.shared.dataTask(with: url!) { (data, response, error) in
             
@@ -37,7 +69,6 @@ class UserProfileViewController: UIViewController {
             let users = json as! [String]
             
            friendRequests = users.joined(separator: ", ")
-           self.friendRequestsLabel.text = friendRequests
         
         }
         task.resume()

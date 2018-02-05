@@ -9,6 +9,7 @@
 import UIKit
 import AWSDynamoDB
 
+
 class SignupViewController: UIViewController {
    
     @IBOutlet weak var firstNameTextField: UITextField!
@@ -20,6 +21,7 @@ class SignupViewController: UIViewController {
     let localDomain = "localhost:8080/"
 
     override func viewDidLoad() {
+        
         super.viewDidLoad()
         
     }
