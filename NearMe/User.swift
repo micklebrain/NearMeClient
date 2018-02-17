@@ -30,7 +30,6 @@ class User : AWSDynamoDBObjectModel,AWSDynamoDBModeling {
 //  var relationshipStatus : String?
     var password : String?
 //  var interests = [String]()
-    var facebookUserID : String?
 //  var emailAddress : String?
 //  var weekendPlans = [String: String]()
     

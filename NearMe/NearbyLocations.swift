@@ -102,7 +102,6 @@ class NearbyLocations: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
             }
               task.resume()
         }
-        
     }
 
     func listLikelyPlaces() {
@@ -236,6 +235,7 @@ extension NearbyLocations : UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        //Index out of range exception?
         selectedPlace = likelyPlaces[indexPath.row]
         
 //        mapView.clear()
@@ -248,15 +248,12 @@ extension NearbyLocations : UITableViewDataSource, UITableViewDelegate {
 //        }
         
         let tbc = self.tabBarController as! MainTabBarController
+        
+        self.userloggedIn?.buildingOccupied = placesTableView.cellForRow(at: indexPath)?.textLabel?.text
+        updateLocation(locality: (self.userloggedIn?.buildingOccupied)!)
         tbc.userloggedIn = self.userloggedIn
         
         tbc.selectedIndex = 2
-        
-//        let nearbyPeopleVC:NearbyPeopleViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "NearbyPeopleViewController") as! NearbyPeopleViewController
-//        nearbyPeopleVC.userLoggedIn = self.userloggedIn
-//        nearbyPeopleVC.userLoggedIn?.buildingOccupied = placesTableView.cellForRow(at: indexPath)?.textLabel?.text
-//        updateLocation(locality: (nearbyPeopleVC.userLoggedIn?.buildingOccupied)!)
-//        self.present(nearbyPeopleVC, animated: false, completion: nil)
         
 //      listLikelyPlaces()
     }
@@ -265,15 +262,7 @@ extension NearbyLocations : UITableViewDataSource, UITableViewDelegate {
         
         let localityTrimmed = locality.replacingOccurrences(of: " ", with: "")
         
-//        let utilities = Util()
-//        let wifiAddress = utilities.getWiFiAddress() as! String
-//        let url = URL(string: "http://" + wifiAddress + ":8080/updateLocation")
         let url = URL(string: "https://fathomless-gorge-73815.herokuapp.com/updateLocation")
-        
-        //this is roomwifi
-//        let url = URL(string: "http://192.168.1.18:8080/pullAccountsLocal")
-        //this is brannan lobby wifi
-//        let url = URL(string: "http://10.12.228.178:8080/pullAccountsLocal")
         
         let userDetails : Parameters = [
             "firstName": self.userloggedIn?.firstName,

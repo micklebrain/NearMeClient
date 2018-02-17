@@ -15,9 +15,11 @@ class UserProfileViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        let tbc = self.tabBarController as! MainTabBarController
+        self.userLoggedIn = tbc.userloggedIn
         
         UserProfilePicture.image = #imageLiteral(resourceName: "empty-headshot")
-//        downloadProfilePic()
+        downloadProfilePic()
     }
     
     private func downloadProfilePic () {
@@ -56,10 +58,6 @@ class UserProfileViewController: UIViewController {
         
         //this is roomwifi
         let url = URL(string: "http://192.168.1.18:8080/pullAccountsLocal")
-        //NoiseBridge
-        //        let url = URL(string: "http://10.20.1.137:8080/pullAccountsLocal")
-        //this is brannan lobby wifi
-        //        let url = URL(string: "http://10.12.228.178:8080/pullAccountsLocal")
         
         let task = URLSession.shared.dataTask(with: url!) { (data, response, error) in
             

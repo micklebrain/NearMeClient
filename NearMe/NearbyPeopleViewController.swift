@@ -19,7 +19,6 @@ import SwiftyJSON
 
 class NearbyPeopleViewController: UIViewController {
     
-    @IBOutlet weak var nameLabel: UILabel!
     let section = ["Friends", "Strangers"]
     //add collegaues, same school
     var locationManager : CLLocationManager!
@@ -32,45 +31,39 @@ class NearbyPeopleViewController: UIViewController {
     var userLoggedIn: User?
     var currentUserLocation: CLLocation?
     var headshot : UIImage?
+    var count = 0
+    var loadingView: UIView = UIView()
+    var container: UIView = UIView()
+    var actInd: UIActivityIndicatorView = UIActivityIndicatorView()
+    
     @IBOutlet weak var PeopleNearbyTableView: UITableView!
+    @IBOutlet weak var peopleCounter: UILabel!
     @IBOutlet weak var presenceSwitch: UISwitch!
     @IBOutlet weak var CurrentLocationLabel: UILabel!
     var profileImage: UIImage?
-
-//  TODO: implement single sign-on
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-       nameLabel.text = userLoggedIn?.firstName
-        
-        getLocation()
-        
         self.PeopleNearbyTableView.delegate = self
         self.PeopleNearbyTableView.dataSource = self
+        
+        let tbc = self.tabBarController as! MainTabBarController
+        self.userLoggedIn = tbc.userloggedIn
+        
+        userLoggedIn?.headshot = #imageLiteral(resourceName: "empty-headshot")
+        getUserPicture(facebookId: (userLoggedIn?.facebookId)!)
+        
+        //Check if location services is on first
+        determineMyCurrentLocation()
+        
+        getLocation()
         
         if let accessToken = AccessToken.current {
             print(AccessToken.current?.userId)
         }
         
         pullFacebookInfo()
-        
-//        let date = Date().addingTimeInterval(60)
-//        let timer = Timer(timeInterval: 5, target: self, selector: #selector(pullNearByPeople), userInfo: 60, repeats: true)
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        let tbc = tabBarController as! MainTabBarController
-        self.userLoggedIn = tbc.userloggedIn
-        
-        userLoggedIn?.headshot = #imageLiteral(resourceName: "headshot3")
-        getUserPicture(facebookId: (userLoggedIn?.facebookId)!)
-        
-        //Check if location services is on first
-        determineMyCurrentLocation()
-//        downloadImages()
         
     }
     
@@ -91,26 +84,6 @@ class NearbyPeopleViewController: UIViewController {
             
             if let data = response.data, let utf8Text = String(data: data, encoding: .utf8) {
                 print("Data: \(utf8Text)") // original server data as UTF8 string
-            }
-        }
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-    struct MyProfileRequest: GraphRequestProtocol {
-        var graphPath: String
-        
-        var parameters: [String : Any]?
-        var accessToken: AccessToken?
-        var httpMethod: GraphRequestHTTPMethod = .GET
-        var apiVersion: GraphAPIVersion = .defaultVersion
-        
-        struct Response: GraphResponseProtocol {
-            init(rawResponse: Any?) {
-                
             }
         }
     }
@@ -254,12 +227,6 @@ class NearbyPeopleViewController: UIViewController {
 //          userLoggedIn.itemId = NoSQLSampleDataGenerator.randomSampleStringWithAttributeName("itemId")
 //          userLoggedIn?.username = currentUser?.username
             
-//          userLoggedIn?.online = true as Bool as NSNumber
-            //        userLoggedIn?.relationshipStatus = "single"
-            userLoggedIn?.facebookId = "1367878021"
-            //        self.friendsAround.add(2)
-            //        userLoggedIn?.friends = self.friendsAround
-            
 //          User's Location
             userLoggedIn?.postalCode = postalCode
             userLoggedIn?.administrativeArea = administrativeArea
@@ -281,22 +248,7 @@ class NearbyPeopleViewController: UIViewController {
             pullNearByPeople()
         }
     }
-    
-    //  Scans all of table
-    func scanNearbyUsers (_ completionHandler: @escaping (_ response: AWSDynamoDBPaginatedOutput?, _ error: NSError?) -> Void) {
-        
-        let objectMapper = AWSDynamoDBObjectMapper.default()
-        let scanExpression = AWSDynamoDBScanExpression()
-//      scanExpression.filterExpression = "online = :val"
-//      scanExpression.expressionAttributeValues = [":val": "true"]
-        
-        objectMapper.scan(User.self, expression: scanExpression) { (response: AWSDynamoDBPaginatedOutput?, error: Error?) in
-            DispatchQueue.main.async(execute: {
-                completionHandler(response, error as NSError?)
-            })
-        }
-    }
-    
+
     func pullNearByPeople () {
         
         //table = LocationsTable()
@@ -361,7 +313,7 @@ class NearbyPeopleViewController: UIViewController {
         //Scan actualy Prod DynamoDB
 //       scanNearbyUsers(completionHandler)
         
-        let utilities = Util()
+//        let utilities = Util()
 //        let wifiAddress = utilities.getWiFiAddress() as! String
 //        let url = URL(string: "http://" + wifiAddress + ":8080/updateLocation")
         
@@ -382,35 +334,81 @@ class NearbyPeopleViewController: UIViewController {
             "sex": "MALE"
         ]
         
+        loadingView.frame = CGRect(x: 100, y: 100, width: 100, height: 100)
+        loadingView.center = self.view.center
+        loadingView.backgroundColor = UIColor.blue
+        loadingView.layer.cornerRadius = 10
+        actInd.activityIndicatorViewStyle =
+            UIActivityIndicatorViewStyle.whiteLarge
+        loadingView.addSubview(actInd)
+        
+        container.frame = CGRect(x: 100, y: 100, width: 100, height: 100)
+        container.center = self.view.center
+        container.layer.cornerRadius = 10
+        container.backgroundColor = UIColor.red
+        container.addSubview(loadingView)
+
+        self.view.addSubview(container)
+        actInd.startAnimating()
+        
         Alamofire.request(url!, method: .post, parameters: userDetails, encoding: JSONEncoding.default)
             .responseJSON{ response in
-            if let json = response.result.value {
-                print("JSON: \(json)")
-                let users = json as! [Any]
-                for someUser in users {
-                    let userDetails = someUser as! [String: Any]
-                    var newPerson = Person()
-//                    newPerson.firstName = userDetails["firstName"] as! String
-                    newPerson.firstName = "Nathan"
-                    newPerson.facebookId = userDetails["facebookId"] as! String
-                    if (self.userLoggedIn?.facebookId != newPerson.facebookId) {
-                        if ((self.userLoggedIn?.friends!.contains(newPerson.firstName))!) {
-                            self.friendsAround.insert(newPerson)
-                        } else {
-                            self.strangersAround.insert(newPerson)
-                        }
+                if let json = response.result.value {
+                    print("JSON: \(json)")
+                    let users = json as! [Any]
+                    for someUser in users {
+                        let userDetails = someUser as! [String: Any]
+                        var newPerson = Person()
+                        // newPerson.firstName = userDetails["firstName"] as! String
+                        // Using facebook id for distinctivness
+                        newPerson.firstName = userDetails["facebookId"] as! String
+                        newPerson.facebookId = userDetails["facebookId"] as! String
+                        newPerson.headshotImage = self.getUserPicture(facebookId: newPerson.facebookId!)
+                        // if (self.userLoggedIn?.facebookId != newPerson.facebookId) {
+                        // if ((self.userLoggedIn?.friends!.contains(newPerson.firstName))!) {
+                        self.friendsAround.insert(newPerson)
+                        // } else {
+                        // self.strangersAround.insert(newPerson)
                     }
+                    self.count = self.friendsAround.count + self.strangersAround.count
+                    print(self.friendsAround.count)
+                    print(self.strangersAround.count)
+                    self.peopleCounter.text = String(describing: self.count)
+                    self.PeopleNearbyTableView.reloadData()
                 }
-                self.PeopleNearbyTableView.reloadData()
-            } else {
-                var person = Person()
-                person.firstName = "Nobody Around"
-                self.friendsAround.insert(person)
-                self.strangersAround.insert(person)
-                self.PeopleNearbyTableView.reloadData()
-            }
         }
+        
+//            } else {
+//                var person = Person()
+//                person.firstName = "Nobody Around"
+//                person.headshotImage = #imageLiteral(resourceName: "empty-headshot")
+//                self.friendsAround.insert(person)
+//                self.strangersAround.insert(person)
+//                self.PeopleNearbyTableView.reloadData()
+//            }
+//        }
     
+    }
+    
+    let handlerBlock: (String) -> Void = {
+        urlValue in
+        
+    }
+    
+    func randomString(length: Int) -> String {
+        
+        let letters : NSString = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+        let len = UInt32(letters.length)
+        
+        var randomString = ""
+        
+        for _ in 0 ..< length {
+            let rand = arc4random_uniform(len)
+            var nextChar = letters.character(at: Int(rand))
+            randomString += NSString(characters: &nextChar, length: 1) as String
+        }
+        
+        return randomString
     }
 
     @IBAction func viewProfile(_ sender: Any) {
@@ -429,6 +427,8 @@ class NearbyPeopleViewController: UIViewController {
     
     func getUserPicture (facebookId : String) -> UIImage {
         
+        //Solve threading to update fb image when complete
+        
         var headshot = #imageLiteral(resourceName: "empty-headshot")
         var pictureUrl = "http://graph.facebook.com/"
         pictureUrl += (userLoggedIn?.facebookId)!
@@ -443,8 +443,6 @@ class NearbyPeopleViewController: UIViewController {
                 } else {
                     if let usableData = data {
                         headshot  = UIImage(data: usableData)!
-                        self.userLoggedIn?.headshot = headshot
-                        self.PeopleNearbyTableView.reloadData()
                     }
                 }
             }
@@ -455,19 +453,6 @@ class NearbyPeopleViewController: UIViewController {
         
         return headshot
     }
-    
-//  Mark: Filter
-    @IBAction func filter(_ sender: Any) {
-        
-        while self.strangersAround.contains(where: { $0.sex == sex.male }) {
-        
-            let foundPerson = self.strangersAround.first(where: { $0.sex == sex.male })
-            strangersAround.remove(foundPerson!)
-        }
-        
-        self.PeopleNearbyTableView.reloadData()
-    
-    }
 
     func randomImage () -> UIImage {
         
@@ -475,6 +460,19 @@ class NearbyPeopleViewController: UIViewController {
         let randomNumber:UInt32 = arc4random_uniform(3)
         let index:Int = Int(randomNumber)
         return images[index]
+        
+    }
+    
+    //  Mark: Filter
+    @IBAction func filter(_ sender: Any) {
+        
+        while self.strangersAround.contains(where: { $0.sex == sex.male }) {
+            
+            let foundPerson = self.strangersAround.first(where: { $0.sex == sex.male })
+            strangersAround.remove(foundPerson!)
+        }
+        
+        self.PeopleNearbyTableView.reloadData()
         
     }
     
@@ -521,6 +519,21 @@ class NearbyPeopleViewController: UIViewController {
     }
     */
 
+}
+
+struct MyProfileRequest: GraphRequestProtocol {
+    var graphPath: String
+    
+    var parameters: [String : Any]?
+    var accessToken: AccessToken?
+    var httpMethod: GraphRequestHTTPMethod = .GET
+    var apiVersion: GraphAPIVersion = .defaultVersion
+    
+    struct Response: GraphResponseProtocol {
+        init(rawResponse: Any?) {
+            
+        }
+    }
 }
 
 extension NearbyPeopleViewController : CLLocationManagerDelegate {
@@ -582,7 +595,7 @@ extension NearbyPeopleViewController : UITableViewDataSource, UITableViewDelegat
         //      TODO: Check why view gets loaded without images - bug
         if (indexPath.section == 0) {
             cell.nameLabel.text = self.friendsAround[friendsAround.index(self.friendsAround.startIndex, offsetBy: indexPath.row)].firstName
-            cell.headshotViewImage.image = userLoggedIn?.headshot
+            cell.headshotViewImage.image = self.friendsAround[friendsAround.index(self.friendsAround.startIndex, offsetBy: indexPath.row)].headshotImage
             cell.headshotViewImage.layer.cornerRadius = 15.0
             cell.headshotViewImage.layer.borderWidth = 3
             cell.headshotViewImage.layer.borderColor = UIColor.black.cgColor
@@ -591,10 +604,8 @@ extension NearbyPeopleViewController : UITableViewDataSource, UITableViewDelegat
             cell.nameLabel.text = self.strangersAround[strangersAround.index(self.strangersAround.startIndex, offsetBy: indexPath.row)].firstName
             //  cell.occupationLabel.text = self.strangersAround[strangersAround.index(self.strangersAround.startIndex, offsetBy: indexPath.row)].
             
-            //  cell.headshotViewImage.image = self.strangersAround[strangersAround.index(self.strangersAround.startIndex, offsetBy: indexPath.row)].headshotImage
+            cell.headshotViewImage.image = self.strangersAround[strangersAround.index(self.strangersAround.startIndex, offsetBy: indexPath.row)].headshotImage
             
-            //  cell.headshotViewImage.image = self.profileImage
-            cell.headshotViewImage.image = userLoggedIn?.headshot
             cell.headshotViewImage.layer.cornerRadius = 15.0
             cell.headshotViewImage.layer.borderWidth = 3
             cell.headshotViewImage.layer.borderColor = UIColor.black.cgColor
@@ -614,4 +625,11 @@ extension NearbyPeopleViewController : UITableViewDataSource, UITableViewDelegat
         self.present(profileVC, animated: false, completion: nil)
     }
     
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if (indexPath.row == 0) {
+            self.actInd.stopAnimating()
+            self.container.isHidden = true
+            self.loadingView.isHidden = true
+        }
+    }
 }

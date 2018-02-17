@@ -89,12 +89,12 @@
 		<dict>
 			<key>localhost</key>
 			<dict>
-				<key>NSTemporaryExceptionAllowsInsecureHTTPSLoads</key>
-				<false/>
 				<key>NSIncludesSubdomains</key>
 				<true/>
 				<key>NSTemporaryExceptionAllowsInsecureHTTPLoads</key>
 				<true/>
+				<key>NSTemporaryExceptionAllowsInsecureHTTPSLoads</key>
+				<false/>
 				<key>NSTemporaryExceptionMinimumTLSVersion</key>
 				<string>1.0</string>
 				<key>NSTemporaryExceptionRequiresForwardSecrecy</key>
@@ -102,14 +102,12 @@
 			</dict>
 		</dict>
 	</dict>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>Using Location</string>
 	<key>NSLocationAlwaysUsageDescription</key>
 	<string>This app always uses your location</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>This app uses your location when in use</string>
-    <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-    <string>Using Location</string>
-    <key>NSLocationWhenInUseUsageDescription</key>
-    <string>Using Location</string>
+	<string>Using Location</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
@@ -121,8 +119,6 @@
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
-		<string>UIInterfaceOrientationLandscapeLeft</string>
-		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>UISupportedInterfaceOrientations~ipad</key>
 	<array>
