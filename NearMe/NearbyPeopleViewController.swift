@@ -35,6 +35,8 @@ class NearbyPeopleViewController: UIViewController {
     var loadingView: UIView = UIView()
     var container: UIView = UIView()
     var actInd: UIActivityIndicatorView = UIActivityIndicatorView()
+    var defaultHeadshot : UIImage?
+    var headshots = [String: UIImage]()
     
     @IBOutlet weak var PeopleNearbyTableView: UITableView!
     @IBOutlet weak var peopleCounter: UILabel!
@@ -45,12 +47,15 @@ class NearbyPeopleViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.PeopleNearbyTableView.delegate = self
-        self.PeopleNearbyTableView.dataSource = self
         
         let tbc = self.tabBarController as! MainTabBarController
         self.userLoggedIn = tbc.userloggedIn
+       
+//        self.defaultHeadshot = getUserPicture(facebookId: "192076231529704")
         
+        self.PeopleNearbyTableView.delegate = self
+        self.PeopleNearbyTableView.dataSource = self
+    
         userLoggedIn?.headshot = #imageLiteral(resourceName: "empty-headshot")
         getUserPicture(facebookId: (userLoggedIn?.facebookId)!)
         
@@ -363,6 +368,7 @@ class NearbyPeopleViewController: UIViewController {
                         // Using facebook id for distinctivness
                         newPerson.firstName = userDetails["facebookId"] as! String
                         newPerson.facebookId = userDetails["facebookId"] as! String
+//                        newPerson.headshotImage = self.defaultHeadshot
                         newPerson.headshotImage = self.getUserPicture(facebookId: newPerson.facebookId!)
                         // if (self.userLoggedIn?.facebookId != newPerson.facebookId) {
                         // if ((self.userLoggedIn?.friends!.contains(newPerson.firstName))!) {
@@ -431,7 +437,8 @@ class NearbyPeopleViewController: UIViewController {
         
         var headshot = #imageLiteral(resourceName: "empty-headshot")
         var pictureUrl = "http://graph.facebook.com/"
-        pictureUrl += (userLoggedIn?.facebookId)!
+//        pictureUrl += (userLoggedIn?.facebookId)!
+        pictureUrl += facebookId
         pictureUrl += "/picture?type=large"
         
         var url = URL(string: pictureUrl)
@@ -442,7 +449,10 @@ class NearbyPeopleViewController: UIViewController {
                     print(error)
                 } else {
                     if let usableData = data {
-                        headshot  = UIImage(data: usableData)!
+                        if (UIImage(data: usableData) != nil) {
+                            headshot = UIImage(data: usableData)!
+                            self.headshots[facebookId] = headshot
+                        }
                     }
                 }
             }
@@ -595,7 +605,13 @@ extension NearbyPeopleViewController : UITableViewDataSource, UITableViewDelegat
         //      TODO: Check why view gets loaded without images - bug
         if (indexPath.section == 0) {
             cell.nameLabel.text = self.friendsAround[friendsAround.index(self.friendsAround.startIndex, offsetBy: indexPath.row)].firstName
-            cell.headshotViewImage.image = self.friendsAround[friendsAround.index(self.friendsAround.startIndex, offsetBy: indexPath.row)].headshotImage
+//            cell.headshotViewImage.image = self.friendsAround[friendsAround.index(self.friendsAround.startIndex, offsetBy: indexPath.row)].headshotImage
+            let headshot = headshots[self.friendsAround[friendsAround.index(self.friendsAround.startIndex, offsetBy: indexPath.row)].facebookId!]
+            if (headshot != nil) {
+                cell.headshotViewImage.image = headshots[self.friendsAround[friendsAround.index(self.friendsAround.startIndex, offsetBy: indexPath.row)].facebookId!]
+            } else {
+                cell.headshotViewImage.image = #imageLiteral(resourceName: "empty-headshot")
+            }
             cell.headshotViewImage.layer.cornerRadius = 15.0
             cell.headshotViewImage.layer.borderWidth = 3
             cell.headshotViewImage.layer.borderColor = UIColor.black.cgColor
