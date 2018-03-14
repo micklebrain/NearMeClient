@@ -13,6 +13,9 @@ import GooglePlaces
 import AWSDynamoDB
 import Alamofire
 import AlamofireSwiftyJSON
+import FacebookLogin
+import FacebookCore
+import FBSDKLoginKit
 
 class NearbyLocations: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
 
@@ -50,6 +53,8 @@ class NearbyLocations: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
         locationManager!.requestAlwaysAuthorization()
         placesClient = GMSPlacesClient.shared()
         
+        pullfacebookInfo()
+        
         if CLLocationManager.locationServicesEnabled() {
             locationManager?.startUpdatingLocation()
         }
@@ -67,6 +72,35 @@ class NearbyLocations: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
         
         let objectMapper = AWSDynamoDBObjectMapper.default()
         
+    }
+    
+    func pullfacebookInfo() {
+        if(FBSDKAccessToken.current() != nil)
+            {
+    
+                print(FBSDKAccessToken.current().permissions)
+                // Graph Path : "me" is going to get current user logged in
+                let graphRequest = FBSDKGraphRequest(graphPath: "me", parameters: ["fields" : "id, name, email"])
+                let connection = FBSDKGraphRequestConnection()
+    
+                connection.add(graphRequest, completionHandler: { (connection, result, error) -> Void in
+                    let data = result as! [String : AnyObject]
+                    var name = data["name"] as! String
+                    var splitName = name.components(separatedBy: " ")
+                    let firstName = splitName.removeFirst()
+                    print("logged in user name is \(String(describing: name))")
+    
+                    let FBid = data["id"] as? String
+                    print("Facebook id is \(String(describing: FBid))")
+    
+                    self.userloggedIn = User()
+                    self.userloggedIn?.firstName = firstName
+                    self.userloggedIn?.username = "Tester"
+                    self.userloggedIn?.facebookId = FBid
+    
+                })
+                connection.start()
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -122,6 +156,8 @@ class NearbyLocations: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
                 }
                 self.placesTableView.reloadData()
             }
+            
+    
         })
         
     }
@@ -247,13 +283,14 @@ extension NearbyLocations : UITableViewDataSource, UITableViewDelegate {
 //            mapView.isHidden = false
 //        }
         
-        let tbc = self.tabBarController as! MainTabBarController
+            let tbc = self.tabBarController as! MainTabBarController
         
-        self.userloggedIn?.buildingOccupied = placesTableView.cellForRow(at: indexPath)?.textLabel?.text
-        updateLocation(locality: (self.userloggedIn?.buildingOccupied)!)
-        tbc.userloggedIn = self.userloggedIn
+            self.userloggedIn?.buildingOccupied = placesTableView.cellForRow(at: indexPath)?.textLabel?.text
+            updateLocation(locality: (self.userloggedIn?.buildingOccupied)!)
+            tbc.userloggedIn = self.userloggedIn
         
-        tbc.selectedIndex = 2
+            tbc.selectedIndex = 2
+        
         
 //      listLikelyPlaces()
     }

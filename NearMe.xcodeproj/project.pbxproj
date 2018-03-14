@@ -37,7 +37,6 @@
 		A5CAABCA1EA95AA500A16E98 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = A5CAABC91EA95AA500A16E98 /* libsqlite3.tbd */; };
 		A5CAABCC1EA95AB700A16E98 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = A5CAABCB1EA95AB700A16E98 /* libz.tbd */; };
 		A5CAABCE1EA95B6800A16E98 /* UserIdentityAccess.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5CAABCD1EA95B6800A16E98 /* UserIdentityAccess.swift */; };
-		A5CAABD01EA95C5A00A16E98 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A5CAABCF1EA95C5A00A16E98 /* Default-568h@2x.png */; };
 		A5CAABD21EAA7DF000A16E98 /* Locations.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5CAABD11EAA7DF000A16E98 /* Locations.swift */; };
 		A5E446461ED68A8A00791822 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E446451ED68A8A00791822 /* LoginViewController.swift */; };
 		A5E446491ED7A81300791822 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E446481ED7A81300791822 /* User.swift */; };
@@ -131,7 +130,6 @@
 		A5CAABC91EA95AA500A16E98 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		A5CAABCB1EA95AB700A16E98 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		A5CAABCD1EA95B6800A16E98 /* UserIdentityAccess.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserIdentityAccess.swift; sourceTree = "<group>"; };
-		A5CAABCF1EA95C5A00A16E98 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		A5CAABD11EAA7DF000A16E98 /* Locations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Locations.swift; sourceTree = "<group>"; };
 		A5E446451ED68A8A00791822 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		A5E446481ED7A81300791822 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
@@ -245,7 +243,6 @@
 		A5A645A41EA6F4FB00D411E1 = {
 			isa = PBXGroup;
 			children = (
-				A5CAABCF1EA95C5A00A16E98 /* Default-568h@2x.png */,
 				A5CAABCD1EA95B6800A16E98 /* UserIdentityAccess.swift */,
 				A5A645AF1EA6F4FB00D411E1 /* NearMe */,
 				A5A645C71EA6F4FB00D411E1 /* NearMeTests */,
@@ -492,7 +489,6 @@
 				A5E4464D1ED7CA6100791822 /* Access.storyboard in Resources */,
 				A5A645BE1EA6F4FB00D411E1 /* LaunchScreen.storyboard in Resources */,
 				A5A645BB1EA6F4FB00D411E1 /* Assets.xcassets in Resources */,
-				A5CAABD01EA95C5A00A16E98 /* Default-568h@2x.png in Resources */,
 				A5A645B61EA6F4FB00D411E1 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

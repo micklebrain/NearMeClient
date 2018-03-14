@@ -226,11 +226,6 @@
                                 <items>
                                     <navigationItem title="Check In" prompt="Prompt" id="iyB-9Q-ZIC">
                                         <barButtonItem key="backBarButtonItem" title="Back" id="CkM-t9-rBn"/>
-                                        <barButtonItem key="leftBarButtonItem" title="Profile" id="Gwz-ek-DNr">
-                                            <connections>
-                                                <action selector="OpenProfile:" destination="4bN-pW-dVJ" id="Qb0-g3-RFO"/>
-                                            </connections>
-                                        </barButtonItem>
                                     </navigationItem>
                                 </items>
                             </navigationBar>
@@ -248,8 +243,8 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Other" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="fSe-p0-YU5">
-                                <rect key="frame" x="139" y="623" width="97" height="30"/>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Other" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="fSe-p0-YU5">
+                                <rect key="frame" x="139" y="624" width="97" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="97" id="WUx-Fb-XIu"/>
                                 </constraints>
@@ -263,12 +258,12 @@
                             <constraint firstItem="9dG-Mg-eID" firstAttribute="leading" secondItem="F95-cI-TK7" secondAttribute="leading" id="1HC-ZC-2vf"/>
                             <constraint firstAttribute="trailing" secondItem="9dG-Mg-eID" secondAttribute="trailing" id="5qe-Sg-mpT"/>
                             <constraint firstItem="9dG-Mg-eID" firstAttribute="leading" secondItem="PMt-Jd-fcd" secondAttribute="leading" id="7kg-QI-q7u"/>
-                            <constraint firstItem="FcS-hM-DjR" firstAttribute="top" secondItem="fSe-p0-YU5" secondAttribute="bottom" constant="76" id="eCN-BJ-BV9"/>
+                            <constraint firstItem="FcS-hM-DjR" firstAttribute="top" secondItem="fSe-p0-YU5" secondAttribute="bottom" constant="75" id="eCN-BJ-BV9"/>
                             <constraint firstItem="9dG-Mg-eID" firstAttribute="trailing" secondItem="F95-cI-TK7" secondAttribute="trailing" id="en2-gk-Nus"/>
                             <constraint firstItem="F95-cI-TK7" firstAttribute="centerX" secondItem="fSe-p0-YU5" secondAttribute="centerX" id="hcD-aC-8hB"/>
                             <constraint firstItem="F95-cI-TK7" firstAttribute="top" secondItem="9dG-Mg-eID" secondAttribute="bottom" constant="66" id="kQq-QO-WHA"/>
                             <constraint firstItem="9dG-Mg-eID" firstAttribute="top" secondItem="PMt-Jd-fcd" secondAttribute="top" id="pB0-B0-MyI"/>
-                            <constraint firstItem="fSe-p0-YU5" firstAttribute="top" secondItem="F95-cI-TK7" secondAttribute="bottom" constant="46" id="xvt-S2-a4k"/>
+                            <constraint firstItem="fSe-p0-YU5" firstAttribute="top" secondItem="F95-cI-TK7" secondAttribute="bottom" constant="47" id="xvt-S2-a4k"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="CheckIn" id="7cb-xS-QC8">

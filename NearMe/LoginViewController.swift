@@ -23,41 +23,66 @@ class LoginViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         
         //Login persistence
-        if(FBSDKAccessToken.current() != nil)
-        {
-            print(FBSDKAccessToken.current().permissions)
-            // Graph Path : "me" is going to get current user logged in
-            let graphRequest = FBSDKGraphRequest(graphPath: "me", parameters: ["fields" : "id, name, email"])
-            let connection = FBSDKGraphRequestConnection()
-
-            connection.add(graphRequest, completionHandler: { (connection, result, error) -> Void in
-                let data = result as! [String : AnyObject]
-                var name = data["name"] as! String
-                var splitName = name.components(separatedBy: " ")
-                let firstName = splitName.removeFirst()
-                print("logged in user name is \(String(describing: name))")
-
-                let FBid = data["id"] as? String
-                print("Facebook id is \(String(describing: FBid))")
-
-                let maintabbarVC:MainTabBarController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "MainTabBarController") as! MainTabBarController
-
-                self.userloggedIn?.firstName = firstName
-                self.userloggedIn?.username = "Tester"
-                self.userloggedIn?.facebookId = FBid
-  
-                maintabbarVC.userloggedIn = self.userloggedIn
-
-                self.present(maintabbarVC, animated: false, completion: nil)
-            })
-            connection.start()
-        }
+//        if(FBSDKAccessToken.current() != nil)
+//        {
+//            let maintabbarVC:MainTabBarController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "MainTabBarController") as! MainTabBarController
+//
+////            self.userloggedIn?.firstName = firstName
+////            self.userloggedIn?.username = "Tester"
+////            self.userloggedIn?.facebookId = FBid
+//
+//            maintabbarVC.userloggedIn = self.userloggedIn
+//
+//            self.present(maintabbarVC, animated: false, completion: nil)
         
+//            print(FBSDKAccessToken.current().permissions)
+//            // Graph Path : "me" is going to get current user logged in
+//            let graphRequest = FBSDKGraphRequest(graphPath: "me", parameters: ["fields" : "id, name, email"])
+//            let connection = FBSDKGraphRequestConnection()
+//
+//            connection.add(graphRequest, completionHandler: { (connection, result, error) -> Void in
+//                let data = result as! [String : AnyObject]
+//                var name = data["name"] as! String
+//                var splitName = name.components(separatedBy: " ")
+//                let firstName = splitName.removeFirst()
+//                print("logged in user name is \(String(describing: name))")
+//
+//                let FBid = data["id"] as? String
+//                print("Facebook id is \(String(describing: FBid))")
+//
+//                let maintabbarVC:MainTabBarController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "MainTabBarController") as! MainTabBarController
+//
+//                self.userloggedIn?.firstName = firstName
+//                self.userloggedIn?.username = "Tester"
+//                self.userloggedIn?.facebookId = FBid
+//
+//                maintabbarVC.userloggedIn = self.userloggedIn
+//
+//                self.present(maintabbarVC, animated: false, completion: nil)
+//            })
+//            connection.start()
+        //}
+    
     }
     
     // TODO: Logout facebook
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        if(FBSDKAccessToken.current() != nil)
+        {
+            let maintabbarVC:MainTabBarController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "MainTabBarController") as! MainTabBarController
+            
+            maintabbarVC.userloggedIn = self.userloggedIn
+            
+            let initialViewController = UIStoryboard(name: "Main", bundle:nil).instantiateInitialViewController() as! UIViewController
+            let appDelegate = (UIApplication.shared.delegate as! AppDelegate)
+            appDelegate.window?.rootViewController = initialViewController
+        
+            self.present(maintabbarVC, animated: false, completion: nil)
+//            self.navigationController?.pushViewController(maintabbarVC, animated: false)
+//            self.present(maintabbarVC, animated: false, completion: nil)
+        }
         
         password.resignFirstResponder()
         
@@ -70,7 +95,6 @@ class LoginViewController: UIViewController {
            print(AccessToken.current?.userId)
         }
         
-        print("done")
     
     }
     

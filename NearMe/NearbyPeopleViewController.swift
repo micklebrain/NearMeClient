@@ -27,7 +27,7 @@ class NearbyPeopleViewController: UIViewController {
     var strangersAround = Set<Person>()
 //  Using NSMutableSet because AWS
     var friendsAround = Set<Person>()
-//    var strangers = NSMutableSet()
+//  var strangers = NSMutableSet()
     var userLoggedIn: User?
     var currentUserLocation: CLLocation?
     var headshot : UIImage?
@@ -46,7 +46,6 @@ class NearbyPeopleViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         
         let tbc = self.tabBarController as! MainTabBarController
         self.userLoggedIn = tbc.userloggedIn
@@ -70,9 +69,19 @@ class NearbyPeopleViewController: UIViewController {
         
         pullFacebookInfo()
         
+        let mainQueue = DispatchQueue.main
+        let deadline = DispatchTime.now() + .seconds(5)
+        mainQueue.asyncAfter(deadline: deadline) {
+            self.container.isHidden = true
+        }
+        
     }
     
     @IBAction func refresh(_ sender: Any) {
+        //Implement caching later
+        self.friendsAround.removeAll()
+        self.strangersAround.removeAll()
+        pullNearByPeople()
         self.PeopleNearbyTableView.reloadData()
     }
     
@@ -345,13 +354,15 @@ class NearbyPeopleViewController: UIViewController {
         loadingView.layer.cornerRadius = 10
         actInd.activityIndicatorViewStyle =
             UIActivityIndicatorViewStyle.whiteLarge
+        actInd.center = self.view.center
         loadingView.addSubview(actInd)
         
         container.frame = CGRect(x: 100, y: 100, width: 100, height: 100)
         container.center = self.view.center
         container.layer.cornerRadius = 10
         container.backgroundColor = UIColor.red
-        container.addSubview(loadingView)
+        container.addSubview(actInd)
+//      container.addSubview(loadingView)
 
         self.view.addSubview(container)
         actInd.startAnimating()
@@ -364,21 +375,29 @@ class NearbyPeopleViewController: UIViewController {
                     for someUser in users {
                         let userDetails = someUser as! [String: Any]
                         var newPerson = Person()
+                        let facebookId = userDetails["facebookId"] as! String
                         // newPerson.firstName = userDetails["firstName"] as! String
                         // Using facebook id for distinctivness
-                        newPerson.firstName = userDetails["facebookId"] as! String
-                        newPerson.facebookId = userDetails["facebookId"] as! String
-//                        newPerson.headshotImage = self.defaultHeadshot
-                        newPerson.headshotImage = self.getUserPicture(facebookId: newPerson.facebookId!)
-                        // if (self.userLoggedIn?.facebookId != newPerson.facebookId) {
-                        // if ((self.userLoggedIn?.friends!.contains(newPerson.firstName))!) {
-                        self.friendsAround.insert(newPerson)
+                        if (facebookId != self.userLoggedIn?.facebookId) {
+                            newPerson.firstName = userDetails["facebookId"] as! String
+                            newPerson.facebookId = userDetails["facebookId"] as! String
+    //                      newPerson.headshotImage = self.defaultHeadshot
+                            newPerson.headshotImage = self.getUserPicture(facebookId: newPerson.facebookId!)
+                            // if (self.userLoggedIn?.facebookId != newPerson.facebookId) {
+                            // if ((self.userLoggedIn?.friends!.contains(newPerson.firstName))!) {
+                            self.friendsAround.insert(newPerson)
+                        }
                         // } else {
                         // self.strangersAround.insert(newPerson)
                     }
                     self.count = self.friendsAround.count + self.strangersAround.count
-                    print(self.friendsAround.count)
-                    print(self.strangersAround.count)
+//                    if (self.count == 0) {
+//                        var person = Person()
+//                        person.firstName = "Nobody Around"
+//                        person.headshotImage = #imageLiteral(resourceName: "empty-headshot")
+//                        self.friendsAround.insert(person)
+//                        self.strangersAround.insert(person)
+//                    }
                     self.peopleCounter.text = String(describing: self.count)
                     self.PeopleNearbyTableView.reloadData()
                 }
@@ -394,11 +413,6 @@ class NearbyPeopleViewController: UIViewController {
 //            }
 //        }
     
-    }
-    
-    let handlerBlock: (String) -> Void = {
-        urlValue in
-        
     }
     
     func randomString(length: Int) -> String {
@@ -648,4 +662,5 @@ extension NearbyPeopleViewController : UITableViewDataSource, UITableViewDelegat
             self.loadingView.isHidden = true
         }
     }
+    
 }
