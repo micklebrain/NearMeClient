@@ -49,8 +49,6 @@ class NearbyPeopleViewController: UIViewController {
         
         let tbc = self.tabBarController as! MainTabBarController
         self.userLoggedIn = tbc.userloggedIn
-       
-//        self.defaultHeadshot = getUserPicture(facebookId: "192076231529704")
         
         self.PeopleNearbyTableView.delegate = self
         self.PeopleNearbyTableView.dataSource = self
@@ -106,21 +104,6 @@ class NearbyPeopleViewController: UIViewController {
         let nathanFBId = "1367878021"
         let nathan2FBId = "111006779636650"
         let TraceyFBid = "109582432994026"
-        
-        let urlString = URL(string: "http://graph.facebook.com/1367878021/picture?type=large")
-        
-        if let url = urlString {
-            let task = URLSession.shared.dataTask(with: urlString!) { (data, response, error) in
-                if error != nil {
-                    print(error)
-                } else {
-                    if let usableData = data {
-                        self.profileImage = UIImage(data: usableData)!
-                    }
-                }
-            }
-            task.resume()
-        }
         
         if(FBSDKAccessToken.current() != nil)
         {
@@ -265,8 +248,8 @@ class NearbyPeopleViewController: UIViewController {
 
     func pullNearByPeople () {
         
+        //AWS DynamoDB
         //table = LocationsTable()
-        
         //Move logic to Backend
 //        let completionHandler = {(response: AWSDynamoDBPaginatedOutput?, error: NSError?) -> Void in
 //
@@ -331,12 +314,13 @@ class NearbyPeopleViewController: UIViewController {
 //        let wifiAddress = utilities.getWiFiAddress() as! String
 //        let url = URL(string: "http://" + wifiAddress + ":8080/updateLocation")
         
-        //this is roomwifi
-//        let url = URL(string: "http://192.168.1.18:8080/pullAccountsLocal")
+        //Roomwifi
+//        let url = URL(string: "http://192.168.1.18:8080/pullAccounts")
         //NoiseBridge
-//        let url = URL(string: "http://10.20.1.137:8080/pullAccountsLocal")
-        //this is brannan lobby wifi
-//        let url = URL(string: "http://10.12.228.178:8080/pullAccountsLocal")
+//        let url = URL(string: "http://10.20.1.137:8080/pullAccounts")
+        //Brannan lobby wifi
+//        let url = URL(string: "http://10.12.228.178:8080/pullAccounts")
+        //Heroku
         let url = URL(string: "https://fathomless-gorge-73815.herokuapp.com/pullAccounts")
         userLoggedIn?.friends = ["Nathan"]
         
@@ -362,7 +346,6 @@ class NearbyPeopleViewController: UIViewController {
         container.layer.cornerRadius = 10
         container.backgroundColor = UIColor.red
         container.addSubview(actInd)
-//      container.addSubview(loadingView)
 
         self.view.addSubview(container)
         actInd.startAnimating()
@@ -379,7 +362,7 @@ class NearbyPeopleViewController: UIViewController {
                         // newPerson.firstName = userDetails["firstName"] as! String
                         // Using facebook id for distinctivness
                         if (facebookId != self.userLoggedIn?.facebookId) {
-                            newPerson.firstName = userDetails["facebookId"] as! String
+                            newPerson.firstName = userDetails["firstName"] as! String
                             newPerson.facebookId = userDetails["facebookId"] as! String
     //                      newPerson.headshotImage = self.defaultHeadshot
                             newPerson.headshotImage = self.getUserPicture(facebookId: newPerson.facebookId!)
@@ -466,6 +449,9 @@ class NearbyPeopleViewController: UIViewController {
                         if (UIImage(data: usableData) != nil) {
                             headshot = UIImage(data: usableData)!
                             self.headshots[facebookId] = headshot
+                            DispatchQueue.main.async {
+                               self.PeopleNearbyTableView.reloadData()
+                            }
                         }
                     }
                 }

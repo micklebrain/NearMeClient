@@ -18,7 +18,7 @@ class UserProfileViewController: UIViewController {
         let tbc = self.tabBarController as! MainTabBarController
         self.userLoggedIn = tbc.userloggedIn
         
-        UserProfilePicture.image = #imageLiteral(resourceName: "empty-headshot")
+//        UserProfilePicture.image = #imageLiteral(resourceName: "empty-headshot")
         downloadProfilePic()
     }
     
@@ -39,7 +39,9 @@ class UserProfileViewController: UIViewController {
                     if let usableData = data {
                         headshot  = UIImage(data: usableData)!
                         self.userLoggedIn?.headshot = headshot
-                        self.UserProfilePicture.image = headshot
+                        DispatchQueue.main.async {
+                          self.UserProfilePicture.image = headshot
+                        }
                     }
                 }
             }
