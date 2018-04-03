@@ -13,12 +13,14 @@
 		2A37F9E72026CFDE00CF79E4 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A37F9E62026CFDE00CF79E4 /* MainTabBarController.swift */; };
 		2A43C6DE2017F5370082C69C /* ifaddrs.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A43C6DD2017F5370082C69C /* ifaddrs.m */; };
 		2A43C6E02017F6450082C69C /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A43C6DF2017F6450082C69C /* Util.swift */; };
+		2A6934CE20732146009CBCB4 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A6934CD20732146009CBCB4 /* ProfileViewController.swift */; };
+		2A6934D02073219B009CBCB4 /* FriendProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A6934CF2073219B009CBCB4 /* FriendProfileViewController.swift */; };
 		2A89C7322016D7D500C10AF2 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A89C7312016D7D500C10AF2 /* Constants.swift */; };
 		2A9CDBDE1FF80DE7005AAF4F /* UserAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A9CDBDD1FF80DE7005AAF4F /* UserAccount.swift */; };
 		A5281CC11EAEAF3D003B9489 /* NoSqlSampleDataGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5281CC01EAEAF3D003B9489 /* NoSqlSampleDataGenerator.swift */; };
 		A5281CC31EAEEBA8003B9489 /* NoSQLModelHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5281CC21EAEEBA8003B9489 /* NoSQLModelHelpers.swift */; };
 		A540DAA61F28AA8500883AB5 /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = A540DAA51F28AA8500883AB5 /* Account.swift */; };
-		A5462D761EF0A0ED000970EB /* NearbyLocations.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5462D751EF0A0ED000970EB /* NearbyLocations.swift */; };
+		A5462D761EF0A0ED000970EB /* NearbyLocationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5462D751EF0A0ED000970EB /* NearbyLocationsViewController.swift */; };
 		A5462D781EF0A4A6000970EB /* NearbyTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5462D771EF0A4A6000970EB /* NearbyTableView.swift */; };
 		A5462D7A1EF0A54C000970EB /* NearbyPeopleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5462D791EF0A54C000970EB /* NearbyPeopleViewController.swift */; };
 		A5462D7C1EF0AB3F000970EB /* UserTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5462D7B1EF0AB3F000970EB /* UserTableViewCell.swift */; };
@@ -87,6 +89,8 @@
 		2A43C6DC2017F5360082C69C /* NearMe-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NearMe-Bridging-Header.h"; sourceTree = "<group>"; };
 		2A43C6DD2017F5370082C69C /* ifaddrs.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ifaddrs.m; sourceTree = "<group>"; };
 		2A43C6DF2017F6450082C69C /* Util.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
+		2A6934CD20732146009CBCB4 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		2A6934CF2073219B009CBCB4 /* FriendProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendProfileViewController.swift; sourceTree = "<group>"; };
 		2A89C7312016D7D500C10AF2 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		2A9CDBDD1FF80DE7005AAF4F /* UserAccount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAccount.swift; sourceTree = "<group>"; };
 		367B6E6AAE824E61258E6144 /* Pods-NearMe.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NearMe.debug.xcconfig"; path = "Pods/Target Support Files/Pods-NearMe/Pods-NearMe.debug.xcconfig"; sourceTree = "<group>"; };
@@ -99,7 +103,7 @@
 		A5281CC01EAEAF3D003B9489 /* NoSqlSampleDataGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoSqlSampleDataGenerator.swift; sourceTree = "<group>"; };
 		A5281CC21EAEEBA8003B9489 /* NoSQLModelHelpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoSQLModelHelpers.swift; sourceTree = "<group>"; };
 		A540DAA51F28AA8500883AB5 /* Account.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Account.swift; sourceTree = "<group>"; };
-		A5462D751EF0A0ED000970EB /* NearbyLocations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NearbyLocations.swift; sourceTree = "<group>"; };
+		A5462D751EF0A0ED000970EB /* NearbyLocationsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NearbyLocationsViewController.swift; sourceTree = "<group>"; };
 		A5462D771EF0A4A6000970EB /* NearbyTableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NearbyTableView.swift; sourceTree = "<group>"; };
 		A5462D791EF0A54C000970EB /* NearbyPeopleViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NearbyPeopleViewController.swift; sourceTree = "<group>"; };
 		A5462D7B1EF0AB3F000970EB /* UserTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserTableViewCell.swift; sourceTree = "<group>"; };
@@ -173,6 +177,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2A351C5F20741D74002A9ACC /* Users */ = {
+			isa = PBXGroup;
+			children = (
+				2A6934CF2073219B009CBCB4 /* FriendProfileViewController.swift */,
+				2A27D5911FCFEAE200331A63 /* UserProfileViewController.swift */,
+				2A6934CD20732146009CBCB4 /* ProfileViewController.swift */,
+			);
+			name = Users;
+			sourceTree = "<group>";
+		};
 		2A89C7302016D7C500C10AF2 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
@@ -193,7 +207,7 @@
 		2AEA81352029012600574261 /* LocationTracking */ = {
 			isa = PBXGroup;
 			children = (
-				A5462D751EF0A0ED000970EB /* NearbyLocations.swift */,
+				A5462D751EF0A0ED000970EB /* NearbyLocationsViewController.swift */,
 			);
 			name = LocationTracking;
 			sourceTree = "<group>";
@@ -268,16 +282,17 @@
 		A5A645AF1EA6F4FB00D411E1 /* NearMe */ = {
 			isa = PBXGroup;
 			children = (
+				2A351C5F20741D74002A9ACC /* Users */,
 				2AEA81362029013600574261 /* Authentication */,
 				2AEA81352029012600574261 /* LocationTracking */,
 				2AEA8134202900D100574261 /* Orchestrator */,
 				2A89C7302016D7C500C10AF2 /* Utils */,
-				A566FEE31F0ADFD50060105D /* NearMe.entitlements */,
 				A5E4464F1EDF169D00791822 /* ViewControllers */,
 				A5E4464E1EDF166400791822 /* AWS Tables */,
 				A5E446471ED68A9500791822 /* Model */,
 				A5A645B01EA6F4FB00D411E1 /* AppDelegate.swift */,
 				A5A645BC1EA6F4FB00D411E1 /* LaunchScreen.storyboard */,
+				A566FEE31F0ADFD50060105D /* NearMe.entitlements */,
 				A5E4464C1ED7CA6100791822 /* Access.storyboard */,
 				A5A645B41EA6F4FB00D411E1 /* Main.storyboard */,
 				A5462D771EF0A4A6000970EB /* NearbyTableView.swift */,
@@ -354,7 +369,6 @@
 			isa = PBXGroup;
 			children = (
 				A5462D791EF0A54C000970EB /* NearbyPeopleViewController.swift */,
-				2A27D5911FCFEAE200331A63 /* UserProfileViewController.swift */,
 				2A43C6DD2017F5370082C69C /* ifaddrs.m */,
 				2A43C6DC2017F5360082C69C /* NearMe-Bridging-Header.h */,
 			);
@@ -733,12 +747,14 @@
 				2A43C6DE2017F5370082C69C /* ifaddrs.m in Sources */,
 				A5462D7C1EF0AB3F000970EB /* UserTableViewCell.swift in Sources */,
 				A5A645B11EA6F4FB00D411E1 /* AppDelegate.swift in Sources */,
+				2A6934CE20732146009CBCB4 /* ProfileViewController.swift in Sources */,
 				2A89C7322016D7D500C10AF2 /* Constants.swift in Sources */,
 				A566FEE21F059C390060105D /* Location.swift in Sources */,
 				2A37F9E72026CFDE00CF79E4 /* MainTabBarController.swift in Sources */,
+				2A6934D02073219B009CBCB4 /* FriendProfileViewController.swift in Sources */,
 				A5A645E41EA6F9CE00D411E1 /* PeopleTableViewController.swift in Sources */,
 				A5CAABD21EAA7DF000A16E98 /* Locations.swift in Sources */,
-				A5462D761EF0A0ED000970EB /* NearbyLocations.swift in Sources */,
+				A5462D761EF0A0ED000970EB /* NearbyLocationsViewController.swift in Sources */,
 				A5281CC11EAEAF3D003B9489 /* NoSqlSampleDataGenerator.swift in Sources */,
 				A5A645B91EA6F4FB00D411E1 /* NearMe.xcdatamodeld in Sources */,
 				A5462D7A1EF0A54C000970EB /* NearbyPeopleViewController.swift in Sources */,

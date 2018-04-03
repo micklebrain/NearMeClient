@@ -44,6 +44,8 @@ class NearbyPeopleViewController: UIViewController {
     @IBOutlet weak var CurrentLocationLabel: UILabel!
     var profileImage: UIImage?
     
+    var timer = Timer()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -73,6 +75,16 @@ class NearbyPeopleViewController: UIViewController {
             self.container.isHidden = true
         }
         
+//        mainQueue.async {
+            self.timer = Timer.scheduledTimer(withTimeInterval: 30.0, repeats: true, block: { (Timer) in
+                self.friendsAround.removeAll()
+                self.strangersAround.removeAll()
+                self.pullNearByPeople()
+                self.count = self.friendsAround.count + self.strangersAround.count
+                self.PeopleNearbyTableView.reloadData()
+            })
+//        }
+        
     }
     
     @IBAction func refresh(_ sender: Any) {
@@ -80,6 +92,7 @@ class NearbyPeopleViewController: UIViewController {
         self.friendsAround.removeAll()
         self.strangersAround.removeAll()
         pullNearByPeople()
+        self.count = self.friendsAround.count + self.strangersAround.count
         self.PeopleNearbyTableView.reloadData()
     }
     
@@ -381,7 +394,8 @@ class NearbyPeopleViewController: UIViewController {
 //                        self.friendsAround.insert(person)
 //                        self.strangersAround.insert(person)
 //                    }
-                    self.peopleCounter.text = String(describing: self.count)
+                    let numberoccupied = "# Occupied: " + String(self.count)
+                    self.peopleCounter.text = String(describing: numberoccupied)
                     self.PeopleNearbyTableView.reloadData()
                 }
         }
@@ -424,7 +438,7 @@ class NearbyPeopleViewController: UIViewController {
     }
     
     @IBAction func connect(_ sender: Any) {
-        let profileVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ProfileViewController") as! NearbyLocations
+        let profileVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ProfileViewController") as! NearbyLocationsViewController
         self.present(profileVC, animated: false, completion: nil)
     }
     
@@ -615,7 +629,8 @@ extension NearbyPeopleViewController : UITableViewDataSource, UITableViewDelegat
             cell.headshotViewImage.layer.cornerRadius = 15.0
             cell.headshotViewImage.layer.borderWidth = 3
             cell.headshotViewImage.layer.borderColor = UIColor.black.cgColor
-            cell.connectButton.titleLabel?.text = "Reconnect"
+            //Keeps flashing
+//            cell.connectButton.titleLabel?.text = "Reconnect"
         } else {
             cell.nameLabel.text = self.strangersAround[strangersAround.index(self.strangersAround.startIndex, offsetBy: indexPath.row)].firstName
             //  cell.occupationLabel.text = self.strangersAround[strangersAround.index(self.strangersAround.startIndex, offsetBy: indexPath.row)].
@@ -631,7 +646,7 @@ extension NearbyPeopleViewController : UITableViewDataSource, UITableViewDelegat
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let profileVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ProfileViewController") as! NearbyLocations
+        let profileVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ProfileViewController") as! NearbyLocationsViewController
         
         let selectedUser = User()
         let selectedCell = PeopleNearbyTableView.cellForRow(at: indexPath) as! UserTableViewCell

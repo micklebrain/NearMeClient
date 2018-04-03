@@ -15,63 +15,41 @@ import FBSDKLoginKit
 class LoginViewController: UIViewController {
     
     var results: [AWSDynamoDBObjectModel]?
-    var userloggedIn = User()
+    var userloggedIn : User!
+    
+    var loginButton:LoginButton!
    
     @IBOutlet weak var username: UITextField!
     @IBOutlet weak var password: UITextField!
     
-    override func viewWillAppear(_ animated: Bool) {
-        
-        //Login persistence
-//        if(FBSDKAccessToken.current() != nil)
-//        {
-//            let maintabbarVC:MainTabBarController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "MainTabBarController") as! MainTabBarController
-//
-////            self.userloggedIn?.firstName = firstName
-////            self.userloggedIn?.username = "Tester"
-////            self.userloggedIn?.facebookId = FBid
-//
-//            maintabbarVC.userloggedIn = self.userloggedIn
-//
-//            self.present(maintabbarVC, animated: false, completion: nil)
-        
-//            print(FBSDKAccessToken.current().permissions)
-//            // Graph Path : "me" is going to get current user logged in
-//            let graphRequest = FBSDKGraphRequest(graphPath: "me", parameters: ["fields" : "id, name, email"])
-//            let connection = FBSDKGraphRequestConnection()
-//
-//            connection.add(graphRequest, completionHandler: { (connection, result, error) -> Void in
-//                let data = result as! [String : AnyObject]
-//                var name = data["name"] as! String
-//                var splitName = name.components(separatedBy: " ")
-//                let firstName = splitName.removeFirst()
-//                print("logged in user name is \(String(describing: name))")
-//
-//                let FBid = data["id"] as? String
-//                print("Facebook id is \(String(describing: FBid))")
-//
-//                let maintabbarVC:MainTabBarController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "MainTabBarController") as! MainTabBarController
-//
-//                self.userloggedIn?.firstName = firstName
-//                self.userloggedIn?.username = "Tester"
-//                self.userloggedIn?.facebookId = FBid
-//
-//                maintabbarVC.userloggedIn = self.userloggedIn
-//
-//                self.present(maintabbarVC, animated: false, completion: nil)
-//            })
-//            connection.start()
-        //}
-    
-    }
-    
-    // TODO: Logout facebook
     override func viewDidLoad() {
         super.viewDidLoad()
         
         if(FBSDKAccessToken.current() != nil)
         {
             let maintabbarVC:MainTabBarController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "MainTabBarController") as! MainTabBarController
+            
+            //This request dosnt happen fast enough
+            let graphRequest = FBSDKGraphRequest(graphPath: "me", parameters: ["fields" : "id, name, email"])
+            let connection = FBSDKGraphRequestConnection()
+            
+            connection.add(graphRequest, completionHandler: { (connection, result, error) -> Void in
+                let data = result as! [String : AnyObject]
+                var name = data["name"] as! String
+                var splitName = name.components(separatedBy: " ")
+                let firstName = splitName.removeFirst()
+                print("logged in user name is \(String(describing: name))")
+                
+                let FBid = data["id"] as? String
+                print("Facebook id is \(String(describing: FBid))")
+                
+                self.userloggedIn = User()
+                self.userloggedIn?.firstName = firstName
+                self.userloggedIn?.username = "Tester"
+                self.userloggedIn?.facebookId = FBid
+                
+            })
+            connection.start()
             
             maintabbarVC.userloggedIn = self.userloggedIn
             
@@ -87,7 +65,7 @@ class LoginViewController: UIViewController {
         password.resignFirstResponder()
         
         //Facebook login button
-        let loginButton = LoginButton(readPermissions: [ .publicProfile, .email, .userFriends ])
+        self.loginButton = LoginButton(readPermissions: [ .publicProfile, .email, .userFriends ])
         loginButton.center = view.center
         view.addSubview(loginButton)
         
@@ -102,28 +80,28 @@ class LoginViewController: UIViewController {
         password.resignFirstResponder()
     }
     
-//    @objc func loginButtonClicked() {
-//        let loginManager = LoginManager()
-//        loginManager.logIn([ .publicProfile ], viewController: self) { loginResult in
-//            switch loginResult {
-//            case .failed(let error):
-//                print(error)
-//            case .cancelled:
-//                print("User cancelled login.")
-//            case .success(let grantedPermissions, let declinedPermissions, let accessToken):
-//                print("Logged in!")
-//            }
-//        }
-//    }
-    
     func login(_ sender: Any) {
 
         //authenticateUser()
-        let nearbyLocations:NearbyLocations = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ProfileViewController") as! NearbyLocations
+        let nearbyLocations:NearbyLocationsViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ProfileViewController") as! NearbyLocationsViewController
         nearbyLocations.userloggedIn = self.userloggedIn
         
         self.present(nearbyLocations, animated: false, completion: nil)
     }
+    
+    //    @objc func loginButtonClicked() {
+    //        let loginManager = LoginManager()
+    //        loginManager.logIn([ .publicProfile ], viewController: self) { loginResult in
+    //            switch loginResult {
+    //            case .failed(let error):
+    //                print(error)
+    //            case .cancelled:
+    //                print("User cancelled login.")
+    //            case .success(let grantedPermissions, let declinedPermissions, let accessToken):
+    //                print("Logged in!")
+    //            }
+    //        }
+    //    }
     
     func scanUsers (_ completeionHandler: @escaping (_ response: AWSDynamoDBPaginatedOutput?, _ error: NSError?) -> Void) {
         
@@ -154,7 +132,7 @@ class LoginViewController: UIViewController {
             print("No items match your criteria. Insert more sample data and try again.")
         }
         else {
-            let nearbyPeopleVC:NearbyLocations = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ProfileViewController") as! NearbyLocations
+            let nearbyPeopleVC:NearbyLocationsViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ProfileViewController") as! NearbyLocationsViewController
             let currentUser = User()
             currentUser?.username = self.username.text
             currentUser?.firstName = self.username.text

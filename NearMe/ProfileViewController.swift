@@ -1,16 +1,14 @@
 //
-//  MainTabBarController.swift
+//  ProfileViewController.swift
 //  NearMe
 //
-//  Created by Nathan Thai Nguyen on 2/3/18.
+//  Created by Nathan Thai Nguyen on 4/2/18.
 //  Copyright © 2018 Nathan Nguyen. All rights reserved.
 //
 
 import UIKit
 
-class MainTabBarController: UITabBarController {
-    
-    var userloggedIn : User?
+class ProfileViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,6 +21,7 @@ class MainTabBarController: UITabBarController {
         // Dispose of any resources that can be recreated.
     }
     
+
     /*
     // MARK: - Navigation
 

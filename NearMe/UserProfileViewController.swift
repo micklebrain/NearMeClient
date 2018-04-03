@@ -7,8 +7,11 @@
 //
 
 import UIKit
+import FacebookLogin
+import FacebookCore
+import FBSDKLoginKit
 
-class UserProfileViewController: UIViewController {
+class UserProfileViewController: ProfileViewController {
 
     @IBOutlet weak var UserProfilePicture: UIImageView!
     var userLoggedIn: User?
@@ -18,8 +21,10 @@ class UserProfileViewController: UIViewController {
         let tbc = self.tabBarController as! MainTabBarController
         self.userLoggedIn = tbc.userloggedIn
         
-//        UserProfilePicture.image = #imageLiteral(resourceName: "empty-headshot")
-        downloadProfilePic()
+//      UserProfilePicture.image = #imageLiteral(resourceName: "empty-headshot")
+        if (self.userLoggedIn != nil) {
+            downloadProfilePic()
+        }
     }
     
     private func downloadProfilePic () {
@@ -81,7 +86,14 @@ class UserProfileViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    @IBAction func logout(_ sender: Any) {
+            let loginVC:LoginViewController = UIStoryboard(name: "Access", bundle: nil).instantiateViewController(withIdentifier: "LoginViewController") as! LoginViewController
+        
+            AccessToken.current = nil
 
+            self.present(loginVC, animated: false, completion: nil)
+    }
+    
     /*
     // MARK: - Navigation
 

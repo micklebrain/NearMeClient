@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="Hgc-Ie-D11">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="Hgc-Ie-D11">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--Login View Controller-->
         <scene sceneID="XzU-Hb-7bO">
             <objects>
-                <viewController id="Hgc-Ie-D11" customClass="LoginViewController" customModule="NearMe" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="LoginViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Hgc-Ie-D11" customClass="LoginViewController" customModule="NearMe" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="esv-Zb-3Dp"/>
                         <viewControllerLayoutGuide type="bottom" id="aRr-oj-1ob"/>
@@ -28,16 +28,6 @@
                                 </state>
                                 <connections>
                                     <action selector="login:" destination="Hgc-Ie-D11" eventType="touchUpInside" id="knX-fP-5Yz"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="o15-E4-1H1">
-                                <rect key="frame" x="166" y="593" width="44" height="33"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="33" id="y1z-lS-MUZ"/>
-                                </constraints>
-                                <state key="normal" title="logout"/>
-                                <connections>
-                                    <action selector="logout:" destination="Hgc-Ie-D11" eventType="touchUpInside" id="cwb-rQ-ENq"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="NearMe" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RmA-xs-Omx">
@@ -77,7 +67,6 @@
                         </subviews>
                         <constraints>
                             <constraint firstItem="H5X-Qt-fxu" firstAttribute="top" secondItem="hKF-9r-YPb" secondAttribute="bottom" constant="9" id="1vb-7e-yAq"/>
-                            <constraint firstItem="o15-E4-1H1" firstAttribute="trailing" secondItem="H5X-Qt-fxu" secondAttribute="trailing" constant="-4" id="6gG-Sv-G6j"/>
                             <constraint firstItem="hKF-9r-YPb" firstAttribute="centerX" secondItem="H5X-Qt-fxu" secondAttribute="centerX" id="Cf3-4i-DOr"/>
                             <constraint firstItem="hKF-9r-YPb" firstAttribute="centerX" secondItem="hbz-7w-XzU" secondAttribute="centerX" id="DKd-v4-20i"/>
                             <constraint firstItem="DyU-PG-mxY" firstAttribute="top" secondItem="RmA-xs-Omx" secondAttribute="bottom" constant="36" id="IXH-t9-juE"/>
@@ -85,7 +74,6 @@
                             <constraint firstItem="RmA-xs-Omx" firstAttribute="top" secondItem="esv-Zb-3Dp" secondAttribute="bottom" id="TY2-wK-KWk"/>
                             <constraint firstItem="df2-PW-QkJ" firstAttribute="top" secondItem="DyU-PG-mxY" secondAttribute="bottom" constant="20" id="cUE-Mb-d6m"/>
                             <constraint firstItem="df2-PW-QkJ" firstAttribute="centerX" secondItem="hKF-9r-YPb" secondAttribute="centerX" id="h1f-cy-qeD"/>
-                            <constraint firstItem="aRr-oj-1ob" firstAttribute="top" secondItem="o15-E4-1H1" secondAttribute="bottom" constant="41" id="keO-Xb-RHN"/>
                             <constraint firstItem="DyU-PG-mxY" firstAttribute="trailing" secondItem="df2-PW-QkJ" secondAttribute="trailing" id="mNo-R1-KjH"/>
                             <constraint firstItem="DyU-PG-mxY" firstAttribute="leading" secondItem="df2-PW-QkJ" secondAttribute="leading" id="rrF-dM-M2o"/>
                             <constraint firstItem="hKF-9r-YPb" firstAttribute="top" secondItem="df2-PW-QkJ" secondAttribute="bottom" constant="42" id="yX9-xl-lHt"/>
@@ -153,9 +141,7 @@
                                 <state key="normal" title="Sign up"/>
                                 <connections>
                                     <action selector="signUp:" destination="7Cm-MF-HkZ" eventType="touchUpInside" id="mE0-7P-nZ6"/>
-                                    <segue destination="Hgc-Ie-D11" kind="show" id="3VH-GG-lWq">
-                                        <nil key="action"/>
-                                    </segue>
+                                    <segue destination="Hgc-Ie-D11" kind="show" id="3VH-GG-lWq"/>
                                 </connections>
                             </button>
                         </subviews>
