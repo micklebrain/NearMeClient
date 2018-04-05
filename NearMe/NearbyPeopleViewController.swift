@@ -20,6 +20,7 @@ import SwiftyJSON
 class NearbyPeopleViewController: UIViewController {
     
     let section = ["Friends", "Strangers"]
+    let filterOptions = ["Female", "Male"]
     //add collegaues, same school
     var locationManager : CLLocationManager!
     var people: [Person] = []
@@ -42,6 +43,8 @@ class NearbyPeopleViewController: UIViewController {
     @IBOutlet weak var peopleCounter: UILabel!
     @IBOutlet weak var presenceSwitch: UISwitch!
     @IBOutlet weak var CurrentLocationLabel: UILabel!
+    @IBOutlet weak var filterPickerView: UIPickerView!
+    
     var profileImage: UIImage?
     
     var timer = Timer()
@@ -54,6 +57,9 @@ class NearbyPeopleViewController: UIViewController {
         
         self.PeopleNearbyTableView.delegate = self
         self.PeopleNearbyTableView.dataSource = self
+        
+        self.filterPickerView.delegate = self
+        self.filterPickerView.dataSource = self
     
         userLoggedIn?.headshot = #imageLiteral(resourceName: "empty-headshot")
         getUserPicture(facebookId: (userLoggedIn?.facebookId)!)
@@ -376,8 +382,9 @@ class NearbyPeopleViewController: UIViewController {
                         // Using facebook id for distinctivness
                         if (facebookId != self.userLoggedIn?.facebookId) {
                             newPerson.firstName = userDetails["firstName"] as! String
+                            newPerson.lastName = userDetails["lastName"] as! String
                             newPerson.facebookId = userDetails["facebookId"] as! String
-    //                      newPerson.headshotImage = self.defaultHeadshot
+                            newPerson.school = userDetails["school"] as! String
                             newPerson.headshotImage = self.getUserPicture(facebookId: newPerson.facebookId!)
                             // if (self.userLoggedIn?.facebookId != newPerson.facebookId) {
                             // if ((self.userLoggedIn?.friends!.contains(newPerson.firstName))!) {
@@ -491,11 +498,10 @@ class NearbyPeopleViewController: UIViewController {
     @IBAction func filter(_ sender: Any) {
         
         while self.strangersAround.contains(where: { $0.sex == sex.male }) {
-            
             let foundPerson = self.strangersAround.first(where: { $0.sex == sex.male })
             strangersAround.remove(foundPerson!)
         }
-        
+         
         self.PeopleNearbyTableView.reloadData()
         
     }
@@ -618,8 +624,9 @@ extension NearbyPeopleViewController : UITableViewDataSource, UITableViewDelegat
         
         //      TODO: Check why view gets loaded without images - bug
         if (indexPath.section == 0) {
-            cell.nameLabel.text = self.friendsAround[friendsAround.index(self.friendsAround.startIndex, offsetBy: indexPath.row)].firstName
-//            cell.headshotViewImage.image = self.friendsAround[friendsAround.index(self.friendsAround.startIndex, offsetBy: indexPath.row)].headshotImage
+            cell.nameLabel.text = self.friendsAround[friendsAround.index(self.friendsAround.startIndex, offsetBy: indexPath.row)].firstName! + " " +
+                self.friendsAround[friendsAround.index(self.friendsAround.startIndex, offsetBy: indexPath.row)].lastName!
+            cell.schoolLabel.text = self.friendsAround[friendsAround.index(self.friendsAround.startIndex, offsetBy: indexPath.row)].school!
             let headshot = headshots[self.friendsAround[friendsAround.index(self.friendsAround.startIndex, offsetBy: indexPath.row)].facebookId!]
             if (headshot != nil) {
                 cell.headshotViewImage.image = headshots[self.friendsAround[friendsAround.index(self.friendsAround.startIndex, offsetBy: indexPath.row)].facebookId!]
@@ -662,6 +669,22 @@ extension NearbyPeopleViewController : UITableViewDataSource, UITableViewDelegat
             self.container.isHidden = true
             self.loadingView.isHidden = true
         }
+    }
+    
+}
+
+extension NearbyPeopleViewController: UIPickerViewDataSource, UIPickerViewDelegate {
+    
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return self.filterOptions.count
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return filterOptions[row]
     }
     
 }

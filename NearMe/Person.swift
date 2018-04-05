@@ -10,7 +10,7 @@ import Foundation
 import CoreLocation
 import UIKit
 
-func ==(lhs: Person, rhs: Person) -> Bool {
+func == (lhs: Person, rhs: Person) -> Bool {
     return lhs.hashValue == rhs.hashValue
 }
 
@@ -36,6 +36,7 @@ class Person : Hashable {
     var location : CLLocation?
     var locality : String?
     var friends : [String]?
+    var school : String?
     
     var headshotImage: UIImage?
     

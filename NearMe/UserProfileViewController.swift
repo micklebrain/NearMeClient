@@ -16,6 +16,9 @@ class UserProfileViewController: ProfileViewController {
     @IBOutlet weak var UserProfilePicture: UIImageView!
     var userLoggedIn: User?
     
+    @IBOutlet weak var NameLabel: UILabel!
+    @IBOutlet weak var EmailLabel: UILabel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         let tbc = self.tabBarController as! MainTabBarController
@@ -24,6 +27,36 @@ class UserProfileViewController: ProfileViewController {
 //      UserProfilePicture.image = #imageLiteral(resourceName: "empty-headshot")
         if (self.userLoggedIn != nil) {
             downloadProfilePic()
+        }
+        
+        pullFacebookInfo()
+
+    }
+    
+    private func pullFacebookInfo () {
+        if(FBSDKAccessToken.current() != nil)
+        {
+            //This request dosnt happen fast enough
+            let graphRequest = FBSDKGraphRequest(graphPath: "me", parameters: ["fields" : "id, name, email"])
+            let connection = FBSDKGraphRequestConnection()
+            
+            connection.add(graphRequest, completionHandler: { (connection, result, error) -> Void in
+                let data = result as! [String : AnyObject]
+                var name = data["name"] as! String
+                var email = data["email"] as! String
+                var splitName = name.components(separatedBy: " ")
+                let firstName = splitName.removeFirst()
+                print("logged in user name is \(String(describing: name))")
+                
+                let FBid = data["id"] as? String
+                print("Facebook id is \(String(describing: FBid))")
+                
+                self.NameLabel.text = name
+                self.EmailLabel.text = email
+                
+            })
+            connection.start()
+            
         }
     }
     

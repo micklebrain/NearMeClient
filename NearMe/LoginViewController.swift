@@ -27,39 +27,37 @@ class LoginViewController: UIViewController {
         
         if(FBSDKAccessToken.current() != nil)
         {
-            let maintabbarVC:MainTabBarController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "MainTabBarController") as! MainTabBarController
-            
             //This request dosnt happen fast enough
             let graphRequest = FBSDKGraphRequest(graphPath: "me", parameters: ["fields" : "id, name, email"])
             let connection = FBSDKGraphRequestConnection()
-            
+
             connection.add(graphRequest, completionHandler: { (connection, result, error) -> Void in
                 let data = result as! [String : AnyObject]
                 var name = data["name"] as! String
                 var splitName = name.components(separatedBy: " ")
                 let firstName = splitName.removeFirst()
                 print("logged in user name is \(String(describing: name))")
-                
+
                 let FBid = data["id"] as? String
                 print("Facebook id is \(String(describing: FBid))")
-                
+
                 self.userloggedIn = User()
                 self.userloggedIn?.firstName = firstName
                 self.userloggedIn?.username = "Tester"
                 self.userloggedIn?.facebookId = FBid
-                
+
             })
             connection.start()
             
+            let maintabbarVC:MainTabBarController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "MainTabBarController") as! MainTabBarController
+
             maintabbarVC.userloggedIn = self.userloggedIn
-            
+
             let initialViewController = UIStoryboard(name: "Main", bundle:nil).instantiateInitialViewController() as! UIViewController
             let appDelegate = (UIApplication.shared.delegate as! AppDelegate)
             appDelegate.window?.rootViewController = initialViewController
-        
+
             self.present(maintabbarVC, animated: false, completion: nil)
-//            self.navigationController?.pushViewController(maintabbarVC, animated: false)
-//            self.present(maintabbarVC, animated: false, completion: nil)
         }
         
         password.resignFirstResponder()
@@ -67,41 +65,41 @@ class LoginViewController: UIViewController {
         //Facebook login button
         self.loginButton = LoginButton(readPermissions: [ .publicProfile, .email, .userFriends ])
         loginButton.center = view.center
+        
+//      self.FbLoginButton.readPermissions = ["id, name, email"]
+        
         view.addSubview(loginButton)
-        
-        if let accessToken = AccessToken.current {
-           print(AccessToken.current?.userId)
-        }
-        
     
+    }
+    
+    @IBAction func loginButtonClicked(_ sender: Any) {
+        let loginManager = LoginManager()
+        loginManager.logIn(readPermissions: [.email, .userFriends, .publicProfile], viewController: self, completion: ({ (loginResult) in
+            switch loginResult {
+            case LoginResult.cancelled:
+                print("Things were canceled")
+            case LoginResult.failed:
+                print("Things failed")
+            case LoginResult.success(grantedPermissions: nil, declinedPermissions: nil, token: nil):
+                
+                let maintabbarVC:MainTabBarController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "MainTabBarController") as! MainTabBarController
+                
+                maintabbarVC.userloggedIn = self.userloggedIn
+                
+                let initialViewController = UIStoryboard(name: "Main", bundle:nil).instantiateInitialViewController() as! UIViewController
+                let appDelegate = (UIApplication.shared.delegate as! AppDelegate)
+                appDelegate.window?.rootViewController = initialViewController
+                
+                self.present(maintabbarVC, animated: false, completion: nil)
+            default:
+                print("Not an option")
+            }
+        }))
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         password.resignFirstResponder()
     }
-    
-    func login(_ sender: Any) {
-
-        //authenticateUser()
-        let nearbyLocations:NearbyLocationsViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ProfileViewController") as! NearbyLocationsViewController
-        nearbyLocations.userloggedIn = self.userloggedIn
-        
-        self.present(nearbyLocations, animated: false, completion: nil)
-    }
-    
-    //    @objc func loginButtonClicked() {
-    //        let loginManager = LoginManager()
-    //        loginManager.logIn([ .publicProfile ], viewController: self) { loginResult in
-    //            switch loginResult {
-    //            case .failed(let error):
-    //                print(error)
-    //            case .cancelled:
-    //                print("User cancelled login.")
-    //            case .success(let grantedPermissions, let declinedPermissions, let accessToken):
-    //                print("Logged in!")
-    //            }
-    //        }
-    //    }
     
     func scanUsers (_ completeionHandler: @escaping (_ response: AWSDynamoDBPaginatedOutput?, _ error: NSError?) -> Void) {
         

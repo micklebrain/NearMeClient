@@ -10,7 +10,6 @@ import Foundation
 
 class Student : Person {
     
-    var school : String?
     var employed : Bool?
 
 }
