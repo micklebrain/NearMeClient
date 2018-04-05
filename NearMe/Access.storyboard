@@ -46,6 +46,14 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2P7-Be-h8A">
+                                <rect key="frame" x="134" y="581" width="108" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Facebook Login"/>
+                                <connections>
+                                    <action selector="loginFacebook:" destination="Hgc-Ie-D11" eventType="touchUpInside" id="jU7-NB-q70"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <constraints>
                             <constraint firstItem="DyU-PG-mxY" firstAttribute="leading" secondItem="df2-PW-QkJ" secondAttribute="leading" id="84M-2O-E2a"/>

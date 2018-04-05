@@ -299,7 +299,7 @@ extension NearbyLocationsViewController : UITableViewDataSource, UITableViewDele
         
         let localityTrimmed = locality.replacingOccurrences(of: " ", with: "")
         
-        let url = URL(string: "https://fathomless-gorge-73815.herokuapp.com/updateLocation")
+        let url = URL(string: "https://crystal-smalltalk.herokuapp.com/updateLocation")
         
         let userDetails : Parameters = [
             "firstName": self.userloggedIn?.firstName,

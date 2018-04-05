@@ -340,7 +340,7 @@ class NearbyPeopleViewController: UIViewController {
         //Brannan lobby wifi
 //        let url = URL(string: "http://10.12.228.178:8080/pullAccounts")
         //Heroku
-        let url = URL(string: "https://fathomless-gorge-73815.herokuapp.com/pullAccounts")
+        let url = URL(string: "https://crystal-smalltalk.herokuapp.com/pullAccounts")
         userLoggedIn?.friends = ["Nathan"]
         
         let userDetails : Parameters = [
@@ -378,16 +378,13 @@ class NearbyPeopleViewController: UIViewController {
                         let userDetails = someUser as! [String: Any]
                         var newPerson = Person()
                         let facebookId = userDetails["facebookId"] as! String
-                        // newPerson.firstName = userDetails["firstName"] as! String
-                        // Using facebook id for distinctivness
+                        
                         if (facebookId != self.userLoggedIn?.facebookId) {
                             newPerson.firstName = userDetails["firstName"] as! String
                             newPerson.lastName = userDetails["lastName"] as! String
                             newPerson.facebookId = userDetails["facebookId"] as! String
                             newPerson.school = userDetails["school"] as! String
                             newPerson.headshotImage = self.getUserPicture(facebookId: newPerson.facebookId!)
-                            // if (self.userLoggedIn?.facebookId != newPerson.facebookId) {
-                            // if ((self.userLoggedIn?.friends!.contains(newPerson.firstName))!) {
                             self.friendsAround.insert(newPerson)
                         }
                         // } else {

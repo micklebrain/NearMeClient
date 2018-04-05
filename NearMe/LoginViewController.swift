@@ -68,9 +68,36 @@ class LoginViewController: UIViewController {
         
 //      self.FbLoginButton.readPermissions = ["id, name, email"]
         
-        view.addSubview(loginButton)
+//        view.addSubview(loginButton)
     
     }
+    
+    @IBAction func loginFacebook(_ sender: Any) {
+        
+        let loginManager = LoginManager()
+        loginManager.logIn(readPermissions: [ .publicProfile, .email, .userFriends ], viewController: self) { (loginResult) in
+            switch loginResult {
+            case.cancelled:
+                print("We failed")
+            case.failed(let error):
+                print(error)
+            case.success(grantedPermissions: let grantedPermissions, declinedPermissions: let declinedPermissions, token: let accessToken):
+                //Pull user's information from granted permissions
+                
+                let maintabbarVC:MainTabBarController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "MainTabBarController") as! MainTabBarController
+                
+                maintabbarVC.userloggedIn = self.userloggedIn
+                
+                let initialViewController = UIStoryboard(name: "Main", bundle:nil).instantiateInitialViewController() as! UIViewController
+                let appDelegate = (UIApplication.shared.delegate as! AppDelegate)
+                appDelegate.window?.rootViewController = initialViewController
+                
+                self.present(maintabbarVC, animated: false, completion: nil)
+            }
+        }
+        
+    }
+    
     
     @IBAction func loginButtonClicked(_ sender: Any) {
         let loginManager = LoginManager()
