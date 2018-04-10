@@ -32,6 +32,7 @@ class NearbyPeopleViewController: UIViewController {
     var currentUserLocation: CLLocation?
     var count = 0
     var actInd: UIActivityIndicatorView!
+    private let refreshControl = UIRefreshControl()
     //var results: [AWSDynamoDBObjectModel]?
 
     @IBOutlet weak var PeopleNearbyTableView: UITableView!
@@ -58,6 +59,15 @@ class NearbyPeopleViewController: UIViewController {
         self.filterPickerView.dataSource = self
     
         self.floorLabel.text?.append(String(userLoggedIn.floor))
+        
+        if #available(iOS 10.0, *) {
+            self.PeopleNearbyTableView.refreshControl = refreshControl
+        } else {
+            self.PeopleNearbyTableView.addSubview(refreshControl)
+        }
+        
+        self.refreshControl.addTarget(self, action: #selector(refreshUsersNearby), for: .valueChanged)
+        
         userLoggedIn?.headshot = #imageLiteral(resourceName: "empty-headshot")
         getUserPicture(facebookId: (userLoggedIn?.facebookId)!)
         
@@ -80,23 +90,25 @@ class NearbyPeopleViewController: UIViewController {
         
 //        mainQueue.async {
             self.timer = Timer.scheduledTimer(withTimeInterval: 30.0, repeats: true, block: { (Timer) in
-                self.friendsAround.removeAll()
-                self.strangersAround.removeAll()
-                self.pullNearByPeople()
-                self.count = self.friendsAround.count + self.strangersAround.count
-                self.PeopleNearbyTableView.reloadData()
+                self.refreshUsersNearby()
             })
 //        }
         
     }
     
     @IBAction func refresh(_ sender: Any) {
-        //Implement caching later
+        refreshUsersNearby()
+    }
+    
+    func refreshUsersNearby () {
+        //Implement caching
         self.friendsAround.removeAll()
         self.strangersAround.removeAll()
         pullNearByPeople()
         self.count = self.friendsAround.count + self.strangersAround.count
         self.PeopleNearbyTableView.reloadData()
+        self.refreshControl.endRefreshing()
+        self.actInd.stopAnimating()
     }
     
     func getLocation() {

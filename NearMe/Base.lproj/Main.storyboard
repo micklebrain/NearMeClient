@@ -143,16 +143,9 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DIy-h1-fWa">
-                                <rect key="frame" x="252" y="44" width="107" height="80"/>
+                            <pickerView contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DIy-h1-fWa">
+                                <rect key="frame" x="252" y="52" width="107" height="72"/>
                             </pickerView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="h3L-lb-JfF">
-                                <rect key="frame" x="306" y="132" width="53" height="30"/>
-                                <state key="normal" title="Refresh"/>
-                                <connections>
-                                    <action selector="refresh:" destination="GNV-Q6-9WX" eventType="touchUpInside" id="Nfx-Gh-tvN"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -160,7 +153,6 @@
                             <constraint firstItem="EwH-vP-xMB" firstAttribute="top" secondItem="nUZ-C0-PPf" secondAttribute="bottom" constant="8" symbolic="YES" id="8IP-DU-nb5"/>
                             <constraint firstItem="DIy-h1-fWa" firstAttribute="leading" secondItem="Vr6-LM-Ob7" secondAttribute="trailing" constant="8" symbolic="YES" id="F8v-Mw-zgZ"/>
                             <constraint firstItem="EwH-vP-xMB" firstAttribute="bottom" secondItem="ewd-je-oU4" secondAttribute="bottom" id="IJ2-Xu-bUb"/>
-                            <constraint firstItem="h3L-lb-JfF" firstAttribute="trailing" secondItem="6f1-eB-Oee" secondAttribute="trailingMargin" id="ITq-FN-Efn"/>
                             <constraint firstItem="xan-Rp-r7g" firstAttribute="top" secondItem="Vr6-LM-Ob7" secondAttribute="bottom" constant="12" id="MQF-Ev-bt1"/>
                             <constraint firstItem="Vr6-LM-Ob7" firstAttribute="trailing" secondItem="xan-Rp-r7g" secondAttribute="trailing" id="N4m-xk-oFD"/>
                             <constraint firstItem="v2k-1y-oXu" firstAttribute="bottom" secondItem="K5i-QG-4Z8" secondAttribute="top" id="P5T-Q7-YLm"/>
@@ -179,11 +171,9 @@
                             <constraint firstAttribute="trailing" secondItem="v2k-1y-oXu" secondAttribute="trailing" id="eNO-Zp-yRR"/>
                             <constraint firstItem="nUZ-C0-PPf" firstAttribute="leading" secondItem="EwH-vP-xMB" secondAttribute="leading" id="gCN-Yq-hne"/>
                             <constraint firstItem="v2k-1y-oXu" firstAttribute="top" secondItem="avf-of-Jfl" secondAttribute="bottom" constant="98" id="m4Y-xO-X2Q"/>
-                            <constraint firstItem="DIy-h1-fWa" firstAttribute="trailing" secondItem="h3L-lb-JfF" secondAttribute="trailing" id="nHc-oM-lkp"/>
-                            <constraint firstItem="xan-Rp-r7g" firstAttribute="centerY" secondItem="h3L-lb-JfF" secondAttribute="centerY" constant="-49.5" id="r7a-HU-1BV"/>
                             <constraint firstItem="avf-of-Jfl" firstAttribute="leading" secondItem="6f1-eB-Oee" secondAttribute="leadingMargin" id="r8b-wR-dDt"/>
                             <constraint firstItem="Vr6-LM-Ob7" firstAttribute="leading" secondItem="xan-Rp-r7g" secondAttribute="leading" constant="-24" id="sId-gA-Wzo"/>
-                            <constraint firstItem="DIy-h1-fWa" firstAttribute="top" secondItem="3uQ-Qb-VSk" secondAttribute="bottom" id="t7l-KZ-uuK"/>
+                            <constraint firstItem="DIy-h1-fWa" firstAttribute="top" secondItem="3uQ-Qb-VSk" secondAttribute="bottom" constant="8" id="t7l-KZ-uuK"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Nearby People" id="mBK-wl-lQt"/>
