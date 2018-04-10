@@ -33,13 +33,12 @@ class Person : Hashable {
     var sex : sex?
     var userId : String?
     var username : String?
+    var currentLocation : location?
     var location : CLLocation?
     var locality : String?
     var friends : [String]?
     var school : String?
-    
     var headshotImage: UIImage?
-    
     var facebookId : String?
     var online : Bool = true
     

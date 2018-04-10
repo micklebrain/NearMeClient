@@ -42,7 +42,7 @@
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Way-Wo-VJs">
                                                     <rect key="frame" x="10" y="11" width="180" height="180"/>
                                                 </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Taken Or Not" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZQn-my-o3N">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Single" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZQn-my-o3N">
                                                     <rect key="frame" x="207" y="146" width="153" height="45"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="45" id="BbJ-JC-uhh"/>
@@ -253,10 +253,10 @@
             </objects>
             <point key="canvasLocation" x="2136.8000000000002" y="934.72906403940885"/>
         </scene>
-        <!--ProfileViewController-->
+        <!--NearbyLocationsViewController-->
         <scene sceneID="7tF-XG-GdW">
             <objects>
-                <viewController storyboardIdentifier="ProfileViewController" title="ProfileViewController" id="4bN-pW-dVJ" customClass="NearbyLocationsViewController" customModule="NearMe" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ProfileViewController" title="NearbyLocationsViewController" id="4bN-pW-dVJ" customClass="NearbyLocationsViewController" customModule="NearMe" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Auy-AW-1Hu"/>
                         <viewControllerLayoutGuide type="bottom" id="FcS-hM-DjR"/>
@@ -287,6 +287,24 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Floor #:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EkU-HO-9Wi">
+                                <rect key="frame" x="68" y="622" width="59" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" maximumValue="100" translatesAutoresizingMaskIntoConstraints="NO" id="tni-nD-w2F">
+                                <rect key="frame" x="236" y="618" width="94" height="29"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </stepper>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ezQ-Bo-clE">
+                                <rect key="frame" x="171" y="618" width="25" height="25"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -303,12 +321,13 @@
                         <offsetWrapper key="titlePositionAdjustment" horizontal="0.0" vertical="0.0"/>
                     </tabBarItem>
                     <connections>
+                        <outlet property="floorNumber" destination="ezQ-Bo-clE" id="6v5-p8-EQD"/>
                         <outlet property="placesTableView" destination="F95-cI-TK7" id="z3k-h8-uMi"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UK3-dr-Pnn" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2854" y="935"/>
+            <point key="canvasLocation" x="2853.5999999999999" y="934.72906403940885"/>
         </scene>
         <!--MainTabBarController-->
         <scene sceneID="Ltg-qj-QSg">

@@ -17,10 +17,10 @@ import FacebookLogin
 import FacebookCore
 import FBSDKLoginKit
 
-class NearbyLocationsViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
+class NearbyLocationsViewController: UIViewController {
 
     @IBOutlet weak var placesTableView: UITableView!
-    @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var floorNumber: UILabel!
     
     var suggestedResturants : [googleLocation] = []
     //Pull from Cache 
@@ -32,12 +32,13 @@ class NearbyLocationsViewController: UIViewController, UIPickerViewDelegate, UIP
     var apiKey : String?
     var locationManager : CLLocationManager!
     var currentUserLocation: CLLocation?
-//    var mapView: GMSMapView!
     var placesClient: GMSPlacesClient!
     var zoomLevel: Float = 15.0
     var likelyPlaces: [GMSPlace] = []
     var selectedPlace: GMSPlace?
     var userloggedIn: User?
+    
+//  var mapView: GMSMapView!
     
     // A default location to use when location permission is not granted.
     let defaultLocation = CLLocation(latitude: -33.869405, longitude: 151.199)
@@ -114,31 +115,6 @@ class NearbyLocationsViewController: UIViewController, UIPickerViewDelegate, UIP
         // Dispose of any resources that can be recreated.
     }
     
-    func requestResturant () {
-    
-        let urlString = URL(string: "https://nearmecrystal.appspot.com/requestResturant")
-        
-        if let url = urlString {
-            let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
-                if error != nil {
-                    print(error)
-                } else {
-                    if let usableData = data {
-                        print(usableData) //JSONSerialization
-                        let json = try? JSONSerialization.jsonObject(with: usableData, options: JSONSerialization.ReadingOptions.allowFragments)
-                        
-                        if let dictionary = json as? [Any] {
-                            for value in dictionary {
-                                print(value)
-                            }
-                        }
-                    }
-                }
-            }
-              task.resume()
-        }
-    }
-
     func listLikelyPlaces() {
         likelyPlaces.removeAll()
 
@@ -157,11 +133,24 @@ class NearbyLocationsViewController: UIViewController, UIPickerViewDelegate, UIP
                 }
                 self.placesTableView.reloadData()
             }
-            
-    
+        
         })
         
     }
+        
+    /*
+    // MARK: - Navigation
+
+    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        // Get the new view controller using segue.destinationViewController.
+        // Pass the selected object to the new view controller.
+    }
+    */
+
+}
+
+extension NearbyLocationsViewController: UIPickerViewDelegate, UIPickerViewDataSource {
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
@@ -175,23 +164,6 @@ class NearbyLocationsViewController: UIViewController, UIPickerViewDelegate, UIP
         return resturantsAround[row]
     }
     
-    @IBAction func OpenProfile(_ sender: Any) {
-        
-        let userProfileVC:UserProfileViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "UserProfileViewController") as! UserProfileViewController
-        userProfileVC.userLoggedIn = self.userloggedIn
-        self.present(userProfileVC, animated: false, completion: nil)
-        
-    }
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
 
 extension NearbyLocationsViewController: CLLocationManagerDelegate {
@@ -288,11 +260,10 @@ extension NearbyLocationsViewController : UITableViewDataSource, UITableViewDele
         
             self.userloggedIn?.buildingOccupied = placesTableView.cellForRow(at: indexPath)?.textLabel?.text
             updateLocation(locality: (self.userloggedIn?.buildingOccupied)!)
+            self.userloggedIn?.floor = Int(floorNumber.text!)
             tbc.userloggedIn = self.userloggedIn
-        
             tbc.selectedIndex = 2
-        
-//      listLikelyPlaces()
+
     }
     
     func updateLocation(locality: String) {

@@ -19,26 +19,21 @@ import SwiftyJSON
 
 class NearbyPeopleViewController: UIViewController {
     
+    var userLoggedIn: User?
     let section = ["Friends", "Strangers"]
     let filterOptions = ["Female", "Male"]
     //add collegaues, same school
     var locationManager : CLLocationManager!
-    var people: [Person] = []
-    var results: [AWSDynamoDBObjectModel]?
     var strangersAround = Set<Person>()
-//  Using NSMutableSet because AWS
+    //Using NSMutableSet because AWS
     var friendsAround = Set<Person>()
-//  var strangers = NSMutableSet()
-    var userLoggedIn: User?
-    var currentUserLocation: CLLocation?
-    var headshot : UIImage?
-    var count = 0
-    var loadingView: UIView = UIView()
-    var container: UIView = UIView()
-    var actInd: UIActivityIndicatorView = UIActivityIndicatorView()
     var defaultHeadshot : UIImage?
     var headshots = [String: UIImage]()
-    
+    var currentUserLocation: CLLocation?
+    var count = 0
+    var actInd: UIActivityIndicatorView!
+    //var results: [AWSDynamoDBObjectModel]?
+
     @IBOutlet weak var PeopleNearbyTableView: UITableView!
     @IBOutlet weak var peopleCounter: UILabel!
     @IBOutlet weak var presenceSwitch: UISwitch!
@@ -75,11 +70,11 @@ class NearbyPeopleViewController: UIViewController {
         
         pullFacebookInfo()
         
-        let mainQueue = DispatchQueue.main
-        let deadline = DispatchTime.now() + .seconds(5)
-        mainQueue.asyncAfter(deadline: deadline) {
-            self.container.isHidden = true
-        }
+//        let mainQueue = DispatchQueue.main
+//        let deadline = DispatchTime.now() + .seconds(5)
+//        mainQueue.asyncAfter(deadline: deadline) {
+//            self.actInd.stopAnimating()
+//        }
         
 //        mainQueue.async {
             self.timer = Timer.scheduledTimer(withTimeInterval: 30.0, repeats: true, block: { (Timer) in
@@ -155,39 +150,6 @@ class NearbyPeopleViewController: UIViewController {
 //        connection2.start()
     }
     
-    func downloadImages () {
-        let transferManager = AWSS3TransferManager.default()
-        
-        let downloadingFileUrl = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent("headshot1.jpg")
-        let downloadRequest = AWSS3TransferManagerDownloadRequest()
-        
-        downloadRequest?.bucket = "nearme-pictures"
-        downloadRequest?.key = "headshot2.jpg"
-        downloadRequest?.downloadingFileURL = downloadingFileUrl
-        
-        // TODO: Cache images
-        // Image was downloaded after the cell was returned
-        transferManager.download(downloadRequest!).continueWith(executor : AWSExecutor.mainThread(), block: { (task:AWSTask<AnyObject>) -> Any? in
-            if let error = task.error as NSError? {
-                if error.domain == AWSS3TransferManagerErrorDomain, let code = AWSS3TransferManagerErrorType(rawValue: error.code) {
-                    switch code {
-                    case .cancelled, .paused:
-                        break
-                    default:
-                        print("Error downloading: \(String(describing: downloadRequest?.key)) Error: \(error)")
-                    }
-                } else {
-                    print("Error downloading: \(String(describing: downloadRequest?.key)) Error: \(error)")
-                }
-                return nil
-            }
-            print("Download complete for: \(String(describing: downloadRequest?.key))")
-            return nil
-        })
-        
-        self.headshot = UIImage(contentsOfFile: downloadingFileUrl.path)
-    }
-    
     //  MARK: - Location tracking
     @IBAction func presenceSwitch(_ sender: Any) {
         let nearbyPeopleVC:UserProfileViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "UserProfileViewController") as! UserProfileViewController
@@ -238,10 +200,6 @@ class NearbyPeopleViewController: UIViewController {
             let latitude = userLocation.coordinate.latitude
             let longitutde = userLocation.coordinate.longitude
             currentUserLocation = CLLocation(latitude: latitude, longitude: longitutde)
-//          userLoggedIn?.location = CLLocation(latitude: latitude, longitude: longitutde)
-//          userLoggedIn?.userID = AWSIdentityManager.default().identityId!
-//          userLoggedIn.itemId = NoSQLSampleDataGenerator.randomSampleStringWithAttributeName("itemId")
-//          userLoggedIn?.username = currentUser?.username
             
 //          User's Location
             userLoggedIn?.postalCode = postalCode
@@ -251,6 +209,7 @@ class NearbyPeopleViewController: UIViewController {
             userLoggedIn?.latitude = userLocation.coordinate.latitude as NSNumber
             userLoggedIn?.longitude = userLocation.coordinate.longitude as NSNumber
             
+            //AWS Object mapper save
 //            objectMapper.save(userLoggedIn!, completionHandler: {(error: Error?) -> Void in
 //                if error != nil {
 //                    DispatchQueue.main.async {
@@ -266,68 +225,6 @@ class NearbyPeopleViewController: UIViewController {
     }
 
     func pullNearByPeople () {
-        
-        //AWS DynamoDB
-        //table = LocationsTable()
-        //Move logic to Backend
-//        let completionHandler = {(response: AWSDynamoDBPaginatedOutput?, error: NSError?) -> Void in
-//
-//            if let error = error {
-//                var errorMessage = "Failed to retrieve items. \(error.localizedDescription)"
-//                if (error.domain == AWSServiceErrorDomain && error.code == AWSServiceErrorType.accessDeniedException.rawValue) {
-//                    errorMessage = "Access denied. You are not allowed to perform this operation."
-//                    print(errorMessage)
-//                }
-//            }
-//            else if response!.items.count == 0 {
-//                print("No items match your criteria. Insert more sample data and try again.")
-//            }
-//            else {
-//                self.results = response?.items
-//                for result in self.results! {
-//                    let model = result
-//                    let modelDictionary: [AnyHashable: Any] = model.dictionaryValue
-//
-//                    // _ = self.table?.tableAttributeName!(self.table!.orderedAttributeKeys[10])
-//                    let newPerson = Person()
-//
-//                    let facebookId = "\(modelDictionary["facebookId"]!)"
-//
-//                    let userLatitude = CLLocationDegrees("\(modelDictionary["latitude"]!)")
-//                    //  (self.table?.orderedAttributeKeys as Any)
-//                    let userLongitude = CLLocationDegrees("\(modelDictionary["longitude"]!)")
-//                    let userLocation = CLLocation(latitude: userLatitude!, longitude: userLongitude!)
-//                    let isOnline = "\(modelDictionary["online"]!)"
-//
-//                    newPerson.location = userLocation
-//                    newPerson.firstName = "\(modelDictionary["firstName"]!)"
-//                    newPerson.sex = sex(rawValue: "\(modelDictionary["sex"]!)")
-//                    newPerson.facebookId = facebookId
-//
-//                    newPerson.headshotImage = self.getUserPicture(facebookId: facebookId)
-//
-//                    // newPerson.online = "\(modelDictionary["online"])"
-//
-//                    //Check distance apart from user
-//                    if (newPerson.firstName != self.userLoggedIn?.firstName && isOnline == "1") {
-//                        let distanceApart = newPerson.location?.distance(from: (self.currentUserLocation)!)
-//
-//                        var aMile = CLLocationDistance()
-////                        aMile.add(1609)
-//                          aMile.add(10000)
-//                        if (self.currentUserLocation != nil) {
-//                            if (distanceApart?.isLess(than: aMile))!{
-//                                self.strangersAround.insert(newPerson)
-//                            }
-//                        }
-//                    }
-//                }
-//                self.PeopleNearbyTableView.reloadData()
-//            }
-//        }
-    
-        //Scan actualy Prod DynamoDB
-//       scanNearbyUsers(completionHandler)
         
 //        let utilities = Util()
 //        let wifiAddress = utilities.getWiFiAddress() as! String
@@ -351,22 +248,13 @@ class NearbyPeopleViewController: UIViewController {
             "sex": "MALE"
         ]
         
-        loadingView.frame = CGRect(x: 100, y: 100, width: 100, height: 100)
-        loadingView.center = self.view.center
-        loadingView.backgroundColor = UIColor.blue
-        loadingView.layer.cornerRadius = 10
-        actInd.activityIndicatorViewStyle =
-            UIActivityIndicatorViewStyle.whiteLarge
+        self.actInd = UIActivityIndicatorView()
+        actInd.frame = CGRect(x: 0.0, y: 0.0, width: 40.0, height: 40.0)
         actInd.center = self.view.center
-        loadingView.addSubview(actInd)
-        
-        container.frame = CGRect(x: 100, y: 100, width: 100, height: 100)
-        container.center = self.view.center
-        container.layer.cornerRadius = 10
-        container.backgroundColor = UIColor.red
-        container.addSubview(actInd)
-
-        self.view.addSubview(container)
+        actInd.hidesWhenStopped = true
+        actInd.activityIndicatorViewStyle =
+            UIActivityIndicatorViewStyle.gray
+        self.view.addSubview(actInd)
         actInd.startAnimating()
         
         Alamofire.request(url!, method: .post, parameters: userDetails, encoding: JSONEncoding.default)
@@ -391,29 +279,23 @@ class NearbyPeopleViewController: UIViewController {
                         // self.strangersAround.insert(newPerson)
                     }
                     self.count = self.friendsAround.count + self.strangersAround.count
-//                    if (self.count == 0) {
-//                        var person = Person()
-//                        person.firstName = "Nobody Around"
-//                        person.headshotImage = #imageLiteral(resourceName: "empty-headshot")
-//                        self.friendsAround.insert(person)
-//                        self.strangersAround.insert(person)
-//                    }
+                    if (self.count == 0) {
+                        var person = Person()
+                        person.firstName = "Nobody"
+                        person.lastName = "Around"
+                        person.school = "None"
+                        person.facebookId = "none"
+                        person.headshotImage = #imageLiteral(resourceName: "empty-headshot")
+                        self.friendsAround.insert(person)
+                        self.strangersAround.insert(person)
+                    }
                     let numberoccupied = "# Occupied: " + String(self.count)
                     self.peopleCounter.text = String(describing: numberoccupied)
                     self.PeopleNearbyTableView.reloadData()
+                    self.actInd.stopAnimating()
                 }
         }
         
-//            } else {
-//                var person = Person()
-//                person.firstName = "Nobody Around"
-//                person.headshotImage = #imageLiteral(resourceName: "empty-headshot")
-//                self.friendsAround.insert(person)
-//                self.strangersAround.insert(person)
-//                self.PeopleNearbyTableView.reloadData()
-//            }
-//        }
-    
     }
     
     func randomString(length: Int) -> String {
@@ -502,6 +384,110 @@ class NearbyPeopleViewController: UIViewController {
         self.PeopleNearbyTableView.reloadData()
         
     }
+    
+    /*
+     func pullNearbyPeopleWithAWS () {
+     
+     AWS DynamoDB
+     table = LocationsTable()
+     Move logic to Backend
+     let completionHandler = {(response: AWSDynamoDBPaginatedOutput?, error: NSError?) -> Void in
+     
+     if let error = error {
+     var errorMessage = "Failed to retrieve items. \(error.localizedDescription)"
+     if (error.domain == AWSServiceErrorDomain && error.code == AWSServiceErrorType.accessDeniedException.rawValue) {
+     errorMessage = "Access denied. You are not allowed to perform this operation."
+     print(errorMessage)
+     }
+     }
+     else if response!.items.count == 0 {
+     print("No items match your criteria. Insert more sample data and try again.")
+     }
+     else {
+     self.results = response?.items
+     for result in self.results! {
+     let model = result
+     let modelDictionary: [AnyHashable: Any] = model.dictionaryValue
+     
+     // _ = self.table?.tableAttributeName!(self.table!.orderedAttributeKeys[10])
+     let newPerson = Person()
+     
+     let facebookId = "\(modelDictionary["facebookId"]!)"
+     
+     let userLatitude = CLLocationDegrees("\(modelDictionary["latitude"]!)")
+     //  (self.table?.orderedAttributeKeys as Any)
+     let userLongitude = CLLocationDegrees("\(modelDictionary["longitude"]!)")
+     let userLocation = CLLocation(latitude: userLatitude!, longitude: userLongitude!)
+     let isOnline = "\(modelDictionary["online"]!)"
+     
+     newPerson.location = userLocation
+     newPerson.firstName = "\(modelDictionary["firstName"]!)"
+     newPerson.sex = sex(rawValue: "\(modelDictionary["sex"]!)")
+     newPerson.facebookId = facebookId
+     
+     newPerson.headshotImage = self.getUserPicture(facebookId: facebookId)
+     
+     // newPerson.online = "\(modelDictionary["online"])"
+     
+     //Check distance apart from user
+     if (newPerson.firstName != self.userLoggedIn?.firstName && isOnline == "1") {
+     let distanceApart = newPerson.location?.distance(from: (self.currentUserLocation)!)
+     
+     var aMile = CLLocationDistance()
+     //                        aMile.add(1609)
+     aMile.add(10000)
+     if (self.currentUserLocation != nil) {
+     if (distanceApart?.isLess(than: aMile))!{
+     self.strangersAround.insert(newPerson)
+     }
+     }
+     }
+     }
+     self.PeopleNearbyTableView.reloadData()
+     }
+     }
+     
+     Scan actualy Prod DynamoDB
+     scanNearbyUsers(completionHandler)
+     
+     }
+     */
+    
+    //Download Images from AWS
+    /*
+        func downloadImages () {
+            let transferManager = AWSS3TransferManager.default()
+    
+            let downloadingFileUrl = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent("headshot1.jpg")
+            let downloadRequest = AWSS3TransferManagerDownloadRequest()
+    
+            downloadRequest?.bucket = "nearme-pictures"
+            downloadRequest?.key = "headshot2.jpg"
+            downloadRequest?.downloadingFileURL = downloadingFileUrl
+    
+            // TODO: Cache images
+            // Image was downloaded after the cell was returned
+            transferManager.download(downloadRequest!).continueWith(executor : AWSExecutor.mainThread(), block: { (task:AWSTask<AnyObject>) -> Any? in
+                if let error = task.error as NSError? {
+                    if error.domain == AWSS3TransferManagerErrorDomain, let code = AWSS3TransferManagerErrorType(rawValue: error.code) {
+                        switch code {
+                        case .cancelled, .paused:
+                            break
+                        default:
+                            print("Error downloading: \(String(describing: downloadRequest?.key)) Error: \(error)")
+                        }
+                    } else {
+                        print("Error downloading: \(String(describing: downloadRequest?.key)) Error: \(error)")
+                    }
+                    return nil
+                }
+                print("Download complete for: \(String(describing: downloadRequest?.key))")
+                return nil
+            })
+    
+            self.userLoggedin.headshot = UIImage(contentsOfFile: downloadingFileUrl.path)
+        }
+     */
     
     /*
      // Override to support conditional editing of the table view.
@@ -634,13 +620,12 @@ extension NearbyPeopleViewController : UITableViewDataSource, UITableViewDelegat
             cell.headshotViewImage.layer.borderWidth = 3
             cell.headshotViewImage.layer.borderColor = UIColor.black.cgColor
             //Keeps flashing
-//            cell.connectButton.titleLabel?.text = "Reconnect"
+//          cell.connectButton.titleLabel?.text = "Reconnect"
         } else {
-            cell.nameLabel.text = self.strangersAround[strangersAround.index(self.strangersAround.startIndex, offsetBy: indexPath.row)].firstName
-            //  cell.occupationLabel.text = self.strangersAround[strangersAround.index(self.strangersAround.startIndex, offsetBy: indexPath.row)].
-            
+            cell.nameLabel.text = self.strangersAround[strangersAround.index(self.strangersAround.startIndex, offsetBy: indexPath.row)].firstName! + " " +
+                self.friendsAround[friendsAround.index(self.friendsAround.startIndex, offsetBy: indexPath.row)].lastName!
             cell.headshotViewImage.image = self.strangersAround[strangersAround.index(self.strangersAround.startIndex, offsetBy: indexPath.row)].headshotImage
-            
+            cell.schoolLabel.text = self.friendsAround[friendsAround.index(self.friendsAround.startIndex, offsetBy: indexPath.row)].school!
             cell.headshotViewImage.layer.cornerRadius = 15.0
             cell.headshotViewImage.layer.borderWidth = 3
             cell.headshotViewImage.layer.borderColor = UIColor.black.cgColor
@@ -663,8 +648,6 @@ extension NearbyPeopleViewController : UITableViewDataSource, UITableViewDelegat
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if (indexPath.row == 0) {
             self.actInd.stopAnimating()
-            self.container.isHidden = true
-            self.loadingView.isHidden = true
         }
     }
     

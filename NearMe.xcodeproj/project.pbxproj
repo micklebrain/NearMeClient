@@ -202,6 +202,7 @@
 			isa = PBXGroup;
 			children = (
 				A5462D751EF0A0ED000970EB /* NearbyLocationsViewController.swift */,
+				A5462D791EF0A54C000970EB /* NearbyPeopleViewController.swift */,
 			);
 			name = LocationTracking;
 			sourceTree = "<group>";
@@ -213,6 +214,27 @@
 				A5E446451ED68A8A00791822 /* LoginViewController.swift */,
 			);
 			name = Authentication;
+			sourceTree = "<group>";
+		};
+		2AFDB2C7207C2F4F00682533 /* User */ = {
+			isa = PBXGroup;
+			children = (
+				A5A645E91EA724DD00D411E1 /* EmployedPerson.swift */,
+				A5A645E71EA720BF00D411E1 /* Student.swift */,
+				A5A645E51EA6FADF00D411E1 /* Person.swift */,
+				A5E446481ED7A81300791822 /* User.swift */,
+			);
+			name = User;
+			sourceTree = "<group>";
+		};
+		2AFDB2C8207C2F6400682533 /* Location */ = {
+			isa = PBXGroup;
+			children = (
+				A5CAABD11EAA7DF000A16E98 /* Locations.swift */,
+				A566FEE11F059C390060105D /* Location.swift */,
+				A5F0431D1F0E932F00D0BBAD /* googleLocation.swift */,
+			);
+			name = Location;
 			sourceTree = "<group>";
 		};
 		A2C2DF2A228BFCD37941843B /* Pods */ = {
@@ -275,12 +297,13 @@
 		A5A645AF1EA6F4FB00D411E1 /* NearMe */ = {
 			isa = PBXGroup;
 			children = (
-				2A351C5F20741D74002A9ACC /* Users */,
 				2AEA81362029013600574261 /* Authentication */,
 				2AEA81352029012600574261 /* LocationTracking */,
+				2A351C5F20741D74002A9ACC /* Users */,
+				2A43C6DD2017F5370082C69C /* ifaddrs.m */,
+				2A43C6DC2017F5360082C69C /* NearMe-Bridging-Header.h */,
 				2AEA8134202900D100574261 /* Orchestrator */,
 				2A89C7302016D7C500C10AF2 /* Utils */,
-				A5E4464F1EDF169D00791822 /* ViewControllers */,
 				A5E4464E1EDF166400791822 /* AWS Tables */,
 				A5E446471ED68A9500791822 /* Model */,
 				A5A645B01EA6F4FB00D411E1 /* AppDelegate.swift */,
@@ -334,14 +357,9 @@
 		A5E446471ED68A9500791822 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				2AFDB2C8207C2F6400682533 /* Location */,
+				2AFDB2C7207C2F4F00682533 /* User */,
 				A5462D7B1EF0AB3F000970EB /* UserTableViewCell.swift */,
-				A5E446481ED7A81300791822 /* User.swift */,
-				A5A645E51EA6FADF00D411E1 /* Person.swift */,
-				A5A645E91EA724DD00D411E1 /* EmployedPerson.swift */,
-				A5A645E71EA720BF00D411E1 /* Student.swift */,
-				A5CAABD11EAA7DF000A16E98 /* Locations.swift */,
-				A566FEE11F059C390060105D /* Location.swift */,
-				A5F0431D1F0E932F00D0BBAD /* googleLocation.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -354,16 +372,6 @@
 				A5E446521EDF6ECC00791822 /* AccountsTable.swift */,
 			);
 			name = "AWS Tables";
-			sourceTree = "<group>";
-		};
-		A5E4464F1EDF169D00791822 /* ViewControllers */ = {
-			isa = PBXGroup;
-			children = (
-				A5462D791EF0A54C000970EB /* NearbyPeopleViewController.swift */,
-				2A43C6DD2017F5370082C69C /* ifaddrs.m */,
-				2A43C6DC2017F5360082C69C /* NearMe-Bridging-Header.h */,
-			);
-			name = ViewControllers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

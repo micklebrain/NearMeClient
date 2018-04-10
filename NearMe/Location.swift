@@ -19,5 +19,6 @@ class location {
     var locality: String?
     var latitude: NSNumber?
     var longitude: NSNumber?
+    var floor: Int?
     
 }

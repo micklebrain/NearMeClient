@@ -23,6 +23,7 @@ class User : AWSDynamoDBObjectModel,AWSDynamoDBModeling {
     var friends : NSMutableSet?
     var friendRequests: [String]?
     var headshot: UIImage?
+    var floor: Int?
     
     var address : String?
     var facebookId : String?
