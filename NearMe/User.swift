@@ -1,40 +1,58 @@
 //
-//  user.swift
+//  Person.swift
 //  NearMe
 //
-//  Created by Nathan Nguyen on 5/25/17.
+//  Created by Nathan Nguyen on 4/18/17.
 //  Copyright © 2017 Nathan Nguyen. All rights reserved.
 //
 
 import Foundation
-import AWSDynamoDB
 import CoreLocation
+import UIKit
 
-// TODO: Pick between person or user
-class User : AWSDynamoDBObjectModel,AWSDynamoDBModeling {
+func == (lhs: User, rhs: User) -> Bool {
+    return lhs.hashValue == rhs.hashValue
+}
+
+enum sex : String {
+    case male = "male"
+    case female = "female"
+}
+
+enum relationshipStatus {
+    case single
+    case married
+    case taken
+}
+
+class User : Hashable /* AWSDynamoDBObjectModel,AWSDynamoDBModeling */ {
     
-    var username : String?
-    var userID : NSNumber?
     var firstName : String?
+    var middleName : String?
     var lastName : String?
+    var sex : sex?
+    var userId : String?
+    var username : String?
+    var currentLocation : location?
+    var friends : [String]?
+    var school : String?
+    var headshotImage: UIImage?
+    var facebookId : String?
+    var online : Bool = true
+    var userID : NSNumber?
     var profilePicture : UIImage?
-    var online : NSNumber = true
-    var sex : String?
-    var friends : NSMutableSet?
     var friendRequests: [String]?
     var headshot: UIImage?
-    var floor: Int?
-    
+    var floor: Int!
     var address : String?
-    var facebookId : String?
-//  var occupation : String?
-//  var relationshipStatus : String?
     var password : String?
-//  var interests = [String]()
-//  var emailAddress : String?
-//  var weekendPlans = [String: String]()
+    //  var occupation : String?
+    //  var relationshipStatus : String?
+    //  var interests = [String]()
+    //  var emailAddress : String?
+    //  var weekendPlans = [String: String]()
     
-//  location purposes
+    //  Location
     var location : CLLocation?
     var postalCode: String?
     var administrativeArea: String?
@@ -44,12 +62,19 @@ class User : AWSDynamoDBObjectModel,AWSDynamoDBModeling {
     var longitude: NSNumber?
     var buildingOccupied: String?
     
-    class func dynamoDBTableName() -> String {
-        return "accounts"
+    //    Has to change first name will not be unique
+    var hashValue: Int {
+        get {
+            return (firstName?.hashValue)!
+        }
     }
     
-    class func hashKeyAttribute() -> String {
-        return "username"
-    }
+    //    class func dynamoDBTableName() -> String {
+    //        return "accounts"
+    //    }
+    //
+    //    class func hashKeyAttribute() -> String {
+    //        return "username"
+    //    }
     
 }

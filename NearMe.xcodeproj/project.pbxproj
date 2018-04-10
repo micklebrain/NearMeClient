@@ -13,6 +13,7 @@
 		2A37F9E72026CFDE00CF79E4 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A37F9E62026CFDE00CF79E4 /* MainTabBarController.swift */; };
 		2A43C6DE2017F5370082C69C /* ifaddrs.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A43C6DD2017F5370082C69C /* ifaddrs.m */; };
 		2A43C6E02017F6450082C69C /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A43C6DF2017F6450082C69C /* Util.swift */; };
+		2A4DA950207D27830015E729 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A4DA94F207D27830015E729 /* User.swift */; };
 		2A6934CE20732146009CBCB4 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A6934CD20732146009CBCB4 /* ProfileViewController.swift */; };
 		2A6934D02073219B009CBCB4 /* FriendProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A6934CF2073219B009CBCB4 /* FriendProfileViewController.swift */; };
 		2A89C7322016D7D500C10AF2 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A89C7312016D7D500C10AF2 /* Constants.swift */; };
@@ -31,14 +32,11 @@
 		A5A645C91EA6F4FB00D411E1 /* NearMeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5A645C81EA6F4FB00D411E1 /* NearMeTests.swift */; };
 		A5A645D41EA6F4FB00D411E1 /* NearMeUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5A645D31EA6F4FB00D411E1 /* NearMeUITests.swift */; };
 		A5A645E41EA6F9CE00D411E1 /* PeopleTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5A645E31EA6F9CE00D411E1 /* PeopleTableViewController.swift */; };
-		A5A645E61EA6FADF00D411E1 /* Person.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5A645E51EA6FADF00D411E1 /* Person.swift */; };
-		A5A645E81EA720BF00D411E1 /* Student.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5A645E71EA720BF00D411E1 /* Student.swift */; };
 		A5A645EA1EA724DD00D411E1 /* EmployedPerson.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5A645E91EA724DD00D411E1 /* EmployedPerson.swift */; };
 		A5CAABCA1EA95AA500A16E98 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = A5CAABC91EA95AA500A16E98 /* libsqlite3.tbd */; };
 		A5CAABCC1EA95AB700A16E98 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = A5CAABCB1EA95AB700A16E98 /* libz.tbd */; };
 		A5CAABD21EAA7DF000A16E98 /* Locations.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5CAABD11EAA7DF000A16E98 /* Locations.swift */; };
 		A5E446461ED68A8A00791822 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E446451ED68A8A00791822 /* LoginViewController.swift */; };
-		A5E446491ED7A81300791822 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E446481ED7A81300791822 /* User.swift */; };
 		A5E4464B1ED7BA9200791822 /* SignupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E4464A1ED7BA9200791822 /* SignupViewController.swift */; };
 		A5E4464D1ED7CA6100791822 /* Access.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A5E4464C1ED7CA6100791822 /* Access.storyboard */; };
 		A5E446531EDF6ECC00791822 /* AccountsTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E446521EDF6ECC00791822 /* AccountsTable.swift */; };
@@ -86,6 +84,7 @@
 		2A43C6DC2017F5360082C69C /* NearMe-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NearMe-Bridging-Header.h"; sourceTree = "<group>"; };
 		2A43C6DD2017F5370082C69C /* ifaddrs.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ifaddrs.m; sourceTree = "<group>"; };
 		2A43C6DF2017F6450082C69C /* Util.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
+		2A4DA94F207D27830015E729 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		2A6934CD20732146009CBCB4 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		2A6934CF2073219B009CBCB4 /* FriendProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendProfileViewController.swift; sourceTree = "<group>"; };
 		2A89C7312016D7D500C10AF2 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
@@ -122,15 +121,12 @@
 		A5A645D31EA6F4FB00D411E1 /* NearMeUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NearMeUITests.swift; sourceTree = "<group>"; };
 		A5A645D51EA6F4FB00D411E1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A5A645E31EA6F9CE00D411E1 /* PeopleTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PeopleTableViewController.swift; sourceTree = "<group>"; };
-		A5A645E51EA6FADF00D411E1 /* Person.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Person.swift; sourceTree = "<group>"; };
-		A5A645E71EA720BF00D411E1 /* Student.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Student.swift; sourceTree = "<group>"; };
 		A5A645E91EA724DD00D411E1 /* EmployedPerson.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EmployedPerson.swift; path = ../EmployedPerson.swift; sourceTree = "<group>"; };
 		A5BCE97EECA2A21F7B9A65FC /* Pods-NearMeUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NearMeUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-NearMeUITests/Pods-NearMeUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		A5CAABC91EA95AA500A16E98 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		A5CAABCB1EA95AB700A16E98 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		A5CAABD11EAA7DF000A16E98 /* Locations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Locations.swift; sourceTree = "<group>"; };
 		A5E446451ED68A8A00791822 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
-		A5E446481ED7A81300791822 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		A5E4464A1ED7BA9200791822 /* SignupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignupViewController.swift; sourceTree = "<group>"; };
 		A5E4464C1ED7CA6100791822 /* Access.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Access.storyboard; sourceTree = "<group>"; };
 		A5E446501EDF170200791822 /* GeorgiaTable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeorgiaTable.swift; sourceTree = "<group>"; };
@@ -220,9 +216,7 @@
 			isa = PBXGroup;
 			children = (
 				A5A645E91EA724DD00D411E1 /* EmployedPerson.swift */,
-				A5A645E71EA720BF00D411E1 /* Student.swift */,
-				A5A645E51EA6FADF00D411E1 /* Person.swift */,
-				A5E446481ED7A81300791822 /* User.swift */,
+				2A4DA94F207D27830015E729 /* User.swift */,
 			);
 			name = User;
 			sourceTree = "<group>";
@@ -731,13 +725,11 @@
 				A5E446461ED68A8A00791822 /* LoginViewController.swift in Sources */,
 				A5281CC31EAEEBA8003B9489 /* NoSQLModelHelpers.swift in Sources */,
 				2A27D5921FCFEAE200331A63 /* UserProfileViewController.swift in Sources */,
-				A5A645E61EA6FADF00D411E1 /* Person.swift in Sources */,
+				2A4DA950207D27830015E729 /* User.swift in Sources */,
 				A5A645EA1EA724DD00D411E1 /* EmployedPerson.swift in Sources */,
 				A5462D781EF0A4A6000970EB /* NearbyTableView.swift in Sources */,
 				A5E446531EDF6ECC00791822 /* AccountsTable.swift in Sources */,
 				2A43C6E02017F6450082C69C /* Util.swift in Sources */,
-				A5E446491ED7A81300791822 /* User.swift in Sources */,
-				A5A645E81EA720BF00D411E1 /* Student.swift in Sources */,
 				A5F0431E1F0E932F00D0BBAD /* googleLocation.swift in Sources */,
 				A5E4464B1ED7BA9200791822 /* SignupViewController.swift in Sources */,
 				2A43C6DE2017F5370082C69C /* ifaddrs.m in Sources */,

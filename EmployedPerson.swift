@@ -8,7 +8,7 @@
 
 import Foundation
 
-class EmployedPerson : Person {
+class EmployedPerson : User {
     
     var employer: String = ""
     var occupation = ""

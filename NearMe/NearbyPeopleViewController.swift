@@ -19,14 +19,14 @@ import SwiftyJSON
 
 class NearbyPeopleViewController: UIViewController {
     
-    var userLoggedIn: User?
+    var userLoggedIn: User!
     let section = ["Friends", "Strangers"]
     let filterOptions = ["Female", "Male"]
     //add collegaues, same school
     var locationManager : CLLocationManager!
-    var strangersAround = Set<Person>()
+    var strangersAround = Set<User>()
     //Using NSMutableSet because AWS
-    var friendsAround = Set<Person>()
+    var friendsAround = Set<User>()
     var defaultHeadshot : UIImage?
     var headshots = [String: UIImage]()
     var currentUserLocation: CLLocation?
@@ -39,6 +39,7 @@ class NearbyPeopleViewController: UIViewController {
     @IBOutlet weak var presenceSwitch: UISwitch!
     @IBOutlet weak var CurrentLocationLabel: UILabel!
     @IBOutlet weak var filterPickerView: UIPickerView!
+    @IBOutlet weak var floorLabel: UILabel!
     
     var profileImage: UIImage?
     
@@ -56,6 +57,7 @@ class NearbyPeopleViewController: UIViewController {
         self.filterPickerView.delegate = self
         self.filterPickerView.dataSource = self
     
+        self.floorLabel.text?.append(String(userLoggedIn.floor))
         userLoggedIn?.headshot = #imageLiteral(resourceName: "empty-headshot")
         getUserPicture(facebookId: (userLoggedIn?.facebookId)!)
         
@@ -154,12 +156,12 @@ class NearbyPeopleViewController: UIViewController {
     @IBAction func presenceSwitch(_ sender: Any) {
         let nearbyPeopleVC:UserProfileViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "UserProfileViewController") as! UserProfileViewController
         self.present(nearbyPeopleVC, animated: false, completion: nil)
-        self.userLoggedIn?.online = !(self.userLoggedIn?.online as! (Bool)) as NSNumber
+        self.userLoggedIn?.online = !self.userLoggedIn.online
         updateOnlineStatus()
     }
     
     func updateOnlineStatus () {
-        if (userLoggedIn!.online.boolValue) {
+        if (userLoggedIn!.online) {
             presenceSwitch.isOn = true
             determineMyCurrentLocation()
         } else {
@@ -264,7 +266,7 @@ class NearbyPeopleViewController: UIViewController {
                     let users = json as! [Any]
                     for someUser in users {
                         let userDetails = someUser as! [String: Any]
-                        var newPerson = Person()
+                        var newPerson = User()
                         let facebookId = userDetails["facebookId"] as! String
                         
                         if (facebookId != self.userLoggedIn?.facebookId) {
@@ -280,7 +282,7 @@ class NearbyPeopleViewController: UIViewController {
                     }
                     self.count = self.friendsAround.count + self.strangersAround.count
                     if (self.count == 0) {
-                        var person = Person()
+                        var person = User()
                         person.firstName = "Nobody"
                         person.lastName = "Around"
                         person.school = "None"
@@ -414,21 +416,8 @@ class NearbyPeopleViewController: UIViewController {
      
      let facebookId = "\(modelDictionary["facebookId"]!)"
      
-     let userLatitude = CLLocationDegrees("\(modelDictionary["latitude"]!)")
-     //  (self.table?.orderedAttributeKeys as Any)
-     let userLongitude = CLLocationDegrees("\(modelDictionary["longitude"]!)")
-     let userLocation = CLLocation(latitude: userLatitude!, longitude: userLongitude!)
-     let isOnline = "\(modelDictionary["online"]!)"
-     
-     newPerson.location = userLocation
-     newPerson.firstName = "\(modelDictionary["firstName"]!)"
-     newPerson.sex = sex(rawValue: "\(modelDictionary["sex"]!)")
-     newPerson.facebookId = facebookId
-     
      newPerson.headshotImage = self.getUserPicture(facebookId: facebookId)
-     
-     // newPerson.online = "\(modelDictionary["online"])"
-     
+    
      //Check distance apart from user
      if (newPerson.firstName != self.userLoggedIn?.firstName && isOnline == "1") {
      let distanceApart = newPerson.location?.distance(from: (self.currentUserLocation)!)
@@ -639,16 +628,18 @@ extension NearbyPeopleViewController : UITableViewDataSource, UITableViewDelegat
         
         let selectedUser = User()
         let selectedCell = PeopleNearbyTableView.cellForRow(at: indexPath) as! UserTableViewCell
-        selectedUser?.firstName = selectedCell.nameLabel.text
-        selectedUser?.location = userLoggedIn?.location
+        selectedUser.firstName = selectedCell.nameLabel.text
+        selectedUser.location = userLoggedIn?.location
         profileVC.userloggedIn = selectedUser
         self.present(profileVC, animated: false, completion: nil)
     }
     
+    func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        self.actInd.stopAnimating()
+    }
+    
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        if (indexPath.row == 0) {
             self.actInd.stopAnimating()
-        }
     }
     
 }

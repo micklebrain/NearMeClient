@@ -21,6 +21,7 @@ class NearbyLocationsViewController: UIViewController {
 
     @IBOutlet weak var placesTableView: UITableView!
     @IBOutlet weak var floorNumber: UILabel!
+    @IBOutlet weak var floorStepper: UIStepper!
     
     var suggestedResturants : [googleLocation] = []
     //Pull from Cache 
@@ -137,6 +138,11 @@ class NearbyLocationsViewController: UIViewController {
         })
         
     }
+    
+    @IBAction func floorChanged(_ sender: Any) {
+        self.floorNumber.text = Int(self.floorStepper.value).description
+    }
+    
         
     /*
     // MARK: - Navigation

@@ -159,8 +159,8 @@ class LoginViewController: UIViewController {
         else {
             let nearbyPeopleVC:NearbyLocationsViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ProfileViewController") as! NearbyLocationsViewController
             let currentUser = User()
-            currentUser?.username = self.username.text
-            currentUser?.firstName = self.username.text
+            currentUser.username = self.username.text
+            currentUser.firstName = self.username.text
             self.present(nearbyPeopleVC, animated: false, completion: nil)
         }
         }

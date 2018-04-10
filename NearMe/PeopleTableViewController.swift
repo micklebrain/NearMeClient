@@ -21,10 +21,10 @@ class personCell : UITableViewCell {
 class PeopleTableViewController: UITableViewController, CLLocationManagerDelegate {
     
     var locationManager : CLLocationManager!
-    var people: [Person] = []
+    var people: [User] = []
     var table: Table?
     var results: [AWSDynamoDBObjectModel]?
-    var peopleAround = Set<Person>()
+    var peopleAround = Set<User>()
     var userLoggedIn: User?
     var currentUserLocation: CLLocation?
 
@@ -120,13 +120,14 @@ class PeopleTableViewController: UITableViewController, CLLocationManagerDelegat
             userLoggedIn?.firstName = userLoggedIn?.username
             group.enter()
     
-            objectMapper.save(userLoggedIn!, completionHandler: {(error: Error?) -> Void in
-                if error != nil {
-                    DispatchQueue.main.async {
-                        errors.append(error! as NSError)
-                    }
-                }
-            })
+//            objectMapper.save(userLoggedIn!, completionHandler: {(error: Error?) -> Void in
+//                if error != nil {
+//                    DispatchQueue.main.async {
+//                        errors.append(error! as NSError)
+//                    }
+//                }
+//            })
+            
            pullNearByPeople()
         }
     }
@@ -166,7 +167,7 @@ class PeopleTableViewController: UITableViewController, CLLocationManagerDelegat
                 let model = result
                 let modelDictionary: [AnyHashable: Any] = model.dictionaryValue
                 // _ = self.table?.tableAttributeName!(self.table!.orderedAttributeKeys[10])
-                let newPerson = Person()
+                let newPerson = User()
                 
                 let userLatitude = CLLocationDegrees("\(modelDictionary["latitude"]!)")
 //                (self.table?.orderedAttributeKeys as Any)
