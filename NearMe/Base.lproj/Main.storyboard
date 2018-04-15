@@ -231,6 +231,13 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Online" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4E3-ZK-7UL">
+                                <rect key="frame" x="16" y="247" width="49" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
@@ -252,6 +259,7 @@
                         <outlet property="EmailLabel" destination="ws8-YE-3Ju" id="e20-iw-hCj"/>
                         <outlet property="NameLabel" destination="3MZ-Jj-T6e" id="ihi-eI-1za"/>
                         <outlet property="UserProfilePicture" destination="3gD-Af-BmY" id="jjK-Hq-c4d"/>
+                        <outlet property="isOnlineLabel" destination="4E3-ZK-7UL" id="FIJ-qV-ZGx"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OJU-cW-27R" userLabel="First Responder" sceneMemberID="firstResponder"/>

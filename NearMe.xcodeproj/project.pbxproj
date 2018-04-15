@@ -14,6 +14,7 @@
 		2A43C6DE2017F5370082C69C /* ifaddrs.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A43C6DD2017F5370082C69C /* ifaddrs.m */; };
 		2A43C6E02017F6450082C69C /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A43C6DF2017F6450082C69C /* Util.swift */; };
 		2A4DA950207D27830015E729 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A4DA94F207D27830015E729 /* User.swift */; };
+		2A4DA952207D41CD0015E729 /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A4DA951207D41CD0015E729 /* Account.swift */; };
 		2A6934CE20732146009CBCB4 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A6934CD20732146009CBCB4 /* ProfileViewController.swift */; };
 		2A6934D02073219B009CBCB4 /* FriendProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A6934CF2073219B009CBCB4 /* FriendProfileViewController.swift */; };
 		2A89C7322016D7D500C10AF2 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A89C7312016D7D500C10AF2 /* Constants.swift */; };
@@ -85,6 +86,7 @@
 		2A43C6DD2017F5370082C69C /* ifaddrs.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ifaddrs.m; sourceTree = "<group>"; };
 		2A43C6DF2017F6450082C69C /* Util.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
 		2A4DA94F207D27830015E729 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		2A4DA951207D41CD0015E729 /* Account.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Account.swift; sourceTree = "<group>"; };
 		2A6934CD20732146009CBCB4 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		2A6934CF2073219B009CBCB4 /* FriendProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendProfileViewController.swift; sourceTree = "<group>"; };
 		2A89C7312016D7D500C10AF2 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
@@ -217,6 +219,7 @@
 			children = (
 				A5A645E91EA724DD00D411E1 /* EmployedPerson.swift */,
 				2A4DA94F207D27830015E729 /* User.swift */,
+				2A4DA951207D41CD0015E729 /* Account.swift */,
 			);
 			name = User;
 			sourceTree = "<group>";
@@ -742,6 +745,7 @@
 				2A6934D02073219B009CBCB4 /* FriendProfileViewController.swift in Sources */,
 				A5A645E41EA6F9CE00D411E1 /* PeopleTableViewController.swift in Sources */,
 				A5CAABD21EAA7DF000A16E98 /* Locations.swift in Sources */,
+				2A4DA952207D41CD0015E729 /* Account.swift in Sources */,
 				A5462D761EF0A0ED000970EB /* NearbyLocationsViewController.swift in Sources */,
 				A5281CC11EAEAF3D003B9489 /* NoSqlSampleDataGenerator.swift in Sources */,
 				A5A645B91EA6F4FB00D411E1 /* NearMe.xcdatamodeld in Sources */,

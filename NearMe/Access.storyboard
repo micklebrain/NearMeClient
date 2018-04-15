@@ -54,6 +54,14 @@
                                     <action selector="loginFacebook:" destination="Hgc-Ie-D11" eventType="touchUpInside" id="jU7-NB-q70"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zem-0c-hQU">
+                                <rect key="frame" x="160" y="492" width="57" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Register"/>
+                                <connections>
+                                    <segue destination="7Cm-MF-HkZ" kind="show" id="bGn-E0-lT3"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <constraints>
                             <constraint firstItem="DyU-PG-mxY" firstAttribute="leading" secondItem="df2-PW-QkJ" secondAttribute="leading" id="84M-2O-E2a"/>
@@ -100,22 +108,8 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Password" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ar2-2g-ahk">
-                                <rect key="frame" x="139" y="306" width="97" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <nil key="textColor"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Username" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="gDt-cg-I7O">
-                                <rect key="frame" x="139" y="262" width="97" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <nil key="textColor"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Email" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="4ps-lD-UUS">
-                                <rect key="frame" x="139" y="208" width="97" height="30"/>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Email/Username" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="4ps-lD-UUS">
+                                <rect key="frame" x="139" y="208" width="127" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -127,9 +121,15 @@
                                 <state key="normal" title="Sign up"/>
                                 <connections>
                                     <action selector="signUp:" destination="7Cm-MF-HkZ" eventType="touchUpInside" id="mE0-7P-nZ6"/>
-                                    <segue destination="Hgc-Ie-D11" kind="show" id="3VH-GG-lWq"/>
                                 </connections>
                             </button>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Password" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ar2-2g-ahk">
+                                <rect key="frame" x="139" y="272" width="97" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
@@ -137,7 +137,7 @@
                         <outlet property="firstNameTextField" destination="i9h-s6-7Eo" id="c2q-SF-ST7"/>
                         <outlet property="lastNameTextField" destination="zyf-vy-AW8" id="ydO-sM-QnA"/>
                         <outlet property="passwordTextField" destination="ar2-2g-ahk" id="5TU-pB-JKe"/>
-                        <outlet property="usernameTextField" destination="gDt-cg-I7O" id="5JJ-mt-lOC"/>
+                        <outlet property="usernameTextField" destination="4ps-lD-UUS" id="XkR-V9-dNu"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pHu-DM-QlD" userLabel="First Responder" sceneMemberID="firstResponder"/>

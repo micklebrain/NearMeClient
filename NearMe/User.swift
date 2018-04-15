@@ -27,25 +27,26 @@ enum relationshipStatus {
 
 class User : Hashable /* AWSDynamoDBObjectModel,AWSDynamoDBModeling */ {
     
+    //Account
+    var userId : NSNumber?
+    var username : String?
+    var password : String?
+    
+    //Individual
     var firstName : String?
     var middleName : String?
     var lastName : String?
     var sex : sex?
-    var userId : String?
-    var username : String?
-    var currentLocation : location?
+    
     var friends : [String]?
     var school : String?
     var headshotImage: UIImage?
     var facebookId : String?
     var online : Bool = true
-    var userID : NSNumber?
     var profilePicture : UIImage?
     var friendRequests: [String]?
     var headshot: UIImage?
-    var floor: Int!
     var address : String?
-    var password : String?
     //  var occupation : String?
     //  var relationshipStatus : String?
     //  var interests = [String]()
@@ -53,6 +54,7 @@ class User : Hashable /* AWSDynamoDBObjectModel,AWSDynamoDBModeling */ {
     //  var weekendPlans = [String: String]()
     
     //  Location
+    var currentLocation : location?
     var location : CLLocation?
     var postalCode: String?
     var administrativeArea: String?
@@ -61,6 +63,7 @@ class User : Hashable /* AWSDynamoDBObjectModel,AWSDynamoDBModeling */ {
     var latitude: NSNumber?
     var longitude: NSNumber?
     var buildingOccupied: String?
+    var floor: Int!
     
     //    Has to change first name will not be unique
     var hashValue: Int {

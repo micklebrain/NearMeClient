@@ -18,14 +18,20 @@ class UserProfileViewController: ProfileViewController {
     
     @IBOutlet weak var NameLabel: UILabel!
     @IBOutlet weak var EmailLabel: UILabel!
+    @IBOutlet weak var isOnlineLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         let tbc = self.tabBarController as! MainTabBarController
         self.userLoggedIn = tbc.userloggedIn
         
-//      UserProfilePicture.image = #imageLiteral(resourceName: "empty-headshot")
         if (self.userLoggedIn != nil) {
+            if (userLoggedIn?.online)! {
+                isOnlineLabel.text = "online"
+            } else {
+                isOnlineLabel.text = "offline"
+            }
+            
             downloadProfilePic()
         }
         
