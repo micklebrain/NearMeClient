@@ -32,7 +32,7 @@ class NearbyPeopleViewController: UIViewController {
     var currentUserLocation: CLLocation?
     var count = 0
     var actInd: UIActivityIndicatorView!
-    private let refreshControl = UIRefreshControl()
+    let refreshControl = UIRefreshControl()
     //var results: [AWSDynamoDBObjectModel]?
 
     @IBOutlet weak var PeopleNearbyTableView: UITableView!
@@ -90,18 +90,17 @@ class NearbyPeopleViewController: UIViewController {
         
 //        mainQueue.async {
             self.timer = Timer.scheduledTimer(withTimeInterval: 30.0, repeats: true, block: { (Timer) in
+                //refresh every 30 seconds
                 self.refreshUsersNearby()
             })
 //        }
         
     }
     
-    @IBAction func refresh(_ sender: Any) {
-        refreshUsersNearby()
-    }
-    
+    //Fix refreshing, indicator dosnt always stop correctly
     func refreshUsersNearby () {
         //Implement caching
+        self.actInd.startAnimating()
         self.friendsAround.removeAll()
         self.strangersAround.removeAll()
         pullNearByPeople()
@@ -606,6 +605,7 @@ extension NearbyPeopleViewController : UITableViewDataSource, UITableViewDelegat
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "UserCell", for: indexPath) as! UserTableViewCell
         
+        self.actInd.stopAnimating()
         //      TODO: Check why view gets loaded without images - bug
         if (indexPath.section == 0) {
             cell.nameLabel.text = self.friendsAround[friendsAround.index(self.friendsAround.startIndex, offsetBy: indexPath.row)].firstName! + " " +
@@ -647,11 +647,13 @@ extension NearbyPeopleViewController : UITableViewDataSource, UITableViewDelegat
     }
     
     func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        self.refreshControl.endRefreshing()
         self.actInd.stopAnimating()
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-            self.actInd.stopAnimating()
+        self.refreshControl.endRefreshing()
+        self.actInd.stopAnimating()
     }
     
 }
