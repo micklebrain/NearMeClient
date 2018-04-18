@@ -48,36 +48,7 @@ class SignupViewController: UIViewController {
     }
 
     @IBAction func signUp(_ sender: Any) {
-        
         createAccount()
-        
-    }
-    
-    func awsRequest () {
-        
-        //        let dynamoDBObjectMapper = AWSDynamoDBObjectMapper.default()
-        //
-        //        let newUser = User()
-        //
-        //        newUser?.firstName = firstNameTextField.text
-        //        newUser?.lastName = lastNameTextField.text
-        //        newUser?.username = usernameTextField.text
-        //        newUser?.password = passwordTextField.text
-        //
-        //        var newAccount = Account()
-        //        newAccount.firstName = firstNameTextField.text
-        //        newAccount.lastName = lastNameTextField.text
-        //        newAccount.userName = usernameTextField.text
-        //        newAccount.password = passwordTextField.text
-        //
-        //        createAccount(newAccount: newAccount)
-        //
-        //        dynamoDBObjectMapper.save(newUser!).continueWith(block: { (task:AWSTask<AnyObject>!) -> Void in
-        //            if (task.error as NSError?) != nil {
-        //                print("The request failed. Error: !(error)")
-        //            }
-        //        })
-        
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {

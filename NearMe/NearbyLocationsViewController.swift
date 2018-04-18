@@ -39,8 +39,6 @@ class NearbyLocationsViewController: UIViewController {
     var selectedPlace: GMSPlace?
     var userloggedIn: User?
     
-//  var mapView: GMSMapView!
-    
     // A default location to use when location permission is not granted.
     let defaultLocation = CLLocation(latitude: -33.869405, longitude: 151.199)
     
@@ -50,60 +48,16 @@ class NearbyLocationsViewController: UIViewController {
         locationManager = CLLocationManager()
         locationManager!.delegate = self
         locationManager!.desiredAccuracy = kCLLocationAccuracyBest
-//      locationManager.distanceFilter = kCLLocationAccuracyNearestTenMeters;
         locationManager.distanceFilter = 50;
         locationManager!.requestAlwaysAuthorization()
         placesClient = GMSPlacesClient.shared()
-        
-        pullfacebookInfo()
         
         if CLLocationManager.locationServicesEnabled() {
             locationManager?.startUpdatingLocation()
         }
         
-//        let camera = GMSCameraPosition.camera(withLatitude: self.defaultLocation.coordinate.latitude,
-//                                              longitude: self.defaultLocation.coordinate.longitude,
-//                                              zoom: zoomLevel)
-        
-//        mapView = GMSMapView.map(withFrame: view.bounds, camera: camera)
-//        mapView.settings.myLocationButton = true
-//        mapView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-//
-//        view.addSubview(mapView)
-//        mapView.isHidden = true
-        
         let objectMapper = AWSDynamoDBObjectMapper.default()
         
-    }
-    
-    func pullfacebookInfo() {
-        //Crashes without internet connection
-        if(FBSDKAccessToken.current() != nil)
-            {
-    
-                print(FBSDKAccessToken.current().permissions)
-                // Graph Path : "me" is going to get current user logged in
-                let graphRequest = FBSDKGraphRequest(graphPath: "me", parameters: ["fields" : "id, name, email"])
-                let connection = FBSDKGraphRequestConnection()
-    
-                connection.add(graphRequest, completionHandler: { (connection, result, error) -> Void in
-                    let data = result as! [String : AnyObject]
-                    var name = data["name"] as! String
-                    var splitName = name.components(separatedBy: " ")
-                    let firstName = splitName.removeFirst()
-                    print("logged in user name is \(String(describing: name))")
-    
-                    let FBid = data["id"] as? String
-                    print("Facebook id is \(String(describing: FBid))")
-    
-                    self.userloggedIn = User()
-                    self.userloggedIn?.firstName = firstName
-                    self.userloggedIn?.username = "Tester"
-                    self.userloggedIn?.facebookId = FBid
-    
-                })
-                connection.start()
-        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -182,13 +136,6 @@ extension NearbyLocationsViewController: CLLocationManagerDelegate {
             longitude: location.coordinate.longitude,
             zoom: zoomLevel)
         
-//        if mapView.isHidden {
-//            mapView.isHidden = true
-//            mapView.camera = camera
-//        } else {
-//            mapView.animate(to: camera)
-//        }
-        
         listLikelyPlaces()
     }
     
@@ -198,8 +145,6 @@ extension NearbyLocationsViewController: CLLocationManagerDelegate {
             print("Location access was restricted.")
         case .denied:
             print("User denied access to location.")
-            // Display the map using the default location.
-//            mapView.isHidden = false
         case .notDetermined:
             print("Location status not determined.")
         case .authorizedAlways: fallthrough
@@ -214,6 +159,7 @@ extension NearbyLocationsViewController: CLLocationManagerDelegate {
     }
     
 }
+
 
 extension NearbyLocationsViewController : UITableViewDataSource, UITableViewDelegate {
     
@@ -253,15 +199,6 @@ extension NearbyLocationsViewController : UITableViewDataSource, UITableViewDele
         //Index out of range exception?
         selectedPlace = likelyPlaces[indexPath.row]
         
-//        mapView.clear()
-//        if selectedPlace != nil {
-//            let marker = GMSMarker(position: (self.selectedPlace?.coordinate)!)
-//            marker.title = selectedPlace?.name
-//            marker.snippet = selectedPlace?.formattedAddress
-//            marker.map = mapView
-//            mapView.isHidden = false
-//        }
-        
             let tbc = self.tabBarController as! MainTabBarController
         
             self.userloggedIn?.buildingOccupied = placesTableView.cellForRow(at: indexPath)?.textLabel?.text
@@ -290,7 +227,7 @@ extension NearbyLocationsViewController : UITableViewDataSource, UITableViewDele
             .response { response in
                 print(response.response?.statusCode)
         }
-        
+    
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
