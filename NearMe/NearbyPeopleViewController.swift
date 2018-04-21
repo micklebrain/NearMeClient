@@ -31,7 +31,7 @@ class NearbyPeopleViewController: UIViewController {
     var headshots = [String: UIImage]()
     var currentUserLocation: CLLocation?
     var count = 0
-    var actInd: UIActivityIndicatorView!
+    var actInd = UIActivityIndicatorView()
     let refreshControl = UIRefreshControl()
     //var results: [AWSDynamoDBObjectModel]?
 
@@ -58,7 +58,7 @@ class NearbyPeopleViewController: UIViewController {
         self.filterPickerView.delegate = self
         self.filterPickerView.dataSource = self
     
-        self.floorLabel.text?.append(String(userLoggedIn.floor))
+        //self.floorLabel.text?.append(String(userLoggedIn.floor))
         
         if #available(iOS 10.0, *) {
             self.PeopleNearbyTableView.refreshControl = refreshControl
@@ -69,7 +69,7 @@ class NearbyPeopleViewController: UIViewController {
         self.refreshControl.addTarget(self, action: #selector(refreshUsersNearby), for: .valueChanged)
         
         userLoggedIn?.headshot = #imageLiteral(resourceName: "empty-headshot")
-        getUserPicture(facebookId: (userLoggedIn?.facebookId)!)
+        //getUserPicture(facebookId: (userLoggedIn?.facebookId)!)
         
         //Check if location services is on first
         determineMyCurrentLocation()
@@ -134,24 +134,28 @@ class NearbyPeopleViewController: UIViewController {
         
         if(FBSDKAccessToken.current() != nil)
         {
-            print(FBSDKAccessToken.current().permissions)
-            print(FBSDKAccessToken.current().tokenString)
             
-            let graphRequest = FBSDKGraphRequest(graphPath: nathanFBId, parameters: ["fields" : "id, name, email,picture"])
+                print(FBSDKAccessToken.current().permissions)
+                print(FBSDKAccessToken.current().tokenString)
+                
+                let graphRequest = FBSDKGraphRequest(graphPath: nathanFBId, parameters: ["fields" : "id, name, email,picture"])
 
-            let connection = FBSDKGraphRequestConnection()
+                let connection = FBSDKGraphRequestConnection()
 
-            connection.add(graphRequest, completionHandler: { (connection, result, error) -> Void in
-                let data = result as! [String : AnyObject]
-                let name = data["name"] as? String
-                let email = data["email"] as? String
-                let picture = data["picture"] as? Any
-                print("logged in user name is \(String(describing: name))")
+                connection.add(graphRequest, completionHandler: { (connection, result, error) -> Void in
+                    if (connection?.urlResponse != nil && connection?.urlResponse.statusCode == 200) {
+                    let data = result as! [String : AnyObject]
+                    let name = data["name"] as? String
+                    let email = data["email"] as? String
+                    let picture = data["picture"] as? Any
+                    print("logged in user name is \(String(describing: name))")
 
-                let FBid = data["id"] as? String
-                print("Facebook id is  \(String(describing: FBid))")
-            })
-            connection.start()
+                    let FBid = data["id"] as? String
+                    print("Facebook id is  \(String(describing: FBid))")
+                    }
+                })
+                connection.start()
+            
         }
         
 //        let photographRequest = FBSDKGraphRequest(graphPath: nathanFBId, parameters: ["fields" : "photo"])
@@ -250,7 +254,7 @@ class NearbyPeopleViewController: UIViewController {
         //Brannan lobby wifi
 //        let url = URL(string: "http://10.12.228.178:8080/pullAccounts")
         //Heroku
-        let url = URL(string: "https://crystal-smalltalk.herokuapp.com/pullAccounts")
+        let url = URL(string: "https://crystal-smalltalk.herokuapp.com/pullNearbyUsers")
         userLoggedIn?.friends = ["Nathan"]
         
         let userDetails : Parameters = [
@@ -261,7 +265,6 @@ class NearbyPeopleViewController: UIViewController {
             "sex": "MALE"
         ]
         
-        self.actInd = UIActivityIndicatorView()
         actInd.frame = CGRect(x: 0.0, y: 0.0, width: 40.0, height: 40.0)
         actInd.center = self.view.center
         actInd.hidesWhenStopped = true
@@ -270,8 +273,10 @@ class NearbyPeopleViewController: UIViewController {
         self.view.addSubview(actInd)
         actInd.startAnimating()
         
+        //Act Indicator will continue to run
         Alamofire.request(url!, method: .post, parameters: userDetails, encoding: JSONEncoding.default)
             .responseJSON{ response in
+                if response.response?.statusCode == 200 {
                 if let json = response.result.value {
                     print("JSON: \(json)")
                     let users = json as! [Any]
@@ -304,6 +309,18 @@ class NearbyPeopleViewController: UIViewController {
                     }
                     let numberoccupied = "# Occupied: " + String(self.count)
                     self.peopleCounter.text = String(describing: numberoccupied)
+                    self.PeopleNearbyTableView.reloadData()
+                    self.actInd.stopAnimating()
+                }
+                } else {
+                    var person = User()
+                    person.firstName = "Nobody"
+                    person.lastName = "Around"
+                    person.school = "None"
+                    person.facebookId = "none"
+                    person.headshotImage = #imageLiteral(resourceName: "empty-headshot")
+                    self.friendsAround.insert(person)
+                    self.strangersAround.insert(person)
                     self.PeopleNearbyTableView.reloadData()
                     self.actInd.stopAnimating()
                 }
@@ -369,9 +386,7 @@ class NearbyPeopleViewController: UIViewController {
                     }
                 }
             }
-
             task.resume()
-
         }
         
         return headshot
@@ -596,8 +611,12 @@ extension NearbyPeopleViewController : UITableViewDataSource, UITableViewDelegat
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // TODO: Ternary Operator
         if (section == 0) {
+            self.refreshControl.endRefreshing()
+            self.actInd.stopAnimating()
             return self.friendsAround.count
         } else {
+            self.refreshControl.endRefreshing()
+            self.actInd.stopAnimating()
             return self.strangersAround.count
         }
     }
@@ -605,6 +624,7 @@ extension NearbyPeopleViewController : UITableViewDataSource, UITableViewDelegat
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "UserCell", for: indexPath) as! UserTableViewCell
         
+        self.refreshControl.endRefreshing()
         self.actInd.stopAnimating()
         //      TODO: Check why view gets loaded without images - bug
         if (indexPath.section == 0) {
