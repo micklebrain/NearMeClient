@@ -241,20 +241,17 @@ class NearbyPeopleViewController: UIViewController {
         }
     }
 
+    //When no internet connection then change label to no internet connection
+    
     func pullNearByPeople () {
         
 //        let utilities = Util()
 //        let wifiAddress = utilities.getWiFiAddress() as! String
 //        let url = URL(string: "http://" + wifiAddress + ":8080/updateLocation")
         
-        //Roomwifi
-//        let url = URL(string: "http://192.168.1.18:8080/pullAccounts")
-        //NoiseBridge
-//        let url = URL(string: "http://10.20.1.137:8080/pullAccounts")
-        //Brannan lobby wifi
-//        let url = URL(string: "http://10.12.228.178:8080/pullAccounts")
-        //Heroku
+        let localUrl = URL(string: "http://localhost:8080/pullNearbyUsers")
         let url = URL(string: "https://crystal-smalltalk.herokuapp.com/pullNearbyUsers")
+        
         userLoggedIn?.friends = ["Nathan"]
         
         let userDetails : Parameters = [
@@ -289,7 +286,6 @@ class NearbyPeopleViewController: UIViewController {
                             newPerson.firstName = userDetails["firstName"] as! String
                             newPerson.lastName = userDetails["lastName"] as! String
                             newPerson.facebookId = userDetails["facebookId"] as! String
-                            newPerson.school = userDetails["school"] as! String
                             newPerson.headshotImage = self.getUserPicture(facebookId: newPerson.facebookId!)
                             self.friendsAround.insert(newPerson)
                         }
@@ -630,7 +626,7 @@ extension NearbyPeopleViewController : UITableViewDataSource, UITableViewDelegat
         if (indexPath.section == 0) {
             cell.nameLabel.text = self.friendsAround[friendsAround.index(self.friendsAround.startIndex, offsetBy: indexPath.row)].firstName! + " " +
                 self.friendsAround[friendsAround.index(self.friendsAround.startIndex, offsetBy: indexPath.row)].lastName!
-            cell.schoolLabel.text = self.friendsAround[friendsAround.index(self.friendsAround.startIndex, offsetBy: indexPath.row)].school!
+           // cell.schoolLabel.text = self.friendsAround[friendsAround.index(self.friendsAround.startIndex, offsetBy: indexPath.row)].school!
             let headshot = headshots[self.friendsAround[friendsAround.index(self.friendsAround.startIndex, offsetBy: indexPath.row)].facebookId!]
             if (headshot != nil) {
                 cell.headshotViewImage.image = headshots[self.friendsAround[friendsAround.index(self.friendsAround.startIndex, offsetBy: indexPath.row)].facebookId!]
