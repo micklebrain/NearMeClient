@@ -45,6 +45,9 @@ class NearbyLocationsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        let tbc = self.tabBarController as! MainTabBarController
+        self.userloggedIn = tbc.userloggedIn
+        
         locationManager = CLLocationManager()
         locationManager!.delegate = self
         locationManager!.desiredAccuracy = kCLLocationAccuracyBest
@@ -60,9 +63,40 @@ class NearbyLocationsViewController: UIViewController {
         
     }
     
+    func pullfacebookInfo() {
+        //Crashes without internet connection
+        if(FBSDKAccessToken.current() != nil)
+            {
+    
+                print(FBSDKAccessToken.current().permissions)
+                // Graph Path : "me" is going to get current user logged in
+                let graphRequest = FBSDKGraphRequest(graphPath: "me", parameters: ["fields" : "id, name, email"])
+                let connection = FBSDKGraphRequestConnection()
+    
+                connection.add(graphRequest, completionHandler: { (connection, result, error) -> Void in
+                    if (connection?.urlResponse != nil && connection?.urlResponse.statusCode == 200) {
+                        let data = result as! [String : AnyObject]
+                        var name = data["name"] as! String
+                        var splitName = name.components(separatedBy: " ")
+                        let firstName = splitName.removeFirst()
+                        print("logged in user name is \(String(describing: name))")
+        
+                        let FBid = data["id"] as? String
+                        print("Facebook id is \(String(describing: FBid))")
+        
+                        self.userloggedIn = User()
+                        self.userloggedIn?.firstName = firstName
+                        self.userloggedIn?.username = "Tester"
+                        self.userloggedIn?.facebookId = FBid
+                    }
+    
+                })
+                connection.start()
+        }
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
-        let tbc = self.tabBarController as! MainTabBarController
-        self.userloggedIn = tbc.userloggedIn
+
     }
 
     override func didReceiveMemoryWarning() {
@@ -202,7 +236,7 @@ extension NearbyLocationsViewController : UITableViewDataSource, UITableViewDele
             let tbc = self.tabBarController as! MainTabBarController
         
             self.userloggedIn?.buildingOccupied = placesTableView.cellForRow(at: indexPath)?.textLabel?.text
-            updateLocation(locality: (self.userloggedIn?.buildingOccupied)!)
+           //updateLocation(locality: (self.userloggedIn?.buildingOccupied)!)
             self.userloggedIn?.floor = Int(floorNumber.text!)
             tbc.userloggedIn = self.userloggedIn
             tbc.selectedIndex = 2

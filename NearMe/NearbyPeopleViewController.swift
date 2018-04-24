@@ -31,7 +31,7 @@ class NearbyPeopleViewController: UIViewController {
     var headshots = [String: UIImage]()
     var currentUserLocation: CLLocation?
     var count = 0
-    var actInd: UIActivityIndicatorView!
+    var actInd = UIActivityIndicatorView()
     let refreshControl = UIRefreshControl()
     //var results: [AWSDynamoDBObjectModel]?
 
@@ -58,7 +58,7 @@ class NearbyPeopleViewController: UIViewController {
         self.filterPickerView.delegate = self
         self.filterPickerView.dataSource = self
     
-        self.floorLabel.text?.append(String(userLoggedIn.floor))
+        //self.floorLabel.text?.append(String(userLoggedIn.floor))
         
         if #available(iOS 10.0, *) {
             self.PeopleNearbyTableView.refreshControl = refreshControl
@@ -67,6 +67,104 @@ class NearbyPeopleViewController: UIViewController {
         }
         
         self.refreshControl.addTarget(self, action: #selector(refreshUsersNearby), for: .valueChanged)
+        
+        userLoggedIn?.headshot = #imageLiteral(resourceName: "empty-headshot")
+        //getUserPicture(facebookId: (userLoggedIn?.facebookId)!)
+        
+        //Check if location services is on first
+        determineMyCurrentLocation()
+        
+        getLocation()
+        
+        if let accessToken = AccessToken.current {
+            print(AccessToken.current?.userId)
+        }
+        
+        pullFacebookInfo()
+        
+//        let mainQueue = DispatchQueue.main
+//        let deadline = DispatchTime.now() + .seconds(5)
+//        mainQueue.asyncAfter(deadline: deadline) {
+//            self.actInd.stopAnimating()
+//        }
+        
+//        mainQueue.async {
+            self.timer = Timer.scheduledTimer(withTimeInterval: 30.0, repeats: true, block: { (Timer) in
+                //refresh every 30 seconds
+                self.refreshUsersNearby()
+            })
+//        }
+        
+    }
+    
+    //Fix refreshing, indicator dosnt always stop correctly
+    func refreshUsersNearby () {
+        //Implement caching
+        self.actInd.startAnimating()
+        self.friendsAround.removeAll()
+        self.strangersAround.removeAll()
+        pullNearByPeople()
+        self.count = self.friendsAround.count + self.strangersAround.count
+        self.PeopleNearbyTableView.reloadData()
+        self.refreshControl.endRefreshing()
+        self.actInd.stopAnimating()
+    }
+    
+    func getLocation() {
+        
+        Alamofire.request("https://httpbin.org/get").responseJSON { response in
+            print("Request: \(String(describing: response.request))")   // original url request
+            print("Response: \(String(describing: response.response))") // http url response
+            print("Result: \(response.result)")                         // response serialization result
+            
+            if let json = response.result.value {
+                print("JSON: \(json)") // serialized json response
+            }
+            
+            if let data = response.data, let utf8Text = String(data: data, encoding: .utf8) {
+                print("Data: \(utf8Text)") // original server data as UTF8 string
+            }
+        }
+    }
+    
+    func pullFacebookInfo () {
+        let nathanFBId = "1367878021"
+        let nathan2FBId = "111006779636650"
+        let TraceyFBid = "109582432994026"
+        
+        if(FBSDKAccessToken.current() != nil)
+        {
+            
+                print(FBSDKAccessToken.current().permissions)
+                print(FBSDKAccessToken.current().tokenString)
+                
+                let graphRequest = FBSDKGraphRequest(graphPath: nathanFBId, parameters: ["fields" : "id, name, email,picture"])
+
+                let connection = FBSDKGraphRequestConnection()
+
+                connection.add(graphRequest, completionHandler: { (connection, result, error) -> Void in
+                    if (connection?.urlResponse != nil && connection?.urlResponse.statusCode == 200) {
+                    let data = result as! [String : AnyObject]
+                    let name = data["name"] as? String
+                    let email = data["email"] as? String
+                    let picture = data["picture"] as? Any
+                    print("logged in user name is \(String(describing: name))")
+
+                    let FBid = data["id"] as? String
+                    print("Facebook id is  \(String(describing: FBid))")
+                    }
+                })
+                connection.start()
+            
+        }
+        
+//        let photographRequest = FBSDKGraphRequest(graphPath: nathanFBId, parameters: ["fields" : "photo"])
+//
+//        let connection2 = FBSDKGraphRequestConnection()
+//        connection2.add(photographRequest, completionHandler: { (connection, result, error) -> Void in
+//            let data = result as! [String: AnyObject]
+//        })
+//        connection2.start()
         
         //Check if location services is on first
         determineMyCurrentLocation()
@@ -93,19 +191,6 @@ class NearbyPeopleViewController: UIViewController {
             presenceSwitch.isOn = false
             locationManager.stopUpdatingLocation()
         }
-    }
-    
-    //Fix refreshing, indicator dosnt always stop correctly
-    func refreshUsersNearby () {
-        //Implement caching
-        self.actInd.startAnimating()
-        self.friendsAround.removeAll()
-        self.strangersAround.removeAll()
-        pullNearByPeople()
-        self.count = self.friendsAround.count + self.strangersAround.count
-        self.PeopleNearbyTableView.reloadData()
-        self.refreshControl.endRefreshing()
-        self.actInd.stopAnimating()
     }
     
     func determineMyCurrentLocation() {
@@ -168,23 +253,43 @@ class NearbyPeopleViewController: UIViewController {
         
     }
 
+    //When no internet connection then change label to no internet connection
+    
     func pullNearByPeople () {
         
-        let url = URL(string: "https://crystal-smalltalk.herokuapp.com/pullAccounts")
+
+//        let utilities = Util()
+//        let wifiAddress = utilities.getWiFiAddress() as! String
+//        let url = URL(string: "http://" + wifiAddress + ":8080/updateLocation")
+        
+        let localUrl = URL(string: "http://localhost:8080/pullNearbyUsers")
+        let url = URL(string: "https://crystal-smalltalk.herokuapp.com/pullNearbyUsers")
+
         userLoggedIn?.friends = ["Nathan"]
         
         let userDetails : Parameters = [
-            "firstName": self.userLoggedIn?.firstName,
+            "firstname": self.userLoggedIn?.firstName,
             "username": self.userLoggedIn?.username,
             "facebookId": self.userLoggedIn?.facebookId,
-            "locality": self.userLoggedIn?.buildingOccupied,
-            "sex": "MALE"
+            "locality": self.userLoggedIn?.buildingOccupied
         ]
         
+        actInd.frame = CGRect(x: 0.0, y: 0.0, width: 40.0, height: 40.0)
+        actInd.center = self.view.center
+        actInd.hidesWhenStopped = true
+        actInd.activityIndicatorViewStyle =
+            UIActivityIndicatorViewStyle.gray
+        self.view.addSubview(actInd)
+        actInd.startAnimating()
+
         activateActivityIndicatorView()
+
         
+        //Act Indicator will continue to run
+        //Clogging server
         Alamofire.request(url!, method: .post, parameters: userDetails, encoding: JSONEncoding.default)
             .responseJSON{ response in
+                if response.response?.statusCode == 200 {
                 if let json = response.result.value {
                     print("JSON: \(json)")
                     let users = json as! [Any]
@@ -197,26 +302,42 @@ class NearbyPeopleViewController: UIViewController {
                             newPerson.firstName = userDetails["firstName"] as! String
                             newPerson.lastName = userDetails["lastName"] as! String
                             newPerson.facebookId = userDetails["facebookId"] as! String
-                            newPerson.school = userDetails["school"] as! String
+
                             newPerson.headshotImage = self.getUserFBPicture(facebookId: newPerson.facebookId!)
+
+                           // newPerson.school = userDetails["school"] as! String
+                            newPerson.headshotImage = self.getUserFBPicture(facebookId: newPerson.facebookId!)
+
                             self.friendsAround.insert(newPerson)
                         }
                         // } else {
                         // self.strangersAround.insert(newPerson)
                     }
                     self.count = self.friendsAround.count + self.strangersAround.count
-                    if (self.count == 0) {
-                        var person = User()
-                        person.firstName = "Nobody"
-                        person.lastName = "Around"
-                        person.school = "None"
-                        person.facebookId = "none"
-                        person.headshotImage = #imageLiteral(resourceName: "empty-headshot")
-                        self.friendsAround.insert(person)
-                        self.strangersAround.insert(person)
-                    }
+//                    if (self.count == 0) {
+//                        var person = User()
+//                        person.firstName = "Nobody"
+//                        person.lastName = "Around"
+//                        person.school = "None"
+//                        person.facebookId = "none"
+//                        person.headshotImage = #imageLiteral(resourceName: "empty-headshot")
+//                        self.friendsAround.insert(person)
+//                        self.strangersAround.insert(person)
+//                    }
                     let numberoccupied = "# Occupied: " + String(self.count)
                     self.peopleCounter.text = String(describing: numberoccupied)
+                    self.PeopleNearbyTableView.reloadData()
+                    self.actInd.stopAnimating()
+                }
+                } else {
+                    var person = User()
+                    person.firstName = "Nobody"
+                    person.lastName = "Around"
+                    person.school = "None"
+                    person.facebookId = "none"
+                    person.headshotImage = #imageLiteral(resourceName: "empty-headshot")
+                    self.friendsAround.insert(person)
+                    self.strangersAround.insert(person)
                     self.PeopleNearbyTableView.reloadData()
                     self.actInd.stopAnimating()
                 }
@@ -252,9 +373,7 @@ class NearbyPeopleViewController: UIViewController {
                     }
                 }
             }
-
             task.resume()
-
         }
         
         return headshot
@@ -362,8 +481,12 @@ extension NearbyPeopleViewController : UITableViewDataSource, UITableViewDelegat
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // TODO: Ternary Operator
         if (section == 0) {
+            self.refreshControl.endRefreshing()
+            self.actInd.stopAnimating()
             return self.friendsAround.count
         } else {
+            self.refreshControl.endRefreshing()
+            self.actInd.stopAnimating()
             return self.strangersAround.count
         }
     }
@@ -371,12 +494,13 @@ extension NearbyPeopleViewController : UITableViewDataSource, UITableViewDelegat
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "UserCell", for: indexPath) as! UserTableViewCell
         
+        self.refreshControl.endRefreshing()
         self.actInd.stopAnimating()
         //      TODO: Check why view gets loaded without images - bug
         if (indexPath.section == 0) {
             cell.nameLabel.text = self.friendsAround[friendsAround.index(self.friendsAround.startIndex, offsetBy: indexPath.row)].firstName! + " " +
                 self.friendsAround[friendsAround.index(self.friendsAround.startIndex, offsetBy: indexPath.row)].lastName!
-            cell.schoolLabel.text = self.friendsAround[friendsAround.index(self.friendsAround.startIndex, offsetBy: indexPath.row)].school!
+           // cell.schoolLabel.text = self.friendsAround[friendsAround.index(self.friendsAround.startIndex, offsetBy: indexPath.row)].school!
             let headshot = headshots[self.friendsAround[friendsAround.index(self.friendsAround.startIndex, offsetBy: indexPath.row)].facebookId!]
             if (headshot != nil) {
                 cell.headshotViewImage.image = headshots[self.friendsAround[friendsAround.index(self.friendsAround.startIndex, offsetBy: indexPath.row)].facebookId!]
