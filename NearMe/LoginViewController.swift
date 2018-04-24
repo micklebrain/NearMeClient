@@ -28,6 +28,7 @@ class LoginViewController: UIViewController {
         //Cache the token in case offline
         if(FBSDKAccessToken.current() != nil)
         {
+            //Crashes without Internet
             //This request dosnt happen fast enough
             let graphRequest = FBSDKGraphRequest(graphPath: "me", parameters: ["fields" : "id, name, email"])
             let connection = FBSDKGraphRequestConnection()
@@ -45,16 +46,16 @@ class LoginViewController: UIViewController {
 
                     self.userloggedIn = User()
                     self.userloggedIn?.firstName = firstName
-                    self.userloggedIn?.username = "Tester"
+                    self.userloggedIn?.username = "SFNathan"
                     self.userloggedIn?.facebookId = FBid
                     
                     let maintabbarVC:MainTabBarController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "MainTabBarController") as! MainTabBarController
                     
                     maintabbarVC.userloggedIn = self.userloggedIn
                     
-                    let initialViewController = UIStoryboard(name: "Main", bundle:nil).instantiateInitialViewController() as! UIViewController
-                    let appDelegate = (UIApplication.shared.delegate as! AppDelegate)
-                    appDelegate.window?.rootViewController = initialViewController
+//                    let initialViewController = UIStoryboard(name: "Main", bundle:nil).instantiateInitialViewController() as! UIViewController
+//                    let appDelegate = (UIApplication.shared.delegate as! AppDelegate)
+//                    appDelegate.window?.rootViewController = initialViewController
                     
                     self.present(maintabbarVC, animated: false, completion: nil)
                 }
@@ -68,10 +69,6 @@ class LoginViewController: UIViewController {
         //Facebook login button
         self.loginButton = LoginButton(readPermissions: [ .publicProfile, .email, .userFriends ])
         loginButton.center = view.center
-        
-//      self.FbLoginButton.readPermissions = ["id, name, email"]
-        
-//        view.addSubview(loginButton)
     
     }
     
@@ -101,74 +98,8 @@ class LoginViewController: UIViewController {
         
     }
     
-    
-    @IBAction func loginButtonClicked(_ sender: Any) {
-        let loginManager = LoginManager()
-        loginManager.logIn(readPermissions: [.email, .userFriends, .publicProfile], viewController: self, completion: ({ (loginResult) in
-            switch loginResult {
-            case LoginResult.cancelled:
-                print("Things were canceled")
-            case LoginResult.failed:
-                print("Things failed")
-            case LoginResult.success(grantedPermissions: nil, declinedPermissions: nil, token: nil):
-                
-                let maintabbarVC:MainTabBarController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "MainTabBarController") as! MainTabBarController
-                
-                maintabbarVC.userloggedIn = self.userloggedIn
-                
-                let initialViewController = UIStoryboard(name: "Main", bundle:nil).instantiateInitialViewController() as! UIViewController
-                let appDelegate = (UIApplication.shared.delegate as! AppDelegate)
-                appDelegate.window?.rootViewController = initialViewController
-                
-                self.present(maintabbarVC, animated: false, completion: nil)
-            default:
-                print("Not an option")
-            }
-        }))
-    }
-    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         password.resignFirstResponder()
-    }
-    
-    func scanUsers (_ completeionHandler: @escaping (_ response: AWSDynamoDBPaginatedOutput?, _ error: NSError?) -> Void) {
-        
-//        let objectMapper = AWSDynamoDBObjectMapper.default()
-//        let scanExpression = AWSDynamoDBScanExpression()
-//        scanExpression.filterExpression = "firstName = :val"
-//        scanExpression.expressionAttributeValues = [":val": username.text]
-//
-//        objectMapper.scan(User.self, expression: scanExpression) { (response: AWSDynamoDBPaginatedOutput?, error: Error?) in
-//            DispatchQueue.main.async(execute: {
-//                completeionHandler(response, error as NSError?)
-//            })
-//        }
-    }
-    
-    //Security
-    func authenticateUser () {
-        
-        let completionHandler = {(response: AWSDynamoDBPaginatedOutput?, error: NSError?) -> Void in
-        if let error = error {
-        var errorMessage = "Failed to retrieve items. \(error.localizedDescription)"
-            if (error.domain == AWSServiceErrorDomain && error.code == AWSServiceErrorType.accessDeniedException.rawValue) {
-                errorMessage = "Access denied. You are not allowed to perform this operation."
-                print(errorMessage)
-            }
-        }
-        else if response!.items.count == 0 {
-            print("No items match your criteria. Insert more sample data and try again.")
-        }
-        else {
-            let nearbyPeopleVC:NearbyLocationsViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ProfileViewController") as! NearbyLocationsViewController
-            let currentUser = User()
-            currentUser.username = self.username.text
-            currentUser.firstName = self.username.text
-            self.present(nearbyPeopleVC, animated: false, completion: nil)
-        }
-        }
-        
-        scanUsers(completionHandler)
     }
 
     @IBAction func logout(_ sender: Any) {

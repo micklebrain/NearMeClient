@@ -45,7 +45,7 @@ class User : Hashable /* AWSDynamoDBObjectModel,AWSDynamoDBModeling */ {
     var online : Bool = true
     var profilePicture : UIImage?
     var friendRequests: [String]?
-    var headshot: UIImage?
+    var headshot = #imageLiteral(resourceName: "empty-headshot.jpg")
     var address : String?
     //  var occupation : String?
     //  var relationshipStatus : String?

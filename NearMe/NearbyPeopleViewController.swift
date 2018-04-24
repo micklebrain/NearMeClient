@@ -165,6 +165,14 @@ class NearbyPeopleViewController: UIViewController {
 //            let data = result as! [String: AnyObject]
 //        })
 //        connection2.start()
+        
+        //Check if location services is on first
+        determineMyCurrentLocation()
+        
+        //refresh every 30 seconds
+        self.timer = Timer.scheduledTimer(withTimeInterval: 30.0, repeats: true, block: { (Timer) in
+            self.refreshUsersNearby()
+        })
     }
     
     //  MARK: - Location tracking
@@ -226,40 +234,44 @@ class NearbyPeopleViewController: UIViewController {
             userLoggedIn?.latitude = userLocation.coordinate.latitude as NSNumber
             userLoggedIn?.longitude = userLocation.coordinate.longitude as NSNumber
             
-            //AWS Object mapper save
-//            objectMapper.save(userLoggedIn!, completionHandler: {(error: Error?) -> Void in
-//                if error != nil {
-//                    DispatchQueue.main.async {
-//                        errors.append(error! as NSError)
-//                    }
-//                }
-//            })
-            
             self.CurrentLocationLabel.text = userLoggedIn?.buildingOccupied
             
             pullNearByPeople()
         }
+    }
+    
+    func activateActivityIndicatorView() {
+        
+        self.actInd = UIActivityIndicatorView()
+        actInd.frame = CGRect(x: 0.0, y: 0.0, width: 40.0, height: 40.0)
+        actInd.center = self.view.center
+        actInd.hidesWhenStopped = true
+        actInd.activityIndicatorViewStyle =
+            UIActivityIndicatorViewStyle.gray
+        self.view.addSubview(actInd)
+        actInd.startAnimating()
+        
     }
 
     //When no internet connection then change label to no internet connection
     
     func pullNearByPeople () {
         
+
 //        let utilities = Util()
 //        let wifiAddress = utilities.getWiFiAddress() as! String
 //        let url = URL(string: "http://" + wifiAddress + ":8080/updateLocation")
         
         let localUrl = URL(string: "http://localhost:8080/pullNearbyUsers")
         let url = URL(string: "https://crystal-smalltalk.herokuapp.com/pullNearbyUsers")
-        
+
         userLoggedIn?.friends = ["Nathan"]
         
         let userDetails : Parameters = [
-            "firstName": self.userLoggedIn?.firstName,
+            "firstname": self.userLoggedIn?.firstName,
             "username": self.userLoggedIn?.username,
             "facebookId": self.userLoggedIn?.facebookId,
-            "locality": self.userLoggedIn?.buildingOccupied,
-            "sex": "MALE"
+            "locality": self.userLoggedIn?.buildingOccupied
         ]
         
         actInd.frame = CGRect(x: 0.0, y: 0.0, width: 40.0, height: 40.0)
@@ -269,8 +281,12 @@ class NearbyPeopleViewController: UIViewController {
             UIActivityIndicatorViewStyle.gray
         self.view.addSubview(actInd)
         actInd.startAnimating()
+
+        activateActivityIndicatorView()
+
         
         //Act Indicator will continue to run
+        //Clogging server
         Alamofire.request(url!, method: .post, parameters: userDetails, encoding: JSONEncoding.default)
             .responseJSON{ response in
                 if response.response?.statusCode == 200 {
@@ -286,23 +302,28 @@ class NearbyPeopleViewController: UIViewController {
                             newPerson.firstName = userDetails["firstName"] as! String
                             newPerson.lastName = userDetails["lastName"] as! String
                             newPerson.facebookId = userDetails["facebookId"] as! String
-                            newPerson.headshotImage = self.getUserPicture(facebookId: newPerson.facebookId!)
+
+                            newPerson.headshotImage = self.getUserFBPicture(facebookId: newPerson.facebookId!)
+
+                           // newPerson.school = userDetails["school"] as! String
+                            newPerson.headshotImage = self.getUserFBPicture(facebookId: newPerson.facebookId!)
+
                             self.friendsAround.insert(newPerson)
                         }
                         // } else {
                         // self.strangersAround.insert(newPerson)
                     }
                     self.count = self.friendsAround.count + self.strangersAround.count
-                    if (self.count == 0) {
-                        var person = User()
-                        person.firstName = "Nobody"
-                        person.lastName = "Around"
-                        person.school = "None"
-                        person.facebookId = "none"
-                        person.headshotImage = #imageLiteral(resourceName: "empty-headshot")
-                        self.friendsAround.insert(person)
-                        self.strangersAround.insert(person)
-                    }
+//                    if (self.count == 0) {
+//                        var person = User()
+//                        person.firstName = "Nobody"
+//                        person.lastName = "Around"
+//                        person.school = "None"
+//                        person.facebookId = "none"
+//                        person.headshotImage = #imageLiteral(resourceName: "empty-headshot")
+//                        self.friendsAround.insert(person)
+//                        self.strangersAround.insert(person)
+//                    }
                     let numberoccupied = "# Occupied: " + String(self.count)
                     self.peopleCounter.text = String(describing: numberoccupied)
                     self.PeopleNearbyTableView.reloadData()
@@ -324,37 +345,7 @@ class NearbyPeopleViewController: UIViewController {
         
     }
     
-    func randomString(length: Int) -> String {
-        
-        let letters : NSString = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
-        let len = UInt32(letters.length)
-        
-        var randomString = ""
-        
-        for _ in 0 ..< length {
-            let rand = arc4random_uniform(len)
-            var nextChar = letters.character(at: Int(rand))
-            randomString += NSString(characters: &nextChar, length: 1) as String
-        }
-        
-        return randomString
-    }
-
-    @IBAction func viewProfile(_ sender: Any) {
-        
-        let profileVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "UserProfileViewController") as! UserProfileViewController
-        profileVC.userLoggedIn = self.userLoggedIn
-        
-        self.present(profileVC, animated: false, completion: nil)
-        
-    }
-    
-    @IBAction func connect(_ sender: Any) {
-        let profileVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ProfileViewController") as! NearbyLocationsViewController
-        self.present(profileVC, animated: false, completion: nil)
-    }
-    
-    func getUserPicture (facebookId : String) -> UIImage {
+    func getUserFBPicture (facebookId : String) -> UIImage {
         
         //Solve threading to update fb image when complete
         
@@ -387,15 +378,6 @@ class NearbyPeopleViewController: UIViewController {
         
         return headshot
     }
-
-    func randomImage () -> UIImage {
-        
-        var images = [#imageLiteral(resourceName: "headshot2"), #imageLiteral(resourceName: "headshot3"), #imageLiteral(resourceName: "headshot1")]
-        let randomNumber:UInt32 = arc4random_uniform(3)
-        let index:Int = Int(randomNumber)
-        return images[index]
-        
-    }
     
     //  Mark: Filter
     @IBAction func filter(_ sender: Any) {
@@ -409,133 +391,25 @@ class NearbyPeopleViewController: UIViewController {
         
     }
     
-    /*
-     func pullNearbyPeopleWithAWS () {
-     
-     AWS DynamoDB
-     table = LocationsTable()
-     Move logic to Backend
-     let completionHandler = {(response: AWSDynamoDBPaginatedOutput?, error: NSError?) -> Void in
-     
-     if let error = error {
-     var errorMessage = "Failed to retrieve items. \(error.localizedDescription)"
-     if (error.domain == AWSServiceErrorDomain && error.code == AWSServiceErrorType.accessDeniedException.rawValue) {
-     errorMessage = "Access denied. You are not allowed to perform this operation."
-     print(errorMessage)
-     }
-     }
-     else if response!.items.count == 0 {
-     print("No items match your criteria. Insert more sample data and try again.")
-     }
-     else {
-     self.results = response?.items
-     for result in self.results! {
-     let model = result
-     let modelDictionary: [AnyHashable: Any] = model.dictionaryValue
-     
-     // _ = self.table?.tableAttributeName!(self.table!.orderedAttributeKeys[10])
-     let newPerson = Person()
-     
-     let facebookId = "\(modelDictionary["facebookId"]!)"
-     
-     newPerson.headshotImage = self.getUserPicture(facebookId: facebookId)
-    
-     //Check distance apart from user
-     if (newPerson.firstName != self.userLoggedIn?.firstName && isOnline == "1") {
-     let distanceApart = newPerson.location?.distance(from: (self.currentUserLocation)!)
-     
-     var aMile = CLLocationDistance()
-     //                        aMile.add(1609)
-     aMile.add(10000)
-     if (self.currentUserLocation != nil) {
-     if (distanceApart?.isLess(than: aMile))!{
-     self.strangersAround.insert(newPerson)
-     }
-     }
-     }
-     }
-     self.PeopleNearbyTableView.reloadData()
-     }
-     }
-     
-     Scan actualy Prod DynamoDB
-     scanNearbyUsers(completionHandler)
-     
-     }
-     */
-    
-    //Download Images from AWS
-    /*
-        func downloadImages () {
-            let transferManager = AWSS3TransferManager.default()
-    
-            let downloadingFileUrl = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent("headshot1.jpg")
-            let downloadRequest = AWSS3TransferManagerDownloadRequest()
-    
-            downloadRequest?.bucket = "nearme-pictures"
-            downloadRequest?.key = "headshot2.jpg"
-            downloadRequest?.downloadingFileURL = downloadingFileUrl
-    
-            // TODO: Cache images
-            // Image was downloaded after the cell was returned
-            transferManager.download(downloadRequest!).continueWith(executor : AWSExecutor.mainThread(), block: { (task:AWSTask<AnyObject>) -> Any? in
-                if let error = task.error as NSError? {
-                    if error.domain == AWSS3TransferManagerErrorDomain, let code = AWSS3TransferManagerErrorType(rawValue: error.code) {
-                        switch code {
-                        case .cancelled, .paused:
-                            break
-                        default:
-                            print("Error downloading: \(String(describing: downloadRequest?.key)) Error: \(error)")
-                        }
-                    } else {
-                        print("Error downloading: \(String(describing: downloadRequest?.key)) Error: \(error)")
-                    }
-                    return nil
-                }
-                print("Download complete for: \(String(describing: downloadRequest?.key))")
-                return nil
-            })
-    
-            self.userLoggedin.headshot = UIImage(contentsOfFile: downloadingFileUrl.path)
-        }
-     */
-    
-    /*
-     // Override to support conditional editing of the table view.
-     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-     // Return false if you do not want the specified item to be editable.
-     return true
-     }
-     */
-    
-    /*
-     // Override to support editing the table view.
-     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-     if editingStyle == .delete {
-     // Delete the row from the data source
-     tableView.deleteRows(at: [indexPath], with: .fade)
-     } else if editingStyle == .insert {
-     // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-     }
-     }
-     */
-    
-     /*
-     // Override to support rearranging the table view.
-     override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {}
-     */
-    
-    /*
-     // Override to support conditional rearranging of the table view.
-     override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-     // Return false if you do not want the item to be re-orderable.
-     return true
-     }
-     */
+    //    func getLocation() {
+    //
+    //        Alamofire.request("https://httpbin.org/get").responseJSON { response in
+    //            print("Request: \(String(describing: response.request))")   // original url request
+    //            print("Response: \(String(describing: response.response))") // http url response
+    //            print("Result: \(response.result)")                         // response serialization result
+    //
+    //            if let json = response.result.value {
+    //                print("JSON: \(json)") // serialized json response
+    //            }
+    //
+    //            if let data = response.data, let utf8Text = String(data: data, encoding: .utf8) {
+    //                print("Data: \(utf8Text)") // original server data as UTF8 string
+    //            }
+    //        }
+    //    }
     
     /*
     // MARK: - Navigation
-
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.

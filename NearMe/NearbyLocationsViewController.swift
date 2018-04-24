@@ -39,38 +39,25 @@ class NearbyLocationsViewController: UIViewController {
     var selectedPlace: GMSPlace?
     var userloggedIn: User?
     
-//  var mapView: GMSMapView!
-    
     // A default location to use when location permission is not granted.
     let defaultLocation = CLLocation(latitude: -33.869405, longitude: 151.199)
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        let tbc = self.tabBarController as! MainTabBarController
+        self.userloggedIn = tbc.userloggedIn
+        
         locationManager = CLLocationManager()
         locationManager!.delegate = self
         locationManager!.desiredAccuracy = kCLLocationAccuracyBest
-//      locationManager.distanceFilter = kCLLocationAccuracyNearestTenMeters;
         locationManager.distanceFilter = 50;
         locationManager!.requestAlwaysAuthorization()
         placesClient = GMSPlacesClient.shared()
         
-        pullfacebookInfo()
-        
         if CLLocationManager.locationServicesEnabled() {
             locationManager?.startUpdatingLocation()
         }
-        
-//        let camera = GMSCameraPosition.camera(withLatitude: self.defaultLocation.coordinate.latitude,
-//                                              longitude: self.defaultLocation.coordinate.longitude,
-//                                              zoom: zoomLevel)
-        
-//        mapView = GMSMapView.map(withFrame: view.bounds, camera: camera)
-//        mapView.settings.myLocationButton = true
-//        mapView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-//
-//        view.addSubview(mapView)
-//        mapView.isHidden = true
         
         let objectMapper = AWSDynamoDBObjectMapper.default()
         
@@ -109,8 +96,7 @@ class NearbyLocationsViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        let tbc = self.tabBarController as! MainTabBarController
-        self.userloggedIn = tbc.userloggedIn
+
     }
 
     override func didReceiveMemoryWarning() {
@@ -184,13 +170,6 @@ extension NearbyLocationsViewController: CLLocationManagerDelegate {
             longitude: location.coordinate.longitude,
             zoom: zoomLevel)
         
-//        if mapView.isHidden {
-//            mapView.isHidden = true
-//            mapView.camera = camera
-//        } else {
-//            mapView.animate(to: camera)
-//        }
-        
         listLikelyPlaces()
     }
     
@@ -200,8 +179,6 @@ extension NearbyLocationsViewController: CLLocationManagerDelegate {
             print("Location access was restricted.")
         case .denied:
             print("User denied access to location.")
-            // Display the map using the default location.
-//            mapView.isHidden = false
         case .notDetermined:
             print("Location status not determined.")
         case .authorizedAlways: fallthrough
@@ -216,6 +193,7 @@ extension NearbyLocationsViewController: CLLocationManagerDelegate {
     }
     
 }
+
 
 extension NearbyLocationsViewController : UITableViewDataSource, UITableViewDelegate {
     
@@ -255,15 +233,6 @@ extension NearbyLocationsViewController : UITableViewDataSource, UITableViewDele
         //Index out of range exception?
         selectedPlace = likelyPlaces[indexPath.row]
         
-//        mapView.clear()
-//        if selectedPlace != nil {
-//            let marker = GMSMarker(position: (self.selectedPlace?.coordinate)!)
-//            marker.title = selectedPlace?.name
-//            marker.snippet = selectedPlace?.formattedAddress
-//            marker.map = mapView
-//            mapView.isHidden = false
-//        }
-        
             let tbc = self.tabBarController as! MainTabBarController
         
             self.userloggedIn?.buildingOccupied = placesTableView.cellForRow(at: indexPath)?.textLabel?.text
@@ -292,7 +261,7 @@ extension NearbyLocationsViewController : UITableViewDataSource, UITableViewDele
             .response { response in
                 print(response.response?.statusCode)
         }
-        
+    
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
