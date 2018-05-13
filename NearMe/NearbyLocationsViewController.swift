@@ -10,15 +10,15 @@ import UIKit
 import CoreLocation
 import GoogleMaps
 import GooglePlaces
-import AWSDynamoDB
 import Alamofire
 import AlamofireSwiftyJSON
 import FacebookLogin
 import FacebookCore
 import FBSDKLoginKit
 
-class NearbyLocationsViewController: UIViewController {
 
+class NearbyLocationsViewController: UIViewController {
+    
     @IBOutlet weak var placesTableView: UITableView!
     @IBOutlet weak var floorNumber: UILabel!
     @IBOutlet weak var floorStepper: UIStepper!
@@ -59,46 +59,46 @@ class NearbyLocationsViewController: UIViewController {
             locationManager?.startUpdatingLocation()
         }
         
-        let objectMapper = AWSDynamoDBObjectMapper.default()
+//        let objectMapper = AWSDynamoDBObjectMapper.default()
         
     }
     
     func pullfacebookInfo() {
         //Crashes without internet connection
         if(FBSDKAccessToken.current() != nil)
-            {
-    
-                print(FBSDKAccessToken.current().permissions)
-                // Graph Path : "me" is going to get current user logged in
-                let graphRequest = FBSDKGraphRequest(graphPath: "me", parameters: ["fields" : "id, name, email"])
-                let connection = FBSDKGraphRequestConnection()
-    
-                connection.add(graphRequest, completionHandler: { (connection, result, error) -> Void in
-                    if (connection?.urlResponse != nil && connection?.urlResponse.statusCode == 200) {
-                        let data = result as! [String : AnyObject]
-                        var name = data["name"] as! String
-                        var splitName = name.components(separatedBy: " ")
-                        let firstName = splitName.removeFirst()
-                        print("logged in user name is \(String(describing: name))")
-        
-                        let FBid = data["id"] as? String
-                        print("Facebook id is \(String(describing: FBid))")
-        
-                        self.userloggedIn = User()
-                        self.userloggedIn?.firstName = firstName
-                        self.userloggedIn?.username = "Tester"
-                        self.userloggedIn?.facebookId = FBid
-                    }
-    
-                })
-                connection.start()
+        {
+            
+            print(FBSDKAccessToken.current().permissions)
+            // Graph Path : "me" is going to get current user logged in
+            let graphRequest = FBSDKGraphRequest(graphPath: "me", parameters: ["fields" : "id, name, email"])
+            let connection = FBSDKGraphRequestConnection()
+            
+            connection.add(graphRequest, completionHandler: { (connection, result, error) -> Void in
+                if (connection?.urlResponse != nil && connection?.urlResponse.statusCode == 200) {
+                    let data = result as! [String : AnyObject]
+                    var name = data["name"] as! String
+                    var splitName = name.components(separatedBy: " ")
+                    let firstName = splitName.removeFirst()
+                    print("logged in user name is \(String(describing: name))")
+                    
+                    let FBid = data["id"] as? String
+                    print("Facebook id is \(String(describing: FBid))")
+                    
+                    self.userloggedIn = User()
+                    self.userloggedIn?.firstName = firstName
+                    self.userloggedIn?.username = "Tester"
+                    self.userloggedIn?.facebookId = FBid
+                }
+                
+            })
+            connection.start()
         }
     }
     
     override func viewWillAppear(_ animated: Bool) {
-
+        
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -106,13 +106,13 @@ class NearbyLocationsViewController: UIViewController {
     
     func listLikelyPlaces() {
         likelyPlaces.removeAll()
-
+        
         placesClient.currentPlace(callback:  { (placeLikelihoods, error) -> Void in
             if let error = error {
                 print("Current Place error: \(error.localizedDescription)")
                 return
             }
-
+            
             if let likelihoodList = placeLikelihoods {
                 for likelihood in likelihoodList.likelihoods {
                     let place = likelihood.place
@@ -122,7 +122,7 @@ class NearbyLocationsViewController: UIViewController {
                 }
                 self.placesTableView.reloadData()
             }
-        
+            
         })
         
     }
@@ -131,17 +131,17 @@ class NearbyLocationsViewController: UIViewController {
         self.floorNumber.text = Int(self.floorStepper.value).description
     }
     
-        
+    
     /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+     // MARK: - Navigation
+     
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+     // Get the new view controller using segue.destinationViewController.
+     // Pass the selected object to the new view controller.
+     }
+     */
+    
 }
 
 extension NearbyLocationsViewController: UIPickerViewDelegate, UIPickerViewDataSource {
@@ -167,8 +167,8 @@ extension NearbyLocationsViewController: CLLocationManagerDelegate {
         print("Location: \(location)")
         
         let camera = GMSCameraPosition.camera(withLatitude: location.coordinate.latitude,
-            longitude: location.coordinate.longitude,
-            zoom: zoomLevel)
+                                              longitude: location.coordinate.longitude,
+                                              zoom: zoomLevel)
         
         listLikelyPlaces()
     }
@@ -233,14 +233,14 @@ extension NearbyLocationsViewController : UITableViewDataSource, UITableViewDele
         //Index out of range exception?
         selectedPlace = likelyPlaces[indexPath.row]
         
-            let tbc = self.tabBarController as! MainTabBarController
+        let tbc = self.tabBarController as! MainTabBarController
         
-            self.userloggedIn?.buildingOccupied = placesTableView.cellForRow(at: indexPath)?.textLabel?.text
-           //updateLocation(locality: (self.userloggedIn?.buildingOccupied)!)
-            self.userloggedIn?.floor = Int(floorNumber.text!)
-            tbc.userloggedIn = self.userloggedIn
-            tbc.selectedIndex = 2
-
+        self.userloggedIn?.buildingOccupied = placesTableView.cellForRow(at: indexPath)?.textLabel?.text
+        //updateLocation(locality: (self.userloggedIn?.buildingOccupied)!)
+        self.userloggedIn?.floor = Int(floorNumber.text!)
+        tbc.userloggedIn = self.userloggedIn
+        tbc.selectedIndex = 2
+        
     }
     
     func updateLocation(locality: String) {
@@ -261,7 +261,7 @@ extension NearbyLocationsViewController : UITableViewDataSource, UITableViewDele
             .response { response in
                 print(response.response?.statusCode)
         }
-    
+        
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

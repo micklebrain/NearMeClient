@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import AWSDynamoDB
 import Alamofire
 import AlamofireSwiftyJSON
 

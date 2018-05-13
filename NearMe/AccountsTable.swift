@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import AWSDynamoDB
 //import AWSMobileHubHelper
 
 //class AccountsTable : NSObject, Table {

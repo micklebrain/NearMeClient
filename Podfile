@@ -5,7 +5,7 @@ target 'NearMe' do
   # Comment the next line if you're not using Swift and don't want to use dynamic frameworks
   use_frameworks!
 
-  # Pods for NearMe
+# Pods for NearMe
 	
 target :’NearMe’ do
     pod 'AWSCognito'
@@ -16,12 +16,16 @@ target :’NearMe’ do
     pod 'AWSS3'
     pod 'AWSSES'
     pod 'AWSSimpleDB'
+    pod 'Bolts'
+    pod 'FBSDKCoreKit'
+    pod 'FBSDKLoginKit'
     pod 'FacebookCore'
     pod 'FacebookLogin'
     pod 'AlamofireSwiftyJSON'
     pod 'GooglePlaces'
     pod 'GoogleMaps'
     pod 'Alamofire'
+    #pod 'Bolts-Swift'
 end
 
   target 'NearMeTests' do

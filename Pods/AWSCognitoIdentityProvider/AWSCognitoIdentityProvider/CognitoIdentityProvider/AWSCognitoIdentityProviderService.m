@@ -1,5 +1,5 @@
 //
-// Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2010-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License").
 // You may not use this file except in compliance with the License.
@@ -26,7 +26,7 @@
 #import "AWSCognitoIdentityProviderResources.h"
 
 static NSString *const AWSInfoCognitoIdentityProvider = @"CognitoIdentityProvider";
-static NSString *const AWSCognitoIdentityProviderSDKVersion = @"2.6.10";
+static NSString *const AWSCognitoIdentityProviderSDKVersion = @"2.6.18";
 
 
 @interface AWSCognitoIdentityProviderResponseSerializer : AWSJSONResponseSerializer
@@ -1647,6 +1647,29 @@ static AWSSynchronizedMutableDictionary *_serviceClients = nil;
      completionHandler:(void (^)(AWSCognitoIdentityProviderGetIdentityProviderByIdentifierResponse *response, NSError *error))completionHandler {
     [[self getIdentityProviderByIdentifier:request] continueWithBlock:^id _Nullable(AWSTask<AWSCognitoIdentityProviderGetIdentityProviderByIdentifierResponse *> * _Nonnull task) {
         AWSCognitoIdentityProviderGetIdentityProviderByIdentifierResponse *result = task.result;
+        NSError *error = task.error;
+
+        if (completionHandler) {
+            completionHandler(result, error);
+        }
+
+        return nil;
+    }];
+}
+
+- (AWSTask<AWSCognitoIdentityProviderGetSigningCertificateResponse *> *)getSigningCertificate:(AWSCognitoIdentityProviderGetSigningCertificateRequest *)request {
+    return [self invokeRequest:request
+                    HTTPMethod:AWSHTTPMethodPOST
+                     URLString:@""
+                  targetPrefix:@"AWSCognitoIdentityProviderService"
+                 operationName:@"GetSigningCertificate"
+                   outputClass:[AWSCognitoIdentityProviderGetSigningCertificateResponse class]];
+}
+
+- (void)getSigningCertificate:(AWSCognitoIdentityProviderGetSigningCertificateRequest *)request
+     completionHandler:(void (^)(AWSCognitoIdentityProviderGetSigningCertificateResponse *response, NSError *error))completionHandler {
+    [[self getSigningCertificate:request] continueWithBlock:^id _Nullable(AWSTask<AWSCognitoIdentityProviderGetSigningCertificateResponse *> * _Nonnull task) {
+        AWSCognitoIdentityProviderGetSigningCertificateResponse *result = task.result;
         NSError *error = task.error;
 
         if (completionHandler) {

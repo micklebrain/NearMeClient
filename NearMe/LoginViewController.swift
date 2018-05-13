@@ -7,14 +7,13 @@
 //
 
 import UIKit
-import AWSDynamoDB
 import FacebookLogin
 import FacebookCore
 import FBSDKLoginKit
 
 class LoginViewController: UIViewController {
     
-    var results: [AWSDynamoDBObjectModel]?
+//    var results: [AWSDynamoDBObjectModel]?
     var userloggedIn : User!
     
     var loginButton:LoginButton!

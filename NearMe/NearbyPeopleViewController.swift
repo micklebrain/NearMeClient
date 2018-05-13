@@ -7,15 +7,12 @@
 //
 
 import UIKit
-import AWSDynamoDB
 import CoreLocation
-import AWSS3
 import FacebookCore
 import FacebookLogin
-import FacebookCore
-import FBSDKLoginKit
 import Alamofire
 import SwiftyJSON
+import FBSDKLoginKit
 
 class NearbyPeopleViewController: UIViewController {
     
@@ -217,7 +214,7 @@ class NearbyPeopleViewController: UIViewController {
             let administrativeArea = (containsPlacemark.administrativeArea != nil) ? containsPlacemark.administrativeArea : ""
             let country = (containsPlacemark.country != nil) ? containsPlacemark.country : ""
             
-            let objectMapper = AWSDynamoDBObjectMapper.default()
+//            let objectMapper = AWSDynamoDBObjectMapper.default()
             var errors: [NSError] = []
             //Use Group for threading?
             let group: DispatchGroup = DispatchGroup()
