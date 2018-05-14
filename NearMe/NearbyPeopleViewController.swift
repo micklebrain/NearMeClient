@@ -167,9 +167,9 @@ class NearbyPeopleViewController: UIViewController {
         determineMyCurrentLocation()
         
         //refresh every 30 seconds
-        self.timer = Timer.scheduledTimer(withTimeInterval: 30.0, repeats: true, block: { (Timer) in
-            self.refreshUsersNearby()
-        })
+//        self.timer = Timer.scheduledTimer(withTimeInterval: 30.0, repeats: true, block: { (Timer) in
+//            self.refreshUsersNearby()
+//        })
     }
     
     //  MARK: - Location tracking

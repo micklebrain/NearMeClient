@@ -47,7 +47,7 @@ class LoginViewController: UIViewController {
                     self.userloggedIn?.firstName = firstName
                     self.userloggedIn?.username = "SFNathan"
                     self.userloggedIn?.facebookId = FBid
-                    
+        
                     let maintabbarVC:MainTabBarController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "MainTabBarController") as! MainTabBarController
                     
                     maintabbarVC.userloggedIn = self.userloggedIn
