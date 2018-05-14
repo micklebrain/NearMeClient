@@ -97,7 +97,7 @@ class NearbyPeopleViewController: UIViewController {
     //Fix refreshing, indicator dosnt always stop correctly
     func refreshUsersNearby () {
         //Implement caching
-        self.actInd.startAnimating()
+//        self.actInd.startAnimating()
         self.friendsAround.removeAll()
         self.strangersAround.removeAll()
         pullNearByPeople()
@@ -105,6 +105,7 @@ class NearbyPeopleViewController: UIViewController {
         self.PeopleNearbyTableView.reloadData()
         self.refreshControl.endRefreshing()
         self.actInd.stopAnimating()
+        self.actInd.removeFromSuperview()
     }
     
     func getLocation() {
@@ -240,13 +241,13 @@ class NearbyPeopleViewController: UIViewController {
     func activateActivityIndicatorView() {
         
         self.actInd = UIActivityIndicatorView()
-        actInd.frame = CGRect(x: 0.0, y: 0.0, width: 40.0, height: 40.0)
-        actInd.center = self.view.center
-        actInd.hidesWhenStopped = true
-        actInd.activityIndicatorViewStyle =
+        self.actInd.frame = CGRect(x: 0.0, y: 0.0, width: 40.0, height: 40.0)
+        self.actInd.center = self.view.center
+        self.actInd.hidesWhenStopped = true
+        self.actInd.activityIndicatorViewStyle =
             UIActivityIndicatorViewStyle.gray
         self.view.addSubview(actInd)
-        actInd.startAnimating()
+        self.actInd.startAnimating()
         
     }
 
@@ -277,10 +278,7 @@ class NearbyPeopleViewController: UIViewController {
         actInd.activityIndicatorViewStyle =
             UIActivityIndicatorViewStyle.gray
         self.view.addSubview(actInd)
-        actInd.startAnimating()
-
-        activateActivityIndicatorView()
-
+        self.actInd.startAnimating()
         
         //Act Indicator will continue to run
         //Clogging server
@@ -536,11 +534,13 @@ extension NearbyPeopleViewController : UITableViewDataSource, UITableViewDelegat
     func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         self.refreshControl.endRefreshing()
         self.actInd.stopAnimating()
+        self.actInd.removeFromSuperview()
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         self.refreshControl.endRefreshing()
         self.actInd.stopAnimating()
+        self.actInd.removeFromSuperview()
     }
     
 }
