@@ -175,8 +175,7 @@ class NearbyPeopleViewController: UIViewController {
     
     //  MARK: - Location tracking
     @IBAction func presenceSwitch(_ sender: Any) {
-        let nearbyPeopleVC:UserProfileViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "UserProfileViewController") as! UserProfileViewController
-        self.present(nearbyPeopleVC, animated: false, completion: nil)
+        self.tabBarController?.selectedIndex = 1
         self.userLoggedIn?.online = !self.userLoggedIn.online
         updateOnlineStatus()
     }
