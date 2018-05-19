@@ -49,10 +49,10 @@ class UserProfileViewController: ProfileViewController {
             
             connection.add(graphRequest, completionHandler: { (connection, result, error) -> Void in
                 let data = result as! [String : AnyObject]
-                var name = data["name"] as! String
-                var email = data["email"] as! String
+                let name = data["name"] as! String
+                let email = data["email"] as! String
                 var splitName = name.components(separatedBy: " ")
-                let firstName = splitName.removeFirst()
+                splitName.removeFirst()
                 print("logged in user name is \(String(describing: name))")
                 
                 let FBid = data["id"] as? String
@@ -79,7 +79,7 @@ class UserProfileViewController: ProfileViewController {
         if let url = url {
             let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
                 if error != nil {
-                    print(error)
+                    print(error!)
                 } else {
                     if let usableData = data {
                         headshot  = UIImage(data: usableData)!
@@ -100,7 +100,7 @@ class UserProfileViewController: ProfileViewController {
         var friendRequests = ""
         
         let utilities = Util()
-        let wifiAddress = utilities.getWiFiAddress() as! String
+        //let wifiAddress = utilities.getWiFiAddress() as! String
 //        let url = URL(string: "http://" + wifiAddress + ":8080/updateLocation")
         
         //this is roomwifi

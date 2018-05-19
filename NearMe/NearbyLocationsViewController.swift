@@ -76,7 +76,7 @@ class NearbyLocationsViewController: UIViewController {
             connection.add(graphRequest, completionHandler: { (connection, result, error) -> Void in
                 if (connection?.urlResponse != nil && connection?.urlResponse.statusCode == 200) {
                     let data = result as! [String : AnyObject]
-                    var name = data["name"] as! String
+                    let name = data["name"] as! String
                     var splitName = name.components(separatedBy: " ")
                     let firstName = splitName.removeFirst()
                     print("logged in user name is \(String(describing: name))")
@@ -166,7 +166,7 @@ extension NearbyLocationsViewController: CLLocationManagerDelegate {
         let location: CLLocation = locations.last!
         print("Location: \(location)")
         
-        let camera = GMSCameraPosition.camera(withLatitude: location.coordinate.latitude,
+        let _ = GMSCameraPosition.camera(withLatitude: location.coordinate.latitude,
                                               longitude: location.coordinate.longitude,
                                               zoom: zoomLevel)
         
@@ -198,7 +198,7 @@ extension NearbyLocationsViewController: CLLocationManagerDelegate {
 extension NearbyLocationsViewController : UITableViewDataSource, UITableViewDelegate {
     
     override func viewDidAppear(_ animated: Bool) {
-        placesTableView.delegate = self as? UITableViewDelegate
+        placesTableView.delegate = self as! UITableViewDelegate
         placesTableView.dataSource = self
         placesTableView.reloadData()
     }
@@ -245,14 +245,14 @@ extension NearbyLocationsViewController : UITableViewDataSource, UITableViewDele
     
     func updateLocation(locality: String) {
         
-        let localityTrimmed = locality.replacingOccurrences(of: " ", with: "")
+        _ = locality.replacingOccurrences(of: " ", with: "")
         
         let url = URL(string: "https://crystal-smalltalk.herokuapp.com/updateLocation")
         
         let userDetails : Parameters = [
-            "firstName": self.userloggedIn?.firstName,
-            "username": self.userloggedIn?.username,
-            "facebookId": self.userloggedIn?.facebookId,
+            "firstName": self.userloggedIn?.firstName!,
+            "username": self.userloggedIn?.username!,
+            "facebookId": self.userloggedIn?.facebookId!,
             "locality": locality,
             "sex": "MALE"
         ]

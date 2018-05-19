@@ -216,9 +216,9 @@ class NearbyPeopleViewController: UIViewController {
             let country = (containsPlacemark.country != nil) ? containsPlacemark.country : ""
             
 //            let objectMapper = AWSDynamoDBObjectMapper.default()
-            var errors: [NSError] = []
+            var _: [NSError] = []
             //Use Group for threading?
-            let group: DispatchGroup = DispatchGroup()
+            let _: DispatchGroup = DispatchGroup()
             
             let latitude = userLocation.coordinate.latitude
             let longitutde = userLocation.coordinate.longitude
@@ -260,7 +260,7 @@ class NearbyPeopleViewController: UIViewController {
 //        let wifiAddress = utilities.getWiFiAddress() as! String
 //        let url = URL(string: "http://" + wifiAddress + ":8080/updateLocation")
         
-        let localUrl = URL(string: "http://localhost:8080/pullNearbyUsers")
+        let _ = URL(string: "http://localhost:8080/pullNearbyUsers")
         let url = URL(string: "https://crystal-smalltalk.herokuapp.com/pullNearbyUsers")
 
         userLoggedIn?.friends = ["Nathan"]
@@ -290,13 +290,13 @@ class NearbyPeopleViewController: UIViewController {
                     let users = json as! [Any]
                     for someUser in users {
                         let userDetails = someUser as! [String: Any]
-                        var newPerson = User()
+                        let newPerson = User()
                         let facebookId = userDetails["facebookId"] as! String
                         
                         if (facebookId != self.userLoggedIn?.facebookId) {
-                            newPerson.firstName = userDetails["firstName"] as! String
-                            newPerson.lastName = userDetails["lastName"] as! String
-                            newPerson.facebookId = userDetails["facebookId"] as! String
+                            newPerson.firstName = userDetails["firstName"] as? String
+                            newPerson.lastName = userDetails["lastName"] as? String
+                            newPerson.facebookId = userDetails["facebookId"] as? String
 
                             newPerson.headshotImage = self.getUserFBPicture(facebookId: newPerson.facebookId!)
 
@@ -325,7 +325,7 @@ class NearbyPeopleViewController: UIViewController {
                     self.actInd.stopAnimating()
                 }
                 } else {
-                    var person = User()
+                    let person = User()
                     person.firstName = "Nobody"
                     person.lastName = "Around"
                     person.school = "None"
@@ -350,12 +350,12 @@ class NearbyPeopleViewController: UIViewController {
         pictureUrl += facebookId
         pictureUrl += "/picture?type=large"
         
-        var url = URL(string: pictureUrl)
+        let url = URL(string: pictureUrl)
         
         if let url = url {
             let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
                 if error != nil {
-                    print(error)
+                    print(error!)
                 } else {
                     if let usableData = data {
                         if (UIImage(data: usableData) != nil) {

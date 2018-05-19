@@ -109,8 +109,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
         let aps = userInfo["aps"] as! [String: AnyObject]
-        
-        let content = aps["content"] as! String
+        let _ = aps["content"] as! String
      
     }
     

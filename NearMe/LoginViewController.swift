@@ -35,7 +35,7 @@ class LoginViewController: UIViewController {
             connection.add(graphRequest, completionHandler: { (connection, result, error) -> Void in
                 if (connection?.urlResponse != nil && connection?.urlResponse.statusCode == 200) {
                     let data = result as! [String : AnyObject]
-                    var name = data["name"] as! String
+                    let name = data["name"] as! String
                     var splitName = name.components(separatedBy: " ")
                     let firstName = splitName.removeFirst()
                     print("logged in user name is \(String(describing: name))")
@@ -80,7 +80,7 @@ class LoginViewController: UIViewController {
                 print("We failed")
             case.failed(let error):
                 print(error)
-            case.success(grantedPermissions: let grantedPermissions, declinedPermissions: let declinedPermissions, token: let accessToken):
+            case.success(grantedPermissions: let grantedPermissions, declinedPermissions: let declinedPermissions, token: let _):
                 //Pull user's information from granted permissions
                 
                 let maintabbarVC:MainTabBarController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "MainTabBarController") as! MainTabBarController
@@ -104,7 +104,7 @@ class LoginViewController: UIViewController {
     @IBAction func logout(_ sender: Any) {
         let deletepermission = FBSDKGraphRequest(graphPath: "me/permissions/", parameters: nil, httpMethod: "DELETE")
         deletepermission?.start(completionHandler: {(connection,result,error)-> Void in
-            print("the delete permission is \(result)")
+            print(String(describing:"the delete permission is \(describing: result))"))
         })
     }
     
