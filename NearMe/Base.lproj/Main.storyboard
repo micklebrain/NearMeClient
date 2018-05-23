@@ -190,6 +190,41 @@
             </objects>
             <point key="canvasLocation" x="3597.5999999999999" y="934.72906403940885"/>
         </scene>
+        <!--Profile View Controller-->
+        <scene sceneID="wwm-AP-FRO">
+            <objects>
+                <viewController storyboardIdentifier="SelectProfileViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="gIg-TJ-CkS" customClass="ProfileViewController" customModule="NearMe" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="MAy-we-zqc"/>
+                        <viewControllerLayoutGuide type="bottom" id="xNS-jo-Sl0"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="eH4-1X-tpB">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2N7-dd-INc">
+                                <rect key="frame" x="118" y="136" width="135" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XYl-jV-u5F">
+                                <rect key="frame" x="16" y="326" width="343" height="353"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </view>
+                    <connections>
+                        <outlet property="firstNameLabel" destination="2N7-dd-INc" id="G86-8t-lWG"/>
+                        <outlet property="selectedUserProfileImage" destination="XYl-jV-u5F" id="4GN-Mm-IJW"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Gk0-yB-Hbn" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1352.8" y="934.72906403940885"/>
+        </scene>
         <!--UserProfileViewController-->
         <scene sceneID="2dj-LV-a09">
             <objects>

@@ -9,10 +9,16 @@
 import UIKit
 
 class ProfileViewController: UIViewController {
-
+    
+    var userSelected : User!
+    
+    @IBOutlet weak var firstNameLabel: UILabel!
+    @IBOutlet weak var selectedUserProfileImage: UIImageView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        firstNameLabel.text = userSelected.firstName
+        self.selectedUserProfileImage.image = userSelected.headshot
         // Do any additional setup after loading the view.
     }
 

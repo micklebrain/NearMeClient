@@ -130,7 +130,7 @@ class NearbyLocationsViewController: UIViewController {
     }
     
     func getUsername() {
-        let url = URL(string: "http://192.168.1.2:8080/sync")
+        let url = URL(string: "https://crystal-smalltalk.herokuapp.com/sync")
         
         let userDetails : Parameters = [
             "facebookId": self.userloggedIn?.facebookId!,
@@ -264,7 +264,7 @@ extension NearbyLocationsViewController : UITableViewDataSource, UITableViewDele
         
         _ = locality.replacingOccurrences(of: " ", with: "")
         
-        let url = URL(string: "http://192.168.1.2:8080/updateLocation")
+        let url = URL(string: "https://crystal-smalltalk.herokuapp.com/updateLocation")
         
         let userDetails : Parameters = [
             "firstname": self.userloggedIn?.firstName!,

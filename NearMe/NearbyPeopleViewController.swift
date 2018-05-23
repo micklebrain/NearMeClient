@@ -530,14 +530,14 @@ extension NearbyPeopleViewController : UITableViewDataSource, UITableViewDelegat
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let profileVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ProfileViewController") as! NearbyLocationsViewController
-        
+        let profileVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "SelectProfileViewController") as! ProfileViewController
         let selectedUser = User()
         let selectedCell = PeopleNearbyTableView.cellForRow(at: indexPath) as! UserTableViewCell
         selectedUser.firstName = selectedCell.nameLabel.text
         selectedUser.location = userLoggedIn?.location
-        profileVC.userloggedIn = selectedUser
-        self.present(profileVC, animated: false, completion: nil)
+        selectedUser.headshot = selectedCell.headshotViewImage.image!
+        profileVC.userSelected = selectedUser
+        self.tabBarController?.present(profileVC, animated: false, completion: nil)
     }
     
     func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
