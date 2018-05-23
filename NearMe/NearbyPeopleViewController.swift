@@ -86,8 +86,8 @@ class NearbyPeopleViewController: UIViewController {
 //        }
         
 //        mainQueue.async {
-            self.timer = Timer.scheduledTimer(withTimeInterval: 300, repeats: true, block: { (Timer) in
-                //refresh every 300 seconds
+            self.timer = Timer.scheduledTimer(withTimeInterval: 90, repeats: true, block: { (Timer) in
+                //refresh every 90 seconds (1 min 30 seconds)
                 self.refreshUsersNearby()
             })
 //        }

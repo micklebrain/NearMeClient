@@ -37,7 +37,7 @@ class NearbyLocationsViewController: UIViewController {
     var zoomLevel: Float = 15.0
     var likelyPlaces: [GMSPlace] = []
     var selectedPlace: GMSPlace?
-    var userloggedIn: User?
+    var userloggedIn = User()
     
     // A default location to use when location permission is not granted.
     let defaultLocation = CLLocation(latitude: -33.869405, longitude: 151.199)
@@ -46,8 +46,9 @@ class NearbyLocationsViewController: UIViewController {
         super.viewDidLoad()
         
         let tbc = self.tabBarController as! MainTabBarController
-        self.userloggedIn = tbc.userloggedIn
+        self.userloggedIn = tbc.userloggedIn!
         
+        pullfacebookInfo()
         getUsername()
         
         locationManager = CLLocationManager()
@@ -69,7 +70,6 @@ class NearbyLocationsViewController: UIViewController {
         //Crashes without internet connection
         if(FBSDKAccessToken.current() != nil)
         {
-            
             print(FBSDKAccessToken.current().permissions)
             // Graph Path : "me" is going to get current user logged in
             let graphRequest = FBSDKGraphRequest(graphPath: "me", parameters: ["fields" : "id, name, email"])
@@ -79,6 +79,10 @@ class NearbyLocationsViewController: UIViewController {
                 if (connection?.urlResponse != nil && connection?.urlResponse.statusCode == 200) {
                     let data = result as! [String : AnyObject]
                     let name = data["name"] as! String
+                    let birthday = data["birthday"]
+                    let email = data["email"] as! String
+                    print(email)
+                    let gender = data["gender"]
                     var splitName = name.components(separatedBy: " ")
                     let firstName = splitName.removeFirst()
                     print("logged in user name is \(String(describing: name))")
@@ -86,10 +90,9 @@ class NearbyLocationsViewController: UIViewController {
                     let FBid = data["id"] as? String
                     print("Facebook id is \(String(describing: FBid))")
                     
-                    self.userloggedIn = User()
-                    self.userloggedIn?.firstName = firstName
-                    self.userloggedIn?.username = "Tester"
-                    self.userloggedIn?.facebookId = FBid
+                    self.userloggedIn.firstName = firstName
+                    self.userloggedIn.username = "Tester"
+                    self.userloggedIn.facebookId = FBid
                 }
                 
             })
@@ -133,13 +136,13 @@ class NearbyLocationsViewController: UIViewController {
         let url = URL(string: "https://crystal-smalltalk.herokuapp.com/sync")
         
         let userDetails : Parameters = [
-            "facebookId": self.userloggedIn?.facebookId!,
+            "facebookId": self.userloggedIn.facebookId!,
         ]
         
         Alamofire.request(url!, method: .post, parameters: userDetails, encoding: JSONEncoding.default)
             .responseString{ response in
                 if let data = response.result.value{
-                    self.userloggedIn?.username = data
+                    self.userloggedIn.username = data
                 }
             }
     }
@@ -252,9 +255,9 @@ extension NearbyLocationsViewController : UITableViewDataSource, UITableViewDele
         
         let tbc = self.tabBarController as! MainTabBarController
         
-        self.userloggedIn?.buildingOccupied = placesTableView.cellForRow(at: indexPath)?.textLabel?.text
-        updateLocation(locality: (self.userloggedIn?.buildingOccupied)!)
-        self.userloggedIn?.floor = Int(floorNumber.text!)
+        self.userloggedIn.buildingOccupied = placesTableView.cellForRow(at: indexPath)?.textLabel?.text
+        updateLocation(locality: (self.userloggedIn.buildingOccupied)!)
+        self.userloggedIn.floor = Int(floorNumber.text!)
         tbc.userloggedIn = self.userloggedIn
         tbc.selectedIndex = 2
         
@@ -267,9 +270,9 @@ extension NearbyLocationsViewController : UITableViewDataSource, UITableViewDele
         let url = URL(string: "https://crystal-smalltalk.herokuapp.com/updateLocation")
         
         let userDetails : Parameters = [
-            "firstname": self.userloggedIn?.firstName!,
-            "userName": self.userloggedIn?.username!,
-            "facebookId": self.userloggedIn?.facebookId!,
+            "firstname": self.userloggedIn.firstName!,
+            "userName": self.userloggedIn.username!,
+            "facebookId": self.userloggedIn.facebookId!,
             "locality": locality
         ]
         

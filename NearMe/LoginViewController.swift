@@ -27,6 +27,7 @@ class LoginViewController: UIViewController {
         //Cache the token in case offline
         if(FBSDKAccessToken.current() != nil)
         {
+            print(FBSDKAccessToken.current().tokenString)
             //Crashes without Internet
             //This request dosnt happen fast enough
             let graphRequest = FBSDKGraphRequest(graphPath: "me", parameters: ["fields" : "id, name, email"])

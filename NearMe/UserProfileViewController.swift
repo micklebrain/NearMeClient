@@ -22,7 +22,7 @@ class UserProfileViewController: ProfileViewController {
     @IBOutlet weak var isOnlineLabel: UILabel!
     
     override func viewDidLoad() {
-        super.viewDidLoad()
+//        super.viewDidLoad()
         let tbc = self.tabBarController as! MainTabBarController
         self.userLoggedIn = tbc.userloggedIn
         
