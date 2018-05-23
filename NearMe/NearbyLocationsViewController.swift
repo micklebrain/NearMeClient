@@ -79,7 +79,6 @@ class NearbyLocationsViewController: UIViewController {
                 if (connection?.urlResponse != nil && connection?.urlResponse.statusCode == 200) {
                     let data = result as! [String : AnyObject]
                     let name = data["name"] as! String
-                    let birthday = data["birthday"]
                     let email = data["email"] as! String
                     print(email)
                     let gender = data["gender"]
@@ -267,7 +266,8 @@ extension NearbyLocationsViewController : UITableViewDataSource, UITableViewDele
         
         _ = locality.replacingOccurrences(of: " ", with: "")
         
-        let url = URL(string: "https://crystal-smalltalk.herokuapp.com/updateLocation")
+//        let url = URL(string: "https://crystal-smalltalk.herokuapp.com/updateLocation")
+        let url = URL(string: "http://10.12.228.178:8080/updateLocation")
         
         let userDetails : Parameters = [
             "firstname": self.userloggedIn.firstName!,
@@ -285,7 +285,7 @@ extension NearbyLocationsViewController : UITableViewDataSource, UITableViewDele
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let controller = segue.destination as! UserProfileViewController
-        controller.userLoggedIn = self.userloggedIn
+        controller.userSelected = self.userloggedIn
     }
     
 }

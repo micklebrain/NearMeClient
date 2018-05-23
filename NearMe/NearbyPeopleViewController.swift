@@ -31,7 +31,7 @@ class NearbyPeopleViewController: UIViewController {
     var actInd = UIActivityIndicatorView()
     let refreshControl = UIRefreshControl()
     //var results: [AWSDynamoDBObjectModel]?
-
+    
     @IBOutlet weak var PeopleNearbyTableView: UITableView!
     @IBOutlet weak var peopleCounter: UILabel!
     @IBOutlet weak var presenceSwitch: UISwitch!
@@ -54,7 +54,7 @@ class NearbyPeopleViewController: UIViewController {
         
         self.filterPickerView.delegate = self
         self.filterPickerView.dataSource = self
-    
+        
         //self.floorLabel.text?.append(String(userLoggedIn.floor))
         
         if #available(iOS 10.0, *) {
@@ -79,25 +79,18 @@ class NearbyPeopleViewController: UIViewController {
         
         pullFacebookInfo()
         
-//        let mainQueue = DispatchQueue.main
-//        let deadline = DispatchTime.now() + .seconds(5)
-//        mainQueue.asyncAfter(deadline: deadline) {
-//            self.actInd.stopAnimating()
-//        }
         
-//        mainQueue.async {
-            self.timer = Timer.scheduledTimer(withTimeInterval: 90, repeats: true, block: { (Timer) in
-                //refresh every 90 seconds (1 min 30 seconds)
-                self.refreshUsersNearby()
-            })
-//        }
+        self.timer = Timer.scheduledTimer(withTimeInterval: 90, repeats: true, block: { (Timer) in
+            //refresh every 90 seconds (1 min 30 seconds)ˆ
+            self.refreshUsersNearby()
+        })
         
     }
     
     //Fix refreshing, indicator dosnt always stop correctly
     func refreshUsersNearby () {
         //Implement caching
-//        self.actInd.startAnimating()
+        //        self.actInd.startAnimating()
         self.friendsAround.removeAll()
         self.strangersAround.removeAll()
         pullNearByPeople()
@@ -133,44 +126,39 @@ class NearbyPeopleViewController: UIViewController {
         if(FBSDKAccessToken.current() != nil)
         {
             
-                print(FBSDKAccessToken.current().permissions)
-                print(FBSDKAccessToken.current().tokenString)
-                
-                let graphRequest = FBSDKGraphRequest(graphPath: nathanFBId, parameters: ["fields" : "id, name, email,picture"])
-
-                let connection = FBSDKGraphRequestConnection()
-
-                connection.add(graphRequest, completionHandler: { (connection, result, error) -> Void in
-                    if (connection?.urlResponse != nil && connection?.urlResponse.statusCode == 200) {
+            print(FBSDKAccessToken.current().permissions)
+            print(FBSDKAccessToken.current().tokenString)
+            
+            let graphRequest = FBSDKGraphRequest(graphPath: nathanFBId, parameters: ["fields" : "id, name, email,picture"])
+            
+            let connection = FBSDKGraphRequestConnection()
+            
+            connection.add(graphRequest, completionHandler: { (connection, result, error) -> Void in
+                if (connection?.urlResponse != nil && connection?.urlResponse.statusCode == 200) {
                     let data = result as! [String : AnyObject]
                     let name = data["name"] as? String
                     let email = data["email"] as? String
                     let picture = data["picture"] as? Any
                     print("logged in user name is \(String(describing: name))")
-
+                    
                     let FBid = data["id"] as? String
                     print("Facebook id is  \(String(describing: FBid))")
-                    }
-                })
-                connection.start()
+                }
+            })
+            connection.start()
             
         }
         
-//        let photographRequest = FBSDKGraphRequest(graphPath: nathanFBId, parameters: ["fields" : "photo"])
-//
-//        let connection2 = FBSDKGraphRequestConnection()
-//        connection2.add(photographRequest, completionHandler: { (connection, result, error) -> Void in
-//            let data = result as! [String: AnyObject]
-//        })
-//        connection2.start()
+        //        let photographRequest = FBSDKGraphRequest(graphPath: nathanFBId, parameters: ["fields" : "photo"])
+        //
+        //        let connection2 = FBSDKGraphRequestConnection()
+        //        connection2.add(photographRequest, completionHandler: { (connection, result, error) -> Void in
+        //            let data = result as! [String: AnyObject]
+        //        })
+        //        connection2.start()
         
         //Check if location services is on first
         determineMyCurrentLocation()
-        
-        //refresh every 30 seconds
-//        self.timer = Timer.scheduledTimer(withTimeInterval: 30.0, repeats: true, block: { (Timer) in
-//            self.refreshUsersNearby()
-//        })
     }
     
     //  MARK: - Location tracking
@@ -214,7 +202,7 @@ class NearbyPeopleViewController: UIViewController {
             let administrativeArea = (containsPlacemark.administrativeArea != nil) ? containsPlacemark.administrativeArea : ""
             let country = (containsPlacemark.country != nil) ? containsPlacemark.country : ""
             
-//            let objectMapper = AWSDynamoDBObjectMapper.default()
+            //            let objectMapper = AWSDynamoDBObjectMapper.default()
             var _: [NSError] = []
             //Use Group for threading?
             let _: DispatchGroup = DispatchGroup()
@@ -223,7 +211,7 @@ class NearbyPeopleViewController: UIViewController {
             let longitutde = userLocation.coordinate.longitude
             currentUserLocation = CLLocation(latitude: latitude, longitude: longitutde)
             
-//          User's Location
+            //          User's Location
             userLoggedIn?.postalCode = postalCode
             userLoggedIn?.administrativeArea = administrativeArea
             userLoggedIn?.country = country
@@ -249,27 +237,26 @@ class NearbyPeopleViewController: UIViewController {
         self.actInd.startAnimating()
         
     }
-
+    
     //When no internet connection then change label to no internet connection
     
     func pullNearByPeople () {
         
-
-//        let utilities = Util()
-//        let wifiAddress = utilities.getWiFiAddress() as! String
-//        let url = URL(string: "http://" + wifiAddress + ":8080/updateLocation")
+        
+        //        let utilities = Util()
+        //        let wifiAddress = utilities.getWiFiAddress() as! String
+        //        let url = URL(string: "http://" + wifiAddress + ":8080/updateLocation")
         
         let _ = URL(string: "http://localhost:8080/pullNearbyUsers")
         let url = URL(string: "https://crystal-smalltalk.herokuapp.com/pullNearbyUsers")
-
+        
         userLoggedIn?.friends = ["Nathan"]
         
         let userDetails : Parameters = [
-            "firstname": self.userLoggedIn?.firstName,
-            "username": self.userLoggedIn?.username,
+            "firstname": self.userLoggedIn?.firstName!,
+            "username": self.userLoggedIn?.username!,
             "facebookId": self.userLoggedIn?.facebookId,
-            "locality": self.userLoggedIn?.buildingOccupied
-        ]
+            "locality": self.userLoggedIn?.buildingOccupied! ]
         
         actInd.frame = CGRect(x: 0.0, y: 0.0, width: 40.0, height: 40.0)
         actInd.center = self.view.center
@@ -283,46 +270,36 @@ class NearbyPeopleViewController: UIViewController {
         Alamofire.request(url!, method: .post, parameters: userDetails, encoding: JSONEncoding.default)
             .responseJSON{ response in
                 if response.response?.statusCode == 200 {
-                if let json = response.result.value {
-                    print("JSON: \(json)")
-                    let users = json as! [Any]
-                    for someUser in users {
-                        let userDetails = someUser as! [String: Any]
-                        let newPerson = User()
-                        let facebookId = userDetails["facebookId"] as! String
-                        
-                        if (facebookId != self.userLoggedIn?.facebookId) {
-                            newPerson.firstName = userDetails["firstName"] as? String
-                            newPerson.lastName = userDetails["lastName"] as? String
-                            newPerson.facebookId = userDetails["facebookId"] as? String
-                            newPerson.headshotImage = self.getUserFBPicture(facebookId: newPerson.facebookId!)
-
-                           // newPerson.school = userDetails["school"] as! String
-                            newPerson.headshotImage = self.getUserFBPicture(facebookId: newPerson.facebookId!)
-
-                            self.friendsAround.insert(newPerson)
+                    if let json = response.result.value {
+                        print("JSON: \(json)")
+                        let users = json as! [Any]
+                        for someUser in users {
+                            let userDetails = someUser as! [String: Any]
+                            let newPerson = User()
+                            let facebookId = userDetails["facebookId"] as! String
+                            
+                            if (facebookId != self.userLoggedIn?.facebookId) {
+                                newPerson.firstName = userDetails["firstName"] as? String
+                                newPerson.lastName = userDetails["lastName"] as? String
+                                newPerson.facebookId = userDetails["facebookId"] as? String
+                                newPerson.headshotImage = self.getUserFBPicture(facebookId: newPerson.facebookId!)
+                                
+                                // newPerson.school = userDetails["school"] as! String
+                                newPerson.headshotImage = self.getUserFBPicture(facebookId: newPerson.facebookId!)
+                                
+                                self.friendsAround.insert(newPerson)
+                            }
+                            // } else {
+                            // self.strangersAround.insert(newPerson)
                         }
-                        // } else {
-                        // self.strangersAround.insert(newPerson)
+                        self.count = self.friendsAround.count + self.strangersAround.count
+                        let numberoccupied = "# Occupied: " + String(self.count)
+                        self.peopleCounter.text = String(describing: numberoccupied)
+                        self.PeopleNearbyTableView.reloadData()
+                        self.actInd.stopAnimating()
                     }
-                    self.count = self.friendsAround.count + self.strangersAround.count
-//                    if (self.count == 0) {
-//                        var person = User()
-//                        person.firstName = "Nobody"
-//                        person.lastName = "Around"
-//                        person.school = "None"
-//                        person.facebookId = "none"
-//                        person.headshotImage = #imageLiteral(resourceName: "empty-headshot")
-//                        self.friendsAround.insert(person)
-//                        self.strangersAround.insert(person)
-//                    }
-                    let numberoccupied = "# Occupied: " + String(self.count)
-                    self.peopleCounter.text = String(describing: numberoccupied)
-                    self.PeopleNearbyTableView.reloadData()
-                    self.actInd.stopAnimating()
-                }
                 } else if response.response?.statusCode == 503 {
-                    print("Server has been overloaded")
+                    print("Server has been overloaded with pull requests")
                     let person = User()
                     person.firstName = "Server"
                     person.lastName = "Overloaded"
@@ -355,7 +332,7 @@ class NearbyPeopleViewController: UIViewController {
         
         var headshot = #imageLiteral(resourceName: "empty-headshot")
         var pictureUrl = "http://graph.facebook.com/"
-//        pictureUrl += (userLoggedIn?.facebookId)!
+        //        pictureUrl += (userLoggedIn?.facebookId)!
         pictureUrl += facebookId
         pictureUrl += "/picture?type=large"
         
@@ -371,7 +348,7 @@ class NearbyPeopleViewController: UIViewController {
                             headshot = UIImage(data: usableData)!
                             self.headshots[facebookId] = headshot
                             DispatchQueue.main.async {
-                               self.PeopleNearbyTableView.reloadData()
+                                self.PeopleNearbyTableView.reloadData()
                             }
                         }
                     }
@@ -390,37 +367,20 @@ class NearbyPeopleViewController: UIViewController {
             let foundPerson = self.strangersAround.first(where: { $0.sex == sex.male })
             strangersAround.remove(foundPerson!)
         }
-         
+        
         self.PeopleNearbyTableView.reloadData()
         
     }
     
-    //    func getLocation() {
-    //
-    //        Alamofire.request("https://httpbin.org/get").responseJSON { response in
-    //            print("Request: \(String(describing: response.request))")   // original url request
-    //            print("Response: \(String(describing: response.response))") // http url response
-    //            print("Result: \(response.result)")                         // response serialization result
-    //
-    //            if let json = response.result.value {
-    //                print("JSON: \(json)") // serialized json response
-    //            }
-    //
-    //            if let data = response.data, let utf8Text = String(data: data, encoding: .utf8) {
-    //                print("Data: \(utf8Text)") // original server data as UTF8 string
-    //            }
-    //        }
-    //    }
-    
     /*
-    // MARK: - Navigation
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+     // MARK: - Navigation
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+     // Get the new view controller using segue.destinationViewController.
+     // Pass the selected object to the new view controller.
+     }
+     */
+    
 }
 
 struct MyProfileRequest: GraphRequestProtocol {
@@ -504,7 +464,7 @@ extension NearbyPeopleViewController : UITableViewDataSource, UITableViewDelegat
         if (indexPath.section == 0) {
             cell.nameLabel.text = self.friendsAround[friendsAround.index(self.friendsAround.startIndex, offsetBy: indexPath.row)].firstName! + " " +
                 self.friendsAround[friendsAround.index(self.friendsAround.startIndex, offsetBy: indexPath.row)].lastName!
-           // cell.schoolLabel.text = self.friendsAround[friendsAround.index(self.friendsAround.startIndex, offsetBy: indexPath.row)].school!
+            // cell.schoolLabel.text = self.friendsAround[friendsAround.index(self.friendsAround.startIndex, offsetBy: indexPath.row)].school!
             let headshot = headshots[self.friendsAround[friendsAround.index(self.friendsAround.startIndex, offsetBy: indexPath.row)].facebookId!]
             if (headshot != nil) {
                 cell.headshotViewImage.image = headshots[self.friendsAround[friendsAround.index(self.friendsAround.startIndex, offsetBy: indexPath.row)].facebookId!]
@@ -514,8 +474,12 @@ extension NearbyPeopleViewController : UITableViewDataSource, UITableViewDelegat
             cell.headshotViewImage.layer.cornerRadius = 15.0
             cell.headshotViewImage.layer.borderWidth = 3
             cell.headshotViewImage.layer.borderColor = UIColor.black.cgColor
+            let appUser = User()
+            appUser.facebookId = self.friendsAround[friendsAround.index(self.friendsAround.startIndex, offsetBy: indexPath.row)].facebookId
+            cell.user = appUser
+            
             //Keeps flashing
-//          cell.connectButton.titleLabel?.text = "Reconnect"
+            //          cell.connectButton.titleLabel?.text = "Reconnect"
         } else {
             cell.nameLabel.text = self.strangersAround[strangersAround.index(self.strangersAround.startIndex, offsetBy: indexPath.row)].firstName! + " " +
                 self.friendsAround[friendsAround.index(self.friendsAround.startIndex, offsetBy: indexPath.row)].lastName!
@@ -524,6 +488,9 @@ extension NearbyPeopleViewController : UITableViewDataSource, UITableViewDelegat
             cell.headshotViewImage.layer.cornerRadius = 15.0
             cell.headshotViewImage.layer.borderWidth = 3
             cell.headshotViewImage.layer.borderColor = UIColor.black.cgColor
+            let appUser = User()
+            appUser.facebookId = self.friendsAround[friendsAround.index(self.friendsAround.startIndex, offsetBy: indexPath.row)].facebookId
+            cell.user = appUser
         }
         
         return cell
@@ -536,8 +503,12 @@ extension NearbyPeopleViewController : UITableViewDataSource, UITableViewDelegat
         selectedUser.firstName = selectedCell.nameLabel.text
         selectedUser.location = userLoggedIn?.location
         selectedUser.headshot = selectedCell.headshotViewImage.image!
+        selectedUser.facebookId = selectedCell.user?.facebookId
         profileVC.userSelected = selectedUser
-        self.tabBarController?.present(profileVC, animated: false, completion: nil)
+        //self.tabBarController?.present(profileVC, animated: false, completion: nil)
+        let tbc = self.tabBarController as! MainTabBarController
+        tbc.selectedUser = selectedUser
+        self.tabBarController?.selectedIndex = 1
     }
     
     func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {

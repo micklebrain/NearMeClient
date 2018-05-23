@@ -11,6 +11,7 @@ import UIKit
 class MainTabBarController: UITabBarController {
     
     var userloggedIn : User?
+    var selectedUser : User?
 
     override func viewDidLoad() {
         super.viewDidLoad()
