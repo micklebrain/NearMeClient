@@ -35,8 +35,8 @@ class SignupViewController: UIViewController {
         let userDetails : Parameters = [
             "firstName": firstNameTextField.text!,
             "lastName": lastNameTextField.text!,
-            "userName": usernameTextField.text!,
-            "password": passwordTextField.text!,
+            "userName": usernameTextField.text!
+            //"password": passwordTextField.text!,
         ]
         
         Alamofire.request(localUrl!, method: .post, parameters: userDetails, encoding: JSONEncoding.default)
