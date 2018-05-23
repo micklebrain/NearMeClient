@@ -86,8 +86,8 @@ class NearbyPeopleViewController: UIViewController {
 //        }
         
 //        mainQueue.async {
-            self.timer = Timer.scheduledTimer(withTimeInterval: 30.0, repeats: true, block: { (Timer) in
-                //refresh every 30 seconds
+            self.timer = Timer.scheduledTimer(withTimeInterval: 300, repeats: true, block: { (Timer) in
+                //refresh every 300 seconds
                 self.refreshUsersNearby()
             })
 //        }
@@ -296,7 +296,6 @@ class NearbyPeopleViewController: UIViewController {
                             newPerson.firstName = userDetails["firstName"] as? String
                             newPerson.lastName = userDetails["lastName"] as? String
                             newPerson.facebookId = userDetails["facebookId"] as? String
-
                             newPerson.headshotImage = self.getUserFBPicture(facebookId: newPerson.facebookId!)
 
                            // newPerson.school = userDetails["school"] as! String
@@ -323,6 +322,18 @@ class NearbyPeopleViewController: UIViewController {
                     self.PeopleNearbyTableView.reloadData()
                     self.actInd.stopAnimating()
                 }
+                } else if response.response?.statusCode == 503 {
+                    print("Server has been overloaded")
+                    let person = User()
+                    person.firstName = "Server"
+                    person.lastName = "Overloaded"
+                    person.school = "None"
+                    person.facebookId = "none"
+                    person.headshotImage = #imageLiteral(resourceName: "empty-headshot")
+                    self.friendsAround.insert(person)
+                    self.strangersAround.insert(person)
+                    self.PeopleNearbyTableView.reloadData()
+                    self.actInd.stopAnimating()
                 } else {
                     let person = User()
                     person.firstName = "Nobody"

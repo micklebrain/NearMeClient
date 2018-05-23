@@ -236,7 +236,7 @@ extension NearbyLocationsViewController : UITableViewDataSource, UITableViewDele
         let tbc = self.tabBarController as! MainTabBarController
         
         self.userloggedIn?.buildingOccupied = placesTableView.cellForRow(at: indexPath)?.textLabel?.text
-        //updateLocation(locality: (self.userloggedIn?.buildingOccupied)!)
+        updateLocation(locality: (self.userloggedIn?.buildingOccupied)!)
         self.userloggedIn?.floor = Int(floorNumber.text!)
         tbc.userloggedIn = self.userloggedIn
         tbc.selectedIndex = 2
@@ -247,14 +247,13 @@ extension NearbyLocationsViewController : UITableViewDataSource, UITableViewDele
         
         _ = locality.replacingOccurrences(of: " ", with: "")
         
-        let url = URL(string: "https://crystal-smalltalk.herokuapp.com/updateLocation")
+        let url = URL(string: "http://192.168.1.2:8080/updateLocation")
         
         let userDetails : Parameters = [
-            "firstName": self.userloggedIn?.firstName!,
-            "username": self.userloggedIn?.username!,
+            "firstname": self.userloggedIn?.firstName!,
+            "userName": self.userloggedIn?.username!,
             "facebookId": self.userloggedIn?.facebookId!,
-            "locality": locality,
-            "sex": "MALE"
+            "locality": locality
         ]
         
         Alamofire.request(url!, method: .post, parameters: userDetails, encoding: JSONEncoding.default)
