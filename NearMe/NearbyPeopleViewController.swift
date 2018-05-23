@@ -279,7 +279,6 @@ class NearbyPeopleViewController: UIViewController {
         self.view.addSubview(actInd)
         self.actInd.startAnimating()
         
-        //Act Indicator will continue to run
         //Clogging server
         Alamofire.request(url!, method: .post, parameters: userDetails, encoding: JSONEncoding.default)
             .responseJSON{ response in

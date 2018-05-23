@@ -48,6 +48,8 @@ class NearbyLocationsViewController: UIViewController {
         let tbc = self.tabBarController as! MainTabBarController
         self.userloggedIn = tbc.userloggedIn
         
+        getUsername()
+        
         locationManager = CLLocationManager()
         locationManager!.delegate = self
         locationManager!.desiredAccuracy = kCLLocationAccuracyBest
@@ -125,6 +127,21 @@ class NearbyLocationsViewController: UIViewController {
             
         })
         
+    }
+    
+    func getUsername() {
+        let url = URL(string: "http://192.168.1.2:8080/sync")
+        
+        let userDetails : Parameters = [
+            "facebookId": self.userloggedIn?.facebookId!,
+        ]
+        
+        Alamofire.request(url!, method: .post, parameters: userDetails, encoding: JSONEncoding.default)
+            .responseString{ response in
+                if let data = response.result.value{
+                    self.userloggedIn?.username = data
+                }
+            }
     }
     
     @IBAction func floorChanged(_ sender: Any) {
