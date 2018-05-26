@@ -53,10 +53,6 @@ class LoginViewController: UIViewController {
                     
                     maintabbarVC.userloggedIn = self.userloggedIn
                     
-//                    let initialViewController = UIStoryboard(name: "Main", bundle:nil).instantiateInitialViewController() as! UIViewController
-//                    let appDelegate = (UIApplication.shared.delegate as! AppDelegate)
-//                    appDelegate.window?.rootViewController = initialViewController
-                    
                     self.present(maintabbarVC, animated: false, completion: nil)
                 }
             })

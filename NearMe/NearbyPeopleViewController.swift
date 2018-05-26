@@ -46,6 +46,49 @@ class NearbyPeopleViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+//        let tbc = self.tabBarController as! MainTabBarController
+//        self.userLoggedIn = tbc.userloggedIn
+//
+//        self.PeopleNearbyTableView.delegate = self
+//        self.PeopleNearbyTableView.dataSource = self
+//
+//        self.filterPickerView.delegate = self
+//        self.filterPickerView.dataSource = self
+//
+//        //self.floorLabel.text?.append(String(userLoggedIn.floor))
+//
+//        if #available(iOS 10.0, *) {
+//            self.PeopleNearbyTableView.refreshControl = refreshControl
+//        } else {
+//            self.PeopleNearbyTableView.addSubview(refreshControl)
+//        }
+//
+//        self.refreshControl.addTarget(self, action: #selector(refreshUsersNearby), for: .valueChanged)
+//
+//        userLoggedIn?.headshot = #imageLiteral(resourceName: "empty-headshot")
+//        //getUserPicture(facebookId: (userLoggedIn?.facebookId)!)
+//
+//        //Check if location services is on first
+//        determineMyCurrentLocation()
+//
+//        getLocation()
+//
+//        if let accessToken = AccessToken.current {
+//            print(AccessToken.current?.userId)
+//        }
+//
+//        pullFacebookInfo()
+//
+//
+//        self.timer = Timer.scheduledTimer(withTimeInterval: 90, repeats: true, block: { (Timer) in
+//            //refresh every 90 seconds (1 min 30 seconds)ˆ
+//            self.refreshUsersNearby()
+//        })
+        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        
         let tbc = self.tabBarController as! MainTabBarController
         self.userLoggedIn = tbc.userloggedIn
         
@@ -80,8 +123,7 @@ class NearbyPeopleViewController: UIViewController {
         pullFacebookInfo()
         
         
-        self.timer = Timer.scheduledTimer(withTimeInterval: 90, repeats: true, block: { (Timer) in
-            //refresh every 90 seconds (1 min 30 seconds)ˆ
+        self.timer = Timer.scheduledTimer(withTimeInterval: 50, repeats: true, block: { (Timer) in
             self.refreshUsersNearby()
         })
         
@@ -169,6 +211,15 @@ class NearbyPeopleViewController: UIViewController {
     }
     
     func updateOnlineStatus () {
+        let url = URL(string: "http://192.168.1.2:8080/updateOnlineStatus")
+        
+        let userDetails : Parameters = [
+            "facebookId": self.userLoggedIn.facebookId,
+            "online": false
+        ]
+        
+        Alamofire.request(url!, method: .post, parameters: userDetails, encoding: JSONEncoding.default)
+        
         if (userLoggedIn!.online) {
             presenceSwitch.isOn = true
             determineMyCurrentLocation()
@@ -298,6 +349,7 @@ class NearbyPeopleViewController: UIViewController {
                         self.PeopleNearbyTableView.reloadData()
                         self.actInd.stopAnimating()
                     }
+                    //If happens show cached data
                 } else if response.response?.statusCode == 503 {
                     print("Server has been overloaded with pull requests")
                     let person = User()
@@ -505,10 +557,12 @@ extension NearbyPeopleViewController : UITableViewDataSource, UITableViewDelegat
         selectedUser.headshot = selectedCell.headshotViewImage.image!
         selectedUser.facebookId = selectedCell.user?.facebookId
         profileVC.userSelected = selectedUser
-        //self.tabBarController?.present(profileVC, animated: false, completion: nil)
-        let tbc = self.tabBarController as! MainTabBarController
-        tbc.selectedUser = selectedUser
-        self.tabBarController?.selectedIndex = 1
+        let maintabVC = self.tabBarController as! MainTabBarController
+        maintabVC.userloggedIn = self.userLoggedIn
+        self.tabBarController?.present(profileVC, animated: false, completion: nil)
+        //        let tbc = self.tabBarController as! MainTabBarController
+        //        tbc.selectedUser = selectedUser
+        //        self.tabBarController?.selectedIndex = 1
     }
     
     func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {

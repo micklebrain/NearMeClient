@@ -62,7 +62,7 @@ class NearbyLocationsViewController: UIViewController {
             locationManager?.startUpdatingLocation()
         }
         
-//        let objectMapper = AWSDynamoDBObjectMapper.default()
+        //        let objectMapper = AWSDynamoDBObjectMapper.default()
         
     }
     
@@ -135,7 +135,7 @@ class NearbyLocationsViewController: UIViewController {
         let url = URL(string: "https://crystal-smalltalk.herokuapp.com/sync")
         
         let userDetails : Parameters = [
-            "facebookId": self.userloggedIn.facebookId!,
+            "facebookId": self.userloggedIn.facebookId!
         ]
         
         Alamofire.request(url!, method: .post, parameters: userDetails, encoding: JSONEncoding.default)
@@ -143,7 +143,7 @@ class NearbyLocationsViewController: UIViewController {
                 if let data = response.result.value{
                     self.userloggedIn.username = data
                 }
-            }
+        }
     }
     
     @IBAction func floorChanged(_ sender: Any) {
@@ -186,8 +186,8 @@ extension NearbyLocationsViewController: CLLocationManagerDelegate {
         print("Location: \(location)")
         
         let _ = GMSCameraPosition.camera(withLatitude: location.coordinate.latitude,
-                                              longitude: location.coordinate.longitude,
-                                              zoom: zoomLevel)
+                                         longitude: location.coordinate.longitude,
+                                         zoom: zoomLevel)
         
         listLikelyPlaces()
     }
@@ -253,11 +253,11 @@ extension NearbyLocationsViewController : UITableViewDataSource, UITableViewDele
         selectedPlace = likelyPlaces[indexPath.row]
         
         let tbc = self.tabBarController as! MainTabBarController
-        
-        self.userloggedIn.buildingOccupied = placesTableView.cellForRow(at: indexPath)?.textLabel?.text
-        updateLocation(locality: (self.userloggedIn.buildingOccupied)!)
-        self.userloggedIn.floor = Int(floorNumber.text!)
         tbc.userloggedIn = self.userloggedIn
+        self.userloggedIn.buildingOccupied = placesTableView.cellForRow(at: indexPath)?.textLabel?.text
+        self.userloggedIn.floor = Int(floorNumber.text!)
+        
+        updateLocation(locality: (self.userloggedIn.buildingOccupied)!)
         tbc.selectedIndex = 2
         
     }
@@ -266,8 +266,7 @@ extension NearbyLocationsViewController : UITableViewDataSource, UITableViewDele
         
         _ = locality.replacingOccurrences(of: " ", with: "")
         
-//        let url = URL(string: "https://crystal-smalltalk.herokuapp.com/updateLocation")
-        let url = URL(string: "http://10.12.228.178:8080/updateLocation")
+        let url = URL(string: "https://crystal-smalltalk.herokuapp.com/updateLocation")
         
         let userDetails : Parameters = [
             "firstname": self.userloggedIn.firstName!,

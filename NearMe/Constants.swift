@@ -13,5 +13,4 @@ class Constants {
     static let BRANNANLOBBYIP = "10.12.228.178"
     static let ROOMIP = ""
 
-    
 }

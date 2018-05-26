@@ -14,22 +14,20 @@ import FBSDKLoginKit
 class UserProfileViewController: ProfileViewController {
 
     @IBOutlet weak var UserProfilePicture: UIImageView!
-    
-    @IBOutlet weak var NameLabel: UILabel!
-    @IBOutlet weak var EmailLabel: UILabel!
-    @IBOutlet weak var isOnlineLabel: UILabel!
+    @IBOutlet weak var UserDetails: UILabel!
+    var userDetailsText : String!
     
     override func viewDidLoad() {
         let tbc = self.tabBarController as! MainTabBarController
-        self.userSelected = tbc.selectedUser
+        self.userSelected = tbc.userloggedIn
 //        self.userLoggedIn = tbc.userloggedIn
         
         if (self.userSelected != nil) {
-            if (userSelected?.online)! {
-                isOnlineLabel.text = "online"
-            } else {
-                isOnlineLabel.text = "offline"
-            }
+//            if (userSelected?.online)! {
+//                UserDetails.text?.append(" online \n")
+//            } else {
+//                userDetailsText.append(" offline \n")
+//            }
             
             downloadProfilePic()
         }
@@ -56,9 +54,8 @@ class UserProfileViewController: ProfileViewController {
                 let FBid = data["id"] as? String
                 print("Facebook id is \(String(describing: FBid))")
                 
-                self.NameLabel.text = name
+                self.UserDetails.text?.append(name)
 //                self.EmailLabel.text = email
-                self.EmailLabel.text = "test@email.com"
             })
             connection.start()
             
