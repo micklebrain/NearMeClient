@@ -12,7 +12,7 @@ import FacebookCore
 import FBSDKLoginKit
 
 class UserProfileViewController: ProfileViewController {
-
+    
     @IBOutlet weak var UserProfilePicture: UIImageView!
     @IBOutlet weak var UserDetails: UILabel!
     var userDetailsText : String!
@@ -20,20 +20,20 @@ class UserProfileViewController: ProfileViewController {
     override func viewDidLoad() {
         let tbc = self.tabBarController as! MainTabBarController
         self.userSelected = tbc.userloggedIn
-//        self.userLoggedIn = tbc.userloggedIn
+        //        self.userLoggedIn = tbc.userloggedIn
         
         if (self.userSelected != nil) {
-//            if (userSelected?.online)! {
-//                UserDetails.text?.append(" online \n")
-//            } else {
-//                userDetailsText.append(" offline \n")
-//            }
+            //            if (userSelected?.online)! {
+            //                UserDetails.text?.append(" online \n")
+            //            } else {
+            //                userDetailsText.append(" offline \n")
+            //            }
             
             downloadProfilePic()
         }
         
         pullFacebookInfo()
-
+        
     }
     
     private func pullFacebookInfo () {
@@ -46,7 +46,7 @@ class UserProfileViewController: ProfileViewController {
             connection.add(graphRequest, completionHandler: { (connection, result, error) -> Void in
                 let data = result as! [String : AnyObject]
                 let name = data["name"] as! String
-//                let email = data["email"] as! String
+                //                let email = data["email"] as! String
                 var splitName = name.components(separatedBy: " ")
                 splitName.removeFirst()
                 print("logged in user name is \(String(describing: name))")
@@ -54,8 +54,7 @@ class UserProfileViewController: ProfileViewController {
                 let FBid = data["id"] as? String
                 print("Facebook id is \(String(describing: FBid))")
                 
-                self.UserDetails.text?.append(name)
-//                self.EmailLabel.text = email
+                self.UserDetails.text?.append(name + "\n" + self.userSelected.buildingOccupied!)
             })
             connection.start()
             
@@ -80,7 +79,7 @@ class UserProfileViewController: ProfileViewController {
                         headshot  = UIImage(data: usableData)!
                         self.userSelected?.headshot = headshot
                         DispatchQueue.main.async {
-                          self.UserProfilePicture.image = headshot
+                            self.UserProfilePicture.image = headshot
                         }
                     }
                 }
@@ -89,28 +88,28 @@ class UserProfileViewController: ProfileViewController {
         }
         
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
     @IBAction func logout(_ sender: Any) {
-            let loginVC:LoginViewController = UIStoryboard(name: "Access", bundle: nil).instantiateViewController(withIdentifier: "LoginViewController") as! LoginViewController
+        let loginVC:LoginViewController = UIStoryboard(name: "Access", bundle: nil).instantiateViewController(withIdentifier: "LoginViewController") as! LoginViewController
         
-            AccessToken.current = nil
-
-            self.present(loginVC, animated: false, completion: nil)
+        AccessToken.current = nil
+        
+        self.present(loginVC, animated: false, completion: nil)
     }
     
     /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+     // MARK: - Navigation
+     
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+     // Get the new view controller using segue.destinationViewController.
+     // Pass the selected object to the new view controller.
+     }
+     */
+    
 }

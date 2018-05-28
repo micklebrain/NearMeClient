@@ -45,46 +45,6 @@ class NearbyPeopleViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-//        let tbc = self.tabBarController as! MainTabBarController
-//        self.userLoggedIn = tbc.userloggedIn
-//
-//        self.PeopleNearbyTableView.delegate = self
-//        self.PeopleNearbyTableView.dataSource = self
-//
-//        self.filterPickerView.delegate = self
-//        self.filterPickerView.dataSource = self
-//
-//        //self.floorLabel.text?.append(String(userLoggedIn.floor))
-//
-//        if #available(iOS 10.0, *) {
-//            self.PeopleNearbyTableView.refreshControl = refreshControl
-//        } else {
-//            self.PeopleNearbyTableView.addSubview(refreshControl)
-//        }
-//
-//        self.refreshControl.addTarget(self, action: #selector(refreshUsersNearby), for: .valueChanged)
-//
-//        userLoggedIn?.headshot = #imageLiteral(resourceName: "empty-headshot")
-//        //getUserPicture(facebookId: (userLoggedIn?.facebookId)!)
-//
-//        //Check if location services is on first
-//        determineMyCurrentLocation()
-//
-//        getLocation()
-//
-//        if let accessToken = AccessToken.current {
-//            print(AccessToken.current?.userId)
-//        }
-//
-//        pullFacebookInfo()
-//
-//
-//        self.timer = Timer.scheduledTimer(withTimeInterval: 90, repeats: true, block: { (Timer) in
-//            //refresh every 90 seconds (1 min 30 seconds)ˆ
-//            self.refreshUsersNearby()
-//        })
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -123,7 +83,7 @@ class NearbyPeopleViewController: UIViewController {
         pullFacebookInfo()
         
         
-        self.timer = Timer.scheduledTimer(withTimeInterval: 50, repeats: true, block: { (Timer) in
+        self.timer = Timer.scheduledTimer(withTimeInterval: 35, repeats: true, block: { (Timer) in
             self.refreshUsersNearby()
         })
         
@@ -211,7 +171,7 @@ class NearbyPeopleViewController: UIViewController {
     }
     
     func updateOnlineStatus () {
-        let url = URL(string: "http://192.168.1.2:8080/updateOnlineStatus")
+        let url = URL(string: "https://crystal-smalltalk.herokuapp.com/updateOnlineStatus")
         
         let userDetails : Parameters = [
             "facebookId": self.userLoggedIn.facebookId,
