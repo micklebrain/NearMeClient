@@ -8,6 +8,9 @@
 
 import Foundation
 
-class UrlConstants {
+public struct UrlConstants {
+    
+    public static let securedProtocol = "https"
+    let nonSecuredProtocol = "http"
     
 }

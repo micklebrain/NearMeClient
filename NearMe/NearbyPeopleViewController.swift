@@ -14,6 +14,7 @@ import Alamofire
 import SwiftyJSON
 import FBSDKLoginKit
 
+
 class NearbyPeopleViewController: UIViewController {
     
     var userLoggedIn: User!
@@ -22,7 +23,6 @@ class NearbyPeopleViewController: UIViewController {
     //add collegaues, same school
     var locationManager : CLLocationManager!
     var strangersAround = Set<User>()
-    //Using NSMutableSet because AWS
     var friendsAround = Set<User>()
     var defaultHeadshot : UIImage?
     var headshots = [String: UIImage]()
@@ -30,7 +30,9 @@ class NearbyPeopleViewController: UIViewController {
     var count = 0
     var actInd = UIActivityIndicatorView()
     let refreshControl = UIRefreshControl()
-    //var results: [AWSDynamoDBObjectModel]?
+    
+    var userCacheURL: URL?
+    let userCacheQueue = OperationQueue()
     
     @IBOutlet weak var PeopleNearbyTableView: UITableView!
     @IBOutlet weak var peopleCounter: UILabel!
@@ -45,9 +47,14 @@ class NearbyPeopleViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        if let cacheURL = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first {
+            self.userCacheURL = cacheURL.appendingPathComponent("users.json")
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         
         let tbc = self.tabBarController as! MainTabBarController
         self.userLoggedIn = tbc.userloggedIn
@@ -74,7 +81,7 @@ class NearbyPeopleViewController: UIViewController {
         //Check if location services is on first
         determineMyCurrentLocation()
         
-        getLocation()
+        //        getLocation()
         
         if let accessToken = AccessToken.current {
             print(AccessToken.current?.userId)
@@ -87,6 +94,8 @@ class NearbyPeopleViewController: UIViewController {
             self.refreshUsersNearby()
         })
         
+        
+        
     }
     
     //Fix refreshing, indicator dosnt always stop correctly
@@ -95,7 +104,7 @@ class NearbyPeopleViewController: UIViewController {
         //        self.actInd.startAnimating()
         self.friendsAround.removeAll()
         self.strangersAround.removeAll()
-        pullNearByPeople()
+        pullNearbyUsers()
         self.count = self.friendsAround.count + self.strangersAround.count
         self.PeopleNearbyTableView.reloadData()
         self.refreshControl.endRefreshing()
@@ -103,22 +112,22 @@ class NearbyPeopleViewController: UIViewController {
         self.actInd.removeFromSuperview()
     }
     
-    func getLocation() {
-        
-        Alamofire.request("https://httpbin.org/get").responseJSON { response in
-            print("Request: \(String(describing: response.request))")   // original url request
-            print("Response: \(String(describing: response.response))") // http url response
-            print("Result: \(response.result)")                         // response serialization result
-            
-            if let json = response.result.value {
-                print("JSON: \(json)") // serialized json response
-            }
-            
-            if let data = response.data, let utf8Text = String(data: data, encoding: .utf8) {
-                print("Data: \(utf8Text)") // original server data as UTF8 string
-            }
-        }
-    }
+    //    func getLocation() {
+    //
+    //        Alamofire.request("https://httpbin.org/get").responseJSON { response in
+    //            print("Request: \(String(describing: response.request))")   // original url request
+    //            print("Response: \(String(describing: response.response))") // http url response
+    //            print("Result: \(response.result)")                         // response serialization result
+    //
+    //            if let json = response.result.value {
+    //                print("JSON: \(json)") // serialized json response
+    //            }
+    //
+    //            if let data = response.data, let utf8Text = String(data: data, encoding: .utf8) {
+    //                print("Data: \(utf8Text)") // original server data as UTF8 string
+    //            }
+    //        }
+    //    }
     
     func pullFacebookInfo () {
         let nathanFBId = "1367878021"
@@ -232,7 +241,7 @@ class NearbyPeopleViewController: UIViewController {
             
             self.CurrentLocationLabel.text = userLoggedIn?.buildingOccupied
             
-            pullNearByPeople()
+            pullNearbyUsers()
         }
     }
     
@@ -251,8 +260,7 @@ class NearbyPeopleViewController: UIViewController {
     
     //When no internet connection then change label to no internet connection
     
-    func pullNearByPeople () {
-        
+    func pullNearbyUsers () {
         
         //        let utilities = Util()
         //        let wifiAddress = utilities.getWiFiAddress() as! String
@@ -302,26 +310,67 @@ class NearbyPeopleViewController: UIViewController {
                             }
                             // } else {
                             // self.strangersAround.insert(newPerson)
+                            
+                            if (self.userCacheURL != nil) {
+                                self.userCacheQueue.addOperation {
+                                    if let stream = OutputStream(url: self.userCacheURL!, append: false) {
+                                        stream.open()
+                                        
+                                        JSONSerialization.writeJSONObject(json, to: stream, options: [.prettyPrinted], error: nil)
+                                        
+                                        stream.close()
+                                    }
+                                }
+                            }
                         }
                         self.count = self.friendsAround.count + self.strangersAround.count
                         let numberoccupied = "# Occupied: " + String(self.count)
                         self.peopleCounter.text = String(describing: numberoccupied)
                         self.PeopleNearbyTableView.reloadData()
                         self.actInd.stopAnimating()
+                        
                     }
                     //If happens show cached data
                 } else if response.response?.statusCode == 503 {
-                    print("Server has been overloaded with pull requests")
-                    let person = User()
-                    person.firstName = "Server"
-                    person.lastName = "Overloaded"
-                    person.school = "None"
-                    person.facebookId = "none"
-                    person.headshotImage = #imageLiteral(resourceName: "empty-headshot")
-                    self.friendsAround.insert(person)
-                    self.strangersAround.insert(person)
-                    self.PeopleNearbyTableView.reloadData()
-                    self.actInd.stopAnimating()
+                    
+                    if (self.userCacheURL != nil) {
+                        self.userCacheQueue.addOperation {
+                            if let stream = InputStream(url: self.userCacheURL!) {
+                                stream.open()
+                                
+                                let users = (try? JSONSerialization.jsonObject(with: stream, options: [])) as? [[String: Any]]
+                                for user in users! {
+                                    let friend = User()
+                                    friend.locality = user["locality"] as! String
+                                    friend.firstName = user["firstName"] as! String
+                                    friend.lastName = user["lastName"] as! String
+                                    friend.facebookId = user["facebookId"] as! String
+                                    friend.headshotImage = self.getUserFBPicture(facebookId: friend.facebookId!)
+                                    self.friendsAround.insert(friend)
+                                }
+                                print(users)
+                                
+                                stream.close()
+                            }
+                            
+                            OperationQueue.main.addOperation {
+                                self.PeopleNearbyTableView.reloadData()
+                            }
+                        }
+                    } else {
+                        
+                        print("Server has been overloaded with pull requests")
+                        let person = User()
+                        person.firstName = "Server"
+                        person.lastName = "Overloaded"
+                        person.school = "None"
+                        person.facebookId = "none"
+                        person.headshotImage = #imageLiteral(resourceName: "empty-headshot")
+                        self.friendsAround.insert(person)
+                        self.strangersAround.insert(person)
+                        self.PeopleNearbyTableView.reloadData()
+                        self.actInd.stopAnimating()
+                    }
                 } else {
                     let person = User()
                     person.firstName = "Nobody"
