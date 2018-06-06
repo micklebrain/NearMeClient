@@ -90,44 +90,23 @@ class NearbyPeopleViewController: UIViewController {
         pullFacebookInfo()
         
         
-        self.timer = Timer.scheduledTimer(withTimeInterval: 35, repeats: true, block: { (Timer) in
+        self.timer = Timer.scheduledTimer(withTimeInterval: 60, repeats: true, block: { (Timer) in
             self.refreshUsersNearby()
         })
-        
-        
         
     }
     
     //Fix refreshing, indicator dosnt always stop correctly
     func refreshUsersNearby () {
         //Implement caching
-        //        self.actInd.startAnimating()
         self.friendsAround.removeAll()
         self.strangersAround.removeAll()
         pullNearbyUsers()
         self.count = self.friendsAround.count + self.strangersAround.count
-        self.PeopleNearbyTableView.reloadData()
         self.refreshControl.endRefreshing()
         self.actInd.stopAnimating()
         self.actInd.removeFromSuperview()
     }
-    
-    //    func getLocation() {
-    //
-    //        Alamofire.request("https://httpbin.org/get").responseJSON { response in
-    //            print("Request: \(String(describing: response.request))")   // original url request
-    //            print("Response: \(String(describing: response.response))") // http url response
-    //            print("Result: \(response.result)")                         // response serialization result
-    //
-    //            if let json = response.result.value {
-    //                print("JSON: \(json)") // serialized json response
-    //            }
-    //
-    //            if let data = response.data, let utf8Text = String(data: data, encoding: .utf8) {
-    //                print("Data: \(utf8Text)") // original server data as UTF8 string
-    //            }
-    //        }
-    //    }
     
     func pullFacebookInfo () {
         let nathanFBId = "1367878021"
@@ -258,8 +237,7 @@ class NearbyPeopleViewController: UIViewController {
         
     }
     
-    //When no internet connection then change label to no internet connection
-    
+    //When no internet connection then display offline label
     func pullNearbyUsers () {
         
         //        let utilities = Util()
@@ -326,13 +304,15 @@ class NearbyPeopleViewController: UIViewController {
                         self.count = self.friendsAround.count + self.strangersAround.count
                         let numberoccupied = "# Occupied: " + String(self.count)
                         self.peopleCounter.text = String(describing: numberoccupied)
-                        self.PeopleNearbyTableView.reloadData()
                         self.actInd.stopAnimating()
+                        
+                        self.PeopleNearbyTableView.reloadData()
                         
                     }
                     //If happens show cached data
                 } else if response.response?.statusCode == 503 {
                     
+                    // Try to display cached data
                     if (self.userCacheURL != nil) {
                         self.userCacheQueue.addOperation {
                             if let stream = InputStream(url: self.userCacheURL!) {
@@ -353,37 +333,23 @@ class NearbyPeopleViewController: UIViewController {
                                 stream.close()
                             }
                             
-                            OperationQueue.main.addOperation {
-                                self.PeopleNearbyTableView.reloadData()
-                            }
                         }
-                    } else {
-                        
-                        print("Server has been overloaded with pull requests")
+                    } else { // No cached data is around so display nobody around users
                         let person = User()
-                        person.firstName = "Server"
-                        person.lastName = "Overloaded"
+                        person.firstName = "Nobody"
+                        person.lastName = "Around"
                         person.school = "None"
                         person.facebookId = "none"
                         person.headshotImage = #imageLiteral(resourceName: "empty-headshot")
                         self.friendsAround.insert(person)
                         self.strangersAround.insert(person)
-                        self.PeopleNearbyTableView.reloadData()
+                        
                         self.actInd.stopAnimating()
                     }
-                } else {
-                    let person = User()
-                    person.firstName = "Nobody"
-                    person.lastName = "Around"
-                    person.school = "None"
-                    person.facebookId = "none"
-                    person.headshotImage = #imageLiteral(resourceName: "empty-headshot")
-                    self.friendsAround.insert(person)
-                    self.strangersAround.insert(person)
-                    self.PeopleNearbyTableView.reloadData()
-                    self.actInd.stopAnimating()
                 }
         }
+        
+        self.PeopleNearbyTableView.reloadData()
         
     }
     
@@ -421,17 +387,6 @@ class NearbyPeopleViewController: UIViewController {
         return headshot
     }
     
-    //  Mark: Filter
-    @IBAction func filter(_ sender: Any) {
-        
-        while self.strangersAround.contains(where: { $0.sex == sex.male }) {
-            let foundPerson = self.strangersAround.first(where: { $0.sex == sex.male })
-            strangersAround.remove(foundPerson!)
-        }
-        
-        self.PeopleNearbyTableView.reloadData()
-        
-    }
     
     /*
      // MARK: - Navigation
@@ -486,8 +441,6 @@ extension NearbyPeopleViewController : CLLocationManagerDelegate {
             }
         })
         
-        //How to put this on the main thread
-        self.PeopleNearbyTableView.reloadData()
     }
     
 }
