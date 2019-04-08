@@ -9,7 +9,6 @@
 import UIKit
 import FacebookLogin
 import FacebookCore
-import FBSDKLoginKit
 
 class UserProfileViewController: ProfileViewController {
     
@@ -19,16 +18,8 @@ class UserProfileViewController: ProfileViewController {
     
     override func viewDidLoad() {
         let tbc = self.tabBarController as! MainTabBarController
-        self.userSelected = tbc.userloggedIn
-        //        self.userLoggedIn = tbc.userloggedIn
-        
+        self.userSelected = tbc.userloggedIn        
         if (self.userSelected != nil) {
-            //            if (userSelected?.online)! {
-            //                UserDetails.text?.append(" online \n")
-            //            } else {
-            //                userDetailsText.append(" offline \n")
-            //            }
-            
             downloadProfilePic()
         }
         
@@ -37,13 +28,11 @@ class UserProfileViewController: ProfileViewController {
     }
     
     private func pullFacebookInfo () {
-        if(FBSDKAccessToken.current() != nil)
-        {
-            //This request dosnt happen fast enough
-            let graphRequest = FBSDKGraphRequest(graphPath: self.userSelected.facebookId, parameters: ["fields" : "id, name, email"])
-            let connection = FBSDKGraphRequestConnection()
+        if((AccessToken.current) != nil) {
+            let graphRequest = GraphRequest(graphPath: self.userSelected.facebookId!, parameters: ["fields" : "id, name, email"], accessToken: AccessToken.current, httpMethod: GraphRequestHTTPMethod.GET, apiVersion: "")
+            let connection = GraphRequestConnection()
             
-            connection.add(graphRequest, completionHandler: { (connection, result, error) -> Void in
+            connection.add(graphRequest) { httpResponse, result in
                 let data = result as! [String : AnyObject]
                 let name = data["name"] as! String
                 //                let email = data["email"] as! String
@@ -54,10 +43,9 @@ class UserProfileViewController: ProfileViewController {
                 let FBid = data["id"] as? String
                 print("Facebook id is \(String(describing: FBid))")
                 
-                self.UserDetails.text?.append(name + "\n" + self.userSelected.buildingOccupied!)
-            })
+//                self.UserDetails.text?.append(name + "\n" + self.userSelected.buildingOccupied!)
+            }
             connection.start()
-            
         }
     }
     
@@ -89,17 +77,17 @@ class UserProfileViewController: ProfileViewController {
         
     }
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
     @IBAction func logout(_ sender: Any) {
         let loginVC:LoginViewController = UIStoryboard(name: "Access", bundle: nil).instantiateViewController(withIdentifier: "LoginViewController") as! LoginViewController
         
         AccessToken.current = nil
         
         self.present(loginVC, animated: false, completion: nil)
+    }
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
     }
     
     /*

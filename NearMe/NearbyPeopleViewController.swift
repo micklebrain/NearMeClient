@@ -13,14 +13,14 @@ import FacebookLogin
 import Alamofire
 import SwiftyJSON
 import FBSDKLoginKit
+import GooglePlaces
+import Starscream
 
-
-class NearbyPeopleViewController: UIViewController {
+class NearbyPeopleViewController: UIViewController, WebSocketDelegate {
     
     var userLoggedIn: User!
     let section = ["Friends", "Strangers"]
     let filterOptions = ["Female", "Male"]
-    //add collegaues, same school
     var locationManager : CLLocationManager!
     var strangersAround = Set<User>()
     var friendsAround = Set<User>()
@@ -29,41 +29,32 @@ class NearbyPeopleViewController: UIViewController {
     var currentUserLocation: CLLocation?
     var count = 0
     var actInd = UIActivityIndicatorView()
-    let refreshControl = UIRefreshControl()
-    
+    var profileImage: UIImage?
+    var timer = Timer()
     var userCacheURL: URL?
+    let refreshControl = UIRefreshControl()
     let userCacheQueue = OperationQueue()
+    var socket: WebSocket?
     
     @IBOutlet weak var PeopleNearbyTableView: UITableView!
     @IBOutlet weak var peopleCounter: UILabel!
     @IBOutlet weak var presenceSwitch: UISwitch!
-    @IBOutlet weak var CurrentLocationLabel: UILabel!
-    @IBOutlet weak var filterPickerView: UIPickerView!
+    @IBOutlet weak var currentLocation: UIButton!
     @IBOutlet weak var floorLabel: UILabel!
     
-    var profileImage: UIImage?
-    
-    var timer = Timer()
-    
     override func viewDidLoad() {
+        
         super.viewDidLoad()
-        
-        if let cacheURL = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first {
-            self.userCacheURL = cacheURL.appendingPathComponent("users.json")
-        }
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
+                
+        //Current User Info
         let tbc = self.tabBarController as! MainTabBarController
         self.userLoggedIn = tbc.userloggedIn
+        pullFacebookInfo()
+        //Current User Info
         
+        //Table View
         self.PeopleNearbyTableView.delegate = self
         self.PeopleNearbyTableView.dataSource = self
-        
-        self.filterPickerView.delegate = self
-        self.filterPickerView.dataSource = self
         
         //self.floorLabel.text?.append(String(userLoggedIn.floor))
         
@@ -74,41 +65,206 @@ class NearbyPeopleViewController: UIViewController {
         }
         
         self.refreshControl.addTarget(self, action: #selector(refreshUsersNearby), for: .valueChanged)
+        //Table View
         
-        userLoggedIn?.headshot = #imageLiteral(resourceName: "empty-headshot")
-        //getUserPicture(facebookId: (userLoggedIn?.facebookId)!)
+        /*Location Services*/
+        //Check if location services is allowed to update location
+        activateLocationServices()
         
-        //Check if location services is on first
-        determineMyCurrentLocation()
+        //Load first time
+        refreshUsersNearby()
         
-        //        getLocation()
-        
-        if let accessToken = AccessToken.current {
-            print(AccessToken.current?.userId)
-        }
-        
-        pullFacebookInfo()
-        
-        
-        self.timer = Timer.scheduledTimer(withTimeInterval: 60, repeats: true, block: { (Timer) in
+        //Refresh every 60 seconds
+        self.timer = Timer.scheduledTimer(withTimeInterval: 45, repeats: true, block: { (Timer) in
             self.refreshUsersNearby()
         })
+        /*Location Services*/
         
     }
     
-    //Fix refreshing, indicator dosnt always stop correctly
-    func refreshUsersNearby () {
+    override func viewWillAppear(_ animated: Bool) {
+        
+        super.viewWillAppear(animated)
+        
+    }
+    
+    func activateActivityIndicatorView() {
+        
+        self.actInd = UIActivityIndicatorView()
+        self.actInd.frame = CGRect(x: 0.0, y: 0.0, width: 40.0, height: 40.0)
+        self.actInd.center = self.view.center
+        self.actInd.hidesWhenStopped = true
+        self.actInd.style =
+            UIActivityIndicatorView.Style.gray
+        self.view.addSubview(actInd)
+        self.actInd.startAnimating()
+        
+    }
+    
+    private func checkIn () {
+        
+    }
+    
+    //MARK: WebSocket
+    func websocketDidConnect(socket: WebSocketClient) {
+        socket.write(string: "Connected through IOS")
+    }
+    
+    func websocketDidDisconnect(socket: WebSocketClient, error: Error?) {
+        
+    }
+    
+    func websocketDidReceiveMessage(socket: WebSocketClient, text: String) {
+        
+    }
+    
+    func websocketDidReceiveData(socket: WebSocketClient, data: Data) {
+        
+    }
+    //WebSocket
+    
+    @objc func refreshUsersNearby () {
+        
         //Implement caching
         self.friendsAround.removeAll()
         self.strangersAround.removeAll()
         pullNearbyUsers()
         self.count = self.friendsAround.count + self.strangersAround.count
+        
         self.refreshControl.endRefreshing()
         self.actInd.stopAnimating()
         self.actInd.removeFromSuperview()
+        
+    }
+    
+    func pullNearbyUsers () {
+        
+        //Activity Indicator
+        actInd.frame = CGRect(x: 0.0, y: 0.0, width: 40.0, height: 40.0)
+        actInd.center = self.view.center
+        actInd.hidesWhenStopped = true
+        actInd.style =
+            UIActivityIndicatorView.Style.gray
+        self.view.addSubview(actInd)
+        self.actInd.startAnimating()
+        //Activity Indicator
+        
+        //User
+        userLoggedIn?.friends = ["Nathan"]
+        
+        let buildingOccupied = userLoggedIn?.buildingOccupied != nil ? userLoggedIn.buildingOccupied : ""
+        
+        let userDetails : Parameters = [
+            "firstname": self.userLoggedIn?.firstName!,
+            "username": self.userLoggedIn?.username!,
+            "facebookId": self.userLoggedIn?.facebookId,
+            "locality": buildingOccupied ]
+        
+        let wifiipAddress = Util.getIFAddresses()[1]
+        let localUrl = URL(string: "http://\(wifiipAddress):8080/pullNearbyUsers?locality=SanFrancisco")
+        let url = URL(string: "https://crystal-smalltalk.herokuapp.com/pullNearbyUsers?locality=SanFrancisco")
+        
+        Alamofire.request(url!, method: .post, parameters: userDetails, encoding: JSONEncoding.default)
+            .responseJSON{ response in
+                if response.response?.statusCode == 200 {
+                    if let json = response.result.value {
+                        let users = json as! [Any]
+                        for someUser in users {
+                            let userDetails = someUser as! [String: Any]
+                            let newPerson = User()
+                            let facebookId = userDetails["facebookId"] as! String
+                            
+                            if (facebookId != self.userLoggedIn?.facebookId) {
+                                newPerson.username = userDetails["username"] as? String
+                                newPerson.firstName = userDetails["firstname"] as? String
+                                newPerson.lastName = userDetails["lastname"] as? String
+                                newPerson.facebookId = userDetails["facebookId"] as? String
+                                newPerson.headshotImage = self.getUserFBPicture(facebookId: newPerson.facebookId!)
+                                
+                                // newPerson.school = userDetails["school"] as! String
+                                newPerson.headshotImage = self.getUserFBPicture(facebookId: newPerson.facebookId!)
+                                
+                                self.friendsAround.insert(newPerson)
+                            }
+                            // } else {
+                            // self.strangersAround.insert(newPerson)
+                            
+                            if (self.userCacheURL != nil) {
+                                self.userCacheQueue.addOperation {
+                                    if let stream = OutputStream(url: self.userCacheURL!, append: false) {
+                                        stream.open()
+                                        
+                                        JSONSerialization.writeJSONObject(json, to: stream, options: [.prettyPrinted], error: nil)
+                                        
+                                        stream.close()
+                                    }
+                                }
+                            }
+                        }
+                        self.count = self.friendsAround.count + self.strangersAround.count
+                        let numberoccupied = "# Occupied: " + String(self.count)
+                        self.peopleCounter.text = String(describing: numberoccupied)
+                        self.actInd.stopAnimating()
+                        
+                        DispatchQueue.main.async {
+                            self.PeopleNearbyTableView.reloadData()
+                            //                            let indexPath = IndexPath(row: 0, section: 0)
+                            //                            self.PeopleNearbyTableView.reloadRows(at: [indexPath], with: UITableViewRowAnimation.fade)
+                        }
+                        
+                    }
+                    //If happens show cached data
+                } else if response.response?.statusCode == 503 {
+                    
+                    // Try to display cached data
+                    if (self.userCacheURL != nil) {
+                        self.userCacheQueue.addOperation {
+                            if let stream = InputStream(url: self.userCacheURL!) {
+                                stream.open()
+                                
+                                let users = (try? JSONSerialization.jsonObject(with: stream, options: [])) as? [[String: Any]]
+                                for user in users! {
+                                    let facebookId = user["facebookId"] as! String
+                                    if (facebookId != self.userLoggedIn?.facebookId) {
+                                        let friend = User()
+                                        friend.locality = user["locality"] as! String
+                                        friend.firstName = user["firstName"] as! String
+                                        friend.lastName = user["lastName"] as! String
+                                        friend.facebookId = user["facebookId"] as! String
+                                        friend.headshotImage = self.getUserFBPicture(facebookId: friend.facebookId!)
+                                        self.friendsAround.insert(friend)
+                                    }
+                                }
+                                stream.close()
+                            }
+                            
+                        }
+                        
+                        DispatchQueue.main.async {
+                            self.PeopleNearbyTableView.reloadData()
+                            //                            let indexPath = IndexPath(row: 0, section: 0)
+                            //                            self.PeopleNearbyTableView.reloadRows(at: [indexPath], with: UITableViewRowAnimation.fade)
+                        }
+                        
+                    } else { // No cached data is around so display nobody around users
+                        let person = User()
+                        person.firstName = "Nobody"
+                        person.lastName = "Around"
+                        person.school = "None"
+                        person.facebookId = "none"
+                        person.headshotImage = #imageLiteral(resourceName: "empty-headshot")
+                        self.friendsAround.insert(person)
+                        self.strangersAround.insert(person)
+                        
+                        self.actInd.stopAnimating()
+                    }
+                }
+        }
+        
     }
     
     func pullFacebookInfo () {
+        
         let nathanFBId = "1367878021"
         let nathan2FBId = "111006779636650"
         let TraceyFBid = "109582432994026"
@@ -116,8 +272,7 @@ class NearbyPeopleViewController: UIViewController {
         if(FBSDKAccessToken.current() != nil)
         {
             
-            print(FBSDKAccessToken.current().permissions)
-            print(FBSDKAccessToken.current().tokenString)
+//            self.userLoggedIn.facebookId = FBSDKAccessToken.current()?.appID
             
             let graphRequest = FBSDKGraphRequest(graphPath: nathanFBId, parameters: ["fields" : "id, name, email,picture"])
             
@@ -148,209 +303,7 @@ class NearbyPeopleViewController: UIViewController {
         //        connection2.start()
         
         //Check if location services is on first
-        determineMyCurrentLocation()
-    }
-    
-    //  MARK: - Location tracking
-    @IBAction func presenceSwitch(_ sender: Any) {
-        self.tabBarController?.selectedIndex = 1
-        self.userLoggedIn?.online = !self.userLoggedIn.online
-        updateOnlineStatus()
-    }
-    
-    func updateOnlineStatus () {
-        let url = URL(string: "https://crystal-smalltalk.herokuapp.com/updateOnlineStatus")
-        
-        let userDetails : Parameters = [
-            "facebookId": self.userLoggedIn.facebookId,
-            "online": false
-        ]
-        
-        Alamofire.request(url!, method: .post, parameters: userDetails, encoding: JSONEncoding.default)
-        
-        if (userLoggedIn!.online) {
-            presenceSwitch.isOn = true
-            determineMyCurrentLocation()
-        } else {
-            presenceSwitch.isOn = false
-            locationManager.stopUpdatingLocation()
-        }
-    }
-    
-    func determineMyCurrentLocation() {
-        
-        locationManager = CLLocationManager()
-        locationManager!.delegate = self
-        locationManager!.desiredAccuracy = kCLLocationAccuracyBest
-        locationManager.distanceFilter = kCLLocationAccuracyNearestTenMeters;
-        locationManager!.requestAlwaysAuthorization()
-        
-        if CLLocationManager.locationServicesEnabled() {
-            locationManager?.startUpdatingLocation()
-        }
-    }
-    
-    func updateCurrentUserLocation (placemark: CLPlacemark?, userLocation: CLLocation) {
-        
-        if let containsPlacemark = placemark {
-            
-            //  TODO: Periodically update location
-            //  locationManager.stopUpdatingLocation()
-            let locality = (containsPlacemark.locality != nil) ? containsPlacemark.locality : ""
-            let postalCode = (containsPlacemark.postalCode != nil) ? containsPlacemark.postalCode : ""
-            let administrativeArea = (containsPlacemark.administrativeArea != nil) ? containsPlacemark.administrativeArea : ""
-            let country = (containsPlacemark.country != nil) ? containsPlacemark.country : ""
-            
-            //            let objectMapper = AWSDynamoDBObjectMapper.default()
-            var _: [NSError] = []
-            //Use Group for threading?
-            let _: DispatchGroup = DispatchGroup()
-            
-            let latitude = userLocation.coordinate.latitude
-            let longitutde = userLocation.coordinate.longitude
-            currentUserLocation = CLLocation(latitude: latitude, longitude: longitutde)
-            
-            //          User's Location
-            userLoggedIn?.postalCode = postalCode
-            userLoggedIn?.administrativeArea = administrativeArea
-            userLoggedIn?.country = country
-            userLoggedIn?.locality = locality
-            userLoggedIn?.latitude = userLocation.coordinate.latitude as NSNumber
-            userLoggedIn?.longitude = userLocation.coordinate.longitude as NSNumber
-            
-            self.CurrentLocationLabel.text = userLoggedIn?.buildingOccupied
-            
-            pullNearbyUsers()
-        }
-    }
-    
-    func activateActivityIndicatorView() {
-        
-        self.actInd = UIActivityIndicatorView()
-        self.actInd.frame = CGRect(x: 0.0, y: 0.0, width: 40.0, height: 40.0)
-        self.actInd.center = self.view.center
-        self.actInd.hidesWhenStopped = true
-        self.actInd.activityIndicatorViewStyle =
-            UIActivityIndicatorViewStyle.gray
-        self.view.addSubview(actInd)
-        self.actInd.startAnimating()
-        
-    }
-    
-    //When no internet connection then display offline label
-    func pullNearbyUsers () {
-        
-        //        let utilities = Util()
-        //        let wifiAddress = utilities.getWiFiAddress() as! String
-        //        let url = URL(string: "http://" + wifiAddress + ":8080/updateLocation")
-        
-        let _ = URL(string: "http://localhost:8080/pullNearbyUsers")
-        let url = URL(string: "https://crystal-smalltalk.herokuapp.com/pullNearbyUsers")
-        
-        userLoggedIn?.friends = ["Nathan"]
-        
-        let userDetails : Parameters = [
-            "firstname": self.userLoggedIn?.firstName!,
-            "username": self.userLoggedIn?.username!,
-            "facebookId": self.userLoggedIn?.facebookId,
-            "locality": self.userLoggedIn?.buildingOccupied! ]
-        
-        actInd.frame = CGRect(x: 0.0, y: 0.0, width: 40.0, height: 40.0)
-        actInd.center = self.view.center
-        actInd.hidesWhenStopped = true
-        actInd.activityIndicatorViewStyle =
-            UIActivityIndicatorViewStyle.gray
-        self.view.addSubview(actInd)
-        self.actInd.startAnimating()
-        
-        //Clogging server
-        Alamofire.request(url!, method: .post, parameters: userDetails, encoding: JSONEncoding.default)
-            .responseJSON{ response in
-                if response.response?.statusCode == 200 {
-                    if let json = response.result.value {
-                        print("JSON: \(json)")
-                        let users = json as! [Any]
-                        for someUser in users {
-                            let userDetails = someUser as! [String: Any]
-                            let newPerson = User()
-                            let facebookId = userDetails["facebookId"] as! String
-                            
-                            if (facebookId != self.userLoggedIn?.facebookId) {
-                                newPerson.firstName = userDetails["firstName"] as? String
-                                newPerson.lastName = userDetails["lastName"] as? String
-                                newPerson.facebookId = userDetails["facebookId"] as? String
-                                newPerson.headshotImage = self.getUserFBPicture(facebookId: newPerson.facebookId!)
-                                
-                                // newPerson.school = userDetails["school"] as! String
-                                newPerson.headshotImage = self.getUserFBPicture(facebookId: newPerson.facebookId!)
-                                
-                                self.friendsAround.insert(newPerson)
-                            }
-                            // } else {
-                            // self.strangersAround.insert(newPerson)
-                            
-                            if (self.userCacheURL != nil) {
-                                self.userCacheQueue.addOperation {
-                                    if let stream = OutputStream(url: self.userCacheURL!, append: false) {
-                                        stream.open()
-                                        
-                                        JSONSerialization.writeJSONObject(json, to: stream, options: [.prettyPrinted], error: nil)
-                                        
-                                        stream.close()
-                                    }
-                                }
-                            }
-                        }
-                        self.count = self.friendsAround.count + self.strangersAround.count
-                        let numberoccupied = "# Occupied: " + String(self.count)
-                        self.peopleCounter.text = String(describing: numberoccupied)
-                        self.actInd.stopAnimating()
-                        
-                        self.PeopleNearbyTableView.reloadData()
-                        
-                    }
-                    //If happens show cached data
-                } else if response.response?.statusCode == 503 {
-                    
-                    // Try to display cached data
-                    if (self.userCacheURL != nil) {
-                        self.userCacheQueue.addOperation {
-                            if let stream = InputStream(url: self.userCacheURL!) {
-                                stream.open()
-                                
-                                let users = (try? JSONSerialization.jsonObject(with: stream, options: [])) as? [[String: Any]]
-                                for user in users! {
-                                    let friend = User()
-                                    friend.locality = user["locality"] as! String
-                                    friend.firstName = user["firstName"] as! String
-                                    friend.lastName = user["lastName"] as! String
-                                    friend.facebookId = user["facebookId"] as! String
-                                    friend.headshotImage = self.getUserFBPicture(facebookId: friend.facebookId!)
-                                    self.friendsAround.insert(friend)
-                                }
-                                print(users)
-                                
-                                stream.close()
-                            }
-                            
-                        }
-                    } else { // No cached data is around so display nobody around users
-                        let person = User()
-                        person.firstName = "Nobody"
-                        person.lastName = "Around"
-                        person.school = "None"
-                        person.facebookId = "none"
-                        person.headshotImage = #imageLiteral(resourceName: "empty-headshot")
-                        self.friendsAround.insert(person)
-                        self.strangersAround.insert(person)
-                        
-                        self.actInd.stopAnimating()
-                    }
-                }
-        }
-        
-        self.PeopleNearbyTableView.reloadData()
-        
+        activateLocationServices()
     }
     
     func getUserFBPicture (facebookId : String) -> UIImage {
@@ -376,6 +329,8 @@ class NearbyPeopleViewController: UIViewController {
                             self.headshots[facebookId] = headshot
                             DispatchQueue.main.async {
                                 self.PeopleNearbyTableView.reloadData()
+                                //                                let indexPath = IndexPath(row: 0, section: 0)
+                                //                                self.PeopleNearbyTableView.reloadRows(at: [indexPath], with: UITableViewRowAnimation.fade)
                             }
                         }
                     }
@@ -387,19 +342,87 @@ class NearbyPeopleViewController: UIViewController {
         return headshot
     }
     
+    func activateLocationServices() {
+        
+        locationManager = CLLocationManager()
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.distanceFilter = kCLLocationAccuracyNearestTenMeters;
+        locationManager.requestAlwaysAuthorization()
+        
+        if CLLocationManager.locationServicesEnabled() {
+            locationManager?.startUpdatingLocation()
+        }
+        
+    }
     
-    /*
-     // MARK: - Navigation
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destinationViewController.
-     // Pass the selected object to the new view controller.
-     }
-     */
+    //  MARK: - Location tracking
+    @IBAction func presenceSwitch(_ sender: Any) {
+        self.tabBarController?.selectedIndex = 1
+        self.userLoggedIn?.online = !self.userLoggedIn.online!
+        updateOnlineStatus()
+    }
+    
+    func updateOnlineStatus () {
+        let url = URL(string: "https://crystal-smalltalk.herokuapp.com/updateOnlineStatus")
+        
+        let userDetails : Parameters = [
+            "facebookId": self.userLoggedIn.facebookId,
+            "online": false
+        ]
+        
+        Alamofire.request(url!, method: .post, parameters: userDetails, encoding: JSONEncoding.default)
+        
+        if (userLoggedIn!.online ?? true) {
+            presenceSwitch.isOn = true
+            activateLocationServices()
+        } else {
+            presenceSwitch.isOn = false
+            locationManager.stopUpdatingLocation()
+        }
+    }
+    
+    func trackUserLocation (placemark: CLPlacemark?, userLocation: CLLocation) {
+        
+        if let userPlacemark = placemark {
+            
+            let locality = (userPlacemark.locality != nil) ? userPlacemark.locality : ""
+            //            let postalCode = (containsPlacemark.postalCode != nil) ? containsPlacemark.postalCode : ""
+            //            let administrativeArea = (containsPlacemark.administrativeArea != nil) ? containsPlacemark.administrativeArea : ""
+            //            let country = (containsPlacemark.country != nil) ? containsPlacemark.country : ""
+            
+            let latitude:Double  = userLocation.coordinate.latitude
+            let longitutde:Double = userLocation.coordinate.longitude
+            
+            let userDetails : Parameters = [
+                "userName": self.userLoggedIn?.username ?? "",
+                "locality": locality ?? ""
+            ]
+            
+            //Track Location
+            let wifiipAddress = Util.getIFAddresses()[1]
+            let trackURL = "http://\(wifiipAddress):8080/track?longitude=\(longitutde)&latitude=\(latitude)"
+            let herokuTrackURL = "https://crystal-smalltalk.herokuapp.com/track?longitude=\(longitutde)&latitude=\(latitude)"
+            Alamofire.request(herokuTrackURL, method: .post, parameters: userDetails, encoding: JSONEncoding.default).response { (response) in
+                print(response.error)
+                print(response.response?.statusCode)
+            }
+            
+            //Update User's Location
+            userLoggedIn.lastLocation = userLocation
+            userLoggedIn.lastPlacemark = placemark
+            
+            currentUserLocation = CLLocation(latitude: latitude, longitude: longitutde)
+            
+        }
+        
+    }
+    
     
 }
 
 struct MyProfileRequest: GraphRequestProtocol {
+    
     var graphPath: String
     
     var parameters: [String : Any]?
@@ -412,18 +435,14 @@ struct MyProfileRequest: GraphRequestProtocol {
             
         }
     }
+    
 }
 
 extension NearbyPeopleViewController : CLLocationManagerDelegate {
     
-    //  Multithreading? Concurrent?
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         
         let userLocation:CLLocation = locations[0] as CLLocation
-        
-        //Shouldnt have both
-        //    manager.stopUpdatingLocation()
-        //   locationManager.stopUpdatingLocation()
         
         //Update to get user's current location not managers
         CLGeocoder().reverseGeocodeLocation(userLocation, completionHandler: {(placemarks, error)->Void in
@@ -435,7 +454,11 @@ extension NearbyPeopleViewController : CLLocationManagerDelegate {
             
             if (placemarks?.count)! > 0 {
                 let pm = placemarks?[0]
-                self.updateCurrentUserLocation(placemark: pm, userLocation: userLocation)
+                //TODO: Dosnt always update location
+                self.currentLocation.titleLabel?.text = pm?.administrativeArea
+                var latitude = pm?.location?.coordinate.latitude as? Double
+                var longitude = pm?.location?.coordinate.longitude as? Double
+                self.trackUserLocation(placemark: pm, userLocation: userLocation)
             } else {
                 print("Problem with the data received from geocoder")
             }

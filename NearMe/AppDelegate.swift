@@ -18,64 +18,67 @@ import GoogleMaps
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-//
-//    func application(application: UIApplication,
-//                     openURL url: NSURL,
-//                     sourceApplication: String?,
-//                     annotation: AnyObject) -> Bool {
-//        return FBSDKApplicationDelegate.sharedInstance().application(
-//            application,
-//            openURL: url as URL!,
-//            sourceApplication: sourceApplication,
-//            annotation: annotation)
-//    }
 
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+    func application(application: UIApplication,
+                     openURL url: NSURL,
+                     sourceApplication: String?,
+                     annotation: AnyObject) -> Bool {
+        return FBSDKApplicationDelegate.sharedInstance().application(
+            application,
+            open: url as URL?,
+            sourceApplication: sourceApplication,
+            annotation: annotation)
+    }
+
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
-//        //Get current FBSDK Token before the view loads
-//        if(FBSDKAccessToken.current() != nil)
-//        {
-//            print(FBSDKAccessToken.current().permissions)
-//
-//            // Graph Path : "me" is going to get current user logged in
-//            let graphRequest = FBSDKGraphRequest(graphPath: "me", parameters: ["fields" : "id, name, email"])
-//            let connection = FBSDKGraphRequestConnection()
-//
-//            connection.add(graphRequest, completionHandler: { (connection, result, error) -> Void in
-//                let data = result as! [String : AnyObject]
-//                var name = data["name"] as! String
-//                var splitName = name.components(separatedBy: " ")
-//                let firstName = splitName.removeFirst()
-//                print("logged in user name is \(String(describing: name))")
-//
-//                let FBid = data["id"] as? String
-//                print("Facebook id is \(String(describing: FBid))")
-//
-//                let maintabbarVC:MainTabBarController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "MainTabBarController") as! MainTabBarController
-//
-//                var userloggedIn = User()
-//                userloggedIn?.firstName = firstName
-//                userloggedIn?.username = "Tester"
-//                userloggedIn?.facebookId = FBid
-//
-//                maintabbarVC.userloggedIn = userloggedIn
-//
-//                self.window?.rootViewController = maintabbarVC
-//                self.window?.makeKeyAndVisible()
-//
-//            })
-//            connection.start()
-//        }
+        //Get current FBSDK Token before the view loads
+        if(FBSDKAccessToken.current() != nil)
+        {
+            // Graph Path : "me" is going to get current user logged in
+            let graphRequest = FBSDKGraphRequest(graphPath: "me", parameters: ["fields" : "id, name, email"])
+            let connection = FBSDKGraphRequestConnection()
+
+            connection.add(graphRequest, completionHandler: { (connection, result, error) -> Void in
+                let data = result as! [String : AnyObject]
+                var name = data["name"] as! String
+                var splitName = name.components(separatedBy: " ")
+                let firstName = splitName.removeFirst()
+                print("logged in user name is \(String(describing: name))")
+
+                let FBid = data["id"] as? String
+                print("Facebook id is \(String(describing: FBid))")
+
+                let maintabbarVC:MainTabBarController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "MainTabBarController") as! MainTabBarController
+
+                var userloggedIn = User()
+                userloggedIn.facebookId = FBid
+
+                maintabbarVC.userloggedIn = userloggedIn
+
+                self.window?.rootViewController = maintabbarVC
+                self.window?.makeKeyAndVisible()
+            })
+            connection.start()
+        } else {
+            
+            let storyboard = UIStoryboard(name: "Access", bundle: nil)
+            let loginVC = storyboard.instantiateViewController(withIdentifier: "LoginViewController")
+            
+            self.window?.rootViewController = loginVC
+            self.window?.makeKeyAndVisible()
+            
+        }
         
         // Override point for customization after application launch.
         GMSServices.provideAPIKey("AIzaSyCwYvhhN4aTMMGjXZvkRQJBcYoCfS74Rw0")
         GMSPlacesClient.provideAPIKey("AIzaSyDNgLkA282boBZGcpNVuEsN9dJre7fjYeI")
         registerForPushNotifications()
         return FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
+        
     }
     
     // Mark: - Notification settings
-
     func registerForPushNotifications () {
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) {
             (granted, error) in
@@ -107,7 +110,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         print("Failed to register: \(error)")
     }
     
-    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any],
+                                                   fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
         let aps = userInfo["aps"] as! [String: AnyObject]
         let _ = aps["content"] as! String
      
@@ -116,7 +120,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
         return FBSDKApplicationDelegate.sharedInstance().application(application, open: url, sourceApplication: sourceApplication, annotation: annotation)
     }
-//
+
 //    func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
 //        return AWSMobileClient.sharedInstance.withApplication(application, withURL: url, withSourceApplication: sourceApplication, withAnnotation: annotation)
 //    }

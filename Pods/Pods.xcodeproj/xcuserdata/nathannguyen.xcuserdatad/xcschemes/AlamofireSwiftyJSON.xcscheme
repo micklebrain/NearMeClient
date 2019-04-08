@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0700"
+   LastUpgradeVersion = "0930"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -13,11 +13,11 @@
             buildForProfiling = "YES"
             buildForArchiving = "YES">
             <BuildableReference
-               BuildableIdentifier = 'primary'
-               BlueprintIdentifier = '61E5C1379DC63FAC57AF48F891CFB123'
-               BlueprintName = 'AlamofireSwiftyJSON'
-               ReferencedContainer = 'container:Pods.xcodeproj'
-               BuildableName = 'AlamofireSwiftyJSON.framework'>
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "517A7A760C564CD916CB263F68C75DD5"
+               BuildableName = "AlamofireSwiftyJSON.framework"
+               BlueprintName = "AlamofireSwiftyJSON"
+               ReferencedContainer = "container:Pods.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>

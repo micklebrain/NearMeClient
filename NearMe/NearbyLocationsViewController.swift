@@ -16,7 +16,6 @@ import FacebookLogin
 import FacebookCore
 import FBSDKLoginKit
 
-
 class NearbyLocationsViewController: UIViewController {
     
     @IBOutlet weak var placesTableView: UITableView!
@@ -43,6 +42,7 @@ class NearbyLocationsViewController: UIViewController {
     let defaultLocation = CLLocation(latitude: -33.869405, longitude: 151.199)
     
     override func viewDidLoad() {
+        
         super.viewDidLoad()
         
         let tbc = self.tabBarController as! MainTabBarController
@@ -63,11 +63,29 @@ class NearbyLocationsViewController: UIViewController {
             locationManager?.startUpdatingLocation()
         }
         
-        //        let objectMapper = AWSDynamoDBObjectMapper.default()
+        // let objectMapper = AWSDynamoDBObjectMapper.default()
         
     }
     
-    func pullfacebookInfo() {
+    private func getUsername() {
+        
+        let url = URL(string: "https://crystal-smalltalk.herokuapp.com/sync")
+        
+        let userDetails : Parameters = [
+            "facebookId": self.userloggedIn.facebookId!
+        ]
+        
+        Alamofire.request(url!, method: .post, parameters: userDetails, encoding: JSONEncoding.default)
+            .responseString{ response in
+                if let data = response.result.value{
+                    self.userloggedIn.username = data
+                }
+        }
+        
+    }
+    
+    private func pullfacebookInfo() {
+        
         //Crashes without internet connection
         if(FBSDKAccessToken.current() != nil)
         {
@@ -98,21 +116,15 @@ class NearbyLocationsViewController: UIViewController {
             })
             connection.start()
         }
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
         
-    }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     func listLikelyPlaces() {
+        
         likelyPlaces.removeAll()
         
         placesClient.currentPlace(callback:  { (placeLikelihoods, error) -> Void in
+            
             if let error = error {
                 print("Current Place error: \(error.localizedDescription)")
                 return
@@ -121,7 +133,10 @@ class NearbyLocationsViewController: UIViewController {
             if let likelihoodList = placeLikelihoods {
                 for likelihood in likelihoodList.likelihoods {
                     let place = likelihood.place
-                    if (!self.likelyPlaces.contains(place) && !place.name.contains("St") && !place.name.contains("street") && !place.name.contains("Ave")) {
+                    if (!self.likelyPlaces.contains(place)
+                        && !(place.name?.contains("St"))!
+                        && !(place.name?.contains("street"))!
+                        && !(place.name?.contains("Ave"))!) {
                         self.likelyPlaces.append(place)
                     }
                 }
@@ -132,50 +147,13 @@ class NearbyLocationsViewController: UIViewController {
         
     }
     
-    func getUsername() {
-        let url = URL(string: "https://crystal-smalltalk.herokuapp.com/sync")
-        
-        let userDetails : Parameters = [
-            "facebookId": self.userloggedIn.facebookId!
-        ]
-        
-        Alamofire.request(url!, method: .post, parameters: userDetails, encoding: JSONEncoding.default)
-            .responseString{ response in
-                if let data = response.result.value{
-                    self.userloggedIn.username = data
-                }
-        }
-    }
-    
     @IBAction func floorChanged(_ sender: Any) {
         self.floorNumber.text = Int(self.floorStepper.value).description
     }
     
-    
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destinationViewController.
-     // Pass the selected object to the new view controller.
-     }
-     */
-    
-}
-
-extension NearbyLocationsViewController: UIPickerViewDelegate, UIPickerViewDataSource {
-    
-    func numberOfComponents(in pickerView: UIPickerView) -> Int {
-        return 1
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return (self.resturantsAround.count)
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return resturantsAround[row]
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
     }
     
 }
@@ -213,7 +191,6 @@ extension NearbyLocationsViewController: CLLocationManagerDelegate {
     }
     
 }
-
 
 extension NearbyLocationsViewController : UITableViewDataSource, UITableViewDelegate {
     
@@ -259,7 +236,7 @@ extension NearbyLocationsViewController : UITableViewDataSource, UITableViewDele
         self.userloggedIn.floor = Int(floorNumber.text!)
         
         updateLocation(locality: (self.userloggedIn.buildingOccupied)!)
-        tbc.selectedIndex = 2
+        tbc.selectedIndex = 1
         
     }
     
@@ -289,3 +266,20 @@ extension NearbyLocationsViewController : UITableViewDataSource, UITableViewDele
     }
     
 }
+
+extension NearbyLocationsViewController: UIPickerViewDelegate, UIPickerViewDataSource {
+    
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return (self.resturantsAround.count)
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return resturantsAround[row]
+    }
+    
+}
+

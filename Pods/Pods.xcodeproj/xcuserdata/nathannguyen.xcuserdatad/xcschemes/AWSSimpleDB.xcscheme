@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0700"
+   LastUpgradeVersion = "0930"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -13,11 +13,11 @@
             buildForProfiling = "YES"
             buildForArchiving = "YES">
             <BuildableReference
-               BuildableIdentifier = 'primary'
-               BlueprintIdentifier = 'E1BEB1A235C18934076838ED6ED9FFE6'
-               BlueprintName = 'AWSSimpleDB'
-               ReferencedContainer = 'container:Pods.xcodeproj'
-               BuildableName = 'AWSSimpleDB.framework'>
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "73305835456A90447978F6D2F459C81A"
+               BuildableName = "AWSSimpleDB.framework"
+               BlueprintName = "AWSSimpleDB"
+               ReferencedContainer = "container:Pods.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>

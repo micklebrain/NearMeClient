@@ -6,8 +6,7 @@ target 'NearMe' do
   use_frameworks!
 
 # Pods for NearMe
-	
-target :’NearMe’ do
+target :'NearMe' do
     pod 'AWSCognito'
     pod 'AWSCognitoIdentityProvider'
     pod 'AWSDynamoDB'
@@ -17,14 +16,13 @@ target :’NearMe’ do
     pod 'AWSSES'
     pod 'AWSSimpleDB'
     pod 'Bolts'
-    pod 'FBSDKCoreKit'
-    pod 'FBSDKLoginKit'
-    pod 'FacebookCore'
-    pod 'FacebookLogin'
     pod 'AlamofireSwiftyJSON'
     pod 'GooglePlaces'
     pod 'GoogleMaps'
     pod 'Alamofire'
+    pod 'Starscream', '~> 3.0.2'
+    pod 'FacebookCore'
+    pod 'FacebookLogin'
     #pod 'Bolts-Swift'
 end
 
