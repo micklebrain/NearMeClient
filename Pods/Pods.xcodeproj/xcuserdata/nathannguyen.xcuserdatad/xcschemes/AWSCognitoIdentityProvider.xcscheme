@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0700"
+   LastUpgradeVersion = "0930"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -13,11 +13,11 @@
             buildForProfiling = "YES"
             buildForArchiving = "YES">
             <BuildableReference
-               BuildableIdentifier = 'primary'
-               BlueprintIdentifier = '1585529DA784A1590EA31F3E20A317D2'
-               BlueprintName = 'AWSCognitoIdentityProvider'
-               ReferencedContainer = 'container:Pods.xcodeproj'
-               BuildableName = 'AWSCognitoIdentityProvider.framework'>
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "29212B2F049288E035AB98405A23E41E"
+               BuildableName = "AWSCognitoIdentityProvider.framework"
+               BlueprintName = "AWSCognitoIdentityProvider"
+               ReferencedContainer = "container:Pods.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>

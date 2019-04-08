@@ -9,13 +9,12 @@
 import UIKit
 import FacebookLogin
 import FacebookCore
-import FBSDKLoginKit
+import Alamofire
+import SwiftyJSON
 
 class LoginViewController: UIViewController {
     
-//    var results: [AWSDynamoDBObjectModel]?
     var userloggedIn : User!
-    
     var loginButton:LoginButton!
    
     @IBOutlet weak var username: UITextField!
@@ -25,38 +24,40 @@ class LoginViewController: UIViewController {
         super.viewDidLoad()
         
         //Cache the token in case offline
-        if(FBSDKAccessToken.current() != nil)
-        {
-            print(FBSDKAccessToken.current().tokenString)
+        if (AccessToken.current != nil) {
             //Crashes without Internet
             //This request dosnt happen fast enough
-            let graphRequest = FBSDKGraphRequest(graphPath: "me", parameters: ["fields" : "id, name, email"])
-            let connection = FBSDKGraphRequestConnection()
-
-            connection.add(graphRequest, completionHandler: { (connection, result, error) -> Void in
-                if (connection?.urlResponse != nil && connection?.urlResponse.statusCode == 200) {
+            
+           let connection = GraphRequestConnection()
+           
+            connection.add(GraphRequest(graphPath: "/me")) { httpResponse, result in
+                
+                switch result {
+                case .success(let response):
                     let data = result as! [String : AnyObject]
                     let name = data["name"] as! String
                     var splitName = name.components(separatedBy: " ")
                     let firstName = splitName.removeFirst()
-                    print("logged in user name is \(String(describing: name))")
-
                     let FBid = data["id"] as? String
-                    print("Facebook id is \(String(describing: FBid))")
-
+                    
                     self.userloggedIn = User()
                     self.userloggedIn?.firstName = firstName
-//                    self.userloggedIn?.username = "GANathan"
                     self.userloggedIn?.facebookId = FBid
-        
+                    
+                    //Hardcoded
+                    self.userloggedIn?.username = "SFNathan"
+                    
                     let maintabbarVC:MainTabBarController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "MainTabBarController") as! MainTabBarController
                     
                     maintabbarVC.userloggedIn = self.userloggedIn
                     
                     self.present(maintabbarVC, animated: false, completion: nil)
+                case .failed(let error):
+                    print("Graph Request Failed: \(error)")
                 }
-            })
-            connection.start()
+                
+            }
+            connection.start()    
 
         }
         
@@ -77,47 +78,57 @@ class LoginViewController: UIViewController {
                 print("We failed")
             case.failed(let error):
                 print(error)
-            case.success(grantedPermissions: let grantedPermissions, declinedPermissions: let declinedPermissions, token: let _):
+            case.success(grantedPermissions: _, declinedPermissions: _, token: let token):
                 //Pull user's information from granted permissions
                 
                 let maintabbarVC:MainTabBarController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "MainTabBarController") as! MainTabBarController
                 
-                maintabbarVC.userloggedIn = self.userloggedIn
+                self.userloggedIn = User()
+                self.userloggedIn.facebookId = token.userId
                 
-                let initialViewController = UIStoryboard(name: "Main", bundle:nil).instantiateInitialViewController() as! UIViewController
-                let appDelegate = (UIApplication.shared.delegate as! AppDelegate)
-                appDelegate.window?.rootViewController = initialViewController
+                let wifiipAddress = Util.getIFAddresses()[1]
+                var localUrlString = "http://\(wifiipAddress):8080/getAccount?facebookId="
+                localUrlString.append(self.userloggedIn.facebookId ?? "")
+                let localUrl = URL(string: localUrlString)
                 
                 self.present(maintabbarVC, animated: false, completion: nil)
+               
+                // TODO: Fix grabbing User's Auth
+//                Alamofire.request(localUrl!).response(completionHandler: { (response) in
+//                    let json = try? JSONSerialization.jsonObject(with: response.data!, options: [])
+//
+//                    if let userFields = json as? [Any] {
+//                        let userFieldsDictionary = userFields[0] as! [String: Any]
+//                        self.userloggedIn.username = userFieldsDictionary["username"] as? String
+//                        self.userloggedIn.firstName = userFieldsDictionary["firstname"] as? String
+//                        self.userloggedIn.lastName = userFieldsDictionary["lastname"] as? String
+//                    }
+//
+//                    maintabbarVC.userloggedIn = self.userloggedIn
+//
+//                    self.present(maintabbarVC, animated: false, completion: nil)
+//
+//                })
+        
             }
         }
         
     }
     
+    @IBAction func logout(_ sender: Any) {
+        let deletepermission = GraphRequest(graphPath: "me/permissions/", parameters: [:], httpMethod: GraphRequestHTTPMethod.DELETE)
+//        deletepermission.start({(connection,result,error)-> Void in
+//            print(String(describing:"the delete permission is \(describing: result))"))
+//        })
+    }
+    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         password.resignFirstResponder()
-    }
-
-    @IBAction func logout(_ sender: Any) {
-        let deletepermission = FBSDKGraphRequest(graphPath: "me/permissions/", parameters: nil, httpMethod: "DELETE")
-        deletepermission?.start(completionHandler: {(connection,result,error)-> Void in
-            print(String(describing:"the delete permission is \(describing: result))"))
-        })
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

@@ -10,10 +10,6 @@ import Foundation
 import CoreLocation
 import UIKit
 
-func == (lhs: User, rhs: User) -> Bool {
-    return lhs.hashValue == rhs.hashValue
-}
-
 enum sex : String {
     case male = "male"
     case female = "female"
@@ -25,7 +21,11 @@ enum relationshipStatus {
     case taken
 }
 
-class User : Hashable /* AWSDynamoDBObjectModel,AWSDynamoDBModeling */ {
+func == (lhs: User, rhs: User) -> Bool {
+    return lhs.hashValue == rhs.hashValue
+}
+
+class User : Hashable {
     
     //Account
     var userId : NSNumber?
@@ -42,7 +42,7 @@ class User : Hashable /* AWSDynamoDBObjectModel,AWSDynamoDBModeling */ {
     var school : String?
     var headshotImage: UIImage?
     var facebookId : String?
-    var online : Bool = true
+    var online : Bool?
     var profilePicture : UIImage?
     var friendRequests: [String]?
     var headshot = #imageLiteral(resourceName: "empty-headshot.jpg")
@@ -54,6 +54,8 @@ class User : Hashable /* AWSDynamoDBObjectModel,AWSDynamoDBModeling */ {
     //  var weekendPlans = [String: String]()
     
     //  Location
+    var lastLocation: CLLocation?
+    var lastPlacemark: CLPlacemark?
     var currentLocation : location?
     var location : CLLocation?
     var postalCode: String?
@@ -65,19 +67,10 @@ class User : Hashable /* AWSDynamoDBObjectModel,AWSDynamoDBModeling */ {
     var buildingOccupied: String?
     var floor: Int!
     
-    //    Has to change first name will not be unique
     var hashValue: Int {
         get {
-            return (firstName?.hashValue)!
+            return (username?.hashValue)!
         }
     }
-    
-    //    class func dynamoDBTableName() -> String {
-    //        return "accounts"
-    //    }
-    //
-    //    class func hashKeyAttribute() -> String {
-    //        return "username"
-    //    }
     
 }

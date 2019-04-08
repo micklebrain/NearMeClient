@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0700"
+   LastUpgradeVersion = "0930"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -13,11 +13,11 @@
             buildForProfiling = "YES"
             buildForArchiving = "YES">
             <BuildableReference
-               BuildableIdentifier = 'primary'
-               BlueprintIdentifier = '764BF5F8A7793010994AF3D12E8FB7BF'
-               BlueprintName = 'AWSDynamoDB'
-               ReferencedContainer = 'container:Pods.xcodeproj'
-               BuildableName = 'AWSDynamoDB.framework'>
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "3BFB45FB2D1819C5997D4E01E1D75F3A"
+               BuildableName = "AWSDynamoDB.framework"
+               BlueprintName = "AWSDynamoDB"
+               ReferencedContainer = "container:Pods.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>

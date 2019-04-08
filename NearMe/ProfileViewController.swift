@@ -29,7 +29,17 @@ class ProfileViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-
+    @IBAction func goBack(_ sender: Any) {
+        
+        let mainTabBarController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "MainTabBarController") as! MainTabBarController
+        mainTabBarController.userloggedIn = self.userSelected
+        mainTabBarController.selectedIndex=2
+        
+        self.present(mainTabBarController, animated: false)
+        
+        
+    }
+    
     /*
     // MARK: - Navigation
 
