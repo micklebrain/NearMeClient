@@ -29,21 +29,29 @@ class UserProfileViewController: ProfileViewController {
     
     private func pullFacebookInfo () {
         if((AccessToken.current) != nil) {
+            self.userSelected = User()
+            self.userSelected.facebookId = "100021819854273"
             let graphRequest = GraphRequest(graphPath: self.userSelected.facebookId!, parameters: ["fields" : "id, name, email"], accessToken: AccessToken.current, httpMethod: GraphRequestHTTPMethod.GET, apiVersion: "")
             let connection = GraphRequestConnection()
             
             connection.add(graphRequest) { httpResponse, result in
-                let data = result as! [String : AnyObject]
-                let name = data["name"] as! String
-                //                let email = data["email"] as! String
-                var splitName = name.components(separatedBy: " ")
-                splitName.removeFirst()
-                print("logged in user name is \(String(describing: name))")
                 
-                let FBid = data["id"] as? String
-                print("Facebook id is \(String(describing: FBid))")
+                switch result {
+                case .success(let response):
+                    let data = result as! [String : AnyObject]
+                    let name = data["name"] as! String
+                    //                let email = data["email"] as! String
+                    var splitName = name.components(separatedBy: " ")
+                    splitName.removeFirst()
+                    print("logged in user name is \(String(describing: name))")
+                    
+                    let FBid = data["id"] as? String
+                    print("Facebook id is \(String(describing: FBid))")
+                    //                self.UserDetails.text?.append(name + "\n" + self.userSelected.buildingOccupied!)
+                case .failed(let error):
+                    print("Failed to get facebook credential")
+                }
                 
-//                self.UserDetails.text?.append(name + "\n" + self.userSelected.buildingOccupied!)
             }
             connection.start()
         }

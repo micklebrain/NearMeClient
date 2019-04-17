@@ -47,23 +47,25 @@ class NearbyLocationsViewController: UIViewController {
         
         let tbc = self.tabBarController as! MainTabBarController
         //Crashes After first logging in through facebook b/c null value
-        self.userloggedIn = tbc.userloggedIn!
-        
-        pullfacebookInfo()
-        getUsername()
-        
-        locationManager = CLLocationManager()
-        locationManager!.delegate = self
-        locationManager!.desiredAccuracy = kCLLocationAccuracyBest
-        locationManager.distanceFilter = 50;
-        locationManager!.requestAlwaysAuthorization()
-        placesClient = GMSPlacesClient.shared()
-        
-        if CLLocationManager.locationServicesEnabled() {
-            locationManager?.startUpdatingLocation()
+        if (self.userloggedIn != nil && tbc.userloggedIn != nil) {
+            self.userloggedIn = tbc.userloggedIn!
+            
+            pullfacebookInfo()
+            getUsername()
+            
+            locationManager = CLLocationManager()
+            locationManager!.delegate = self
+            locationManager!.desiredAccuracy = kCLLocationAccuracyBest
+            locationManager.distanceFilter = 50;
+            locationManager!.requestAlwaysAuthorization()
+            placesClient = GMSPlacesClient.shared()
+            
+            if CLLocationManager.locationServicesEnabled() {
+                locationManager?.startUpdatingLocation()
+            }
+            
+            // let objectMapper = AWSDynamoDBObjectMapper.default()
         }
-        
-        // let objectMapper = AWSDynamoDBObjectMapper.default()
         
     }
     
