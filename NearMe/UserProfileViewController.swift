@@ -18,7 +18,8 @@ class UserProfileViewController: ProfileViewController {
     
     override func viewDidLoad() {
         let tbc = self.tabBarController as! MainTabBarController
-        self.userSelected = tbc.userloggedIn        
+        self.userSelected = tbc.userloggedIn
+        
         if (self.userSelected != nil) {
             downloadProfilePic()
         }
@@ -29,26 +30,30 @@ class UserProfileViewController: ProfileViewController {
     
     private func pullFacebookInfo () {
         if((AccessToken.current) != nil) {
-            self.userSelected = User()
-            self.userSelected.facebookId = "100021819854273"
-            let graphRequest = GraphRequest(graphPath: self.userSelected.facebookId!, parameters: ["fields" : "id, name, email"], accessToken: AccessToken.current, httpMethod: GraphRequestHTTPMethod.GET, apiVersion: "")
-            let connection = GraphRequestConnection()
+            print(AccessToken.current)
+            let graphRequest = GraphRequest(graphPath: self.userSelected.facebookId!, parameters: ["fields" : "id, name, email"], accessToken: AccessToken.current, httpMethod: GraphRequestHTTPMethod.GET, apiVersion: .defaultVersion)
+//                        let graphRequest = GraphRequest(graphPath: "/me", parameters: ["fields" : "id, name, email"], accessToken: AccessToken.current, httpMethod: GraphRequestHTTPMethod.GET, apiVersion: "")
             
-            connection.add(graphRequest) { httpResponse, result in
+            let connection = GraphRequestConnection()
+            connection.add(graphRequest) { response, result in
                 
                 switch result {
                 case .success(let response):
-                    let data = result as! [String : AnyObject]
-                    let name = data["name"] as! String
-                    //                let email = data["email"] as! String
-                    var splitName = name.components(separatedBy: " ")
-                    splitName.removeFirst()
-                    print("logged in user name is \(String(describing: name))")
                     
-                    let FBid = data["id"] as? String
+                    print("Custom Graph Request Succeeded: \(response)")
+                    print("My facebook id is \(response.dictionaryValue?["id"])")
+                    print("My name is \(response.dictionaryValue?["name"])")
+//                    let data = result as! [String : AnyObject]
+                    let facebookName = (response.dictionaryValue?["name"]) as! String
+                    var splitName = facebookName.components(separatedBy: " ")
+                    splitName.removeFirst()
+                    print("logged in user name is \(String(describing: facebookName))")
+                    
+                    let FBid = (response.dictionaryValue?["id"]) as! String
                     print("Facebook id is \(String(describing: FBid))")
                     //                self.UserDetails.text?.append(name + "\n" + self.userSelected.buildingOccupied!)
                 case .failed(let error):
+                    print(error)
                     print("Failed to get facebook credential")
                 }
                 

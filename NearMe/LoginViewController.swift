@@ -91,8 +91,6 @@ class LoginViewController: UIViewController {
                 localUrlString.append(self.userloggedIn.facebookId ?? "")
                 let localUrl = URL(string: localUrlString)
                 
-                self.present(maintabbarVC, animated: false, completion: nil)
-               
                 // TODO: Fix grabbing User's Auth
 //                Alamofire.request(localUrl!).response(completionHandler: { (response) in
 //                    let json = try? JSONSerialization.jsonObject(with: response.data!, options: [])
@@ -109,6 +107,13 @@ class LoginViewController: UIViewController {
 //                    self.present(maintabbarVC, animated: false, completion: nil)
 //
 //                })
+                
+                // Hardcoded
+                self.userloggedIn.username = "SFNathan"
+                self.userloggedIn.firstName = "Nathan"
+                self.userloggedIn.lastName = "Nguyen"
+                maintabbarVC.userloggedIn = self.userloggedIn
+                self.present(maintabbarVC, animated: false, completion: nil)
         
             }
         }
