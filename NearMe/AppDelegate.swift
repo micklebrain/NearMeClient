@@ -35,7 +35,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         //Get current FBSDK Token before the view loads
         if(FBSDKAccessToken.current() != nil)
         {
-            // Graph Path : "me" is going to get current user logged in
+            
             let graphRequest = FBSDKGraphRequest(graphPath: "me", parameters: ["fields" : "id, name, email"])
             let connection = FBSDKGraphRequestConnection()
 
