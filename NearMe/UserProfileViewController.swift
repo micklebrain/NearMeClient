@@ -51,7 +51,11 @@ class UserProfileViewController: ProfileViewController {
                     
                     let FBid = (response.dictionaryValue?["id"]) as! String
                     print("Facebook id is \(String(describing: FBid))")
-                    //                self.UserDetails.text?.append(name + "\n" + self.userSelected.buildingOccupied!)
+                    self.UserDetails.text?.append(
+                        "First Name: " + self.userSelected.firstName!)
+                    self.UserDetails.text?.append(
+                        " Last Name: " + self.userSelected.lastName!)
+                    
                 case .failed(let error):
                     print(error)
                     print("Failed to get facebook credential")
