@@ -23,6 +23,7 @@ target :'NearMe' do
     pod 'Starscream', '~> 3.0.2'
     pod 'FacebookCore'
     pod 'FacebookLogin'
+    pod 'SwiftLint'
     #pod 'Bolts-Swift'
 end
 
