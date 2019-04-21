@@ -1,0 +1,130 @@
+//
+//  LoginViewController.swift
+//  LoginScreen
+//
+//  Created by Florian Marcu on 1/15/17.
+//  Copyright © 2017 iOS App Templates. All rights reserved.
+//
+
+import FacebookCore
+import FacebookLogin
+//import TwitterKit
+import UIKit
+
+class AuthViewController: UIViewController {
+    
+    
+    @IBOutlet var usernameTextField: UITextField!
+    @IBOutlet var passwordTextField: UITextField!
+    
+    var userloggedIn : User!
+    
+    // Facebook login permissions
+    // Add extra permissions you need
+    // Remove permissions you don't need
+    private let readPermissions: [ReadPermission] = [ .publicProfile, .email, .userFriends, .custom("user_posts") ]
+    
+    @IBAction func didTapLoginButton(_ sender: LoginButton) {
+        // Regular login attempt. Add the code to handle the login by email and password.
+        guard let email = usernameTextField.text, let pass = passwordTextField.text else {
+            // It should never get here
+            return
+        }
+        didLogin(method: "email and password", info: "Email: \(email) \n Password: \(pass)")
+    }
+    
+    @IBAction func dudTaoFacebookLoginButton(_ sender: Any) {
+        // Facebook login attempt
+        let loginManager = LoginManager()
+        loginManager.logIn(readPermissions: readPermissions, viewController: self, completion: didReceiveFacebookLoginResult)
+    }
+    
+//    @IBAction func didTapFacebookLoginButton(_ sender: FacebookLoginButton) {
+//        // Facebook login attempt
+//        let loginManager = LoginManager()
+//        loginManager.logIn(readPermissions: readPermissions, viewController: self, completion: didReceiveFacebookLoginResult)
+//    }
+    
+//    @IBAction func didTapTwitterLoginButton(_ sender: TwitterLoginButton) {
+//        // Twitter login attempt
+//        TWTRTwitter.sharedInstance().logIn(completion: { session, error in
+//            if let session = session {
+//                // Successful log in with Twitter
+//                print("signed in as \(session.userName)");
+//                let info = "Username: \(session.userName) \n User ID: \(session.userID)"
+//                self.didLogin(method: "Twitter", info: info)
+//            } else {
+//                print("error: \(error?.localizedDescription)");
+//            }
+//        })
+//    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        usernameTextField.resignFirstResponder()
+        passwordTextField.resignFirstResponder()
+    }
+    
+    private func didReceiveFacebookLoginResult(loginResult: LoginResult) {
+        switch loginResult {
+        case .success(grantedPermissions: _, declinedPermissions: _, token: let token):
+            didLoginWithFacebook(token)
+        case .failed(_): break
+        default: break
+        }
+    }
+    
+    private func didLoginWithFacebook(_ token: AccessToken) {
+        // Successful log in with Facebook
+        if let accessToken = AccessToken.current {
+//            let facebookAPIManager = FacebookAPIManager(accessToken: accessToken)
+//            facebookAPIManager.requestFacebookUser(completion: { (facebookUser) in
+//                if let _ = facebookUser.email {
+//                    let info = "First name: \(facebookUser.firstName!) \n Last name: \(facebookUser.lastName!) \n Email: \(facebookUser.email!)"
+//                    self.didLogin(method: "Facebook", info: info)
+//                }
+//            })
+            
+            //Pull user's information from granted permissions
+            let maintabbarVC:MainTabBarController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "MainTabBarController") as! MainTabBarController
+            
+            self.userloggedIn = User()
+            self.userloggedIn.facebookId = token.userId
+            
+            let wifiipAddress = Util.getIFAddresses()[1]
+            var localUrlString = "http://\(wifiipAddress):8080/getAccount?facebookId="
+            localUrlString.append(self.userloggedIn.facebookId ?? "")
+            let localUrl = URL(string: localUrlString)
+            
+            // TODO: Fix grabbing User's Auth
+            //                Alamofire.request(localUrl!).response(completionHandler: { (response) in
+            //                    let json = try? JSONSerialization.jsonObject(with: response.data!, options: [])
+            //
+            //                    if let userFields = json as? [Any] {
+            //                        let userFieldsDictionary = userFields[0] as! [String: Any]
+            //                        self.userloggedIn.username = userFieldsDictionary["username"] as? String
+            //                        self.userloggedIn.firstName = userFieldsDictionary["firstname"] as? String
+            //                        self.userloggedIn.lastName = userFieldsDictionary["lastname"] as? String
+            //                    }
+            //
+            //                    maintabbarVC.userloggedIn = self.userloggedIn
+            //
+            //                    self.present(maintabbarVC, animated: false, completion: nil)
+            //
+            //                })
+            
+            // Hardcoded
+            self.userloggedIn.username = "SFNathan"
+            self.userloggedIn.firstName = "Nathan"
+            self.userloggedIn.lastName = "Nguyen"
+            maintabbarVC.userloggedIn = self.userloggedIn
+            self.present(maintabbarVC, animated: false, completion: nil)
+        }
+    }
+    
+    private func didLogin(method: String, info: String) {
+        let message = "Successfully logged in with \(method). " + info
+        let alert = UIAlertController(title: "Success", message: message, preferredStyle: UIAlertController.Style.alert)
+        alert.addAction(UIAlertAction(title: "Done", style: UIAlertAction.Style.default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
+    }
+}
