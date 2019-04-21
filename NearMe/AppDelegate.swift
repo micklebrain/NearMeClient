@@ -63,7 +63,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         } else {
             
             let storyboard = UIStoryboard(name: "Access", bundle: nil)
-            let loginVC = storyboard.instantiateViewController(withIdentifier: "LoginViewController")
+            let loginVC = storyboard.instantiateViewController(withIdentifier: "AuthViewController")
             
             self.window?.rootViewController = loginVC
             self.window?.makeKeyAndVisible()

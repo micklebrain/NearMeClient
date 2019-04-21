@@ -1,14 +1,168 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="Hgc-Ie-D11">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="7F0-66-qOt">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
+        <!--Auth View Controller-->
+        <scene sceneID="cRQ-Oq-Klv">
+            <objects>
+                <viewController storyboardIdentifier="AuthViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="7F0-66-qOt" customClass="AuthViewController" customModule="NearMe" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="oCt-Fs-fTc"/>
+                        <viewControllerLayoutGuide type="bottom" id="qQ1-mL-BsI"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="paC-Q6-Tvv">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="night-stars-wallpaper" translatesAutoresizingMaskIntoConstraints="NO" id="kgH-NB-6BE">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                            </imageView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sNt-YP-rfD" userLabel="LoginFormContainerView">
+                                <rect key="frame" x="36" y="152.5" width="304" height="133.5"/>
+                                <subviews>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Username" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="fyR-ku-PdU" userLabel="Username Text Field" customClass="LoginTextField" customModule="NearMe" customModuleProvider="target">
+                                        <rect key="frame" x="20" y="20" width="264" height="30"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="30" id="I3g-gm-sgw"/>
+                                        </constraints>
+                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="_placeholderLabel.textColor">
+                                                <color key="value" red="0.7019608021" green="0.7019608021" blue="0.7019608021" alpha="1" colorSpace="calibratedRGB"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                    </textField>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="UOp-e0-tZQ" userLabel="Password Text Field" customClass="LoginTextField" customModule="NearMe" customModuleProvider="target">
+                                        <rect key="frame" x="20" y="57" width="264" height="30"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="30" id="A6g-W3-tRe"/>
+                                        </constraints>
+                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                        <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="_placeholderLabel.textColor">
+                                                <color key="value" red="0.7019608021" green="0.7019608021" blue="0.7019608021" alpha="1" colorSpace="calibratedRGB"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                    </textField>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="l1h-yh-fd3" customClass="LoginButton" customModule="LoginScreen" customModuleProvider="target">
+                                        <rect key="frame" x="20" y="101" width="264" height="30"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="30" id="vxq-PF-eF2"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="AppleSDGothicNeo-Regular" family="Apple SD Gothic Neo" pointSize="17"/>
+                                        <state key="normal" title="Login"/>
+                                        <connections>
+                                            <action selector="didTapLoginButton:" destination="7F0-66-qOt" eventType="touchUpInside" id="zz5-a6-R1f"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="133.5" id="BJy-r0-l69"/>
+                                    <constraint firstAttribute="trailing" secondItem="fyR-ku-PdU" secondAttribute="trailing" constant="20" id="G5o-rD-prf"/>
+                                    <constraint firstItem="l1h-yh-fd3" firstAttribute="width" secondItem="UOp-e0-tZQ" secondAttribute="width" id="HU4-2W-tCp"/>
+                                    <constraint firstItem="l1h-yh-fd3" firstAttribute="top" secondItem="UOp-e0-tZQ" secondAttribute="bottom" constant="14" id="SPa-LF-wGF"/>
+                                    <constraint firstItem="UOp-e0-tZQ" firstAttribute="leading" secondItem="sNt-YP-rfD" secondAttribute="leading" constant="20" id="VH5-A6-MNg"/>
+                                    <constraint firstItem="UOp-e0-tZQ" firstAttribute="top" secondItem="fyR-ku-PdU" secondAttribute="bottom" constant="7" id="VZx-mn-7U7"/>
+                                    <constraint firstItem="l1h-yh-fd3" firstAttribute="centerX" secondItem="sNt-YP-rfD" secondAttribute="centerX" id="mOc-Jt-6TR"/>
+                                    <constraint firstItem="fyR-ku-PdU" firstAttribute="leading" secondItem="sNt-YP-rfD" secondAttribute="leading" constant="20" id="nEe-Br-cUR" userLabel="Username Text Field.leading = leading + 40"/>
+                                    <constraint firstItem="fyR-ku-PdU" firstAttribute="top" secondItem="sNt-YP-rfD" secondAttribute="top" constant="20" id="pcs-C4-hE2"/>
+                                    <constraint firstAttribute="trailing" secondItem="UOp-e0-tZQ" secondAttribute="trailing" constant="20" id="qfP-c3-7NB"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mFI-np-rJ3" userLabel="SocialButtonsContainerView">
+                                <rect key="frame" x="87.5" y="321" width="200" height="64"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Lnv-le-BpY" userLabel="TwitterButton" customClass="TwitterLoginButton" customModule="NearMe" customModuleProvider="target">
+                                        <rect key="frame" x="105" y="17" width="95" height="30"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="30" id="3wG-Kd-P4p"/>
+                                            <constraint firstAttribute="width" constant="95" id="U1P-oL-5bh"/>
+                                        </constraints>
+                                        <state key="normal" image="twitter-icon"/>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fM7-TT-wlU" userLabel="FacebookButton" customClass="FacebookLoginButton" customModule="NearMe" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="17" width="95" height="30"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="30" id="NiR-jR-Qdr"/>
+                                            <constraint firstAttribute="width" constant="95" id="hPs-Gg-ehT"/>
+                                        </constraints>
+                                        <state key="normal" image="facebook-icon"/>
+                                        <connections>
+                                            <action selector="dudTaoFacebookLoginButton:" destination="7F0-66-qOt" eventType="touchUpInside" id="T5d-N7-df2"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="fM7-TT-wlU" firstAttribute="centerY" secondItem="mFI-np-rJ3" secondAttribute="centerY" id="KME-2v-Nea"/>
+                                    <constraint firstAttribute="width" constant="200" id="NW3-vj-ljR" userLabel="width = 140"/>
+                                    <constraint firstItem="Lnv-le-BpY" firstAttribute="leading" secondItem="fM7-TT-wlU" secondAttribute="trailing" constant="10" id="UCW-gf-kTW"/>
+                                    <constraint firstItem="fM7-TT-wlU" firstAttribute="leading" secondItem="mFI-np-rJ3" secondAttribute="leading" id="bEA-NF-F5c"/>
+                                    <constraint firstAttribute="height" constant="64" id="cul-eR-QTb"/>
+                                    <constraint firstItem="Lnv-le-BpY" firstAttribute="leading" secondItem="fM7-TT-wlU" secondAttribute="trailing" constant="10" id="gaA-24-fhP"/>
+                                    <constraint firstItem="Lnv-le-BpY" firstAttribute="centerY" secondItem="mFI-np-rJ3" secondAttribute="centerY" id="wNV-hQ-GJa"/>
+                                </constraints>
+                            </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="or connect with" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YTo-jK-wZO" userLabel="ConectWithLabel">
+                                <rect key="frame" x="0.0" y="300" width="375" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="s6R-5c-611"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                <color key="textColor" red="0.7019608021" green="0.7019608021" blue="0.7019608021" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="iosapptemplates.com" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PVs-Qf-epE">
+                                <rect key="frame" x="0.0" y="103" width="375" height="42"/>
+                                <color key="tintColor" red="0.1215686275" green="0.29411764709999999" blue="0.64313725489999995" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="42" id="3GP-57-dVR"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="AppleSDGothicNeo-Regular" family="Apple SD Gothic Neo" pointSize="26"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="kgH-NB-6BE" firstAttribute="centerX" secondItem="paC-Q6-Tvv" secondAttribute="centerX" id="1pd-cA-u0U"/>
+                            <constraint firstItem="mFI-np-rJ3" firstAttribute="centerX" secondItem="paC-Q6-Tvv" secondAttribute="centerX" id="6D4-7N-eVn"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="sNt-YP-rfD" secondAttribute="trailing" constant="19" id="6re-u1-Y3q"/>
+                            <constraint firstItem="sNt-YP-rfD" firstAttribute="top" secondItem="PVs-Qf-epE" secondAttribute="bottom" multiplier="1.05" id="7MM-3B-sZv"/>
+                            <constraint firstItem="sNt-YP-rfD" firstAttribute="leading" secondItem="paC-Q6-Tvv" secondAttribute="leadingMargin" constant="20" id="DAe-PW-s2E"/>
+                            <constraint firstItem="kgH-NB-6BE" firstAttribute="width" secondItem="paC-Q6-Tvv" secondAttribute="width" id="Y0H-Hj-C2q"/>
+                            <constraint firstItem="PVs-Qf-epE" firstAttribute="centerX" secondItem="paC-Q6-Tvv" secondAttribute="centerX" id="YWl-Za-788"/>
+                            <constraint firstItem="PVs-Qf-epE" firstAttribute="top" secondItem="oCt-Fs-fTc" secondAttribute="bottom" multiplier="4" constant="23" id="bCO-82-Rpb"/>
+                            <constraint firstItem="mFI-np-rJ3" firstAttribute="top" secondItem="YTo-jK-wZO" secondAttribute="bottom" id="bVT-ku-coj"/>
+                            <constraint firstItem="YTo-jK-wZO" firstAttribute="top" secondItem="sNt-YP-rfD" secondAttribute="bottom" multiplier="1.05" id="d3f-at-N6n"/>
+                            <constraint firstItem="kgH-NB-6BE" firstAttribute="centerY" secondItem="paC-Q6-Tvv" secondAttribute="centerY" id="evS-sM-uuL"/>
+                            <constraint firstItem="kgH-NB-6BE" firstAttribute="height" secondItem="paC-Q6-Tvv" secondAttribute="height" id="f5u-Uh-xXG"/>
+                            <constraint firstItem="YTo-jK-wZO" firstAttribute="centerX" secondItem="paC-Q6-Tvv" secondAttribute="centerX" id="ltj-8S-1he"/>
+                            <constraint firstItem="PVs-Qf-epE" firstAttribute="width" secondItem="paC-Q6-Tvv" secondAttribute="width" id="oB3-Hq-JkI"/>
+                            <constraint firstItem="YTo-jK-wZO" firstAttribute="width" secondItem="paC-Q6-Tvv" secondAttribute="width" id="uej-nq-g3n"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="passwordTextField" destination="UOp-e0-tZQ" id="MCk-II-Ydn"/>
+                        <outlet property="usernameTextField" destination="fyR-ku-PdU" id="5ma-i5-qyp"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dpe-fg-j3k" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-15" y="-50"/>
+        </scene>
         <!--LoginVC-->
         <scene sceneID="XzU-Hb-7bO">
             <objects>
@@ -22,7 +176,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="NearMe" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RmA-xs-Omx">
-                                <rect key="frame" x="154" y="20" width="68" height="32"/>
+                                <rect key="frame" x="153.5" y="20" width="68" height="32"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="68" id="Nv4-cj-llX"/>
                                     <constraint firstAttribute="height" constant="32" id="SHl-gC-gdF"/>
@@ -145,4 +299,9 @@
             <point key="canvasLocation" x="530" y="731"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="facebook-icon" width="16" height="16"/>
+        <image name="night-stars-wallpaper" width="320" height="568"/>
+        <image name="twitter-icon" width="16" height="16"/>
+    </resources>
 </document>
