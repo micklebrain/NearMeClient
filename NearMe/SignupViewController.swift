@@ -41,7 +41,7 @@ class SignupViewController: UIViewController {
         
         Alamofire.request(localUrl!, method: .post, parameters: userDetails, encoding: JSONEncoding.default)
             .response { response in
-                print(response.response?.statusCode)
+                print(response.response?.statusCode ?? 500)
         }
         
     }

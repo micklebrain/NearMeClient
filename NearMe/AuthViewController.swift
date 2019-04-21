@@ -2,17 +2,13 @@
 //  LoginViewController.swift
 //  LoginScreen
 //
-//  Created by Florian Marcu on 1/15/17.
-//  Copyright © 2017 iOS App Templates. All rights reserved.
 //
 
 import FacebookCore
 import FacebookLogin
-//import TwitterKit
 import UIKit
 
 class AuthViewController: UIViewController {
-    
     
     @IBOutlet var usernameTextField: UITextField!
     @IBOutlet var passwordTextField: UITextField!
@@ -39,26 +35,6 @@ class AuthViewController: UIViewController {
         loginManager.logIn(readPermissions: readPermissions, viewController: self, completion: didReceiveFacebookLoginResult)
     }
     
-//    @IBAction func didTapFacebookLoginButton(_ sender: FacebookLoginButton) {
-//        // Facebook login attempt
-//        let loginManager = LoginManager()
-//        loginManager.logIn(readPermissions: readPermissions, viewController: self, completion: didReceiveFacebookLoginResult)
-//    }
-    
-//    @IBAction func didTapTwitterLoginButton(_ sender: TwitterLoginButton) {
-//        // Twitter login attempt
-//        TWTRTwitter.sharedInstance().logIn(completion: { session, error in
-//            if let session = session {
-//                // Successful log in with Twitter
-//                print("signed in as \(session.userName)");
-//                let info = "Username: \(session.userName) \n User ID: \(session.userID)"
-//                self.didLogin(method: "Twitter", info: info)
-//            } else {
-//                print("error: \(error?.localizedDescription)");
-//            }
-//        })
-//    }
-    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         usernameTextField.resignFirstResponder()
         passwordTextField.resignFirstResponder()
@@ -76,6 +52,7 @@ class AuthViewController: UIViewController {
     private func didLoginWithFacebook(_ token: AccessToken) {
         // Successful log in with Facebook
         if let accessToken = AccessToken.current {
+            
 //            let facebookAPIManager = FacebookAPIManager(accessToken: accessToken)
 //            facebookAPIManager.requestFacebookUser(completion: { (facebookUser) in
 //                if let _ = facebookUser.email {

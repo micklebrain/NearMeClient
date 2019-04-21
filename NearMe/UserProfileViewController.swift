@@ -30,7 +30,7 @@ class UserProfileViewController: ProfileViewController {
     
     private func pullFacebookInfo () {
         if((AccessToken.current) != nil) {
-            print(AccessToken.current)
+            print(AccessToken.current ?? "No Current Facebook Access Token")
             let graphRequest = GraphRequest(graphPath: self.userSelected.facebookId!, parameters: ["fields" : "id, name, email"], accessToken: AccessToken.current, httpMethod: GraphRequestHTTPMethod.GET, apiVersion: .defaultVersion)
 //                        let graphRequest = GraphRequest(graphPath: "/me", parameters: ["fields" : "id, name, email"], accessToken: AccessToken.current, httpMethod: GraphRequestHTTPMethod.GET, apiVersion: "")
             
@@ -41,8 +41,8 @@ class UserProfileViewController: ProfileViewController {
                 case .success(let response):
                     
                     print("Custom Graph Request Succeeded: \(response)")
-                    print("My facebook id is \(response.dictionaryValue?["id"])")
-                    print("My name is \(response.dictionaryValue?["name"])")
+                    print("My facebook id is \(String(describing: response.dictionaryValue?["id"]))")
+                    print("My name is \(String(describing: response.dictionaryValue?["name"]))")
 //                    let data = result as! [String : AnyObject]
                     let facebookName = (response.dictionaryValue?["name"]) as! String
                     var splitName = facebookName.components(separatedBy: " ")
