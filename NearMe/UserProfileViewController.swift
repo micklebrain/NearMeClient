@@ -56,6 +56,8 @@ class UserProfileViewController: ProfileViewController {
                     self.UserDetails.numberOfLines = 0
                     
                     self.UserDetails.text?.append(
+                        "Username: " + self.userSelected.username! + "\n")
+                    self.UserDetails.text?.append(
                         "First Name: " + self.userSelected.firstName! + "\n")
                     self.UserDetails.text?.append(
                         "Last Name: " + self.userSelected.lastName!)
