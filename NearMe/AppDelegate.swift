@@ -41,7 +41,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
             connection.add(graphRequest, completionHandler: { (connection, result, error) -> Void in
                 let data = result as! [String : AnyObject]
-                var name = data["name"] as! String
+                let name = data["name"] as! String
                 var splitName = name.components(separatedBy: " ")
                 let firstName = splitName.removeFirst()
                 print("logged in user name is \(String(describing: name))")
@@ -51,8 +51,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
                 let maintabbarVC:MainTabBarController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "MainTabBarController") as! MainTabBarController
 
-                var userloggedIn = User()
+                let userloggedIn = User()
                 userloggedIn.facebookId = FBid
+                userloggedIn.firstName = firstName
 
                 maintabbarVC.userloggedIn = userloggedIn
 
