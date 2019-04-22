@@ -40,12 +40,12 @@ class User : Hashable {
     
     var friends : [String]?
     var school : String?
-    var headshotImage: UIImage?
+//    var headshotImage: UIImage?
+    var headshot = #imageLiteral(resourceName: "empty-headshot.jpg")
     var facebookId : String?
     var online : Bool?
     var profilePicture : UIImage?
     var friendRequests: [String]?
-    var headshot = #imageLiteral(resourceName: "empty-headshot.jpg")
     var address : String?
     //  var occupation : String?
     //  var relationshipStatus : String?
