@@ -32,6 +32,7 @@ class UserProfileViewController: ProfileViewController {
         if((AccessToken.current) != nil) {
             print(AccessToken.current ?? "No Current Facebook Access Token")
             let graphRequest = GraphRequest(graphPath: self.userSelected.facebookId!, parameters: ["fields" : "id, name, email"], accessToken: AccessToken.current, httpMethod: GraphRequestHTTPMethod.GET, apiVersion: .defaultVersion)
+            // Get current facebook profile
 //                        let graphRequest = GraphRequest(graphPath: "/me", parameters: ["fields" : "id, name, email"], accessToken: AccessToken.current, httpMethod: GraphRequestHTTPMethod.GET, apiVersion: "")
             
             let connection = GraphRequestConnection()
@@ -51,10 +52,19 @@ class UserProfileViewController: ProfileViewController {
                     
                     let FBid = (response.dictionaryValue?["id"]) as! String
                     print("Facebook id is \(String(describing: FBid))")
+                    
+                    self.UserDetails.numberOfLines = 0
+                    
+                    let userName = self.userSelected.username ?? ""
+                    let firstName = self.userSelected.firstName ?? ""
+                    let lastName = self.userSelected.lastName ?? ""
+                    
                     self.UserDetails.text?.append(
-                        "First Name: " + self.userSelected.firstName!)
+                        "Username: " + userName + "\n")
                     self.UserDetails.text?.append(
-                        " Last Name: " + self.userSelected.lastName!)
+                        "First Name: " + firstName + "\n")
+                    self.UserDetails.text?.append(
+                        "Last Name: " + lastName)
                     
                 case .failed(let error):
                     print(error)

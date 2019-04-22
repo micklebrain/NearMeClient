@@ -46,7 +46,7 @@ class NearbyLocationsViewController: UIViewController {
         super.viewDidLoad()
         
         let tbc = self.tabBarController as! MainTabBarController
-        //Crashes After first logging in through facebook b/c null value
+        // Crashes After first logging in through facebook b/c null value
         if (self.userloggedIn != nil && tbc.userloggedIn != nil) {
             self.userloggedIn = tbc.userloggedIn!
             

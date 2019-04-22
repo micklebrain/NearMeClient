@@ -70,6 +70,7 @@ class AuthViewController: UIViewController {
             let wifiipAddress = Util.getIFAddresses()[1]
             var localUrlString = "http://\(wifiipAddress):8080/getAccount?facebookId="
             localUrlString.append(self.userloggedIn.facebookId ?? "")
+            
             let localUrl = URL(string: localUrlString)
             
             // TODO: Fix grabbing User's Auth

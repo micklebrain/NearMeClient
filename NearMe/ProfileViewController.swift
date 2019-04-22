@@ -33,7 +33,7 @@ class ProfileViewController: UIViewController {
         
         let mainTabBarController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "MainTabBarController") as! MainTabBarController
         mainTabBarController.userloggedIn = self.userSelected
-        mainTabBarController.selectedIndex=2
+        mainTabBarController.selectedIndex = 0
         
         self.present(mainTabBarController, animated: false)
         
