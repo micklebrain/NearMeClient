@@ -45,7 +45,7 @@ class NearbyPeopleViewController: UIViewController, WebSocketDelegate {
     override func viewDidLoad() {
         
         super.viewDidLoad()
-                
+        
         //Current User Info
         let tbc = self.tabBarController as! MainTabBarController
         self.userLoggedIn = tbc.userloggedIn
@@ -74,10 +74,10 @@ class NearbyPeopleViewController: UIViewController, WebSocketDelegate {
         //Load first time
         refreshUsersNearby()
         
-        //Refresh every 60 seconds
-        self.timer = Timer.scheduledTimer(withTimeInterval: 45, repeats: true, block: { (Timer) in
-            self.refreshUsersNearby()
-        })
+        //Refresh Nearby Userevery 60 seconds
+//        self.timer = Timer.scheduledTimer(withTimeInterval: 10, repeats: true, block: { (Timer) in
+//            self.refreshUsersNearby()
+//        })
         /*Location Services*/
         
     }
@@ -208,8 +208,6 @@ class NearbyPeopleViewController: UIViewController, WebSocketDelegate {
                         
                         self.actInd.stopAnimating()
                         
-                        self.getUsersFBPictures(facebookIds: usersFacebookIds)
-                        
                         DispatchQueue.main.async {
                             self.PeopleNearbyTableView.reloadData()
                             //                            let indexPath = IndexPath(row: 0, section: 0)
@@ -273,8 +271,8 @@ class NearbyPeopleViewController: UIViewController, WebSocketDelegate {
         
         if(FBSDKAccessToken.current() != nil)
         {
-            
-//            self.userLoggedIn.facebookId = FBSDKAccessToken.current()?.appID
+        
+            FBSDKAccessToken.current()?.userID
             
             let graphRequest = FBSDKGraphRequest(graphPath: nathanFBId, parameters: ["fields" : "id, name, email,picture"])
             
@@ -335,45 +333,25 @@ class NearbyPeopleViewController: UIViewController, WebSocketDelegate {
                             user.headshot = headshot
                             self.friendsAround.insert(user)
                             
-//                            let friendIndexPath = IndexPath(row: self.friendsAround.count, section: 0)
-//                            self.PeopleNearbyTableView.cellForRow(at: friendIndexPath)
+                            let friendIndexPath = IndexPath(row: self.friendsAround.count, section: 0)
+                            DispatchQueue.main.async {
+                            if let _ = self.PeopleNearbyTableView.cellForRow(at: friendIndexPath) {
+                                    self.PeopleNearbyTableView.reloadRows(at: [friendIndexPath], with: UITableView.RowAnimation.automatic)
+                                }
+                            }
+                        } else {
+                            print("Image cannot be used for user ")
+                            print(facebookId)
                         }
+                    } else {
+                        print("Image cannot be used for user ")
+                        print(facebookId)
                     }
                 }
             }
             task.resume()
         }
         
-    }
-    
-    func getUsersFBPictures (facebookIds : [String]) {
-        
-        //Solve threading to update fb image when complete
-        
-//        var headshot = #imageLiteral(resourceName: "empty-headshot")
-//        var pictureUrl = "http://graph.facebook.com/"
-//        //        pictureUrl += (userLoggedIn?.facebookId)!
-//        pictureUrl += facebookId
-//        pictureUrl += "/picture?type=large"
-//
-//        let url = URL(string: pictureUrl)
-//
-//        if let url = url {
-//            let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
-//                if error != nil {
-//                    print(error!)
-//                } else {
-//                    if let usableData = data {
-//                        if (UIImage(data: usableData) != nil) {
-//                            headshot = UIImage(data: usableData)!
-//                            self.headshots[facebookId] = headshot
-//                        }
-//                    }
-//                }
-//            }
-//            task.resume()
-//        }
-
     }
     
     func activateLocationServices() {
@@ -530,7 +508,7 @@ extension NearbyPeopleViewController : UITableViewDataSource, UITableViewDelegat
         
         self.refreshControl.endRefreshing()
         self.actInd.stopAnimating()
-        // TODO: Check why view gets loaded without images - bug
+        
         if (indexPath.section == 0) {
             cell.userDetails.text? =
             self.friendsAround[friendsAround.index(self.friendsAround.startIndex, offsetBy: indexPath.row)].firstName! + " " +
@@ -552,6 +530,8 @@ extension NearbyPeopleViewController : UITableViewDataSource, UITableViewDelegat
                 cell.headshotViewImage.layer.borderWidth = headshotBorderWidth
                 cell.headshotViewImage.layer.borderColor = UIColor.black.cgColor
                 
+            } else {
+                print("Facebook ID not found")
             }
             
             let appUser = User()
@@ -597,6 +577,7 @@ extension NearbyPeopleViewController : UITableViewDataSource, UITableViewDelegat
         self.refreshControl.endRefreshing()
         self.actInd.stopAnimating()
         self.actInd.removeFromSuperview()
+//        self.PeopleNearbyTableView.reloadRows(at: [friendIndexPath], with: UITableView.RowAnimation.automatic)
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {

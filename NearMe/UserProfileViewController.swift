@@ -9,6 +9,7 @@
 import UIKit
 import FacebookLogin
 import FacebookCore
+import FBSDKLoginKit
 
 class UserProfileViewController: ProfileViewController {
     
@@ -19,6 +20,7 @@ class UserProfileViewController: ProfileViewController {
     override func viewDidLoad() {
         let tbc = self.tabBarController as! MainTabBarController
         self.userSelected = tbc.userloggedIn
+        self.userSelected.facebookId = FBSDKAccessToken.current()?.userID
         
         if (self.userSelected != nil) {
             downloadProfilePic()
@@ -30,7 +32,6 @@ class UserProfileViewController: ProfileViewController {
     
     private func pullFacebookInfo () {
         if((AccessToken.current) != nil) {
-            print(AccessToken.current ?? "No Current Facebook Access Token")
             let graphRequest = GraphRequest(graphPath: self.userSelected.facebookId!, parameters: ["fields" : "id, name, email"], accessToken: AccessToken.current, httpMethod: GraphRequestHTTPMethod.GET, apiVersion: .defaultVersion)
             // Get current facebook profile
 //                        let graphRequest = GraphRequest(graphPath: "/me", parameters: ["fields" : "id, name, email"], accessToken: AccessToken.current, httpMethod: GraphRequestHTTPMethod.GET, apiVersion: "")
