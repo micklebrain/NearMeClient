@@ -300,7 +300,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="facebook" width="50" height="50"/>
+        <image name="facebook" width="25" height="25"/>
         <image name="night-stars-wallpaper" width="320" height="568"/>
         <image name="twitter-icon" width="16" height="16"/>
     </resources>

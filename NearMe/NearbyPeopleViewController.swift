@@ -101,10 +101,6 @@ class NearbyPeopleViewController: UIViewController, WebSocketDelegate {
         
     }
     
-    private func checkIn () {
-        
-    }
-    
     //MARK: WebSocket
     func websocketDidConnect(socket: WebSocketClient) {
         socket.write(string: "Connected through IOS")
@@ -154,17 +150,24 @@ class NearbyPeopleViewController: UIViewController, WebSocketDelegate {
         
         let buildingOccupied = userLoggedIn?.buildingOccupied != nil ? userLoggedIn.buildingOccupied : ""
         
+        let firstName = self.userLoggedIn?.firstName ?? ""
+        let userName = self.userLoggedIn.username ?? ""
+        let facebookId = self.userLoggedIn?.facebookId ?? ""
+        
         let userDetails : Parameters = [
-            "firstname": self.userLoggedIn?.firstName!,
-            "username": self.userLoggedIn?.username!,
-            "facebookId": self.userLoggedIn?.facebookId,
+            "firstname": firstName,
+            "username": userName,
+            "facebookId": facebookId,
             "locality": buildingOccupied ]
         
         let wifiipAddress = Util.getIFAddresses()[1]
         let localUrl = URL(string: "http://\(wifiipAddress):8080/pullNearbyUsers?locality=SanFrancisco")
-        let url = URL(string: "https://crystal-smalltalk.herokuapp.com/pullNearbyUsers?locality=SanFrancisco")
+        let pullNearByUsersUrl = URL(string: "https://crystal-smalltalk.herokuapp.com/pullNearbyUsers?locality=SanFrancisco")
         
-        Alamofire.request(url!, method: .post, parameters: userDetails, encoding: JSONEncoding.default)
+        let allUsersUrl = URL(string: "https://crystal-smalltalk.herokuapp.com/pullAllUsers")
+        
+        Alamofire.request(pullNearByUsersUrl!, method: .post, parameters: userDetails, encoding: JSONEncoding.default)
+//            Alamofire.request(allUsersUrl!, method: .get)
             .responseJSON{ response in
                 if response.response?.statusCode == 200 {
                     if let json = response.result.value {
@@ -499,18 +502,30 @@ extension NearbyPeopleViewController : UITableViewDataSource, UITableViewDelegat
         self.actInd.stopAnimating()
         //      TODO: Check why view gets loaded without images - bug
         if (indexPath.section == 0) {
-            cell.nameLabel.text = self.friendsAround[friendsAround.index(self.friendsAround.startIndex, offsetBy: indexPath.row)].firstName! + " " +
+            cell.userDetails.text? =
+            self.friendsAround[friendsAround.index(self.friendsAround.startIndex, offsetBy: indexPath.row)].firstName! + " " +
                 self.friendsAround[friendsAround.index(self.friendsAround.startIndex, offsetBy: indexPath.row)].lastName!
+            
             // cell.schoolLabel.text = self.friendsAround[friendsAround.index(self.friendsAround.startIndex, offsetBy: indexPath.row)].school!
-            let headshot = headshots[self.friendsAround[friendsAround.index(self.friendsAround.startIndex, offsetBy: indexPath.row)].facebookId!]
-            if (headshot != nil) {
-                cell.headshotViewImage.image = headshots[self.friendsAround[friendsAround.index(self.friendsAround.startIndex, offsetBy: indexPath.row)].facebookId!]
-            } else {
-                cell.headshotViewImage.image = #imageLiteral(resourceName: "empty-headshot")
+            
+ 
+            let facebookId = self.friendsAround[friendsAround.index(self.friendsAround.startIndex, offsetBy: indexPath.row)].facebookId ?? ""
+            
+            if (facebookId != "") {
+            
+                let headshot = headshots[self.friendsAround[friendsAround.index(self.friendsAround.startIndex, offsetBy: indexPath.row)].facebookId!]
+                
+                if (headshot != nil) {
+                    cell.headshotViewImage.image = headshots[self.friendsAround[friendsAround.index(self.friendsAround.startIndex, offsetBy: indexPath.row)].facebookId!]
+                } else {
+                    cell.headshotViewImage.image = #imageLiteral(resourceName: "empty-headshot")
+                }
+                cell.headshotViewImage.layer.cornerRadius = 15.0
+                cell.headshotViewImage.layer.borderWidth = 3
+                cell.headshotViewImage.layer.borderColor = UIColor.black.cgColor
+                
             }
-            cell.headshotViewImage.layer.cornerRadius = 15.0
-            cell.headshotViewImage.layer.borderWidth = 3
-            cell.headshotViewImage.layer.borderColor = UIColor.black.cgColor
+            
             let appUser = User()
             appUser.facebookId = self.friendsAround[friendsAround.index(self.friendsAround.startIndex, offsetBy: indexPath.row)].facebookId
             cell.user = appUser
@@ -518,10 +533,10 @@ extension NearbyPeopleViewController : UITableViewDataSource, UITableViewDelegat
             //Keeps flashing
             //          cell.connectButton.titleLabel?.text = "Reconnect"
         } else {
-            cell.nameLabel.text = self.strangersAround[strangersAround.index(self.strangersAround.startIndex, offsetBy: indexPath.row)].firstName! + " " +
+            cell.userDetails.text? = self.strangersAround[strangersAround.index(self.strangersAround.startIndex, offsetBy: indexPath.row)].firstName! + " " +
                 self.friendsAround[friendsAround.index(self.friendsAround.startIndex, offsetBy: indexPath.row)].lastName!
             cell.headshotViewImage.image = self.strangersAround[strangersAround.index(self.strangersAround.startIndex, offsetBy: indexPath.row)].headshotImage
-            cell.schoolLabel.text = self.friendsAround[friendsAround.index(self.friendsAround.startIndex, offsetBy: indexPath.row)].school!
+            cell.userDetails.text? = self.friendsAround[friendsAround.index(self.friendsAround.startIndex, offsetBy: indexPath.row)].school!
             cell.headshotViewImage.layer.cornerRadius = 15.0
             cell.headshotViewImage.layer.borderWidth = 3
             cell.headshotViewImage.layer.borderColor = UIColor.black.cgColor
@@ -537,7 +552,7 @@ extension NearbyPeopleViewController : UITableViewDataSource, UITableViewDelegat
         let profileVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "SelectProfileViewController") as! ProfileViewController
         let selectedUser = User()
         let selectedCell = PeopleNearbyTableView.cellForRow(at: indexPath) as! UserTableViewCell
-        selectedUser.firstName = selectedCell.nameLabel.text
+        selectedUser.firstName = selectedCell.userDetails.text
         selectedUser.location = userLoggedIn?.location
         selectedUser.headshot = selectedCell.headshotViewImage.image!
         selectedUser.facebookId = selectedCell.user?.facebookId

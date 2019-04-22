@@ -55,12 +55,16 @@ class UserProfileViewController: ProfileViewController {
                     
                     self.UserDetails.numberOfLines = 0
                     
+                    let userName = self.userSelected.username ?? ""
+                    let firstName = self.userSelected.firstName ?? ""
+                    let lastName = self.userSelected.lastName ?? ""
+                    
                     self.UserDetails.text?.append(
-                        "Username: " + self.userSelected.username! + "\n")
+                        "Username: " + userName + "\n")
                     self.UserDetails.text?.append(
-                        "First Name: " + self.userSelected.firstName! + "\n")
+                        "First Name: " + firstName + "\n")
                     self.UserDetails.text?.append(
-                        "Last Name: " + self.userSelected.lastName!)
+                        "Last Name: " + lastName)
                     
                 case .failed(let error):
                     print(error)
