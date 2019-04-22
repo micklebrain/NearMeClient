@@ -29,7 +29,7 @@ class AuthViewController: UIViewController {
         didLogin(method: "email and password", info: "Email: \(email) \n Password: \(pass)")
     }
     
-    @IBAction func dudTaoFacebookLoginButton(_ sender: Any) {
+    @IBAction func didTapFacebookLoginButton(_ sender: Any) {
         // Facebook login attempt
         let loginManager = LoginManager()
         loginManager.logIn(readPermissions: readPermissions, viewController: self, completion: didReceiveFacebookLoginResult)

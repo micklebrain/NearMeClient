@@ -105,7 +105,7 @@ class UserProfileViewController: ProfileViewController {
     }
     
     @IBAction func logout(_ sender: Any) {
-        let loginVC:LoginViewController = UIStoryboard(name: "Access", bundle: nil).instantiateViewController(withIdentifier: "LoginViewController") as! LoginViewController
+        let loginVC:AuthViewController = UIStoryboard(name: "Access", bundle: nil).instantiateViewController(withIdentifier: "AuthViewController") as! AuthViewController
         
         AccessToken.current = nil
         

@@ -101,7 +101,7 @@
                                         </constraints>
                                         <state key="normal" image="facebook"/>
                                         <connections>
-                                            <action selector="dudTaoFacebookLoginButton:" destination="7F0-66-qOt" eventType="touchUpInside" id="T5d-N7-df2"/>
+                                            <action selector="didTapFacebookLoginButton:" destination="7F0-66-qOt" eventType="touchUpInside" id="T5d-N7-df2"/>
                                         </connections>
                                     </button>
                                 </subviews>

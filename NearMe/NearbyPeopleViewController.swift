@@ -163,51 +163,52 @@ class NearbyPeopleViewController: UIViewController, WebSocketDelegate {
         let wifiipAddress = Util.getIFAddresses()[1]
         let localUrl = URL(string: "http://\(wifiipAddress):8080/pullNearbyUsers?locality=SanFrancisco")
         let pullNearByUsersUrl = URL(string: "https://crystal-smalltalk.herokuapp.com/pullNearbyUsers?locality=SanFrancisco")
-        
         let allUsersUrl = URL(string: "https://crystal-smalltalk.herokuapp.com/pullAllUsers")
         
-        Alamofire.request(pullNearByUsersUrl!, method: .post, parameters: userDetails, encoding: JSONEncoding.default)
-//            Alamofire.request(allUsersUrl!, method: .get)
+//        Alamofire.request(pullNearByUsersUrl!, method: .post, parameters: userDetails, encoding: JSONEncoding.default)
+            Alamofire.request(allUsersUrl!, method: .get)
             .responseJSON{ response in
                 if response.response?.statusCode == 200 {
                     if let json = response.result.value {
                         let users = json as! [Any]
+                        
+                        self.count = users.count
+                        let numberoccupied = "# Occupied: " + String(self.count)
+                        self.peopleCounter.text = String(describing: numberoccupied)
+                        
+                        var usersFacebookIds = [String]()
+                    
                         for someUser in users {
                             let userDetails = someUser as! [String: Any]
                             let newPerson = User()
                             let facebookId = userDetails["facebookId"] as! String
+                            usersFacebookIds.append(facebookId)
                             
                             if (facebookId != self.userLoggedIn?.facebookId) {
                                 newPerson.username = userDetails["username"] as? String
                                 newPerson.firstName = userDetails["firstname"] as? String
                                 newPerson.lastName = userDetails["lastname"] as? String
                                 newPerson.facebookId = userDetails["facebookId"] as? String
-                                newPerson.headshotImage = self.getUserFBPicture(facebookId: newPerson.facebookId!)
-                                
-                                // newPerson.school = userDetails["school"] as! String
-                                newPerson.headshotImage = self.getUserFBPicture(facebookId: newPerson.facebookId!)
                                 
                                 self.friendsAround.insert(newPerson)
+                                // TODO: Call on seperate thread
+                                self.getUserFBPicture(facebookId: newPerson.facebookId!)
                             }
-                            // } else {
-                            // self.strangersAround.insert(newPerson)
                             
                             if (self.userCacheURL != nil) {
                                 self.userCacheQueue.addOperation {
                                     if let stream = OutputStream(url: self.userCacheURL!, append: false) {
                                         stream.open()
-                                        
                                         JSONSerialization.writeJSONObject(json, to: stream, options: [.prettyPrinted], error: nil)
-                                        
                                         stream.close()
                                     }
                                 }
                             }
                         }
-                        self.count = self.friendsAround.count + self.strangersAround.count
-                        let numberoccupied = "# Occupied: " + String(self.count)
-                        self.peopleCounter.text = String(describing: numberoccupied)
+                        
                         self.actInd.stopAnimating()
+                        
+                        self.getUsersFBPictures(facebookIds: usersFacebookIds)
                         
                         DispatchQueue.main.async {
                             self.PeopleNearbyTableView.reloadData()
@@ -234,7 +235,7 @@ class NearbyPeopleViewController: UIViewController, WebSocketDelegate {
                                         friend.firstName = user["firstName"] as! String
                                         friend.lastName = user["lastName"] as! String
                                         friend.facebookId = user["facebookId"] as! String
-                                        friend.headshotImage = self.getUserFBPicture(facebookId: friend.facebookId!)
+                                        self.getUserFBPicture(facebookId: friend.facebookId!)
                                         self.friendsAround.insert(friend)
                                     }
                                 }
@@ -255,10 +256,8 @@ class NearbyPeopleViewController: UIViewController, WebSocketDelegate {
                         person.lastName = "Around"
                         person.school = "None"
                         person.facebookId = "none"
-                        person.headshotImage = #imageLiteral(resourceName: "empty-headshot")
                         self.friendsAround.insert(person)
                         self.strangersAround.insert(person)
-                        
                         self.actInd.stopAnimating()
                     }
                 }
@@ -309,13 +308,11 @@ class NearbyPeopleViewController: UIViewController, WebSocketDelegate {
         activateLocationServices()
     }
     
-    func getUserFBPicture (facebookId : String) -> UIImage {
+    func getUserFBPicture (facebookId : String) {
         
-        //Solve threading to update fb image when complete
-        
+        // Solve threading to update fb image when complete
         var headshot = #imageLiteral(resourceName: "empty-headshot")
         var pictureUrl = "http://graph.facebook.com/"
-        //        pictureUrl += (userLoggedIn?.facebookId)!
         pictureUrl += facebookId
         pictureUrl += "/picture?type=large"
         
@@ -330,11 +327,16 @@ class NearbyPeopleViewController: UIViewController, WebSocketDelegate {
                         if (UIImage(data: usableData) != nil) {
                             headshot = UIImage(data: usableData)!
                             self.headshots[facebookId] = headshot
-                            DispatchQueue.main.async {
-                                self.PeopleNearbyTableView.reloadData()
-                                //                                let indexPath = IndexPath(row: 0, section: 0)
-                                //                                self.PeopleNearbyTableView.reloadRows(at: [indexPath], with: UITableViewRowAnimation.fade)
-                            }
+                            
+                            let user = self.friendsAround.remove(at:
+                            self.friendsAround.firstIndex(where: { (user) -> Bool in
+                                user.facebookId == facebookId
+                            })!)
+                            user.headshot = headshot
+                            self.friendsAround.insert(user)
+                            
+//                            let friendIndexPath = IndexPath(row: self.friendsAround.count, section: 0)
+//                            self.PeopleNearbyTableView.cellForRow(at: friendIndexPath)
                         }
                     }
                 }
@@ -342,7 +344,36 @@ class NearbyPeopleViewController: UIViewController, WebSocketDelegate {
             task.resume()
         }
         
-        return headshot
+    }
+    
+    func getUsersFBPictures (facebookIds : [String]) {
+        
+        //Solve threading to update fb image when complete
+        
+//        var headshot = #imageLiteral(resourceName: "empty-headshot")
+//        var pictureUrl = "http://graph.facebook.com/"
+//        //        pictureUrl += (userLoggedIn?.facebookId)!
+//        pictureUrl += facebookId
+//        pictureUrl += "/picture?type=large"
+//
+//        let url = URL(string: pictureUrl)
+//
+//        if let url = url {
+//            let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
+//                if error != nil {
+//                    print(error!)
+//                } else {
+//                    if let usableData = data {
+//                        if (UIImage(data: usableData) != nil) {
+//                            headshot = UIImage(data: usableData)!
+//                            self.headshots[facebookId] = headshot
+//                        }
+//                    }
+//                }
+//            }
+//            task.resume()
+//        }
+
     }
     
     func activateLocationServices() {
@@ -420,7 +451,6 @@ class NearbyPeopleViewController: UIViewController, WebSocketDelegate {
         }
         
     }
-    
     
 }
 
@@ -500,7 +530,7 @@ extension NearbyPeopleViewController : UITableViewDataSource, UITableViewDelegat
         
         self.refreshControl.endRefreshing()
         self.actInd.stopAnimating()
-        //      TODO: Check why view gets loaded without images - bug
+        // TODO: Check why view gets loaded without images - bug
         if (indexPath.section == 0) {
             cell.userDetails.text? =
             self.friendsAround[friendsAround.index(self.friendsAround.startIndex, offsetBy: indexPath.row)].firstName! + " " +
@@ -508,20 +538,18 @@ extension NearbyPeopleViewController : UITableViewDataSource, UITableViewDelegat
             
             // cell.schoolLabel.text = self.friendsAround[friendsAround.index(self.friendsAround.startIndex, offsetBy: indexPath.row)].school!
             
- 
             let facebookId = self.friendsAround[friendsAround.index(self.friendsAround.startIndex, offsetBy: indexPath.row)].facebookId ?? ""
             
+            // Get Headshot if there is facebookId
             if (facebookId != "") {
-            
-                let headshot = headshots[self.friendsAround[friendsAround.index(self.friendsAround.startIndex, offsetBy: indexPath.row)].facebookId!]
+
+                cell.headshotViewImage.image = self.friendsAround[friendsAround.index(self.friendsAround.startIndex, offsetBy: indexPath.row)].headshot
+        
+                var headshotCornerRadius = CGFloat(15.0)
+                var headshotBorderWidth = CGFloat(3)
                 
-                if (headshot != nil) {
-                    cell.headshotViewImage.image = headshots[self.friendsAround[friendsAround.index(self.friendsAround.startIndex, offsetBy: indexPath.row)].facebookId!]
-                } else {
-                    cell.headshotViewImage.image = #imageLiteral(resourceName: "empty-headshot")
-                }
-                cell.headshotViewImage.layer.cornerRadius = 15.0
-                cell.headshotViewImage.layer.borderWidth = 3
+                cell.headshotViewImage.layer.cornerRadius = headshotCornerRadius
+                cell.headshotViewImage.layer.borderWidth = headshotBorderWidth
                 cell.headshotViewImage.layer.borderColor = UIColor.black.cgColor
                 
             }
@@ -530,12 +558,12 @@ extension NearbyPeopleViewController : UITableViewDataSource, UITableViewDelegat
             appUser.facebookId = self.friendsAround[friendsAround.index(self.friendsAround.startIndex, offsetBy: indexPath.row)].facebookId
             cell.user = appUser
             
-            //Keeps flashing
-            //          cell.connectButton.titleLabel?.text = "Reconnect"
+            // Keeps flashing
+            // cell.connectButton.titleLabel?.text = "Reconnect"
         } else {
             cell.userDetails.text? = self.strangersAround[strangersAround.index(self.strangersAround.startIndex, offsetBy: indexPath.row)].firstName! + " " +
                 self.friendsAround[friendsAround.index(self.friendsAround.startIndex, offsetBy: indexPath.row)].lastName!
-            cell.headshotViewImage.image = self.strangersAround[strangersAround.index(self.strangersAround.startIndex, offsetBy: indexPath.row)].headshotImage
+            cell.headshotViewImage.image = self.strangersAround[strangersAround.index(self.strangersAround.startIndex, offsetBy: indexPath.row)].headshot
             cell.userDetails.text? = self.friendsAround[friendsAround.index(self.friendsAround.startIndex, offsetBy: indexPath.row)].school!
             cell.headshotViewImage.layer.cornerRadius = 15.0
             cell.headshotViewImage.layer.borderWidth = 3
