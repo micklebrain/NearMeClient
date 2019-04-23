@@ -9,6 +9,7 @@
 import UIKit
 import FacebookLogin
 import FacebookCore
+import FBSDKLoginKit
 
 class UserProfileViewController: ProfileViewController {
     
@@ -19,6 +20,7 @@ class UserProfileViewController: ProfileViewController {
     override func viewDidLoad() {
         let tbc = self.tabBarController as! MainTabBarController
         self.userSelected = tbc.userloggedIn
+        self.userSelected.facebookId = FBSDKAccessToken.current()?.userID
         
         if (self.userSelected != nil) {
             downloadProfilePic()
@@ -30,7 +32,6 @@ class UserProfileViewController: ProfileViewController {
     
     private func pullFacebookInfo () {
         if((AccessToken.current) != nil) {
-            print(AccessToken.current ?? "No Current Facebook Access Token")
             let graphRequest = GraphRequest(graphPath: self.userSelected.facebookId!, parameters: ["fields" : "id, name, email"], accessToken: AccessToken.current, httpMethod: GraphRequestHTTPMethod.GET, apiVersion: .defaultVersion)
             // Get current facebook profile
 //                        let graphRequest = GraphRequest(graphPath: "/me", parameters: ["fields" : "id, name, email"], accessToken: AccessToken.current, httpMethod: GraphRequestHTTPMethod.GET, apiVersion: "")
@@ -58,13 +59,16 @@ class UserProfileViewController: ProfileViewController {
                     let userName = self.userSelected.username ?? ""
                     let firstName = self.userSelected.firstName ?? ""
                     let lastName = self.userSelected.lastName ?? ""
+                    let school = self.userSelected.school ?? ""
                     
                     self.UserDetails.text?.append(
                         "Username: " + userName + "\n")
                     self.UserDetails.text?.append(
                         "First Name: " + firstName + "\n")
                     self.UserDetails.text?.append(
-                        "Last Name: " + lastName)
+                        "Last Name: " + lastName + "\n")
+                    self.UserDetails.text?.append(
+                        "School: " + school)
                     
                 case .failed(let error):
                     print(error)

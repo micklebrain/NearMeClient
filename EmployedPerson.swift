@@ -10,7 +10,7 @@ import Foundation
 
 class EmployedPerson : User {
     
-    var employer: String = ""
+//    var employer: String = ""
     var occupation = ""
     
 }
