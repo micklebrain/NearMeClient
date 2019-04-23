@@ -65,25 +65,29 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="BOb-QI-23f">
+                                <rect key="frame" x="16" y="44" width="343" height="26"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="26" id="exc-gy-M8h"/>
+                                </constraints>
+                                <state key="normal" title="Check In"/>
+                            </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Counter:" textAlignment="natural" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xan-Rp-r7g">
-                                <rect key="frame" x="116" y="99" width="142" height="21"/>
+                                <rect key="frame" x="116" y="100" width="142" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BOb-QI-23f">
-                                <rect key="frame" x="16" y="44" width="343" height="33"/>
-                                <state key="normal" title="Location"/>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="BOb-QI-23f" firstAttribute="top" secondItem="3uQ-Qb-VSk" secondAttribute="bottom" id="40G-oG-ACd"/>
-                            <constraint firstItem="BOb-QI-23f" firstAttribute="centerX" secondItem="6f1-eB-Oee" secondAttribute="centerX" id="BeE-j0-bqq"/>
+                            <constraint firstItem="BOb-QI-23f" firstAttribute="top" secondItem="3uQ-Qb-VSk" secondAttribute="bottom" id="04G-iZ-cRB"/>
+                            <constraint firstItem="BOb-QI-23f" firstAttribute="leading" secondItem="6f1-eB-Oee" secondAttribute="leadingMargin" id="DiL-uN-WlJ"/>
                             <constraint firstItem="v2k-1y-oXu" firstAttribute="bottom" secondItem="K5i-QG-4Z8" secondAttribute="top" id="P5T-Q7-YLm"/>
                             <constraint firstItem="v2k-1y-oXu" firstAttribute="leading" secondItem="6f1-eB-Oee" secondAttribute="leading" id="Xkg-Fv-5gc"/>
                             <constraint firstAttribute="trailing" secondItem="v2k-1y-oXu" secondAttribute="trailing" id="eNO-Zp-yRR"/>
-                            <constraint firstItem="v2k-1y-oXu" firstAttribute="top" secondItem="xan-Rp-r7g" secondAttribute="bottom" constant="67" id="qq5-bx-PDK"/>
+                            <constraint firstItem="BOb-QI-23f" firstAttribute="centerX" secondItem="xan-Rp-r7g" secondAttribute="centerX" id="oR5-gl-XEM"/>
+                            <constraint firstItem="v2k-1y-oXu" firstAttribute="top" secondItem="xan-Rp-r7g" secondAttribute="bottom" constant="66" id="qq5-bx-PDK"/>
                             <constraint firstItem="v2k-1y-oXu" firstAttribute="centerX" secondItem="xan-Rp-r7g" secondAttribute="centerX" id="xlE-2p-JWp"/>
                         </constraints>
                     </view>
@@ -289,7 +293,7 @@
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="F38-5b-sdP" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2854" y="224"/>
+            <point key="canvasLocation" x="3191" y="206"/>
         </scene>
     </scenes>
 </document>

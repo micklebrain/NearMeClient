@@ -52,6 +52,9 @@ class NearbyPeopleViewController: UIViewController, WebSocketDelegate {
         pullFacebookInfo()
         //Current User Info
         
+        let checkedInLocation = self.userLoggedIn.buildingOccupied ?? ""
+        self.currentLocation.titleLabel?.text = checkedInLocation
+        
         //Table View
         self.PeopleNearbyTableView.delegate = self
         self.PeopleNearbyTableView.dataSource = self
@@ -85,6 +88,8 @@ class NearbyPeopleViewController: UIViewController, WebSocketDelegate {
     override func viewWillAppear(_ animated: Bool) {
         
         super.viewWillAppear(animated)
+        let checkedInLocation = self.userLoggedIn.buildingOccupied ?? "Check in"
+        self.currentLocation.titleLabel?.text = checkedInLocation
         
     }
     
@@ -466,7 +471,6 @@ extension NearbyPeopleViewController : CLLocationManagerDelegate {
             if (placemarks?.count)! > 0 {
                 let pm = placemarks?[0]
                 //TODO: Dosnt always update location
-                self.currentLocation.titleLabel?.text = pm?.administrativeArea
                 var latitude = pm?.location?.coordinate.latitude as? Double
                 var longitude = pm?.location?.coordinate.longitude as? Double
                 self.trackUserLocation(placemark: pm, userLocation: userLocation)

@@ -111,7 +111,6 @@ class NearbyLocationsViewController: UIViewController {
                     print("Facebook id is \(String(describing: FBid))")
                     
                     self.userloggedIn.firstName = firstName
-                    self.userloggedIn.username = "Tester"
                     self.userloggedIn.facebookId = FBid
                 }
                 
@@ -250,10 +249,13 @@ extension NearbyLocationsViewController : UITableViewDataSource, UITableViewDele
         
         let userDetails : Parameters = [
             "firstname": self.userloggedIn.firstName!,
-            "userName": self.userloggedIn.username!,
+            "username": self.userloggedIn.username!,
             "facebookId": self.userloggedIn.facebookId!,
             "locality": locality
         ]
+        
+        let tbc = self.tabBarController as! MainTabBarController
+        tbc.userloggedIn?.buildingOccupied = locality
         
         Alamofire.request(url!, method: .post, parameters: userDetails, encoding: JSONEncoding.default)
             .response { response in
