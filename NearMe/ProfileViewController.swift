@@ -30,14 +30,7 @@ class ProfileViewController: UIViewController {
     }
     
     @IBAction func goBack(_ sender: Any) {
-        
-        let mainTabBarController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "MainTabBarController") as! MainTabBarController
-        mainTabBarController.userloggedIn = self.userSelected
-        mainTabBarController.selectedIndex = 0
-        
-        self.present(mainTabBarController, animated: false)
-        
-        
+        self.dismiss(animated: false, completion: nil)
     }
     
     /*

@@ -571,6 +571,7 @@ extension NearbyPeopleViewController : UITableViewDataSource, UITableViewDelegat
         profileVC.userSelected = selectedUser
         let maintabVC = self.tabBarController as! MainTabBarController
         maintabVC.userloggedIn = self.userLoggedIn
+        self.tabBarController?.modalPresentationStyle = .popover
         self.tabBarController?.present(profileVC, animated: false, completion: nil)
         //        let tbc = self.tabBarController as! MainTabBarController
         //        tbc.selectedUser = selectedUser
