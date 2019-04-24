@@ -71,6 +71,8 @@ class LoginViewController: UIViewController {
     
     @IBAction func loginFacebook(_ sender: Any) {
         
+        // TODO: Add loading activity indicator for slow request response
+        
         let loginManager = LoginManager()
         loginManager.logIn(readPermissions: [ .publicProfile, .email, .userFriends ], viewController: self) { (loginResult) in
             switch loginResult {

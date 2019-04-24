@@ -64,9 +64,7 @@ class UserProfileViewController: ProfileViewController {
                     self.UserDetails.text?.append(
                         "Username: " + userName + "\n")
                     self.UserDetails.text?.append(
-                        "First Name: " + firstName + "\n")
-                    self.UserDetails.text?.append(
-                        "Last Name: " + lastName + "\n")
+                        "Name: " + firstName + lastName + "\n")
                     self.UserDetails.text?.append(
                         "School: " + school)
                     

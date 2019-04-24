@@ -78,6 +78,12 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Status" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gPy-f9-IwR">
+                                <rect key="frame" x="16" y="149" width="343" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -85,9 +91,12 @@
                             <constraint firstItem="BOb-QI-23f" firstAttribute="leading" secondItem="6f1-eB-Oee" secondAttribute="leadingMargin" id="DiL-uN-WlJ"/>
                             <constraint firstItem="v2k-1y-oXu" firstAttribute="bottom" secondItem="K5i-QG-4Z8" secondAttribute="top" id="P5T-Q7-YLm"/>
                             <constraint firstItem="v2k-1y-oXu" firstAttribute="leading" secondItem="6f1-eB-Oee" secondAttribute="leading" id="Xkg-Fv-5gc"/>
+                            <constraint firstItem="gPy-f9-IwR" firstAttribute="leading" secondItem="BOb-QI-23f" secondAttribute="leading" id="YKR-Ad-3gv"/>
                             <constraint firstAttribute="trailing" secondItem="v2k-1y-oXu" secondAttribute="trailing" id="eNO-Zp-yRR"/>
                             <constraint firstItem="BOb-QI-23f" firstAttribute="centerX" secondItem="xan-Rp-r7g" secondAttribute="centerX" id="oR5-gl-XEM"/>
                             <constraint firstItem="v2k-1y-oXu" firstAttribute="top" secondItem="xan-Rp-r7g" secondAttribute="bottom" constant="66" id="qq5-bx-PDK"/>
+                            <constraint firstItem="v2k-1y-oXu" firstAttribute="top" secondItem="gPy-f9-IwR" secondAttribute="bottom" constant="17" id="xJL-9K-86e"/>
+                            <constraint firstItem="gPy-f9-IwR" firstAttribute="trailing" secondItem="BOb-QI-23f" secondAttribute="trailing" id="xVk-8q-5XQ"/>
                             <constraint firstItem="v2k-1y-oXu" firstAttribute="centerX" secondItem="xan-Rp-r7g" secondAttribute="centerX" id="xlE-2p-JWp"/>
                         </constraints>
                     </view>

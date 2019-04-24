@@ -157,6 +157,35 @@ class NearbyLocationsViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    func updateLocation(locality: String) {
+        
+        _ = locality.replacingOccurrences(of: " ", with: "")
+        
+        let url = URL(string: "https://crystal-smalltalk.herokuapp.com/updateLocation")
+        
+        let userDetails : Parameters = [
+            "firstname": self.userloggedIn.firstName!,
+            "username": self.userloggedIn.username!,
+            "facebookId": self.userloggedIn.facebookId!,
+            "locality": locality
+        ]
+        
+        let tbc = self.tabBarController as! MainTabBarController
+        tbc.userloggedIn?.buildingOccupied = locality
+        
+        Alamofire.request(url!, method: .post, parameters: userDetails, encoding: JSONEncoding.default)
+            .response { response in
+                print(response.response?.statusCode)
+        }
+        
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        placesTableView.delegate = self as! UITableViewDelegate
+        placesTableView.dataSource = self
+        placesTableView.reloadData()
+    }
+    
 }
 
 extension NearbyLocationsViewController: CLLocationManagerDelegate {
@@ -195,12 +224,6 @@ extension NearbyLocationsViewController: CLLocationManagerDelegate {
 
 extension NearbyLocationsViewController : UITableViewDataSource, UITableViewDelegate {
     
-    override func viewDidAppear(_ animated: Bool) {
-        placesTableView.delegate = self as! UITableViewDelegate
-        placesTableView.dataSource = self
-        placesTableView.reloadData()
-    }
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return likelyPlaces.count
     }
@@ -238,29 +261,6 @@ extension NearbyLocationsViewController : UITableViewDataSource, UITableViewDele
         
         updateLocation(locality: (self.userloggedIn.buildingOccupied)!)
         tbc.selectedIndex = 1
-        
-    }
-    
-    func updateLocation(locality: String) {
-        
-        _ = locality.replacingOccurrences(of: " ", with: "")
-        
-        let url = URL(string: "https://crystal-smalltalk.herokuapp.com/updateLocation")
-        
-        let userDetails : Parameters = [
-            "firstname": self.userloggedIn.firstName!,
-            "username": self.userloggedIn.username!,
-            "facebookId": self.userloggedIn.facebookId!,
-            "locality": locality
-        ]
-        
-        let tbc = self.tabBarController as! MainTabBarController
-        tbc.userloggedIn?.buildingOccupied = locality
-        
-        Alamofire.request(url!, method: .post, parameters: userDetails, encoding: JSONEncoding.default)
-            .response { response in
-                print(response.response?.statusCode)
-        }
         
     }
     
