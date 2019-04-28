@@ -195,6 +195,7 @@ class NearbyPeopleViewController: UIViewController, WebSocketDelegate {
                                 newPerson.firstName = userDetails["firstname"] as? String
                                 newPerson.lastName = userDetails["lastname"] as? String
                                 newPerson.facebookId = userDetails["facebookId"] as? String
+                                newPerson.school = userDetails["school"] as? String
                                 
                                 self.friendsAround.insert(newPerson)
                                 // TODO: Call on seperate thread
@@ -372,7 +373,7 @@ class NearbyPeopleViewController: UIViewController, WebSocketDelegate {
             locationManager?.startUpdatingLocation()
         }
         
-    }
+    }       
     
     //  MARK: - Location tracking
     @IBAction func presenceSwitch(_ sender: Any) {
@@ -515,9 +516,16 @@ extension NearbyPeopleViewController : UITableViewDataSource, UITableViewDelegat
         self.actInd.stopAnimating()
         
         if (indexPath.section == 0) {
+            
+            cell.userDetails.numberOfLines = 0
+            
             cell.userDetails.text? =
             self.friendsAround[friendsAround.index(self.friendsAround.startIndex, offsetBy: indexPath.row)].firstName! + " " +
                 self.friendsAround[friendsAround.index(self.friendsAround.startIndex, offsetBy: indexPath.row)].lastName!
+            
+            cell.userDetails.text? +=
+                self.friendsAround[friendsAround.index(self.friendsAround.startIndex, offsetBy: indexPath.row)].school! + " " +
+                self.friendsAround[friendsAround.index(self.friendsAround.startIndex, offsetBy: indexPath.row)].school!
             
             // cell.schoolLabel.text = self.friendsAround[friendsAround.index(self.friendsAround.startIndex, offsetBy: indexPath.row)].school!
             

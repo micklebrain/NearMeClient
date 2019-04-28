@@ -16,9 +16,49 @@
 		2A4DA952207D41CD0015E729 /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A4DA951207D41CD0015E729 /* Account.swift */; };
 		2A6934CE20732146009CBCB4 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A6934CD20732146009CBCB4 /* ProfileViewController.swift */; };
 		2A89C7322016D7D500C10AF2 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A89C7312016D7D500C10AF2 /* Constants.swift */; };
+		2A9EE0F2226D131400A3E280 /* URL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A9EE0F1226D131400A3E280 /* URL.swift */; };
+		2A9EE0F8226D505600A3E280 /* NoSQLModelHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5281CC21EAEEBA8003B9489 /* NoSQLModelHelpers.swift */; };
+		2A9EE0F9226D505600A3E280 /* LocationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A463F1D213F28B7005D4405 /* LocationController.swift */; };
+		2A9EE0FA226D505600A3E280 /* URL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A9EE0F1226D131400A3E280 /* URL.swift */; };
+		2A9EE0FB226D505600A3E280 /* UserProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A27D5911FCFEAE200331A63 /* UserProfileViewController.swift */; };
+		2A9EE0FC226D505600A3E280 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A4DA94F207D27830015E729 /* User.swift */; };
+		2A9EE0FD226D505600A3E280 /* EmployedPerson.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5A645E91EA724DD00D411E1 /* EmployedPerson.swift */; };
+		2A9EE0FE226D505600A3E280 /* NearbyTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5462D771EF0A4A6000970EB /* NearbyTableView.swift */; };
+		2A9EE0FF226D505600A3E280 /* AccountsTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E446521EDF6ECC00791822 /* AccountsTable.swift */; };
+		2A9EE100226D505600A3E280 /* AuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AFEBD3B226BE6FD0019F6A7 /* AuthViewController.swift */; };
+		2A9EE101226D505600A3E280 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A43C6DF2017F6450082C69C /* Util.swift */; };
+		2A9EE102226D505600A3E280 /* googleLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5F0431D1F0E932F00D0BBAD /* googleLocation.swift */; };
+		2A9EE103226D505600A3E280 /* SignupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E4464A1ED7BA9200791822 /* SignupViewController.swift */; };
+		2A9EE104226D505600A3E280 /* ifaddrs.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A43C6DD2017F5370082C69C /* ifaddrs.m */; };
+		2A9EE105226D505600A3E280 /* UserTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5462D7B1EF0AB3F000970EB /* UserTableViewCell.swift */; };
+		2A9EE106226D505600A3E280 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5A645B01EA6F4FB00D411E1 /* AppDelegate.swift */; };
+		2A9EE107226D505600A3E280 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A6934CD20732146009CBCB4 /* ProfileViewController.swift */; };
+		2A9EE108226D505600A3E280 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A89C7312016D7D500C10AF2 /* Constants.swift */; };
+		2A9EE109226D505600A3E280 /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = A566FEE11F059C390060105D /* Location.swift */; };
+		2A9EE10A226D505600A3E280 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A37F9E62026CFDE00CF79E4 /* MainTabBarController.swift */; };
+		2A9EE10B226D505600A3E280 /* UrlConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AF7DF3B20B60EC3003EEFF9 /* UrlConstants.swift */; };
+		2A9EE10C226D505600A3E280 /* Locations.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5CAABD11EAA7DF000A16E98 /* Locations.swift */; };
+		2A9EE10D226D505600A3E280 /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A4DA951207D41CD0015E729 /* Account.swift */; };
+		2A9EE10E226D505600A3E280 /* NearbyLocationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5462D751EF0A0ED000970EB /* NearbyLocationsViewController.swift */; };
+		2A9EE10F226D505600A3E280 /* NoSqlSampleDataGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5281CC01EAEAF3D003B9489 /* NoSqlSampleDataGenerator.swift */; };
+		2A9EE110226D505600A3E280 /* NearMe.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A5A645B71EA6F4FB00D411E1 /* NearMe.xcdatamodeld */; };
+		2A9EE111226D505600A3E280 /* NearbyPeopleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5462D791EF0A54C000970EB /* NearbyPeopleViewController.swift */; };
+		2A9EE112226D505600A3E280 /* FacebookLoginButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AFEBD3D226BEB880019F6A7 /* FacebookLoginButton.swift */; };
+		2A9EE114226D505600A3E280 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = A5CAABCB1EA95AB700A16E98 /* libz.tbd */; };
+		2A9EE115226D505600A3E280 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = A5CAABC91EA95AA500A16E98 /* libsqlite3.tbd */; };
+		2A9EE116226D505600A3E280 /* Pods_NearMe_NearMe.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0789B87CD7A9FE70298CAD0F /* Pods_NearMe_NearMe.framework */; };
+		2A9EE118226D505600A3E280 /* Access.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A5E4464C1ED7CA6100791822 /* Access.storyboard */; };
+		2A9EE119226D505600A3E280 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A5A645BC1EA6F4FB00D411E1 /* LaunchScreen.storyboard */; };
+		2A9EE11A226D505600A3E280 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A5A645BA1EA6F4FB00D411E1 /* Assets.xcassets */; };
+		2A9EE11B226D505600A3E280 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A5A645B41EA6F4FB00D411E1 /* Main.storyboard */; };
+		2A9EE12A226D554500A3E280 /* InfoDev.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2A9EE129226D554500A3E280 /* InfoDev.plist */; };
+		2A9EE12C226D6A6800A3E280 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A9EE12B226D6A6700A3E280 /* LoginViewController.swift */; };
+		2A9EE12F226E4F5C00A3E280 /* FacebookManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A9EE12E226E4F5C00A3E280 /* FacebookManager.swift */; };
+		2A9EE131226E989D00A3E280 /* AccountManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A9EE130226E989D00A3E280 /* AccountManager.swift */; };
 		2AA6F8362149C48300C18D8E /* NearbyPeopleVCTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AA6F8352149C48300C18D8E /* NearbyPeopleVCTest.swift */; };
 		2AF7DF3C20B60EC3003EEFF9 /* UrlConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AF7DF3B20B60EC3003EEFF9 /* UrlConstants.swift */; };
-		33D346CFB1B556BB2C082720 /* Pods_NearMe_NearMe.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F75CFB9B459824E10AA5479 /* Pods_NearMe_NearMe.framework */; };
+		2AFEBD3C226BE6FD0019F6A7 /* AuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AFEBD3B226BE6FD0019F6A7 /* AuthViewController.swift */; };
+		2AFEBD3E226BEB880019F6A7 /* FacebookLoginButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AFEBD3D226BEB880019F6A7 /* FacebookLoginButton.swift */; };
 		A5281CC11EAEAF3D003B9489 /* NoSqlSampleDataGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5281CC01EAEAF3D003B9489 /* NoSqlSampleDataGenerator.swift */; };
 		A5281CC31EAEEBA8003B9489 /* NoSQLModelHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5281CC21EAEEBA8003B9489 /* NoSQLModelHelpers.swift */; };
 		A5462D761EF0A0ED000970EB /* NearbyLocationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5462D751EF0A0ED000970EB /* NearbyLocationsViewController.swift */; };
@@ -37,12 +77,12 @@
 		A5CAABCA1EA95AA500A16E98 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = A5CAABC91EA95AA500A16E98 /* libsqlite3.tbd */; };
 		A5CAABCC1EA95AB700A16E98 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = A5CAABCB1EA95AB700A16E98 /* libz.tbd */; };
 		A5CAABD21EAA7DF000A16E98 /* Locations.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5CAABD11EAA7DF000A16E98 /* Locations.swift */; };
-		A5E446461ED68A8A00791822 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E446451ED68A8A00791822 /* LoginViewController.swift */; };
 		A5E4464B1ED7BA9200791822 /* SignupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E4464A1ED7BA9200791822 /* SignupViewController.swift */; };
 		A5E4464D1ED7CA6100791822 /* Access.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A5E4464C1ED7CA6100791822 /* Access.storyboard */; };
 		A5E446531EDF6ECC00791822 /* AccountsTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E446521EDF6ECC00791822 /* AccountsTable.swift */; };
 		A5F0431E1F0E932F00D0BBAD /* googleLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5F0431D1F0E932F00D0BBAD /* googleLocation.swift */; };
 		A81AAC9FEBAC53EDDDDE887B /* Pods_NearMeTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E50A159BFDC4030841FC8FA /* Pods_NearMeTests.framework */; };
+		CD11325CD0769DE94A456941 /* Pods_NearMe_NearMe.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0789B87CD7A9FE70298CAD0F /* Pods_NearMe_NearMe.framework */; };
 		FAB61DED7A6316E6FF26E5D7 /* Pods_NearMeUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 89385DFBD3E5ACADB49CFA99 /* Pods_NearMeUITests.framework */; };
 /* End PBXBuildFile section */
 
@@ -64,6 +104,16 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		2A9EE11D226D505600A3E280 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		A58D4FDE1EEEF8B6003A9365 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -77,6 +127,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		0789B87CD7A9FE70298CAD0F /* Pods_NearMe_NearMe.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NearMe_NearMe.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		151C842C815E077C5DA13581 /* Pods-NearMe-NearMe.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NearMe-NearMe.debug.xcconfig"; path = "Pods/Target Support Files/Pods-NearMe-NearMe/Pods-NearMe-NearMe.debug.xcconfig"; sourceTree = "<group>"; };
 		25F11A12CBAC0E7A7F26C7F6 /* Pods-NearMe-NearMe.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NearMe-NearMe.release.xcconfig"; path = "Pods/Target Support Files/Pods-NearMe-NearMe/Pods-NearMe-NearMe.release.xcconfig"; sourceTree = "<group>"; };
 		2A27D5911FCFEAE200331A63 /* UserProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileViewController.swift; sourceTree = "<group>"; };
@@ -89,11 +140,19 @@
 		2A4DA951207D41CD0015E729 /* Account.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Account.swift; sourceTree = "<group>"; };
 		2A6934CD20732146009CBCB4 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		2A89C7312016D7D500C10AF2 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		2A9EE0F1226D131400A3E280 /* URL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = URL.swift; path = ../../../NathanNguyen/NearMeClient/NearMe/URL.swift; sourceTree = "<group>"; };
+		2A9EE0F3226D4C7A00A3E280 /* Dev.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = Dev.xcconfig; path = ../../NathanNguyen/NearMeClient/Dev.xcconfig; sourceTree = "<group>"; };
+		2A9EE123226D505600A3E280 /* NearMeDev.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NearMeDev.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		2A9EE129226D554500A3E280 /* InfoDev.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = InfoDev.plist; path = ../../../NathanNguyen/NearMeClient/NearMe/InfoDev.plist; sourceTree = "<group>"; };
+		2A9EE12B226D6A6700A3E280 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoginViewController.swift; path = ../../../NathanNguyen/NearMeClient/NearMe/LoginViewController.swift; sourceTree = "<group>"; };
+		2A9EE12E226E4F5C00A3E280 /* FacebookManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = FacebookManager.swift; path = ../../../NathanNguyen/NearMeClient/NearMe/FacebookManager.swift; sourceTree = "<group>"; };
+		2A9EE130226E989D00A3E280 /* AccountManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AccountManager.swift; path = ../../../NathanNguyen/NearMeClient/NearMe/AccountManager.swift; sourceTree = "<group>"; };
 		2A9F20132093D5B000E1B7E8 /* Bolts-ObjC-master */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "Bolts-ObjC-master"; path = "../Bolts-ObjC-master"; sourceTree = "<group>"; };
 		2AA6F8352149C48300C18D8E /* NearbyPeopleVCTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NearbyPeopleVCTest.swift; sourceTree = "<group>"; };
 		2AF7DF3B20B60EC3003EEFF9 /* UrlConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UrlConstants.swift; sourceTree = "<group>"; };
+		2AFEBD3B226BE6FD0019F6A7 /* AuthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AuthViewController.swift; path = ../../../NathanNguyen/NearMeClient/NearMe/AuthViewController.swift; sourceTree = "<group>"; };
+		2AFEBD3D226BEB880019F6A7 /* FacebookLoginButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = FacebookLoginButton.swift; path = ../../../NathanNguyen/NearMeClient/NearMe/FacebookLoginButton.swift; sourceTree = "<group>"; };
 		367B6E6AAE824E61258E6144 /* Pods-NearMe.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NearMe.debug.xcconfig"; path = "Pods/Target Support Files/Pods-NearMe/Pods-NearMe.debug.xcconfig"; sourceTree = "<group>"; };
-		5F75CFB9B459824E10AA5479 /* Pods_NearMe_NearMe.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NearMe_NearMe.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		76F2B9DC5B976E8CE124491E /* Pods-NearMeUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NearMeUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-NearMeUITests/Pods-NearMeUITests.release.xcconfig"; sourceTree = "<group>"; };
 		89385DFBD3E5ACADB49CFA99 /* Pods_NearMeUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NearMeUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8C39FAD41AE982195E839DA3 /* Pods-NearMe.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NearMe.release.xcconfig"; path = "Pods/Target Support Files/Pods-NearMe/Pods-NearMe.release.xcconfig"; sourceTree = "<group>"; };
@@ -127,7 +186,6 @@
 		A5CAABC91EA95AA500A16E98 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		A5CAABCB1EA95AB700A16E98 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		A5CAABD11EAA7DF000A16E98 /* Locations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Locations.swift; sourceTree = "<group>"; };
-		A5E446451ED68A8A00791822 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		A5E4464A1ED7BA9200791822 /* SignupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignupViewController.swift; sourceTree = "<group>"; };
 		A5E4464C1ED7CA6100791822 /* Access.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Access.storyboard; sourceTree = "<group>"; };
 		A5E446501EDF170200791822 /* GeorgiaTable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeorgiaTable.swift; sourceTree = "<group>"; };
@@ -138,13 +196,23 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		2A9EE113226D505600A3E280 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2A9EE114226D505600A3E280 /* libz.tbd in Frameworks */,
+				2A9EE115226D505600A3E280 /* libsqlite3.tbd in Frameworks */,
+				2A9EE116226D505600A3E280 /* Pods_NearMe_NearMe.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		A5A645AA1EA6F4FB00D411E1 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				A5CAABCC1EA95AB700A16E98 /* libz.tbd in Frameworks */,
 				A5CAABCA1EA95AA500A16E98 /* libsqlite3.tbd in Frameworks */,
-				33D346CFB1B556BB2C082720 /* Pods_NearMe_NearMe.framework in Frameworks */,
+				CD11325CD0769DE94A456941 /* Pods_NearMe_NearMe.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -172,6 +240,7 @@
 			children = (
 				2A27D5911FCFEAE200331A63 /* UserProfileViewController.swift */,
 				2A6934CD20732146009CBCB4 /* ProfileViewController.swift */,
+				2A9EE130226E989D00A3E280 /* AccountManager.swift */,
 			);
 			name = Users;
 			sourceTree = "<group>";
@@ -186,6 +255,22 @@
 				2A43C6DC2017F5360082C69C /* NearMe-Bridging-Header.h */,
 			);
 			name = Utils;
+			sourceTree = "<group>";
+		};
+		2A9EE0F0226D12F900A3E280 /* Constants */ = {
+			isa = PBXGroup;
+			children = (
+				2A9EE0F1226D131400A3E280 /* URL.swift */,
+			);
+			name = Constants;
+			sourceTree = "<group>";
+		};
+		2A9EE12D226E4F4800A3E280 /* Facebook */ = {
+			isa = PBXGroup;
+			children = (
+				2A9EE12E226E4F5C00A3E280 /* FacebookManager.swift */,
+			);
+			name = Facebook;
 			sourceTree = "<group>";
 		};
 		2AEA8134202900D100574261 /* Orchestrator */ = {
@@ -210,7 +295,9 @@
 			isa = PBXGroup;
 			children = (
 				A5E4464A1ED7BA9200791822 /* SignupViewController.swift */,
-				A5E446451ED68A8A00791822 /* LoginViewController.swift */,
+				2A9EE12B226D6A6700A3E280 /* LoginViewController.swift */,
+				2AFEBD3B226BE6FD0019F6A7 /* AuthViewController.swift */,
+				2AFEBD3D226BEB880019F6A7 /* FacebookLoginButton.swift */,
 			);
 			name = Authentication;
 			sourceTree = "<group>";
@@ -253,6 +340,7 @@
 		A5A645A41EA6F4FB00D411E1 = {
 			isa = PBXGroup;
 			children = (
+				2A9EE0F3226D4C7A00A3E280 /* Dev.xcconfig */,
 				A5A645AF1EA6F4FB00D411E1 /* NearMe */,
 				A5A645C71EA6F4FB00D411E1 /* NearMeTests */,
 				A5A645D21EA6F4FB00D411E1 /* NearMeUITests */,
@@ -269,6 +357,7 @@
 				A5A645AD1EA6F4FB00D411E1 /* NearMe.app */,
 				A5A645C41EA6F4FB00D411E1 /* NearMeTests.xctest */,
 				A5A645CF1EA6F4FB00D411E1 /* NearMeUITests.xctest */,
+				2A9EE123226D505600A3E280 /* NearMeDev.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -276,6 +365,7 @@
 		A5A645AF1EA6F4FB00D411E1 /* NearMe */ = {
 			isa = PBXGroup;
 			children = (
+				2A9EE12D226E4F4800A3E280 /* Facebook */,
 				2AEA81362029013600574261 /* Authentication */,
 				2AEA81352029012600574261 /* LocationTracking */,
 				2A351C5F20741D74002A9ACC /* Users */,
@@ -292,6 +382,7 @@
 				A5A645B41EA6F4FB00D411E1 /* Main.storyboard */,
 				A5A645BA1EA6F4FB00D411E1 /* Assets.xcassets */,
 				A5A645BF1EA6F4FB00D411E1 /* Info.plist */,
+				2A9EE129226D554500A3E280 /* InfoDev.plist */,
 				A5A645B71EA6F4FB00D411E1 /* NearMe.xcdatamodeld */,
 				A566FEE31F0ADFD50060105D /* NearMe.entitlements */,
 			);
@@ -326,7 +417,7 @@
 				A5CAABC91EA95AA500A16E98 /* libsqlite3.tbd */,
 				8E50A159BFDC4030841FC8FA /* Pods_NearMeTests.framework */,
 				89385DFBD3E5ACADB49CFA99 /* Pods_NearMeUITests.framework */,
-				5F75CFB9B459824E10AA5479 /* Pods_NearMe_NearMe.framework */,
+				0789B87CD7A9FE70298CAD0F /* Pods_NearMe_NearMe.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -334,6 +425,7 @@
 		A5E446471ED68A9500791822 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				2A9EE0F0226D12F900A3E280 /* Constants */,
 				2AFDB2C8207C2F6400682533 /* Location */,
 				2AFDB2C7207C2F4F00682533 /* User */,
 				A5462D7B1EF0AB3F000970EB /* UserTableViewCell.swift */,
@@ -354,6 +446,28 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		2A9EE0F4226D505600A3E280 /* NearMeDev */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2A9EE120226D505600A3E280 /* Build configuration list for PBXNativeTarget "NearMeDev" */;
+			buildPhases = (
+				2A9EE0F5226D505600A3E280 /* [CP] Check Pods Manifest.lock */,
+				2A9EE0F6226D505600A3E280 /* Sources */,
+				2A9EE113226D505600A3E280 /* Frameworks */,
+				2A9EE117226D505600A3E280 /* Resources */,
+				2A9EE11C226D505600A3E280 /* ShellScript */,
+				2A9EE11D226D505600A3E280 /* Embed Frameworks */,
+				2A9EE11E226D505600A3E280 /* [CP] Embed Pods Frameworks */,
+				2A9EE11F226D505600A3E280 /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = NearMeDev;
+			productName = NearMe;
+			productReference = 2A9EE123226D505600A3E280 /* NearMeDev.app */;
+			productType = "com.apple.product-type.application";
+		};
 		A5A645AC1EA6F4FB00D411E1 /* NearMe */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = A5A645D81EA6F4FC00D411E1 /* Build configuration list for PBXNativeTarget "NearMe" */;
@@ -364,8 +478,8 @@
 				A5A645AB1EA6F4FB00D411E1 /* Resources */,
 				A58D4FB91EEE122C003A9365 /* ShellScript */,
 				A58D4FDE1EEEF8B6003A9365 /* Embed Frameworks */,
-				13E79F545D35838BF01C2D98 /* [CP] Embed Pods Frameworks */,
-				AC0BA4D239F6C32D0960B4B2 /* [CP] Copy Pods Resources */,
+				4FF763A0B84B1561B3AE259A /* [CP] Embed Pods Frameworks */,
+				299D3321E0922819F5E63D90 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -424,6 +538,9 @@
 				LastUpgradeCheck = 0930;
 				ORGANIZATIONNAME = "Nathan Nguyen";
 				TargetAttributes = {
+					2A9EE0F4226D505600A3E280 = {
+						DevelopmentTeam = DP8WZRYLZG;
+					};
 					A5A645AC1EA6F4FB00D411E1 = {
 						CreatedOnToolsVersion = 8.3.1;
 						DevelopmentTeam = DP8WZRYLZG;
@@ -464,15 +581,28 @@
 				A5A645AC1EA6F4FB00D411E1 /* NearMe */,
 				A5A645C31EA6F4FB00D411E1 /* NearMeTests */,
 				A5A645CE1EA6F4FB00D411E1 /* NearMeUITests */,
+				2A9EE0F4226D505600A3E280 /* NearMeDev */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		2A9EE117226D505600A3E280 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2A9EE118226D505600A3E280 /* Access.storyboard in Resources */,
+				2A9EE119226D505600A3E280 /* LaunchScreen.storyboard in Resources */,
+				2A9EE11A226D505600A3E280 /* Assets.xcassets in Resources */,
+				2A9EE11B226D505600A3E280 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		A5A645AB1EA6F4FB00D411E1 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2A9EE12A226D554500A3E280 /* InfoDev.plist in Resources */,
 				A5E4464D1ED7CA6100791822 /* Access.storyboard in Resources */,
 				A5A645BE1EA6F4FB00D411E1 /* LaunchScreen.storyboard in Resources */,
 				A5A645BB1EA6F4FB00D411E1 /* Assets.xcassets in Resources */,
@@ -515,7 +645,132 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		13E79F545D35838BF01C2D98 /* [CP] Embed Pods Frameworks */ = {
+		299D3321E0922819F5E63D90 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-NearMe-NearMe/Pods-NearMe-NearMe-resources.sh",
+				"${PODS_ROOT}/GoogleMaps/Maps/Frameworks/GoogleMaps.framework/Resources/GoogleMaps.bundle",
+				"${PODS_ROOT}/GooglePlaces/Frameworks/GooglePlaces.framework/Resources/GooglePlaces.bundle",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleMaps.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GooglePlaces.bundle",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-NearMe-NearMe/Pods-NearMe-NearMe-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		2A9EE0F5226D505600A3E280 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-NearMe-NearMe-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		2A9EE11C226D505600A3E280 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n#\"${PODS_ROOT}/SwiftLint/swiftlint\"\n";
+		};
+		2A9EE11E226D505600A3E280 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-NearMe-NearMe/Pods-NearMe-NearMe-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/AWSCognito/AWSCognito.framework",
+				"${BUILT_PRODUCTS_DIR}/AWSCognitoIdentityProvider/AWSCognitoIdentityProvider.framework",
+				"${BUILT_PRODUCTS_DIR}/AWSCognitoIdentityProviderASF/AWSCognitoIdentityProviderASF.framework",
+				"${BUILT_PRODUCTS_DIR}/AWSCore/AWSCore.framework",
+				"${BUILT_PRODUCTS_DIR}/AWSDynamoDB/AWSDynamoDB.framework",
+				"${BUILT_PRODUCTS_DIR}/AWSEC2/AWSEC2.framework",
+				"${BUILT_PRODUCTS_DIR}/AWSMobileAnalytics/AWSMobileAnalytics.framework",
+				"${BUILT_PRODUCTS_DIR}/AWSS3/AWSS3.framework",
+				"${BUILT_PRODUCTS_DIR}/AWSSES/AWSSES.framework",
+				"${BUILT_PRODUCTS_DIR}/AWSSimpleDB/AWSSimpleDB.framework",
+				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/AlamofireSwiftyJSON/AlamofireSwiftyJSON.framework",
+				"${BUILT_PRODUCTS_DIR}/Bolts/Bolts.framework",
+				"${BUILT_PRODUCTS_DIR}/FBSDKCoreKit/FBSDKCoreKit.framework",
+				"${BUILT_PRODUCTS_DIR}/FBSDKLoginKit/FBSDKLoginKit.framework",
+				"${BUILT_PRODUCTS_DIR}/FacebookCore/FacebookCore.framework",
+				"${BUILT_PRODUCTS_DIR}/FacebookLogin/FacebookLogin.framework",
+				"${BUILT_PRODUCTS_DIR}/Starscream/Starscream.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AWSCognito.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AWSCognitoIdentityProvider.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AWSCognitoIdentityProviderASF.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AWSCore.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AWSDynamoDB.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AWSEC2.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AWSMobileAnalytics.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AWSS3.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AWSSES.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AWSSimpleDB.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AlamofireSwiftyJSON.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Bolts.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKCoreKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKLoginKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FacebookCore.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FacebookLogin.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Starscream.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-NearMe-NearMe/Pods-NearMe-NearMe-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		2A9EE11F226D505600A3E280 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-NearMe-NearMe/Pods-NearMe-NearMe-resources.sh",
+				"${PODS_ROOT}/GoogleMaps/Maps/Frameworks/GoogleMaps.framework/Resources/GoogleMaps.bundle",
+				"${PODS_ROOT}/GooglePlaces/Frameworks/GooglePlaces.framework/Resources/GooglePlaces.bundle",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleMaps.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GooglePlaces.bundle",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-NearMe-NearMe/Pods-NearMe-NearMe-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		4FF763A0B84B1561B3AE259A /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -598,27 +853,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "";
-		};
-		AC0BA4D239F6C32D0960B4B2 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-NearMe-NearMe/Pods-NearMe-NearMe-resources.sh",
-				"${PODS_ROOT}/GoogleMaps/Maps/Frameworks/GoogleMaps.framework/Resources/GoogleMaps.bundle",
-				"${PODS_ROOT}/GooglePlaces/Frameworks/GooglePlaces.framework/Resources/GooglePlaces.bundle",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleMaps.bundle",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GooglePlaces.bundle",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-NearMe-NearMe/Pods-NearMe-NearMe-resources.sh\"\n";
-			showEnvVarsInLog = 0;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n#\"${PODS_ROOT}/SwiftLint/swiftlint\"\n";
 		};
 		E2CA4629064EBEB0EB47EA80 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -641,18 +876,56 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		2A9EE0F6226D505600A3E280 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2A9EE0F8226D505600A3E280 /* NoSQLModelHelpers.swift in Sources */,
+				2A9EE0F9226D505600A3E280 /* LocationController.swift in Sources */,
+				2A9EE0FA226D505600A3E280 /* URL.swift in Sources */,
+				2A9EE0FB226D505600A3E280 /* UserProfileViewController.swift in Sources */,
+				2A9EE0FC226D505600A3E280 /* User.swift in Sources */,
+				2A9EE0FD226D505600A3E280 /* EmployedPerson.swift in Sources */,
+				2A9EE0FE226D505600A3E280 /* NearbyTableView.swift in Sources */,
+				2A9EE0FF226D505600A3E280 /* AccountsTable.swift in Sources */,
+				2A9EE100226D505600A3E280 /* AuthViewController.swift in Sources */,
+				2A9EE101226D505600A3E280 /* Util.swift in Sources */,
+				2A9EE102226D505600A3E280 /* googleLocation.swift in Sources */,
+				2A9EE103226D505600A3E280 /* SignupViewController.swift in Sources */,
+				2A9EE104226D505600A3E280 /* ifaddrs.m in Sources */,
+				2A9EE105226D505600A3E280 /* UserTableViewCell.swift in Sources */,
+				2A9EE106226D505600A3E280 /* AppDelegate.swift in Sources */,
+				2A9EE107226D505600A3E280 /* ProfileViewController.swift in Sources */,
+				2A9EE108226D505600A3E280 /* Constants.swift in Sources */,
+				2A9EE109226D505600A3E280 /* Location.swift in Sources */,
+				2A9EE10A226D505600A3E280 /* MainTabBarController.swift in Sources */,
+				2A9EE10B226D505600A3E280 /* UrlConstants.swift in Sources */,
+				2A9EE10C226D505600A3E280 /* Locations.swift in Sources */,
+				2A9EE10D226D505600A3E280 /* Account.swift in Sources */,
+				2A9EE10E226D505600A3E280 /* NearbyLocationsViewController.swift in Sources */,
+				2A9EE10F226D505600A3E280 /* NoSqlSampleDataGenerator.swift in Sources */,
+				2A9EE110226D505600A3E280 /* NearMe.xcdatamodeld in Sources */,
+				2A9EE111226D505600A3E280 /* NearbyPeopleViewController.swift in Sources */,
+				2A9EE112226D505600A3E280 /* FacebookLoginButton.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		A5A645A91EA6F4FB00D411E1 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A5E446461ED68A8A00791822 /* LoginViewController.swift in Sources */,
+				2A9EE12C226D6A6800A3E280 /* LoginViewController.swift in Sources */,
 				A5281CC31EAEEBA8003B9489 /* NoSQLModelHelpers.swift in Sources */,
 				2A463F1E213F28B7005D4405 /* LocationController.swift in Sources */,
+				2A9EE0F2226D131400A3E280 /* URL.swift in Sources */,
+				2A9EE12F226E4F5C00A3E280 /* FacebookManager.swift in Sources */,
+				2A9EE131226E989D00A3E280 /* AccountManager.swift in Sources */,
 				2A27D5921FCFEAE200331A63 /* UserProfileViewController.swift in Sources */,
 				2A4DA950207D27830015E729 /* User.swift in Sources */,
 				A5A645EA1EA724DD00D411E1 /* EmployedPerson.swift in Sources */,
 				A5462D781EF0A4A6000970EB /* NearbyTableView.swift in Sources */,
 				A5E446531EDF6ECC00791822 /* AccountsTable.swift in Sources */,
+				2AFEBD3C226BE6FD0019F6A7 /* AuthViewController.swift in Sources */,
 				2A43C6E02017F6450082C69C /* Util.swift in Sources */,
 				A5F0431E1F0E932F00D0BBAD /* googleLocation.swift in Sources */,
 				A5E4464B1ED7BA9200791822 /* SignupViewController.swift in Sources */,
@@ -670,6 +943,7 @@
 				A5281CC11EAEAF3D003B9489 /* NoSqlSampleDataGenerator.swift in Sources */,
 				A5A645B91EA6F4FB00D411E1 /* NearMe.xcdatamodeld in Sources */,
 				A5462D7A1EF0A54C000970EB /* NearbyPeopleViewController.swift in Sources */,
+				2AFEBD3E226BEB880019F6A7 /* FacebookLoginButton.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -725,6 +999,92 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		2A9EE121226D505600A3E280 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 151C842C815E077C5DA13581 /* Pods-NearMe-NearMe.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = NearMe/NearMe.entitlements;
+				DEVELOPMENT_TEAM = DP8WZRYLZG;
+				ENABLE_BITCODE = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/**",
+					"\"$PODS_CONFIGURATION_BUILD_DIR/FBSDKCoreKit\"",
+				);
+				INFOPLIST_FILE = "$(SRCROOT)/../../NathanNguyen/NearMeClient/NearMe/InfoDev.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-framework",
+					"\"AWSCognito\"",
+					"-framework",
+					"\"AWSCognitoIdentityProvider\"",
+					"-framework",
+					"\"AWSCore\"",
+					"-framework",
+					"\"AWSDynamoDB\"",
+					"-framework",
+					"\"AWSMobileAnalytics\"",
+					"-framework",
+					"\"AWSS3\"",
+					"-framework",
+					"\"AWSSES\"",
+					"-framework",
+					"\"AWSSimpleDB\"",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.crystal.NearMe;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "NearMe/NearMe-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		2A9EE122226D505600A3E280 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 25F11A12CBAC0E7A7F26C7F6 /* Pods-NearMe-NearMe.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = NearMe/NearMe.entitlements;
+				DEVELOPMENT_TEAM = DP8WZRYLZG;
+				ENABLE_BITCODE = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$PODS_CONFIGURATION_BUILD_DIR/FBSDKCoreKit\"",
+				);
+				INFOPLIST_FILE = "$(SRCROOT)/../../NathanNguyen/NearMeClient/NearMe/InfoDev.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-framework",
+					"\"AWSCognito\"",
+					"-framework",
+					"\"AWSCognitoIdentityProvider\"",
+					"-framework",
+					"\"AWSCore\"",
+					"-framework",
+					"\"AWSDynamoDB\"",
+					"-framework",
+					"\"AWSMobileAnalytics\"",
+					"-framework",
+					"\"AWSS3\"",
+					"-framework",
+					"\"AWSSES\"",
+					"-framework",
+					"\"AWSSimpleDB\"",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.crystal.NearMe;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "NearMe/NearMe-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
 		A5A645D61EA6F4FB00D411E1 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -985,6 +1345,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		2A9EE120226D505600A3E280 /* Build configuration list for PBXNativeTarget "NearMeDev" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2A9EE121226D505600A3E280 /* Debug */,
+				2A9EE122226D505600A3E280 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		A5A645A81EA6F4FB00D411E1 /* Build configuration list for PBXProject "NearMe" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
