@@ -155,23 +155,22 @@ class NearbyPeopleViewController: UIViewController, WebSocketDelegate {
         userLoggedIn?.friends = ["Nathan"]
         
         let buildingOccupied = userLoggedIn?.buildingOccupied != nil ? userLoggedIn.buildingOccupied : ""
-        
         let firstName = self.userLoggedIn?.firstName ?? ""
         let userName = self.userLoggedIn.username ?? ""
         let facebookId = self.userLoggedIn?.facebookId ?? ""
         
-        let userDetails : Parameters = [
-            "firstname": firstName,
-            "username": userName,
-            "facebookId": facebookId,
-            "locality": buildingOccupied ]
+//        let userDetails : Parameters = [
+//            "firstname": firstName,
+//            "username": userName,
+//            "facebookId": facebookId,
+//            "locality": buildingOccupied ]
         
         let wifiipAddress = Util.getIFAddresses()[1]
-        let localUrl = URL(string: "http://\(wifiipAddress):8080/pullNearbyUsers?locality=SanFrancisco")
-        let pullNearByUsersUrl = URL(string: "https://crystal-smalltalk.herokuapp.com/pullNearbyUsers?locality=SanFrancisco")
+        let localPullNearbyUsersUrl = URL(string: "http://\(wifiipAddress):8080/pullNearbyUsers?locality=SanFrancisco")
+        let pullNearbyUsersUrl = URL(string: "https://crystal-smalltalk.herokuapp.com/pullNearbyUsers?locality=SanFrancisco")
         let allUsersUrl = URL(string: "https://crystal-smalltalk.herokuapp.com/pullAllUsers")
         
-//        Alamofire.request(pullNearByUsersUrl!, method: .post, parameters: userDetails, encoding: JSONEncoding.default)
+//        Alamofire.request(pullNearbyUsersUrl!, method: .post, parameters: userDetails, encoding: JSONEncoding.default)
             Alamofire.request(allUsersUrl!, method: .get)
             .responseJSON{ response in
                 if response.response?.statusCode == 200 {
@@ -197,8 +196,6 @@ class NearbyPeopleViewController: UIViewController, WebSocketDelegate {
                                 newPerson.facebookId = userDetails["facebookId"] as? String
                                 newPerson.school = userDetails["school"] as? String
                                 newPerson.employer = userDetails["employer"] as? String
-                                
-                                print(newPerson.school)
                                 
                                 self.friendsAround.append(newPerson)
                                 // TODO: Call on seperate thread
@@ -239,10 +236,10 @@ class NearbyPeopleViewController: UIViewController, WebSocketDelegate {
                                     let facebookId = user["facebookId"] as! String
                                     if (facebookId != self.userLoggedIn?.facebookId) {
                                         let friend = User()
-                                        friend.locality = user["locality"] as! String
-                                        friend.firstName = user["firstName"] as! String
-                                        friend.lastName = user["lastName"] as! String
-                                        friend.facebookId = user["facebookId"] as! String
+                                        friend.locality = user["locality"] as? String
+                                        friend.firstName = user["firstName"] as? String
+                                        friend.lastName = user["lastName"] as? String
+                                        friend.facebookId = user["facebookId"] as? String
                                         self.getUserFBPicture(facebookId: friend.facebookId!)
                                         self.friendsAround.append(friend)
                                     }
@@ -389,7 +386,7 @@ class NearbyPeopleViewController: UIViewController, WebSocketDelegate {
         let url = URL(string: "https://crystal-smalltalk.herokuapp.com/updateOnlineStatus")
         
         let userDetails : Parameters = [
-            "facebookId": self.userLoggedIn.facebookId,
+            "facebookId": self.userLoggedIn.facebookId!,
             "online": false
         ]
         
@@ -426,7 +423,7 @@ class NearbyPeopleViewController: UIViewController, WebSocketDelegate {
             let trackURL = "http://\(wifiipAddress):8080/track?longitude=\(longitutde)&latitude=\(latitude)"
             let herokuTrackURL = "https://crystal-smalltalk.herokuapp.com/track?longitude=\(longitutde)&latitude=\(latitude)"
             Alamofire.request(herokuTrackURL, method: .post, parameters: userDetails, encoding: JSONEncoding.default).response { (response) in
-                print(response.error)
+                print(response.error!)
                 print(response.response?.statusCode)
             }
             
@@ -476,8 +473,8 @@ extension NearbyPeopleViewController : CLLocationManagerDelegate {
             if (placemarks?.count)! > 0 {
                 let pm = placemarks?[0]
                 //TODO: Dosnt always update location
-                var latitude = pm?.location?.coordinate.latitude as? Double
-                var longitude = pm?.location?.coordinate.longitude as? Double
+                var latitude = pm?.location?.coordinate.latitude
+                var longitude = pm?.location?.coordinate.longitude
                 self.trackUserLocation(placemark: pm, userLocation: userLocation)
             } else {
                 print("Problem with the data received from geocoder")
@@ -541,8 +538,8 @@ extension NearbyPeopleViewController : UITableViewDataSource, UITableViewDelegat
 
                 cell.headshotViewImage.image = self.friendsAround[friendsAround.index(self.friendsAround.startIndex, offsetBy: indexPath.row)].headshot
         
-                var headshotCornerRadius = CGFloat(15.0)
-                var headshotBorderWidth = CGFloat(3)
+                let headshotCornerRadius = CGFloat(15.0)
+                let headshotBorderWidth = CGFloat(3)
                 
                 cell.headshotViewImage.layer.cornerRadius = headshotCornerRadius
                 cell.headshotViewImage.layer.borderWidth = headshotBorderWidth

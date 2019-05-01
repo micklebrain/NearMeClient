@@ -33,7 +33,7 @@ class LoginViewController: UIViewController {
             connection.add(GraphRequest(graphPath: "/me")) { httpResponse, result in
                 
                 switch result {
-                case .success(let response):
+                case .success(let _):
                     let data = result as! [String : AnyObject]
                     let name = data["name"] as! String
                     var splitName = name.components(separatedBy: " ")
@@ -77,7 +77,7 @@ class LoginViewController: UIViewController {
         loginManager.logIn(readPermissions: [ .publicProfile, .email, .userFriends ], viewController: self) { (loginResult) in
             switch loginResult {
             case.cancelled:
-                print("We failed")
+                print("Login to Facebook has been canceled")
             case.failed(let error):
                 print(error)
             case.success(grantedPermissions: _, declinedPermissions: _, token: let token):
@@ -93,7 +93,6 @@ class LoginViewController: UIViewController {
                 localUrlString.append(self.userloggedIn.facebookId ?? "")
                 let localUrl = URL(string: localUrlString)
                 
-                // TODO: Fix grabbing User's Auth
                 Alamofire.request(localUrl!).response(completionHandler: { (response) in
                     let json = try? JSONSerialization.jsonObject(with: response.data!, options: [])
 
@@ -111,13 +110,6 @@ class LoginViewController: UIViewController {
 
                 })
                 
-//                // Hardcoded
-//                self.userloggedIn.username = "SFNathan"
-//                self.userloggedIn.firstName = "Nathan"
-//                self.userloggedIn.lastName = "Nguyen"
-//                maintabbarVC.userloggedIn = self.userloggedIn
-//                self.present(maintabbarVC, animated: false, completion: nil)
-        
             }
         }
         
