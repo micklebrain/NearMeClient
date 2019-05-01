@@ -33,7 +33,7 @@ class LoginViewController: UIViewController {
             connection.add(GraphRequest(graphPath: "/me")) { httpResponse, result in
                 
                 switch result {
-                case .success(let response):
+                case .success(let _):
                     let data = result as! [String : AnyObject]
                     let name = data["name"] as! String
                     var splitName = name.components(separatedBy: " ")
@@ -77,7 +77,7 @@ class LoginViewController: UIViewController {
         loginManager.logIn(readPermissions: [ .publicProfile, .email, .userFriends ], viewController: self) { (loginResult) in
             switch loginResult {
             case.cancelled:
-                print("We failed")
+                print("Login to Facebook has been canceled")
             case.failed(let error):
                 print(error)
             case.success(grantedPermissions: _, declinedPermissions: _, token: let token):
@@ -89,34 +89,27 @@ class LoginViewController: UIViewController {
                 self.userloggedIn.facebookId = token.userId
                 
                 let wifiipAddress = Util.getIFAddresses()[1]
-                var localUrlString = "http://\(wifiipAddress):8080/getAccount?facebookId="
+                var localUrlString = "http://\(wifiipAddress):8080/account?facebookId="
                 localUrlString.append(self.userloggedIn.facebookId ?? "")
                 let localUrl = URL(string: localUrlString)
                 
-                // TODO: Fix grabbing User's Auth
-//                Alamofire.request(localUrl!).response(completionHandler: { (response) in
-//                    let json = try? JSONSerialization.jsonObject(with: response.data!, options: [])
-//
-//                    if let userFields = json as? [Any] {
-//                        let userFieldsDictionary = userFields[0] as! [String: Any]
-//                        self.userloggedIn.username = userFieldsDictionary["username"] as? String
-//                        self.userloggedIn.firstName = userFieldsDictionary["firstname"] as? String
-//                        self.userloggedIn.lastName = userFieldsDictionary["lastname"] as? String
-//                    }
-//
-//                    maintabbarVC.userloggedIn = self.userloggedIn
-//
-//                    self.present(maintabbarVC, animated: false, completion: nil)
-//
-//                })
+                Alamofire.request(localUrl!).response(completionHandler: { (response) in
+                    let json = try? JSONSerialization.jsonObject(with: response.data!, options: [])
+
+                    if let userFields = json as? [Any] {
+                        let userFieldsDictionary = userFields[0] as! [String: Any]
+                        self.userloggedIn.username = userFieldsDictionary["username"] as? String
+                        self.userloggedIn.firstName = userFieldsDictionary["firstname"] as? String
+                        self.userloggedIn.lastName = userFieldsDictionary["lastname"] as? String
+                        self.userloggedIn.school = userFieldsDictionary["school"] as? String
+                    }
+
+                    maintabbarVC.userloggedIn = self.userloggedIn
+
+                    self.present(maintabbarVC, animated: false, completion: nil)
+
+                })
                 
-                // Hardcoded
-                self.userloggedIn.username = "SFNathan"
-                self.userloggedIn.firstName = "Nathan"
-                self.userloggedIn.lastName = "Nguyen"
-                maintabbarVC.userloggedIn = self.userloggedIn
-                self.present(maintabbarVC, animated: false, completion: nil)
-        
             }
         }
         
