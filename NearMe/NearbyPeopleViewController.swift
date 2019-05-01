@@ -23,7 +23,7 @@ class NearbyPeopleViewController: UIViewController, WebSocketDelegate {
     let filterOptions = ["Female", "Male"]
     var locationManager : CLLocationManager!
     var strangersAround = Set<User>()
-    var friendsAround = Set<User>()
+    var friendsAround: [User] = []
     var defaultHeadshot : UIImage?
     var headshots = [String: UIImage]()
     var currentUserLocation: CLLocation?
@@ -196,8 +196,11 @@ class NearbyPeopleViewController: UIViewController, WebSocketDelegate {
                                 newPerson.lastName = userDetails["lastname"] as? String
                                 newPerson.facebookId = userDetails["facebookId"] as? String
                                 newPerson.school = userDetails["school"] as? String
+                                newPerson.employer = userDetails["employer"] as? String
                                 
-                                self.friendsAround.insert(newPerson)
+                                print(newPerson.school)
+                                
+                                self.friendsAround.append(newPerson)
                                 // TODO: Call on seperate thread
                                 self.getUserFBPicture(facebookId: newPerson.facebookId!)
                             }
@@ -241,7 +244,7 @@ class NearbyPeopleViewController: UIViewController, WebSocketDelegate {
                                         friend.lastName = user["lastName"] as! String
                                         friend.facebookId = user["facebookId"] as! String
                                         self.getUserFBPicture(facebookId: friend.facebookId!)
-                                        self.friendsAround.insert(friend)
+                                        self.friendsAround.append(friend)
                                     }
                                 }
                                 stream.close()
@@ -261,7 +264,7 @@ class NearbyPeopleViewController: UIViewController, WebSocketDelegate {
                         person.lastName = "Around"
                         person.school = "None"
                         person.facebookId = "none"
-                        self.friendsAround.insert(person)
+                        self.friendsAround.append(person)
                         self.strangersAround.insert(person)
                         self.actInd.stopAnimating()
                     }
@@ -338,7 +341,7 @@ class NearbyPeopleViewController: UIViewController, WebSocketDelegate {
                                 user.facebookId == facebookId
                             })!)
                             user.headshot = headshot
-                            self.friendsAround.insert(user)
+                            self.friendsAround.append(user)
                             
                             let friendIndexPath = IndexPath(row: self.friendsAround.count, section: 0)
                             DispatchQueue.main.async {
@@ -521,11 +524,13 @@ extension NearbyPeopleViewController : UITableViewDataSource, UITableViewDelegat
             
             cell.userDetails.text? =
             self.friendsAround[friendsAround.index(self.friendsAround.startIndex, offsetBy: indexPath.row)].firstName! + " " +
-                self.friendsAround[friendsAround.index(self.friendsAround.startIndex, offsetBy: indexPath.row)].lastName!
+                self.friendsAround[friendsAround.index(self.friendsAround.startIndex, offsetBy: indexPath.row)].lastName! + "\n"
             
             cell.userDetails.text? +=
-                self.friendsAround[friendsAround.index(self.friendsAround.startIndex, offsetBy: indexPath.row)].school! + " " +
-                self.friendsAround[friendsAround.index(self.friendsAround.startIndex, offsetBy: indexPath.row)].school!
+                self.friendsAround[friendsAround.index(self.friendsAround.startIndex, offsetBy: indexPath.row)].school! + "\n"
+            
+            cell.userDetails.text? +=
+                self.friendsAround[friendsAround.index(self.friendsAround.startIndex, offsetBy: indexPath.row)].employer!
             
             // cell.schoolLabel.text = self.friendsAround[friendsAround.index(self.friendsAround.startIndex, offsetBy: indexPath.row)].school!
             
