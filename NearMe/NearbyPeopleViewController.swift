@@ -59,6 +59,8 @@ class NearbyPeopleViewController: UIViewController, WebSocketDelegate {
         self.PeopleNearbyTableView.delegate = self
         self.PeopleNearbyTableView.dataSource = self
         
+        self.PeopleNearbyTableView.decelerationRate = .fast
+        
         //self.floorLabel.text?.append(String(userLoggedIn.floor))
         
         if #available(iOS 10.0, *) {
@@ -423,7 +425,7 @@ class NearbyPeopleViewController: UIViewController, WebSocketDelegate {
             let trackURL = "http://\(wifiipAddress):8080/track?longitude=\(longitutde)&latitude=\(latitude)"
             let herokuTrackURL = "https://crystal-smalltalk.herokuapp.com/track?longitude=\(longitutde)&latitude=\(latitude)"
             Alamofire.request(herokuTrackURL, method: .post, parameters: userDetails, encoding: JSONEncoding.default).response { (response) in
-                print(response.error!)
+               // print(response.error!)
                 print(response.response?.statusCode)
             }
             
