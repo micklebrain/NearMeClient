@@ -34,6 +34,7 @@ class LoginViewController: UIViewController {
                 
                 switch result {
                 case .success(let _):
+                    
                     let data = result as! [String : AnyObject]
                     let name = data["name"] as! String
                     var splitName = name.components(separatedBy: " ")
@@ -52,6 +53,7 @@ class LoginViewController: UIViewController {
                     maintabbarVC.userloggedIn = self.userloggedIn
                     
                     self.present(maintabbarVC, animated: false, completion: nil)
+                    
                 case .failed(let error):
                     print("Graph Request Failed: \(error)")
                 }
