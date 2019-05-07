@@ -10,14 +10,22 @@ import UIKit
 import FacebookLogin
 import FacebookCore
 import FBSDKLoginKit
+import SocketIO
 
 class UserProfileViewController: ProfileViewController {
     
     @IBOutlet weak var UserProfilePicture: UIImageView!
     @IBOutlet weak var UserDetails: UILabel!
     var userDetailsText : String!
+    var socket: SocketIOClient?
     
     override func viewDidLoad() {
+        
+//        socket = SocketIOClient(manager: NSURL(string: "https://chat-smalltalk.herokuapp.com/"), nsp: "")
+//        
+//        SocketIOManager.sharedInstance.connectToServerWithNickname(nickname: "Nathan", completionHandler: () -> Void)
+//        SocketIOManager.sharedInstance.sendMessage(message: "Well Hello", withNickname: "Nathan")
+        
         let tbc = self.tabBarController as! MainTabBarController
         self.userSelected = tbc.userloggedIn
         self.userSelected.facebookId = FBSDKAccessToken.current()?.userID
@@ -27,7 +35,6 @@ class UserProfileViewController: ProfileViewController {
         }
         
         pullFacebookInfo()
-        
     }
     
     private func pullFacebookInfo () {
@@ -64,9 +71,11 @@ class UserProfileViewController: ProfileViewController {
                     self.UserDetails.text?.append(
                         "Username: " + userName + "\n")
                     self.UserDetails.text?.append(
-                        "Name: " + firstName + lastName + "\n")
+                        "Name: " + firstName + " " + lastName + "\n")
                     self.UserDetails.text?.append(
-                        "School: " + school)
+                        "School: " + school + "\n")
+                    self.UserDetails.text?.append("Instagram Username: " + "\n")
+                    self.UserDetails.text?.append("Snapchat Username: ")
                     
                 case .failed(let error):
                     print(error)

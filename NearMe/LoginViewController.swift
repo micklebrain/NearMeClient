@@ -6,11 +6,11 @@
 //  Copyright © 2017 Nathan Nguyen. All rights reserved.
 //
 
-import UIKit
+import Alamofire
 import FacebookLogin
 import FacebookCore
-import Alamofire
 import SwiftyJSON
+import UIKit
 
 class LoginViewController: UIViewController {
     
@@ -23,10 +23,10 @@ class LoginViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //Cache the token in case offline
+        // Cache the token in case offline
         if (AccessToken.current != nil) {
-            //Crashes without Internet
-            //This request dosnt happen fast enough
+            // Crashes without Internet
+            // This request dosnt happen fast enough
             
            let connection = GraphRequestConnection()
            
@@ -34,6 +34,7 @@ class LoginViewController: UIViewController {
                 
                 switch result {
                 case .success(let _):
+                    
                     let data = result as! [String : AnyObject]
                     let name = data["name"] as! String
                     var splitName = name.components(separatedBy: " ")
@@ -52,6 +53,7 @@ class LoginViewController: UIViewController {
                     maintabbarVC.userloggedIn = self.userloggedIn
                     
                     self.present(maintabbarVC, animated: false, completion: nil)
+                    
                 case .failed(let error):
                     print("Graph Request Failed: \(error)")
                 }
@@ -72,7 +74,6 @@ class LoginViewController: UIViewController {
     @IBAction func loginFacebook(_ sender: Any) {
         
         // TODO: Add loading activity indicator for slow request response
-        
         let loginManager = LoginManager()
         loginManager.logIn(readPermissions: [ .publicProfile, .email, .userFriends ], viewController: self) { (loginResult) in
             switch loginResult {

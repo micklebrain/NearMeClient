@@ -36,6 +36,8 @@ class NearbyPeopleViewController: UIViewController, WebSocketDelegate {
     let userCacheQueue = OperationQueue()
     var socket: WebSocket?
     
+    var undownloadedImages:[Int] = []
+    
     @IBOutlet weak var PeopleNearbyTableView: UITableView!
     @IBOutlet weak var peopleCounter: UILabel!
     @IBOutlet weak var presenceSwitch: UISwitch!
@@ -58,6 +60,8 @@ class NearbyPeopleViewController: UIViewController, WebSocketDelegate {
         //Table View
         self.PeopleNearbyTableView.delegate = self
         self.PeopleNearbyTableView.dataSource = self
+        
+        self.PeopleNearbyTableView.decelerationRate = .fast
         
         //self.floorLabel.text?.append(String(userLoggedIn.floor))
         
@@ -199,7 +203,9 @@ class NearbyPeopleViewController: UIViewController, WebSocketDelegate {
                                 
                                 self.friendsAround.append(newPerson)
                                 // TODO: Call on seperate thread
-                                self.getUserFBPicture(facebookId: newPerson.facebookId!)
+                                self.getUserFBPicture(for: newPerson.facebookId!) { result in
+                                    print(result)
+                                }
                             }
                             
                             if (self.userCacheURL != nil) {
@@ -240,7 +246,9 @@ class NearbyPeopleViewController: UIViewController, WebSocketDelegate {
                                         friend.firstName = user["firstName"] as? String
                                         friend.lastName = user["lastName"] as? String
                                         friend.facebookId = user["facebookId"] as? String
-                                        self.getUserFBPicture(facebookId: friend.facebookId!)
+                                        self.getUserFBPicture(for: friend.facebookId!) { result in
+                                            print(result)
+                                        }
                                         self.friendsAround.append(friend)
                                     }
                                 }
@@ -313,7 +321,7 @@ class NearbyPeopleViewController: UIViewController, WebSocketDelegate {
         activateLocationServices()
     }
     
-    func getUserFBPicture (facebookId : String) {
+    func getUserFBPicture (for facebookId : String, completionHandler: @escaping (UIImage) -> Void) {
         
         // Solve threading to update fb image when complete
         var headshot = #imageLiteral(resourceName: "empty-headshot")
@@ -340,12 +348,23 @@ class NearbyPeopleViewController: UIViewController, WebSocketDelegate {
                             user.headshot = headshot
                             self.friendsAround.append(user)
                             
+                            let index = self.friendsAround.count
                             let friendIndexPath = IndexPath(row: self.friendsAround.count, section: 0)
-                            DispatchQueue.main.async {
-                            if let _ = self.PeopleNearbyTableView.cellForRow(at: friendIndexPath) {
-                                    self.PeopleNearbyTableView.reloadRows(at: [friendIndexPath], with: UITableView.RowAnimation.automatic)
-                                }
-                            }
+                            
+                                                        DispatchQueue.main.async {
+                            // Check if cell is visible
+                                                        if let _ = self.PeopleNearbyTableView.cellForRow(at: friendIndexPath) {
+                                                                self.PeopleNearbyTableView.reloadRows(at: [friendIndexPath], with: UITableView.RowAnimation.automatic)
+                                                        } else {
+                                                            // TODO: If cell is not visible enque to download picture and reload cell
+                                                            print("Cell is not visible yet")
+                                                            self.undownloadedImages.append(index)
+                                                            print("List of indexes not avaialable")
+                                                            print(self.undownloadedImages)
+                                                            }
+                                                        }
+                            completionHandler(headshot)
+                        
                         } else {
                             print("Image cannot be used for user ")
                             print(facebookId)
@@ -423,7 +442,7 @@ class NearbyPeopleViewController: UIViewController, WebSocketDelegate {
             let trackURL = "http://\(wifiipAddress):8080/track?longitude=\(longitutde)&latitude=\(latitude)"
             let herokuTrackURL = "https://crystal-smalltalk.herokuapp.com/track?longitude=\(longitutde)&latitude=\(latitude)"
             Alamofire.request(herokuTrackURL, method: .post, parameters: userDetails, encoding: JSONEncoding.default).response { (response) in
-                print(response.error!)
+               // print(response.error!)
                 print(response.response?.statusCode)
             }
             
@@ -472,10 +491,12 @@ extension NearbyPeopleViewController : CLLocationManagerDelegate {
             
             if (placemarks?.count)! > 0 {
                 let pm = placemarks?[0]
+                print(pm?.administrativeArea)
                 //TODO: Dosnt always update location
                 var latitude = pm?.location?.coordinate.latitude
                 var longitude = pm?.location?.coordinate.longitude
                 self.trackUserLocation(placemark: pm, userLocation: userLocation)
+                self.view.setNeedsDisplay()
             } else {
                 print("Problem with the data received from geocoder")
             }
@@ -531,19 +552,27 @@ extension NearbyPeopleViewController : UITableViewDataSource, UITableViewDelegat
             
             // cell.schoolLabel.text = self.friendsAround[friendsAround.index(self.friendsAround.startIndex, offsetBy: indexPath.row)].school!
             
-            let facebookId = self.friendsAround[friendsAround.index(self.friendsAround.startIndex, offsetBy: indexPath.row)].facebookId ?? ""
-            
-            // Get Headshot if there is facebookId
-            if (facebookId != "") {
-
-                cell.headshotViewImage.image = self.friendsAround[friendsAround.index(self.friendsAround.startIndex, offsetBy: indexPath.row)].headshot
-        
+            if let facebookId = self.friendsAround[friendsAround.index(self.friendsAround.startIndex, offsetBy: indexPath.row)].facebookId {
+                
                 let headshotCornerRadius = CGFloat(15.0)
                 let headshotBorderWidth = CGFloat(3)
-                
                 cell.headshotViewImage.layer.cornerRadius = headshotCornerRadius
                 cell.headshotViewImage.layer.borderWidth = headshotBorderWidth
                 cell.headshotViewImage.layer.borderColor = UIColor.black.cgColor
+                cell.headshotViewImage.image = self.friendsAround[friendsAround.index(self.friendsAround.startIndex, offsetBy: indexPath.row)].headshot
+                
+                // Set Headshot image for cell
+                getUserFBPicture(for: facebookId) {
+                    result in
+                    
+                    if let cell = self.PeopleNearbyTableView?.cellForRow(at: indexPath) as! UserTableViewCell?
+                        {
+                        cell.headshotViewImage.image = result
+                        cell.setNeedsLayout() // need to reload the view, which won't happen otherwise since this is in an async call
+                    }
+                    
+
+                }
                 
             } else {
                 print("Facebook ID not found")
