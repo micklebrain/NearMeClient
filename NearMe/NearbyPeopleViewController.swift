@@ -54,7 +54,8 @@ class NearbyPeopleViewController: UIViewController, WebSocketDelegate {
         pullFacebookInfo()
         //Current User Info
         
-        let checkedInLocation = self.userLoggedIn.buildingOccupied ?? "Check In"
+        var checkedInLocation = self.userLoggedIn.buildingOccupied ?? "Check In"
+        checkedInLocation += self.userLoggedIn.locality ?? " "
         self.currentLocation.setTitle(checkedInLocation, for: .normal)
         
         //Table View
@@ -93,7 +94,8 @@ class NearbyPeopleViewController: UIViewController, WebSocketDelegate {
         
         super.viewWillAppear(animated)
         let tbc = self.tabBarController as! MainTabBarController
-        let checkedInLocation = tbc.userloggedIn?.buildingOccupied ?? "Check In"
+        var checkedInLocation = tbc.userloggedIn?.buildingOccupied ?? "Check In"
+        checkedInLocation += self.userLoggedIn.locality ?? ""
         self.currentLocation.setTitle(checkedInLocation, for: .normal)
         
     }
