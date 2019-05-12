@@ -63,8 +63,6 @@ class NearbyLocationsViewController: UIViewController {
             if CLLocationManager.locationServicesEnabled() {
                 locationManager?.startUpdatingLocation()
             }
-            
-            // let objectMapper = AWSDynamoDBObjectMapper.default()
         }
         
     }
@@ -225,13 +223,20 @@ extension NearbyLocationsViewController: CLLocationManagerDelegate {
 extension NearbyLocationsViewController : UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if likelyPlaces.count == 0 {
+            return 1
+        }
         return likelyPlaces.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if likelyPlaces.count == 0 {
+            let cell = placesTableView.dequeueReusableCell(withIdentifier: "place", for: indexPath)
+            cell.textLabel?.text = "Please enable location services"
+            return cell
+        }
         let cell = placesTableView.dequeueReusableCell(withIdentifier: "place", for: indexPath)
         let collectionItem = likelyPlaces[indexPath.row]
-        
         cell.textLabel?.text = collectionItem.name
         
         return cell

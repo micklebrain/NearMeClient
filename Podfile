@@ -24,6 +24,7 @@ target :'NearMe' do
     pod 'FacebookCore'
     pod 'FacebookLogin'
     pod 'SwiftLint'
+    pod 'Socket.IO-Client-Swift'
     #pod 'Bolts-Swift'
 end
 
