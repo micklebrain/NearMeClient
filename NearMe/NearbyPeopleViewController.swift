@@ -22,8 +22,8 @@ class NearbyPeopleViewController: UIViewController, WebSocketDelegate {
     let section = ["Friends", "Strangers"]
     let filterOptions = ["Female", "Male"]
     var locationManager : CLLocationManager!
-    var strangersAround = Set<User>()
     var friendsAround: [User] = []
+    var strangersAround = Set<User>()
     var defaultHeadshot : UIImage?
     var headshots = [String: UIImage]()
     var currentUserLocation: CLLocation?
@@ -35,8 +35,6 @@ class NearbyPeopleViewController: UIViewController, WebSocketDelegate {
     let refreshControl = UIRefreshControl()
     let userCacheQueue = OperationQueue()
     var socket: WebSocket?
-    
-    var undownloadedImages:[Int] = []
     
     @IBOutlet weak var PeopleNearbyTableView: UITableView!
     @IBOutlet weak var peopleCounter: UILabel!
@@ -182,7 +180,6 @@ class NearbyPeopleViewController: UIViewController, WebSocketDelegate {
                 if response.response?.statusCode == 200 {
                     if let json = response.result.value {
                         let users = json as! [Any]
-                        
                         self.count = users.count
                         let numberoccupied = "# Occupied: " + String(self.count)
                         self.peopleCounter.text = String(describing: numberoccupied)
@@ -225,8 +222,8 @@ class NearbyPeopleViewController: UIViewController, WebSocketDelegate {
                         
                         DispatchQueue.main.async {
                             self.PeopleNearbyTableView.reloadData()
-                            //                            let indexPath = IndexPath(row: 0, section: 0)
-                            //                            self.PeopleNearbyTableView.reloadRows(at: [indexPath], with: UITableViewRowAnimation.fade)
+                            // let indexPath = IndexPath(row: 0, section: 0)
+                            // self.PeopleNearbyTableView.reloadRows(at: [indexPath], with: UITableViewRowAnimation.fade)
                         }
                         
                     }
@@ -261,8 +258,8 @@ class NearbyPeopleViewController: UIViewController, WebSocketDelegate {
                         
                         DispatchQueue.main.async {
                             self.PeopleNearbyTableView.reloadData()
-                            //                            let indexPath = IndexPath(row: 0, section: 0)
-                            //                            self.PeopleNearbyTableView.reloadRows(at: [indexPath], with: UITableViewRowAnimation.fade)
+                            // let indexPath = IndexPath(row: 0, section: 0)
+                            // self.PeopleNearbyTableView.reloadRows(at: [indexPath], with: UITableViewRowAnimation.fade)
                         }
                         
                     } else { // No cached data is around so display nobody around users
@@ -342,7 +339,6 @@ class NearbyPeopleViewController: UIViewController, WebSocketDelegate {
                         if (UIImage(data: usableData) != nil) {
                             headshot = UIImage(data: usableData)!
                             self.headshots[facebookId] = headshot
-                            
                             let user = self.friendsAround.remove(at:
                             self.friendsAround.firstIndex(where: { (user) -> Bool in
                                 user.facebookId == facebookId
@@ -353,18 +349,15 @@ class NearbyPeopleViewController: UIViewController, WebSocketDelegate {
                             let index = self.friendsAround.count
                             let friendIndexPath = IndexPath(row: self.friendsAround.count, section: 0)
                             
-                                                        DispatchQueue.main.async {
+                            DispatchQueue.main.async {
                             // Check if cell is visible
-                                                        if let _ = self.PeopleNearbyTableView.cellForRow(at: friendIndexPath) {
-                                                                self.PeopleNearbyTableView.reloadRows(at: [friendIndexPath], with: UITableView.RowAnimation.automatic)
-                                                        } else {
-                                                            // TODO: If cell is not visible enque to download picture and reload cell
-                                                            print("Cell is not visible yet")
-                                                            self.undownloadedImages.append(index)
-                                                            print("List of indexes not avaialable")
-                                                            print(self.undownloadedImages)
-                                                            }
-                                                        }
+                            if let _ = self.PeopleNearbyTableView.cellForRow(at: friendIndexPath) {
+                                    self.PeopleNearbyTableView.reloadRows(at: [friendIndexPath], with: UITableView.RowAnimation.automatic)
+                            } else {
+                                // TODO: If cell is not visible enque to download picture and reload cell
+                                print("Cell is not visible yet")
+                                }
+                            }
                             completionHandler(headshot)
                         
                         } else {
@@ -463,7 +456,6 @@ class NearbyPeopleViewController: UIViewController, WebSocketDelegate {
 struct MyProfileRequest: GraphRequestProtocol {
     
     var graphPath: String
-    
     var parameters: [String : Any]?
     var accessToken: AccessToken?
     var httpMethod: GraphRequestHTTPMethod = .GET
@@ -561,21 +553,22 @@ extension NearbyPeopleViewController : UITableViewDataSource, UITableViewDelegat
                 cell.headshotViewImage.layer.cornerRadius = headshotCornerRadius
                 cell.headshotViewImage.layer.borderWidth = headshotBorderWidth
                 cell.headshotViewImage.layer.borderColor = UIColor.black.cgColor
-                cell.headshotViewImage.image = self.friendsAround[friendsAround.index(self.friendsAround.startIndex, offsetBy: indexPath.row)].headshot
-                
-                // Set Headshot image for cell
-                getUserFBPicture(for: facebookId) {
-                    result in
-                    
-                    if let cell = self.PeopleNearbyTableView?.cellForRow(at: indexPath) as! UserTableViewCell?
-                        {
-                        cell.headshotViewImage.image = result
-                        cell.setNeedsLayout() // need to reload the view, which won't happen otherwise since this is in an async call
+    
+                if let userImage = self.headshots[facebookId] {
+                    cell.headshotViewImage.image = userImage
+                } else {
+                        getUserFBPicture(for: facebookId) {
+                            result in
+                            // TODO: Should not be called in main thread
+                            DispatchQueue.main.async {
+                                if let cell = self.PeopleNearbyTableView?.cellForRow(at: indexPath) as! UserTableViewCell?
+                                {
+                                    cell.headshotViewImage.image = result
+                                    cell.setNeedsLayout() // need to reload the view, which won't happen otherwise since this is in an async call
+                                }
+                            }
                     }
-                    
-
                 }
-                
             } else {
                 print("Facebook ID not found")
             }
