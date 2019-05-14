@@ -2,7 +2,6 @@
 //  LoginViewController.swift
 //  LoginScreen
 //
-//
 
 import FacebookCore
 import FacebookLogin
@@ -95,6 +94,12 @@ class AuthViewController: UIViewController {
             self.userloggedIn.firstName = "Nathan"
             self.userloggedIn.lastName = "Nguyen"
             maintabbarVC.userloggedIn = self.userloggedIn
+            
+            print("Logging in with user: ")
+            print("FacebookId: " + self.userloggedIn.facebookId!)
+            print("First Name: " + self.userloggedIn.firstName!)
+            print("Last Name: " + self.userloggedIn.lastName!)
+            
             self.present(maintabbarVC, animated: false, completion: nil)
         }
     }

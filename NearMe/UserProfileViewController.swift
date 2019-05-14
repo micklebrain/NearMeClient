@@ -26,6 +26,8 @@ class UserProfileViewController: ProfileViewController {
 //        SocketIOManager.sharedInstance.connectToServerWithNickname(nickname: "Nathan", completionHandler: () -> Void)
 //        SocketIOManager.sharedInstance.sendMessage(message: "Well Hello", withNickname: "Nathan")
         
+        self.UserDetails.numberOfLines = 0
+        
         let tbc = self.tabBarController as! MainTabBarController
         self.userSelected = tbc.userloggedIn
         self.userSelected.facebookId = FBSDKAccessToken.current()?.userID
@@ -49,19 +51,12 @@ class UserProfileViewController: ProfileViewController {
                 switch result {
                 case .success(let response):
                     
-                    print("Custom Graph Request Succeeded: \(response)")
-                    print("My facebook id is \(String(describing: response.dictionaryValue?["id"]))")
-                    print("My name is \(String(describing: response.dictionaryValue?["name"]))")
+                    print("Facebook graph request Succeeded: \(response)")
 //                    let data = result as! [String : AnyObject]
                     let facebookName = (response.dictionaryValue?["name"]) as! String
                     var splitName = facebookName.components(separatedBy: " ")
                     splitName.removeFirst()
-                    print("logged in user name is \(String(describing: facebookName))")
-                    
                     let FBid = (response.dictionaryValue?["id"]) as! String
-                    print("Facebook id is \(String(describing: FBid))")
-                    
-                    self.UserDetails.numberOfLines = 0
                     
                     let userName = self.userSelected.username ?? ""
                     let firstName = self.userSelected.firstName ?? ""

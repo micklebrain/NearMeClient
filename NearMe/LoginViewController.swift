@@ -80,7 +80,7 @@ class LoginViewController: UIViewController {
             case.cancelled:
                 print("Login to Facebook has been canceled")
             case.failed(let error):
-                print(error)
+                print("Ooops")
             case.success(grantedPermissions: _, declinedPermissions: _, token: let token):
                 //Pull user's information from granted permissions
                 

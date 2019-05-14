@@ -11,15 +11,13 @@ import Foundation
 
 class AccountManager {
     
-    func pullUser(_ facebookId: String) {
-        
-    }
+    let allUsersUrl = URL(string: "https://crystal-smalltalk.herokuapp.com/pullAllUsers")
     
-    func pullAllUsers() {
+    func pullUser(_ facebookId: String) {}
+    
+    func pullAllUsers() -> Set<User> {
         
-        let allUsersUrl = URL(string: "https://crystal-smalltalk.herokuapp.com/pullAllUsers")
-        
-        //        Alamofire.request(pullNearbyUsersUrl!, method: .post, parameters: userDetails, encoding: JSONEncoding.default)
+        // Alamofire.request(pullNearbyUsersUrl!, method: .post, parameters: userDetails, encoding: JSONEncoding.default)
         Alamofire.request(allUsersUrl!, method: .get)
             .responseJSON{ response in
                 if response.response?.statusCode == 200 {
@@ -34,13 +32,12 @@ class AccountManager {
                             let facebookId = userDetails["facebookId"] as! String
                             usersFacebookIds.append(facebookId)
                             
-                            
-                                newPerson.username = userDetails["username"] as? String
-                                newPerson.firstName = userDetails["firstname"] as? String
-                                newPerson.lastName = userDetails["lastname"] as? String
-                                newPerson.facebookId = userDetails["facebookId"] as? String
-                                newPerson.school = userDetails["school"] as? String
-                                newPerson.employer = userDetails["employer"] as? String
+                            newPerson.username = userDetails["username"] as? String
+                            newPerson.firstName = userDetails["firstname"] as? String
+                            newPerson.lastName = userDetails["lastname"] as? String
+                            newPerson.facebookId = userDetails["facebookId"] as? String
+                            newPerson.school = userDetails["school"] as? String
+                            newPerson.employer = userDetails["employer"] as? String
                                                                 
 //                            if (self.userCacheURL != nil) {
 //                                self.userCacheQueue.addOperation {
@@ -52,11 +49,12 @@ class AccountManager {
 //                                }
 //                            }
                         }
-                        
                     }
                     //If happens show cached data
                 } 
         }
+        
+        return Set<User>()
         
     }
     
