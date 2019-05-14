@@ -89,7 +89,6 @@ class NearbyLocationsViewController: UIViewController {
         //Crashes without internet connection
         if(FBSDKAccessToken.current() != nil)
         {
-            print(FBSDKAccessToken.current().permissions)
             // Graph Path : "me" is going to get current user logged in
             let graphRequest = FBSDKGraphRequest(graphPath: "me", parameters: ["fields" : "id, name, email"])
             let connection = FBSDKGraphRequestConnection()
@@ -99,14 +98,12 @@ class NearbyLocationsViewController: UIViewController {
                     let data = result as! [String : AnyObject]
                     let name = data["name"] as! String
                     let email = data["email"] as! String
-                    print(email)
                     let gender = data["gender"]
                     var splitName = name.components(separatedBy: " ")
                     let firstName = splitName.removeFirst()
-                    print("logged in user name is \(String(describing: name))")
                     
                     let FBid = data["id"] as? String
-                    print("Facebook id is \(String(describing: FBid))")
+                    
                     
                     self.userloggedIn.firstName = firstName
                     self.userloggedIn.facebookId = FBid
@@ -125,7 +122,7 @@ class NearbyLocationsViewController: UIViewController {
         placesClient.currentPlace(callback:  { (placeLikelihoods, error) -> Void in
             
             if let error = error {
-                print("Current Place error: \(error.localizedDescription)")
+                print("Places Client error: \(error.localizedDescription)")
                 return
             }
             
@@ -139,6 +136,7 @@ class NearbyLocationsViewController: UIViewController {
                         self.likelyPlaces.append(place)
                     }
                 }
+                print("\(self.likelyPlaces.count) Likely places around: \n \(self.likelyPlaces)")
                 self.placesTableView.reloadData()
             }
             
@@ -190,7 +188,6 @@ extension NearbyLocationsViewController: CLLocationManagerDelegate {
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         let location: CLLocation = locations.last!
-        print("Location: \(location)")
         
         let _ = GMSCameraPosition.camera(withLatitude: location.coordinate.latitude,
                                          longitude: location.coordinate.longitude,
@@ -208,14 +205,13 @@ extension NearbyLocationsViewController: CLLocationManagerDelegate {
         case .notDetermined:
             print("Location status not determined.")
         case .authorizedAlways: fallthrough
-        case .authorizedWhenInUse:
-            print("Location status is OK.")
+        case .authorizedWhenInUse: print("Application is authorized to use location")
         }
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         locationManager.stopUpdatingLocation()
-        print("Error: \(error)")
+        print("Location Manager did fail error: \(error.localizedDescription)")
     }
     
 }

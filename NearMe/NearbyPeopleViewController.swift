@@ -163,23 +163,31 @@ class NearbyPeopleViewController: UIViewController, WebSocketDelegate {
         let userName = self.userLoggedIn.username ?? ""
         let facebookId = self.userLoggedIn?.facebookId ?? ""
         
-//        let userDetails : Parameters = [
-//            "firstname": firstName,
-//            "username": userName,
-//            "facebookId": facebookId,
-//            "locality": buildingOccupied ]
+        // Body for nearby users
+        let userDetails : Parameters = [
+            "firstname": firstName,
+            "username": userName,
+            "facebookId": facebookId,
+            "locality": buildingOccupied ]
         
         let wifiipAddress = Util.getIFAddresses()[1]
-        let localPullNearbyUsersUrl = URL(string: "http://\(wifiipAddress):8080/pullNearbyUsers?locality=SanFrancisco")
-        let pullNearbyUsersUrl = URL(string: "https://crystal-smalltalk.herokuapp.com/pullNearbyUsers?locality=SanFrancisco")
-        let allUsersUrl = URL(string: "https://crystal-smalltalk.herokuapp.com/pullAllUsers")
+        let usersLocality = userLoggedIn.locality ?? "NewYork"
+        let localPullNearbyUsersUrlString = "http://\(wifiipAddress):8080/pullNearbyUsers?locality=NewYork"
+        let localPullNearbyUsersUrl = URL(string: "http://localhost:8080/pullNearbyUsers?locality=SanFrancisco&zipCode=11104")
+//        let localPullNearbyUsersUrl = URL(string: localPullNearbyUsersUrlString)
+        let pullNearbyUsersUrl = URL(string: "https://crystal-smalltalk.herokuapp.com/pullNearbyUsers?locality=SanFrancisco&zipCode=10036")
+        let pullAllUsersUrl = URL(string: "https://crystal-smalltalk.herokuapp.com/pullAllUsers")
         
-//        Alamofire.request(pullNearbyUsersUrl!, method: .post, parameters: userDetails, encoding: JSONEncoding.default)
-            Alamofire.request(allUsersUrl!, method: .get)
+        Alamofire.request(pullNearbyUsersUrl!, method: .post, parameters: userDetails, encoding: JSONEncoding.default)
+//            Alamofire.request(pullAllUsersUrl!, method: .get)
             .responseJSON{ response in
                 if response.response?.statusCode == 200 {
                     if let json = response.result.value {
                         let users = json as! [Any]
+                        
+                        print("Users found nearby PostalCode: \(self.userLoggedIn.postalCode) Locality: \(self.userLoggedIn.buildingOccupied) Building Occupied: \(self.userLoggedIn.buildingOccupied)")
+                        print(users)
+                        
                         self.count = users.count
                         let numberoccupied = "# Occupied: " + String(self.count)
                         self.peopleCounter.text = String(describing: numberoccupied)
@@ -203,7 +211,7 @@ class NearbyPeopleViewController: UIViewController, WebSocketDelegate {
                                 self.friendsAround.append(newPerson)
                                 // TODO: Call on seperate thread
                                 self.getUserFBPicture(for: newPerson.facebookId!) { result in
-                                    print(result)
+                                    
                                 }
                             }
                             
@@ -229,7 +237,6 @@ class NearbyPeopleViewController: UIViewController, WebSocketDelegate {
                     }
                     //If happens show cached data
                 } else if response.response?.statusCode == 503 {
-                    
                     // Try to display cached data
                     if (self.userCacheURL != nil) {
                         self.userCacheQueue.addOperation {
@@ -246,14 +253,13 @@ class NearbyPeopleViewController: UIViewController, WebSocketDelegate {
                                         friend.lastName = user["lastName"] as? String
                                         friend.facebookId = user["facebookId"] as? String
                                         self.getUserFBPicture(for: friend.facebookId!) { result in
-                                            print(result)
+                                            
                                         }
                                         self.friendsAround.append(friend)
                                     }
                                 }
                                 stream.close()
                             }
-                            
                         }
                         
                         DispatchQueue.main.async {
@@ -273,8 +279,7 @@ class NearbyPeopleViewController: UIViewController, WebSocketDelegate {
                         self.actInd.stopAnimating()
                     }
                 }
-        }
-        
+            }
     }
     
     func pullFacebookInfo () {
@@ -298,10 +303,7 @@ class NearbyPeopleViewController: UIViewController, WebSocketDelegate {
                     let name = data["name"] as? String
                     let email = data["email"] as? String
                     let picture = data["picture"] as? Any
-                    print("logged in user name is \(String(describing: name))")
-                    
                     let FBid = data["id"] as? String
-                    print("Facebook id is  \(String(describing: FBid))")
                 }
             })
             connection.start()
@@ -355,7 +357,7 @@ class NearbyPeopleViewController: UIViewController, WebSocketDelegate {
                                     self.PeopleNearbyTableView.reloadRows(at: [friendIndexPath], with: UITableView.RowAnimation.automatic)
                             } else {
                                 // TODO: If cell is not visible enque to download picture and reload cell
-                                print("Cell is not visible yet")
+                                
                                 }
                             }
                             completionHandler(headshot)
@@ -420,25 +422,22 @@ class NearbyPeopleViewController: UIViewController, WebSocketDelegate {
         if let userPlacemark = placemark {
             
             let locality = (userPlacemark.locality != nil) ? userPlacemark.locality : ""
-            //            let postalCode = (containsPlacemark.postalCode != nil) ? containsPlacemark.postalCode : ""
-            //            let administrativeArea = (containsPlacemark.administrativeArea != nil) ? containsPlacemark.administrativeArea : ""
-            //            let country = (containsPlacemark.country != nil) ? containsPlacemark.country : ""
-            
+            let postalCode = (userPlacemark.postalCode != nil) ? userPlacemark.postalCode : ""
             let latitude:Double  = userLocation.coordinate.latitude
             let longitutde:Double = userLocation.coordinate.longitude
+            //  let administrativeArea = (containsPlacemark.administrativeArea != nil) ? containsPlacemark.administrativeArea : ""
+            //  let country = (containsPlacemark.country != nil) ? containsPlacemark.country : ""
             
             let userDetails : Parameters = [
-                "userName": self.userLoggedIn?.username ?? "",
+                "username": self.userLoggedIn?.username ?? "",
                 "locality": locality ?? ""
             ]
             
             //Track Location
             let wifiipAddress = Util.getIFAddresses()[1]
             let trackURL = "http://\(wifiipAddress):8080/track?longitude=\(longitutde)&latitude=\(latitude)"
-            let herokuTrackURL = "https://crystal-smalltalk.herokuapp.com/track?longitude=\(longitutde)&latitude=\(latitude)"
+            let herokuTrackURL = "https://crystal-smalltalk.herokuapp.com/track?longitude=\(longitutde)&latitude=\(latitude)&zipCode=\(postalCode!)"
             Alamofire.request(herokuTrackURL, method: .post, parameters: userDetails, encoding: JSONEncoding.default).response { (response) in
-               // print(response.error!)
-                print(response.response?.statusCode)
             }
             
             //Update User's Location
@@ -448,7 +447,6 @@ class NearbyPeopleViewController: UIViewController, WebSocketDelegate {
             currentUserLocation = CLLocation(latitude: latitude, longitude: longitutde)
             
         }
-        
     }
     
 }
@@ -485,7 +483,6 @@ extension NearbyPeopleViewController : CLLocationManagerDelegate {
             
             if (placemarks?.count)! > 0 {
                 let pm = placemarks?[0]
-                print(pm?.administrativeArea)
                 //TODO: Dosnt always update location
                 var latitude = pm?.location?.coordinate.latitude
                 var longitude = pm?.location?.coordinate.longitude

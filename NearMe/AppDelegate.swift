@@ -44,11 +44,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 let name = data["name"] as! String
                 var splitName = name.components(separatedBy: " ")
                 let firstName = splitName.removeFirst()
-                print("logged in user name is \(String(describing: name))")
-
                 let FBid = data["id"] as? String
-                print("Facebook id is \(String(describing: FBid))")
-
                 let maintabbarVC:MainTabBarController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "MainTabBarController") as! MainTabBarController
 
                 let userloggedIn = User()
@@ -83,8 +79,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func registerForPushNotifications () {
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) {
             (granted, error) in
-            print("Permission granted: \(granted)")
-            
             guard granted else { return }
             self.getNotificationSettings()
         }
@@ -92,7 +86,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func getNotificationSettings() {
         UNUserNotificationCenter.current().getNotificationSettings { (settings) in
-            print("Notification settings: \(settings)")
             guard settings.authorizationStatus == .authorized else { return }
 //            UIApplication.shared.registerForRemoteNotifications()
         }
