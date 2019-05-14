@@ -60,9 +60,6 @@ class AuthViewController: UIViewController {
 //                }
 //            })
             
-            //Pull user's information from granted permissions
-            let maintabbarVC:MainTabBarController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "MainTabBarController") as! MainTabBarController
-            
             self.userloggedIn = User()
             self.userloggedIn.facebookId = token.userId
             
@@ -89,18 +86,22 @@ class AuthViewController: UIViewController {
             //
             //                })
             
-            // Hardcoded
-            self.userloggedIn.username = "SFNathan"
-            self.userloggedIn.firstName = "Nathan"
-            self.userloggedIn.lastName = "Nguyen"
-            maintabbarVC.userloggedIn = self.userloggedIn
             
-            print("Logging in with user: ")
-            print("FacebookId: " + self.userloggedIn.facebookId!)
-            print("First Name: " + self.userloggedIn.firstName!)
-            print("Last Name: " + self.userloggedIn.lastName!)
-            
-            self.present(maintabbarVC, animated: false, completion: nil)
+            if let maintabbarVC:MainTabBarController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "MainTabBarController") as? MainTabBarController {
+                
+                // Hardcoded
+                self.userloggedIn.username = "SFNathan"
+                self.userloggedIn.firstName = "Nathan"
+                self.userloggedIn.lastName = "Nguyen"
+                maintabbarVC.userloggedIn = self.userloggedIn
+                
+                print("Logging in with user: ")
+                print("FacebookId: " + self.userloggedIn.facebookId!)
+                print("First Name: " + self.userloggedIn.firstName!)
+                print("Last Name: " + self.userloggedIn.lastName!)
+                
+                self.present(maintabbarVC, animated: false, completion: nil)
+            }
         }
     }
     

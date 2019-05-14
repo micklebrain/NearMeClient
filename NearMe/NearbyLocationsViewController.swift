@@ -22,7 +22,7 @@ class NearbyLocationsViewController: UIViewController {
     @IBOutlet weak var floorNumber: UILabel!
     @IBOutlet weak var floorStepper: UIStepper!
     
-    var suggestedResturants : [googleLocation] = []
+    var suggestedResturants : [GoogleLocation] = []
     //Pull from Cache 
     var resturantsAround : [String] = []
     
@@ -45,10 +45,11 @@ class NearbyLocationsViewController: UIViewController {
         
         super.viewDidLoad()
         
-        let tbc = self.tabBarController as! MainTabBarController
+        if let tbc = self.tabBarController as? MainTabBarController {
         // Crashes After first logging in through facebook b/c null value
-        if (self.userloggedIn != nil && tbc.userloggedIn != nil) {
-            self.userloggedIn = tbc.userloggedIn!
+        
+        let newUser = User()
+        self.userloggedIn = tbc.userloggedIn ?? newUser
             
             pullfacebookInfo()
             getUsername()
@@ -64,6 +65,7 @@ class NearbyLocationsViewController: UIViewController {
                 locationManager?.startUpdatingLocation()
             }
         }
+        
         
     }
     
@@ -95,18 +97,20 @@ class NearbyLocationsViewController: UIViewController {
             
             connection.add(graphRequest, completionHandler: { (connection, result, error) -> Void in
                 if (connection?.urlResponse != nil && connection?.urlResponse.statusCode == 200) {
-                    let data = result as! [String : AnyObject]
-                    let name = data["name"] as! String
-                    let email = data["email"] as! String
-                    let gender = data["gender"]
-                    var splitName = name.components(separatedBy: " ")
-                    let firstName = splitName.removeFirst()
-                    
-                    let FBid = data["id"] as? String
-                    
-                    
-                    self.userloggedIn.firstName = firstName
-                    self.userloggedIn.facebookId = FBid
+                    if let data = result as? [String : AnyObject] {
+                        if let name = data["name"] as? String {
+                        var splitName = name.components(separatedBy: " ")
+                        let firstName = splitName.removeFirst()
+    //                    let email = data["email"] as! String
+    //                    let gender = data["gender"]
+                        
+                        let FBid = data["id"] as? String
+                        
+                        
+                        self.userloggedIn.firstName = firstName
+                        self.userloggedIn.facebookId = FBid
+                        }
+                    }
                 }
                 
             })
@@ -166,18 +170,20 @@ class NearbyLocationsViewController: UIViewController {
             "locality": locality
         ]
         
-        let tbc = self.tabBarController as! MainTabBarController
+        if let tbc = self.tabBarController as? MainTabBarController {
         tbc.userloggedIn?.buildingOccupied = locality
+        }
         
         Alamofire.request(url!, method: .post, parameters: userDetails, encoding: JSONEncoding.default)
             .response { response in
-                print(response.response?.statusCode)
+                print(response.response?.statusCode ?? "Status code not found")
         }
+        
         
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        placesTableView.delegate = self as! UITableViewDelegate
+        placesTableView.delegate = self as? UITableViewDelegate
         placesTableView.dataSource = self
         placesTableView.reloadData()
     }
@@ -255,19 +261,21 @@ extension NearbyLocationsViewController : UITableViewDataSource, UITableViewDele
         //Index out of range exception?
         selectedPlace = likelyPlaces[indexPath.row]
         
-        let tbc = self.tabBarController as! MainTabBarController
-        tbc.userloggedIn = self.userloggedIn
-        self.userloggedIn.buildingOccupied = placesTableView.cellForRow(at: indexPath)?.textLabel?.text
-        self.userloggedIn.floor = Int(floorNumber.text!)
-        
-        updateLocation(locality: (self.userloggedIn.buildingOccupied)!)
-        tbc.selectedIndex = 1
+        if let tbc = self.tabBarController as? MainTabBarController {
+            tbc.userloggedIn = self.userloggedIn
+            self.userloggedIn.buildingOccupied = placesTableView.cellForRow(at: indexPath)?.textLabel?.text
+            self.userloggedIn.floor = Int(floorNumber.text!)
+            
+            updateLocation(locality: (self.userloggedIn.buildingOccupied)!)
+            tbc.selectedIndex = 1
+        }
         
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let controller = segue.destination as! UserProfileViewController
-        controller.userSelected = self.userloggedIn
+        if let controller = segue.destination as? UserProfileViewController {
+            controller.userSelected = self.userloggedIn
+        }
     }
     
 }

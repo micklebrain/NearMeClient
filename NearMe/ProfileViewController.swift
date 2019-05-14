@@ -12,13 +12,13 @@ class ProfileViewController: UIViewController {
     
     var userSelected : User!
     
-    @IBOutlet weak var UserDetailsLabel: UILabel!
+    @IBOutlet weak var userDetailsLabel: UILabel!
     @IBOutlet weak var selectedUserProfileImage: UIImageView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         if (userSelected != nil) {
-            UserDetailsLabel.text = userSelected.firstName!
+            userDetailsLabel.text = userSelected.firstName!
             self.selectedUserProfileImage.image = userSelected.headshot
         }
         // Do any additional setup after loading the view.

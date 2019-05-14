@@ -10,12 +10,12 @@ import Foundation
 import CoreLocation
 import UIKit
 
-enum sex : String {
+enum Sex : String {
     case male = "male"
     case female = "female"
 }
 
-enum relationshipStatus {
+enum RelationshipStatus {
     case single
     case married
     case taken
@@ -36,7 +36,7 @@ class User : Hashable {
     var firstName : String?
     var middleName : String?
     var lastName : String?
-    var sex : sex?
+    var sex : Sex?
     
     var friends : [String]?
     var school : String?
@@ -56,7 +56,7 @@ class User : Hashable {
     //  Location
     var lastLocation: CLLocation?
     var lastPlacemark: CLPlacemark?
-    var currentLocation : location?
+    var currentLocation : Location?
     var location : CLLocation?
     var postalCode: String?
     var administrativeArea: String?

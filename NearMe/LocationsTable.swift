@@ -55,7 +55,7 @@ class LocationsTable: NSObject, Table {
      */
     
     func tableAttributeName(_ dataObjectAttributeName: String) -> String {
-        return Locations.jsonKeyPathsByPropertyKey()[dataObjectAttributeName] as! String
+        return Locations.jsonKeyPathsByPropertyKey()[dataObjectAttributeName] as? String
     }
     
     func getItemDescription() -> String {
@@ -213,18 +213,19 @@ class LocationsTable: NSObject, Table {
         let objectMapper = AWSDynamoDBObjectMapper.default()
         
         
-        let itemToUpdate: Locations = item as! Locations
+        if let itemToUpdate: Locations = item as? Locations {
         
-        itemToUpdate._category = NoSQLSampleDataGenerator.randomPartitionSampleStringWithAttributeName("category")
-        itemToUpdate._latitude = NoSQLSampleDataGenerator.randomSampleNumber()
-        itemToUpdate._longitude = NoSQLSampleDataGenerator.randomSampleNumber()
-        itemToUpdate._name = NoSQLSampleDataGenerator.randomSampleStringWithAttributeName("name")
-        
-        objectMapper.save(itemToUpdate, completionHandler: {(error: Error?) in
-            DispatchQueue.main.async(execute: {
-                completionHandler(error as NSError?)
+            itemToUpdate._category = NoSQLSampleDataGenerator.randomPartitionSampleStringWithAttributeName("category")
+            itemToUpdate._latitude = NoSQLSampleDataGenerator.randomSampleNumber()
+            itemToUpdate._longitude = NoSQLSampleDataGenerator.randomSampleNumber()
+            itemToUpdate._name = NoSQLSampleDataGenerator.randomSampleStringWithAttributeName("name")
+            
+            objectMapper.save(itemToUpdate, completionHandler: {(error: Error?) in
+                DispatchQueue.main.async(execute: {
+                    completionHandler(error as NSError?)
+                })
             })
-        })
+        }
     }
     
     func removeItem(_ item: AWSDynamoDBObjectModel, completionHandler: @escaping (_ error: NSError?) -> Void) {

@@ -8,7 +8,7 @@
 
 import Foundation
 
-class googleLocation {
+class GoogleLocation {
     
     var name: String?
     var rating: Int?

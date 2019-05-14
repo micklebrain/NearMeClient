@@ -35,11 +35,11 @@ class LoginViewController: UIViewController {
                 switch result {
                 case .success(let _):
                     
-                    let data = result as! [String : AnyObject]
-                    let name = data["name"] as! String
-                    var splitName = name.components(separatedBy: " ")
-                    let firstName = splitName.removeFirst()
-                    let FBid = data["id"] as? String
+                    let data = result as? [String : AnyObject]
+                    let name = data?["name"] as? String
+                    var splitName = name?.components(separatedBy: " ")
+                    let firstName = splitName?[0]
+                    let FBid = data?["id"] as? String
                     
                     self.userloggedIn = User()
                     self.userloggedIn?.firstName = firstName
@@ -48,11 +48,12 @@ class LoginViewController: UIViewController {
                     //Hardcoded
                     self.userloggedIn?.username = "SFNathan"
                     
-                    let maintabbarVC:MainTabBarController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "MainTabBarController") as! MainTabBarController
+                    if let maintabbarVC:MainTabBarController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "MainTabBarController") as? MainTabBarController {
                     
-                    maintabbarVC.userloggedIn = self.userloggedIn
-                    
-                    self.present(maintabbarVC, animated: false, completion: nil)
+                        maintabbarVC.userloggedIn = self.userloggedIn
+                        
+                        self.present(maintabbarVC, animated: false, completion: nil)
+                    }
                     
                 case .failed(let error):
                     print("Graph Request Failed: \(error)")
@@ -84,25 +85,27 @@ class LoginViewController: UIViewController {
             case.success(grantedPermissions: _, declinedPermissions: _, token: let token):
                 //Pull user's information from granted permissions
                 
-                let maintabbarVC:MainTabBarController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "MainTabBarController") as! MainTabBarController
+                if let maintabbarVC:MainTabBarController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "MainTabBarController") as? MainTabBarController {
                 
-                self.userloggedIn = User()
-                self.userloggedIn.facebookId = token.userId
+                    self.userloggedIn = User()
+                    self.userloggedIn.facebookId = token.userId
+                    
+                    let wifiipAddress = Util.getIFAddresses()[1]
+                    var localUrlString = "http://\(wifiipAddress):8080/account?facebookId="
+                    localUrlString.append(self.userloggedIn.facebookId ?? "")
+                    let localUrl = URL(string: localUrlString)
                 
-                let wifiipAddress = Util.getIFAddresses()[1]
-                var localUrlString = "http://\(wifiipAddress):8080/account?facebookId="
-                localUrlString.append(self.userloggedIn.facebookId ?? "")
-                let localUrl = URL(string: localUrlString)
                 
                 Alamofire.request(localUrl!).response(completionHandler: { (response) in
                     let json = try? JSONSerialization.jsonObject(with: response.data!, options: [])
 
                     if let userFields = json as? [Any] {
-                        let userFieldsDictionary = userFields[0] as! [String: Any]
-                        self.userloggedIn.username = userFieldsDictionary["username"] as? String
-                        self.userloggedIn.firstName = userFieldsDictionary["firstname"] as? String
-                        self.userloggedIn.lastName = userFieldsDictionary["lastname"] as? String
-                        self.userloggedIn.school = userFieldsDictionary["school"] as? String
+                        if let userFieldsDictionary = userFields[0] as? [String: Any] {
+                            self.userloggedIn.username = userFieldsDictionary["username"] as? String
+                            self.userloggedIn.firstName = userFieldsDictionary["firstname"] as? String
+                            self.userloggedIn.lastName = userFieldsDictionary["lastname"] as? String
+                            self.userloggedIn.school = userFieldsDictionary["school"] as? String
+                        }
                     }
 
                     maintabbarVC.userloggedIn = self.userloggedIn
@@ -110,6 +113,7 @@ class LoginViewController: UIViewController {
                     self.present(maintabbarVC, animated: false, completion: nil)
 
                 })
+                }
                 
             }
         }
