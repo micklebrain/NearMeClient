@@ -9,7 +9,7 @@
 import Foundation
 import CoreLocation
 
-class location {
+class Location {
     
     var location : CLLocation?
     var lastLocation : String?

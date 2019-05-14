@@ -14,8 +14,8 @@ import SocketIO
 
 class UserProfileViewController: ProfileViewController {
     
-    @IBOutlet weak var UserProfilePicture: UIImageView!
-    @IBOutlet weak var UserDetails: UILabel!
+    @IBOutlet weak var userProfilePicture: UIImageView!
+    @IBOutlet weak var userDetails: UILabel!
     var userDetailsText : String!
     var socket: SocketIOClient?
     
@@ -26,11 +26,12 @@ class UserProfileViewController: ProfileViewController {
 //        SocketIOManager.sharedInstance.connectToServerWithNickname(nickname: "Nathan", completionHandler: () -> Void)
 //        SocketIOManager.sharedInstance.sendMessage(message: "Well Hello", withNickname: "Nathan")
         
-        self.UserDetails.numberOfLines = 0
+        self.userDetails.numberOfLines = 0
         
-        let tbc = self.tabBarController as! MainTabBarController
-        self.userSelected = tbc.userloggedIn
-        self.userSelected.facebookId = FBSDKAccessToken.current()?.userID
+        if let tbc = self.tabBarController as? MainTabBarController {
+            self.userSelected = tbc.userloggedIn
+            self.userSelected.facebookId = FBSDKAccessToken.current()?.userID
+        }
         
         if (self.userSelected != nil) {
             downloadProfilePic()
@@ -41,9 +42,17 @@ class UserProfileViewController: ProfileViewController {
     
     private func pullFacebookInfo () {
         if((AccessToken.current) != nil) {
-            let graphRequest = GraphRequest(graphPath: self.userSelected.facebookId!, parameters: ["fields" : "id, name, email"], accessToken: AccessToken.current, httpMethod: GraphRequestHTTPMethod.GET, apiVersion: .defaultVersion)
-            // Get current facebook profile
-//                        let graphRequest = GraphRequest(graphPath: "/me", parameters: ["fields" : "id, name, email"], accessToken: AccessToken.current, httpMethod: GraphRequestHTTPMethod.GET, apiVersion: "")
+            let graphRequest = GraphRequest(graphPath: self.userSelected.facebookId!,
+                                            parameters: ["fields" : "id, name, email"],
+                                            accessToken: AccessToken.current,
+                                            httpMethod: GraphRequestHTTPMethod.GET,
+                                            apiVersion: .defaultVersion)
+// Get current facebook profile
+// let graphRequest = GraphRequest(graphPath: "/me",
+//            parameters: ["fields" : "id, name, email"],
+//            accessToken: AccessToken.current,
+//            httpMethod: GraphRequestHTTPMethod.GET,
+//            apiVersion: "")
             
             let connection = GraphRequestConnection()
             connection.add(graphRequest) { response, result in
@@ -53,24 +62,23 @@ class UserProfileViewController: ProfileViewController {
                     
                     print("Facebook graph request Succeeded: \(response)")
 //                    let data = result as! [String : AnyObject]
-                    let facebookName = (response.dictionaryValue?["name"]) as! String
-                    var splitName = facebookName.components(separatedBy: " ")
-                    splitName.removeFirst()
-                    let FBid = (response.dictionaryValue?["id"]) as! String
+                    let facebookName = (response.dictionaryValue?["name"]) as? String
+                    var splitName = facebookName?.components(separatedBy: " ")
+//                    let FBid = (response.dictionaryValue?["id"]) as! String
                     
                     let userName = self.userSelected.username ?? ""
                     let firstName = self.userSelected.firstName ?? ""
                     let lastName = self.userSelected.lastName ?? ""
                     let school = self.userSelected.school ?? ""
                     
-                    self.UserDetails.text?.append(
+                    self.userDetails.text?.append(
                         "Username: " + userName + "\n")
-                    self.UserDetails.text?.append(
+                    self.userDetails.text?.append(
                         "Name: " + firstName + " " + lastName + "\n")
-                    self.UserDetails.text?.append(
+                    self.userDetails.text?.append(
                         "School: " + school + "\n")
-                    self.UserDetails.text?.append("Instagram Username: " + "\n")
-                    self.UserDetails.text?.append("Snapchat Username: ")
+                    self.userDetails.text?.append("Instagram Username: " + "\n")
+                    self.userDetails.text?.append("Snapchat Username: ")
                     
                 case .failed(let error):
                     print(error)
@@ -100,7 +108,7 @@ class UserProfileViewController: ProfileViewController {
                         headshot  = UIImage(data: usableData)!
                         self.userSelected?.headshot = headshot
                         DispatchQueue.main.async {
-                            self.UserProfilePicture.image = headshot
+                            self.userProfilePicture.image = headshot
                         }
                     }
                 }
@@ -111,11 +119,12 @@ class UserProfileViewController: ProfileViewController {
     }
     
     @IBAction func logout(_ sender: Any) {
-        let loginVC:AuthViewController = UIStoryboard(name: "Access", bundle: nil).instantiateViewController(withIdentifier: "AuthViewController") as! AuthViewController
+        if let loginVC:AuthViewController = UIStoryboard(name: "Access", bundle: nil).instantiateViewController(withIdentifier: "AuthViewController") as? AuthViewController {
         
         AccessToken.current = nil
         
         self.present(loginVC, animated: false, completion: nil)
+        }
     }
     
     override func didReceiveMemoryWarning() {

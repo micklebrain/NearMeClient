@@ -22,15 +22,16 @@ class AccountManager {
             .responseJSON{ response in
                 if response.response?.statusCode == 200 {
                     if let json = response.result.value {
-                        let users = json as! [Any]
+                        if let users = json as? [Any] {
                         
                         var usersFacebookIds = [String]()
                         
                         for someUser in users {
-                            let userDetails = someUser as! [String: Any]
+                            if let userDetails = someUser as? [String: Any] {
                             let newPerson = User()
-                            let facebookId = userDetails["facebookId"] as! String
-                            usersFacebookIds.append(facebookId)
+                            if let facebookId = userDetails["facebookId"] as? String {
+                                usersFacebookIds.append(facebookId)
+                            }
                             
                             newPerson.username = userDetails["username"] as? String
                             newPerson.firstName = userDetails["firstname"] as? String
@@ -48,6 +49,8 @@ class AccountManager {
 //                                    }
 //                                }
 //                            }
+                            }
+                            }
                         }
                     }
                     //If happens show cached data

@@ -24,7 +24,7 @@ class NearbyPeopleViewController: UIViewController, WebSocketDelegate {
     var locationManager : CLLocationManager!
     var friendsAround: [User] = []
     var strangersAround = Set<User>()
-    var defaultHeadshot : UIImage?
+    var defaultHeadshot : UIImage!
     var headshots = [String: UIImage]()
     var currentUserLocation: CLLocation?
     var count = 0
@@ -36,7 +36,7 @@ class NearbyPeopleViewController: UIViewController, WebSocketDelegate {
     let userCacheQueue = OperationQueue()
     var socket: WebSocket?
     
-    @IBOutlet weak var PeopleNearbyTableView: UITableView!
+    @IBOutlet weak var peopleNearbyTableView: UITableView!
     @IBOutlet weak var peopleCounter: UILabel!
     @IBOutlet weak var presenceSwitch: UISwitch!
     @IBOutlet weak var currentLocation: UIButton!
@@ -47,8 +47,9 @@ class NearbyPeopleViewController: UIViewController, WebSocketDelegate {
         super.viewDidLoad()
         
         //Current User Info
-        let tbc = self.tabBarController as! MainTabBarController
-        self.userLoggedIn = tbc.userloggedIn
+        if let tbc = self.tabBarController as? MainTabBarController {
+            self.userLoggedIn = tbc.userloggedIn
+        }
         pullFacebookInfo()
         //Current User Info
         
@@ -57,17 +58,17 @@ class NearbyPeopleViewController: UIViewController, WebSocketDelegate {
         self.currentLocation.setTitle(checkedInLocation, for: .normal)
         
         //Table View
-        self.PeopleNearbyTableView.delegate = self
-        self.PeopleNearbyTableView.dataSource = self
+        self.peopleNearbyTableView.delegate = self
+        self.peopleNearbyTableView.dataSource = self
         
-        self.PeopleNearbyTableView.decelerationRate = .fast
+        self.peopleNearbyTableView.decelerationRate = .fast
         
         //self.floorLabel.text?.append(String(userLoggedIn.floor))
         
         if #available(iOS 10.0, *) {
-            self.PeopleNearbyTableView.refreshControl = refreshControl
+            self.peopleNearbyTableView.refreshControl = refreshControl
         } else {
-            self.PeopleNearbyTableView.addSubview(refreshControl)
+            self.peopleNearbyTableView.addSubview(refreshControl)
         }
         
         self.refreshControl.addTarget(self, action: #selector(refreshUsersNearby), for: .valueChanged)
@@ -91,10 +92,11 @@ class NearbyPeopleViewController: UIViewController, WebSocketDelegate {
     override func viewWillAppear(_ animated: Bool) {
         
         super.viewWillAppear(animated)
-        let tbc = self.tabBarController as! MainTabBarController
-        var checkedInLocation = tbc.userloggedIn?.buildingOccupied ?? "Check In"
-        checkedInLocation += self.userLoggedIn.locality ?? ""
-        self.currentLocation.setTitle(checkedInLocation, for: .normal)
+        if let tbc = self.tabBarController as? MainTabBarController {
+            var checkedInLocation = tbc.userloggedIn?.buildingOccupied ?? "Check In"
+            checkedInLocation += self.userLoggedIn.locality ?? ""
+            self.currentLocation.setTitle(checkedInLocation, for: .normal)
+        }
         
     }
     
@@ -183,7 +185,7 @@ class NearbyPeopleViewController: UIViewController, WebSocketDelegate {
             .responseJSON{ response in
                 if response.response?.statusCode == 200 {
                     if let json = response.result.value {
-                        let users = json as! [Any]
+                        if let users = json as? [Any] {
                         
                         print("Users found nearby PostalCode: \(self.userLoggedIn.postalCode) Locality: \(self.userLoggedIn.buildingOccupied) Building Occupied: \(self.userLoggedIn.buildingOccupied)")
                         print(users)
@@ -192,27 +194,27 @@ class NearbyPeopleViewController: UIViewController, WebSocketDelegate {
                         let numberoccupied = "# Occupied: " + String(self.count)
                         self.peopleCounter.text = String(describing: numberoccupied)
                         
-                        var usersFacebookIds = [String]()
+                        
                     
                         for someUser in users {
-                            let userDetails = someUser as! [String: Any]
+                            let userDetails = someUser as? [String: Any]
                             let newPerson = User()
-                            let facebookId = userDetails["facebookId"] as! String
-                            usersFacebookIds.append(facebookId)
-                            
+                            if let facebookId: String = userDetails?["facebookId"] as? String {
+            
                             if (facebookId != self.userLoggedIn?.facebookId) {
-                                newPerson.username = userDetails["username"] as? String
-                                newPerson.firstName = userDetails["firstname"] as? String
-                                newPerson.lastName = userDetails["lastname"] as? String
-                                newPerson.facebookId = userDetails["facebookId"] as? String
-                                newPerson.school = userDetails["school"] as? String
-                                newPerson.employer = userDetails["employer"] as? String
+                                newPerson.username = userDetails?["username"] as? String
+                                newPerson.firstName = userDetails?["firstname"] as? String
+                                newPerson.lastName = userDetails?["lastname"] as? String
+                                newPerson.facebookId = userDetails?["facebookId"] as? String
+                                newPerson.school = userDetails?["school"] as? String
+                                newPerson.employer = userDetails?["employer"] as? String
                                 
                                 self.friendsAround.append(newPerson)
                                 // TODO: Call on seperate thread
                                 self.getUserFBPicture(for: newPerson.facebookId!) { result in
                                     
                                 }
+                            }
                             }
                             
                             if (self.userCacheURL != nil) {
@@ -229,11 +231,12 @@ class NearbyPeopleViewController: UIViewController, WebSocketDelegate {
                         self.actInd.stopAnimating()
                         
                         DispatchQueue.main.async {
-                            self.PeopleNearbyTableView.reloadData()
+                            self.peopleNearbyTableView.reloadData()
                             // let indexPath = IndexPath(row: 0, section: 0)
                             // self.PeopleNearbyTableView.reloadRows(at: [indexPath], with: UITableViewRowAnimation.fade)
                         }
                         
+                    }
                     }
                     //If happens show cached data
                 } else if response.response?.statusCode == 503 {
@@ -245,7 +248,7 @@ class NearbyPeopleViewController: UIViewController, WebSocketDelegate {
                                 
                                 let users = (try? JSONSerialization.jsonObject(with: stream, options: [])) as? [[String: Any]]
                                 for user in users! {
-                                    let facebookId = user["facebookId"] as! String
+                                    let facebookId = user["facebookId"] as? String
                                     if (facebookId != self.userLoggedIn?.facebookId) {
                                         let friend = User()
                                         friend.locality = user["locality"] as? String
@@ -263,7 +266,7 @@ class NearbyPeopleViewController: UIViewController, WebSocketDelegate {
                         }
                         
                         DispatchQueue.main.async {
-                            self.PeopleNearbyTableView.reloadData()
+                            self.peopleNearbyTableView.reloadData()
                             // let indexPath = IndexPath(row: 0, section: 0)
                             // self.PeopleNearbyTableView.reloadRows(at: [indexPath], with: UITableViewRowAnimation.fade)
                         }
@@ -286,7 +289,7 @@ class NearbyPeopleViewController: UIViewController, WebSocketDelegate {
         
         let nathanFBId = "1367878021"
         let nathan2FBId = "111006779636650"
-        let TraceyFBid = "109582432994026"
+        let traceyFBid = "109582432994026"
         
         if(FBSDKAccessToken.current() != nil)
         {
@@ -299,11 +302,11 @@ class NearbyPeopleViewController: UIViewController, WebSocketDelegate {
             
             connection.add(graphRequest, completionHandler: { (connection, result, error) -> Void in
                 if (connection?.urlResponse != nil && connection?.urlResponse.statusCode == 200) {
-                    let data = result as! [String : AnyObject]
-                    let name = data["name"] as? String
-                    let email = data["email"] as? String
-                    let picture = data["picture"] as? Any
-                    let FBid = data["id"] as? String
+                    let data = result as? [String : AnyObject]
+                    let name = data?["name"] as? String
+                    let email = data?["email"] as? String
+                    let picture = data?["picture"] as? Any
+                    let FBid = data?["id"] as? String
                 }
             })
             connection.start()
@@ -353,8 +356,8 @@ class NearbyPeopleViewController: UIViewController, WebSocketDelegate {
                             
                             DispatchQueue.main.async {
                             // Check if cell is visible
-                            if let _ = self.PeopleNearbyTableView.cellForRow(at: friendIndexPath) {
-                                    self.PeopleNearbyTableView.reloadRows(at: [friendIndexPath], with: UITableView.RowAnimation.automatic)
+                                if let _ = self.peopleNearbyTableView.cellForRow(at: friendIndexPath) {
+                                    self.peopleNearbyTableView.reloadRows(at: [friendIndexPath], with: UITableView.RowAnimation.automatic)
                             } else {
                                 // TODO: If cell is not visible enque to download picture and reload cell
                                 
@@ -522,7 +525,7 @@ extension NearbyPeopleViewController : UITableViewDataSource, UITableViewDelegat
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "UserCell", for: indexPath) as! UserTableViewCell
+        if let cell = tableView.dequeueReusableCell(withIdentifier: "UserCell", for: indexPath) as? UserTableViewCell {
         
         self.refreshControl.endRefreshing()
         self.actInd.stopAnimating()
@@ -558,10 +561,10 @@ extension NearbyPeopleViewController : UITableViewDataSource, UITableViewDelegat
                             result in
                             // TODO: Should not be called in main thread
                             DispatchQueue.main.async {
-                                if let cell = self.PeopleNearbyTableView?.cellForRow(at: indexPath) as! UserTableViewCell?
+                                if let cell = self.peopleNearbyTableView?.cellForRow(at: indexPath) as? UserTableViewCell?
                                 {
-                                    cell.headshotViewImage.image = result
-                                    cell.setNeedsLayout() // need to reload the view, which won't happen otherwise since this is in an async call
+                                    cell?.headshotViewImage.image = result
+                                    cell?.setNeedsLayout() // need to reload the view, which won't happen otherwise since this is in an async call
                                 }
                             }
                     }
@@ -588,23 +591,29 @@ extension NearbyPeopleViewController : UITableViewDataSource, UITableViewDelegat
             appUser.facebookId = self.friendsAround[friendsAround.index(self.friendsAround.startIndex, offsetBy: indexPath.row)].facebookId
             cell.user = appUser
         }
+          return cell
+        }
+        return UITableViewCell()
         
-        return cell
+        
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let profileVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "SelectProfileViewController") as! ProfileViewController
-        let selectedUser = User()
-        let selectedCell = PeopleNearbyTableView.cellForRow(at: indexPath) as! UserTableViewCell
-        selectedUser.firstName = selectedCell.userDetails.text
-        selectedUser.location = userLoggedIn?.location
-        selectedUser.headshot = selectedCell.headshotViewImage.image!
-        selectedUser.facebookId = selectedCell.user?.facebookId
-        profileVC.userSelected = selectedUser
-        let maintabVC = self.tabBarController as! MainTabBarController
-        maintabVC.userloggedIn = self.userLoggedIn
-        self.tabBarController?.modalPresentationStyle = .popover
-        self.tabBarController?.present(profileVC, animated: false, completion: nil)
+        if let profileVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "SelectProfileViewController") as? ProfileViewController {
+            let selectedUser = User()
+            let selectedCell = peopleNearbyTableView.cellForRow(at: indexPath) as? UserTableViewCell
+            selectedUser.firstName = selectedCell?.userDetails.text
+            selectedUser.location = userLoggedIn?.location
+            selectedUser.headshot = selectedCell?.headshotViewImage.image ?? defaultHeadshot
+            selectedUser.facebookId = selectedCell?.user?.facebookId
+            profileVC.userSelected = selectedUser
+        
+            if let maintabVC = self.tabBarController as? MainTabBarController {
+                maintabVC.userloggedIn = self.userLoggedIn
+                self.tabBarController?.modalPresentationStyle = .popover
+                self.tabBarController?.present(profileVC, animated: false, completion: nil)
+            }
+        }
         //        let tbc = self.tabBarController as! MainTabBarController
         //        tbc.selectedUser = selectedUser
         //        self.tabBarController?.selectedIndex = 1
