@@ -313,15 +313,15 @@ class NearbyPeopleViewController: UIViewController, WebSocketDelegate {
             
         }
         
-        //        let photographRequest = FBSDKGraphRequest(graphPath: nathanFBId, parameters: ["fields" : "photo"])
+        // let photographRequest = FBSDKGraphRequest(graphPath: nathanFBId, parameters: ["fields" : "photo"])
         //
-        //        let connection2 = FBSDKGraphRequestConnection()
-        //        connection2.add(photographRequest, completionHandler: { (connection, result, error) -> Void in
-        //            let data = result as! [String: AnyObject]
-        //        })
-        //        connection2.start()
+        // let connection2 = FBSDKGraphRequestConnection()
+        // connection2.add(photographRequest, completionHandler: { (connection, result, error) -> Void in
+        // let data = result as! [String: AnyObject]
+        // })
+        // connection2.start()
         
-        //Check if location services is on first
+        // Check if location services is on first
         activateLocationServices()
     }
     
@@ -506,11 +506,6 @@ extension NearbyPeopleViewController : UITableViewDataSource, UITableViewDelegat
         return self.section[section]
     }
     
-    func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return self.section.count
-    }
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // TODO: Ternary Operator
         if (section == 0) {
@@ -630,6 +625,10 @@ extension NearbyPeopleViewController : UITableViewDataSource, UITableViewDelegat
         self.refreshControl.endRefreshing()
         self.actInd.stopAnimating()
         self.actInd.removeFromSuperview()
+    }
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return self.section.count
     }
     
 }

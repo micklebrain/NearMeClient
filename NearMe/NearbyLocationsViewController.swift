@@ -157,31 +157,6 @@ class NearbyLocationsViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    func updateLocation(locality: String) {
-        
-        _ = locality.replacingOccurrences(of: " ", with: "")
-        
-        let url = URL(string: "https://crystal-smalltalk.herokuapp.com/updateLocation")
-        
-        let userDetails : Parameters = [
-            "firstname": self.userloggedIn.firstName!,
-            "username": self.userloggedIn.username!,
-            "facebookId": self.userloggedIn.facebookId!,
-            "locality": locality
-        ]
-        
-        if let tbc = self.tabBarController as? MainTabBarController {
-        tbc.userloggedIn?.buildingOccupied = locality
-        }
-        
-        Alamofire.request(url!, method: .post, parameters: userDetails, encoding: JSONEncoding.default)
-            .response { response in
-                print(response.response?.statusCode ?? "Status code not found")
-        }
-        
-        
-    }
-    
     override func viewDidAppear(_ animated: Bool) {
         placesTableView.delegate = self as? UITableViewDelegate
         placesTableView.dataSource = self
@@ -266,8 +241,18 @@ extension NearbyLocationsViewController : UITableViewDataSource, UITableViewDele
             self.userloggedIn.buildingOccupied = placesTableView.cellForRow(at: indexPath)?.textLabel?.text
             self.userloggedIn.floor = Int(floorNumber.text!)
             
-            updateLocation(locality: (self.userloggedIn.buildingOccupied)!)
-            tbc.selectedIndex = 1
+            let longitude = self.userloggedIn.longitude ?? 0
+            let latitude = self.userloggedIn.latitude ?? 0
+            let postalCode = self.userloggedIn.postalCode ?? 0
+            
+            LocationAPIHandler.updateLocation(user: self.userloggedIn,
+                                              locality: (self.userloggedIn.buildingOccupied)!,
+                                              longitude: longitude,
+                                              latitude: latitude,
+                                              building: (selectedPlace?.name)!,
+                                              zipCode: postalCode)
+            
+            tbc.selectedIndex = 0
         }
         
     }

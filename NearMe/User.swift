@@ -27,17 +27,16 @@ func == (lhs: User, rhs: User) -> Bool {
 
 class User : Hashable {
     
-    //Account
+    // Account
     var userId : NSNumber?
     var username : String?
     var password : String?
     
-    //Individual
+    // Individual
     var firstName : String?
     var middleName : String?
     var lastName : String?
     var sex : Sex?
-    
     var friends : [String]?
     var school : String?
     var employer : String?
@@ -58,12 +57,12 @@ class User : Hashable {
     var lastPlacemark: CLPlacemark?
     var currentLocation : Location?
     var location : CLLocation?
-    var postalCode: String?
+    var postalCode: Int?
     var administrativeArea: String?
     var country: String?
     var locality: String?
-    var latitude: NSNumber?
-    var longitude: NSNumber?
+    var latitude: Double?
+    var longitude: Double?
     var buildingOccupied: String?
     var floor: Int!
     

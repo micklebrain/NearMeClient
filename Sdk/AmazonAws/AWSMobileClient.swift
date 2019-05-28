@@ -76,9 +76,6 @@ class AWSMobileClient: NSObject {
     */
     func didFinishLaunching(_ application: UIApplication, withOptions launchOptions: [AnyHashable: Any]?) -> Bool {
         print("didFinishLaunching:")
-
-
-            
         let didFinishLaunching: Bool = AWSSignInManager.sharedInstance().interceptApplication(application, didFinishLaunchingWithOptions: launchOptions)
 
         if (!isInitialized) {
