@@ -163,11 +163,38 @@ class NearbyLocationsViewController: UIViewController {
 extension NearbyLocationsViewController: CLLocationManagerDelegate {
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        let location: CLLocation = locations.last!
+//        let location: CLLocation = locations.last!
+//
+//        self.userloggedIn.latitude = location.coordinate.latitude
+//        self.userloggedIn.longitude = location.coordinate.longitude
+//
+//        _ = GMSCameraPosition.camera(withLatitude: location.coordinate.latitude,
+//                                         longitude: location.coordinate.longitude,
+//                                         zoom: zoomLevel)
         
-        _ = GMSCameraPosition.camera(withLatitude: location.coordinate.latitude,
-                                         longitude: location.coordinate.longitude,
-                                         zoom: zoomLevel)
+        let userLocation: CLLocation = locations[0] as CLLocation
+        
+        //Update to get user's current location not managers
+        CLGeocoder().reverseGeocodeLocation(userLocation, completionHandler: {(placemarks, error) -> Void in
+            
+            if (error != nil) {
+                print("Reverse geocoder failed with error: " + (error?.localizedDescription)!)
+                return
+            }
+            
+            if (placemarks?.count)! > 0 {
+                let pm = placemarks?[0]
+                // TODO: Dosnt always update location
+                let latitude = pm?.location?.coordinate.latitude
+                let longitude = pm?.location?.coordinate.longitude
+                self.userloggedIn.latitude = latitude
+                self.userloggedIn.longitude = longitude
+                self.userloggedIn.locality = pm?.locality
+                self.userloggedIn.postalCode = Int ((pm?.postalCode)!)
+            } else {
+                print("Problem with the data received from geocoder")
+            }
+        })
         
         listLikelyPlaces()
     }
@@ -182,6 +209,8 @@ extension NearbyLocationsViewController: CLLocationManagerDelegate {
             print("Location status not determined.")
         case .authorizedAlways: fallthrough
         case .authorizedWhenInUse: print("Application is authorized to use location")
+        @unknown default:
+            fatalError()
         }
     }
     
@@ -238,9 +267,10 @@ extension NearbyLocationsViewController: UITableViewDataSource, UITableViewDeleg
             let longitude = self.userloggedIn.longitude ?? 0
             let latitude = self.userloggedIn.latitude ?? 0
             let postalCode = self.userloggedIn.postalCode ?? 0
+            let locality = self.userloggedIn.locality ?? ""
             
             LocationAPIHandler.updateLocation(user: self.userloggedIn,
-                                              locality: (self.userloggedIn.buildingOccupied)!,
+                                              locality: locality,
                                               longitude: longitude,
                                               latitude: latitude,
                                               building: (selectedPlace?.name)!,

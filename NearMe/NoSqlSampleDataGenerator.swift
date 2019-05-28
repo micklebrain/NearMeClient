@@ -87,8 +87,7 @@ class NoSQLSampleDataGenerator {
         // Get a random number of insertion items
         let items: Int = Int(arc4random_uniform(UInt32(NoSQLSampleDataGeneratorSampleStringValues.count / 2)) + 1)
         // Insert items for corresponding count
-        for _ in 0..<items {
-            stringArray.append(NoSQLSampleDataGeneratorSampleStringValues[Int(arc4random_uniform(UInt32(NoSQLSampleDataGeneratorSampleStringValues.count)))])
+        for _ in 0..<items {            stringArray.append(NoSQLSampleDataGeneratorSampleStringValues[Int(arc4random_uniform(UInt32(NoSQLSampleDataGeneratorSampleStringValues.count)))])
         }
         return stringArray
         

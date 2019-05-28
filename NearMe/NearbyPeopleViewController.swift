@@ -53,8 +53,7 @@ class NearbyPeopleViewController: UIViewController, WebSocketDelegate {
         pullFacebookInfo()
         //Current User Info
         
-        var checkedInLocation = self.userLoggedIn.buildingOccupied ?? "Check In"
-        checkedInLocation += self.userLoggedIn.locality ?? " "
+        let checkedInLocation = self.userLoggedIn.buildingOccupied ?? "Check In"
         self.currentLocation.setTitle(checkedInLocation, for: .normal)
         
         //Table View
@@ -93,8 +92,7 @@ class NearbyPeopleViewController: UIViewController, WebSocketDelegate {
         
         super.viewWillAppear(animated)
         if let tbc = self.tabBarController as? MainTabBarController {
-            var checkedInLocation = tbc.userloggedIn?.buildingOccupied ?? "Check In"
-            checkedInLocation += self.userLoggedIn.locality ?? ""
+            let checkedInLocation = tbc.userloggedIn?.buildingOccupied ?? "Check In"
             self.currentLocation.setTitle(checkedInLocation, for: .normal)
         }
         
@@ -173,7 +171,7 @@ class NearbyPeopleViewController: UIViewController, WebSocketDelegate {
             "locality": buildingOccupied ]
         
         let wifiipAddress = Util.getIFAddresses()[1]
-        let usersLocality = userLoggedIn.locality ?? "NewYork"
+        let usersLocality = userLoggedIn.locality ?? ""
         let localPullNearbyUsersUrlString = "http://\(wifiipAddress):8080/pullNearbyUsers?locality=NewYork"
         let localPullNearbyUsersUrl = URL(string: "http://localhost:8080/pullNearbyUsers?locality=SanFrancisco&zipCode=11104")
 //        let localPullNearbyUsersUrl = URL(string: localPullNearbyUsersUrlString)

@@ -44,7 +44,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 var splitName = name?.components(separatedBy: " ")
                 let firstName = splitName?[0]
                 let FBid = data?["id"] as? String
-                if let maintabbarVC: MainTabBarController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "MainTabBarController") as? MainTabBarController {
+                if let maintabbarVC: MainTabBarController = UIStoryboard(name: "Main",
+                                                                         bundle: nil).instantiateViewController(withIdentifier: "MainTabBarController") as? MainTabBarController {
 
                     let userloggedIn = User()
                     userloggedIn.facebookId = FBid

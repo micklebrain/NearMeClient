@@ -19,7 +19,11 @@ class FacebookManager {
                                         httpMethod: GraphRequestHTTPMethod.GET,
                                         apiVersion: .defaultVersion)
         // Get current facebook profile
-        // let graphRequest = GraphRequest(graphPath: "/me", parameters: ["fields" : "id, name, email"], accessToken: AccessToken.current, httpMethod: GraphRequestHTTPMethod.GET, apiVersion: "")
+        // let graphRequest = GraphRequest(graphPath: "/me",
+        //                                 parameters: ["fields" : "id, name, email"],
+        //                                 accessToken: AccessToken.current,
+        //                                 httpMethod: GraphRequestHTTPMethod.GET,
+        //                                 apiVersion: "")
         
         let connection = GraphRequestConnection()
         connection.add(graphRequest) { response, result in
