@@ -12,7 +12,7 @@ class AuthViewController: UIViewController {
     @IBOutlet var usernameTextField: UITextField!
     @IBOutlet var passwordTextField: UITextField!
     
-    var userloggedIn : User!
+    var userloggedIn: User!
     
     // Facebook login permissions
     // Add extra permissions you need
@@ -31,7 +31,9 @@ class AuthViewController: UIViewController {
     @IBAction func didTapFacebookLoginButton(_ sender: Any) {
         // Facebook login attempt
         let loginManager = LoginManager()
-        loginManager.logIn(readPermissions: readPermissions, viewController: self, completion: didReceiveFacebookLoginResult)
+        loginManager.logIn(readPermissions: readPermissions,
+                           viewController: self,
+                           completion: didReceiveFacebookLoginResult)
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -43,7 +45,7 @@ class AuthViewController: UIViewController {
         switch loginResult {
         case .success(grantedPermissions: _, declinedPermissions: _, token: let token):
             didLoginWithFacebook(token)
-        case .failed(_): break
+        case .failed: break
         default: break
         }
     }
@@ -51,7 +53,6 @@ class AuthViewController: UIViewController {
     private func didLoginWithFacebook(_ token: AccessToken) {
         // Successful log in with Facebook
         if let accessToken = AccessToken.current {
-            
 //            let facebookAPIManager = FacebookAPIManager(accessToken: accessToken)
 //            facebookAPIManager.requestFacebookUser(completion: { (facebookUser) in
 //                if let _ = facebookUser.email {
@@ -59,16 +60,12 @@ class AuthViewController: UIViewController {
 //                    self.didLogin(method: "Facebook", info: info)
 //                }
 //            })
-            
             self.userloggedIn = User()
             self.userloggedIn.facebookId = token.userId
-            
             let wifiipAddress = Util.getIFAddresses()[1]
             var localUrlString = "http://\(wifiipAddress):8080/getAccount?facebookId="
             localUrlString.append(self.userloggedIn.facebookId ?? "")
-            
             let localUrl = URL(string: localUrlString)
-            
             // TODO: Fix grabbing User's Auth
             //                Alamofire.request(localUrl!).response(completionHandler: { (response) in
             //                    let json = try? JSONSerialization.jsonObject(with: response.data!, options: [])
@@ -85,26 +82,22 @@ class AuthViewController: UIViewController {
             //                    self.present(maintabbarVC, animated: false, completion: nil)
             //
             //                })
-            
-            
-            if let maintabbarVC:MainTabBarController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "MainTabBarController") as? MainTabBarController {
-                
+            if let maintabbarVC: MainTabBarController = UIStoryboard(name: "Main",
+                                                                    bundle: nil).instantiateViewController(
+                                                                        withIdentifier: "MainTabBarController") as? MainTabBarController {
                 // Hardcoded
                 self.userloggedIn.username = "SFNathan"
                 self.userloggedIn.firstName = "Nathan"
                 self.userloggedIn.lastName = "Nguyen"
                 maintabbarVC.userloggedIn = self.userloggedIn
-                
                 print("Logging in with user: ")
                 print("FacebookId: " + self.userloggedIn.facebookId!)
                 print("First Name: " + self.userloggedIn.firstName!)
                 print("Last Name: " + self.userloggedIn.lastName!)
-                
                 self.present(maintabbarVC, animated: false, completion: nil)
             }
         }
     }
-    
     private func didLogin(method: String, info: String) {
         let message = "Successfully logged in with \(method). " + info
         let alert = UIAlertController(title: "Success", message: message, preferredStyle: UIAlertController.Style.alert)

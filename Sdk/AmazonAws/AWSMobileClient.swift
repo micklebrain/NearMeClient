@@ -17,7 +17,8 @@ import AWSCore
 import AWSMobileHubHelper
 
 /**
- * AWSMobileClient is a singleton that bootstraps the app. It creates an identity manager to establish the user identity with Amazon Cognito.
+ * AWSMobileClient is a singleton that bootstraps the app.
+ * It creates an identity manager to establish the user identity with Amazon Cognito.
  */
 class AWSMobileClient: NSObject {
     
@@ -46,15 +47,21 @@ class AWSMobileClient: NSObject {
      * - parameter annotation: from application delegate.
      * - returns: true if call was handled by this component
      */
-    func withApplication(_ application: UIApplication, withURL url: URL, withSourceApplication sourceApplication: String?, withAnnotation annotation: Any) -> Bool {
+    func withApplication(_ application: UIApplication,
+                         withURL url: URL,
+                         withSourceApplication sourceApplication: String?,
+                         withAnnotation annotation: Any) -> Bool {
         print("withApplication:withURL")
-        AWSSignInManager.sharedInstance().interceptApplication(application, open: url, sourceApplication: sourceApplication, annotation: annotation)
+        AWSSignInManager.sharedInstance().interceptApplication(application,
+                                                               open: url,
+                                                               sourceApplication: sourceApplication,
+                                                               annotation: annotation)
         
         if (!isInitialized) {
             isInitialized = true
         }
         
-        return false;
+        return false
     }
     
     /**
@@ -66,7 +73,6 @@ class AWSMobileClient: NSObject {
     func applicationDidBecomeActive(_ application: UIApplication) {
         print("applicationDidBecomeActive:")
     }
-    
     
     /**
     * Configures all the enabled AWS services from application delegate with options.

@@ -14,8 +14,8 @@ import UIKit
 
 class LoginViewController: UIViewController {
     
-    var userloggedIn : User!
-    var loginButton:LoginButton!
+    var userloggedIn: User!
+    var loginButton: LoginButton!
    
     @IBOutlet weak var username: UITextField!
     @IBOutlet weak var password: UITextField!
@@ -30,12 +30,12 @@ class LoginViewController: UIViewController {
             
            let connection = GraphRequestConnection()
            
-            connection.add(GraphRequest(graphPath: "/me")) { httpResponse, result in
+            connection.add(GraphRequest(graphPath: "/me")) { _, result in
                 
                 switch result {
-                case .success(let _):
+                case .success(_):
                     
-                    let data = result as? [String : AnyObject]
+                    let data = result as? [String: AnyObject]
                     let name = data?["name"] as? String
                     var splitName = name?.components(separatedBy: " ")
                     let firstName = splitName?[0]
@@ -48,22 +48,19 @@ class LoginViewController: UIViewController {
                     //Hardcoded
                     self.userloggedIn?.username = "SFNathan"
                     
-                    if let maintabbarVC:MainTabBarController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "MainTabBarController") as? MainTabBarController {
+                    if let maintabbarVC: MainTabBarController = UIStoryboard(name: "Main",
+                                                                            bundle: nil).instantiateViewController(withIdentifier: "MainTabBarController") as? MainTabBarController {
                     
                         maintabbarVC.userloggedIn = self.userloggedIn
                         
                         self.present(maintabbarVC, animated: false, completion: nil)
                     }
-                    
                 case .failed(let error):
                     print("Graph Request Failed: \(error)")
                 }
-                
             }
-            connection.start()    
-
+            connection.start()
         }
-        
         password.resignFirstResponder()
         
         //Facebook login button
@@ -73,7 +70,6 @@ class LoginViewController: UIViewController {
     }
     
     @IBAction func loginFacebook(_ sender: Any) {
-        
         // TODO: Add loading activity indicator for slow request response
         let loginManager = LoginManager()
         loginManager.logIn(readPermissions: [ .publicProfile, .email, .userFriends ], viewController: self) { (loginResult) in
@@ -84,9 +80,7 @@ class LoginViewController: UIViewController {
                 print("Ooops")
             case.success(grantedPermissions: _, declinedPermissions: _, token: let token):
                 //Pull user's information from granted permissions
-                
-                if let maintabbarVC:MainTabBarController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "MainTabBarController") as? MainTabBarController {
-                
+                if let maintabbarVC: MainTabBarController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "MainTabBarController") as? MainTabBarController {
                     self.userloggedIn = User()
                     self.userloggedIn.facebookId = token.userId
                     
@@ -94,8 +88,6 @@ class LoginViewController: UIViewController {
                     var localUrlString = "http://\(wifiipAddress):8080/account?facebookId="
                     localUrlString.append(self.userloggedIn.facebookId ?? "")
                     let localUrl = URL(string: localUrlString)
-                
-                
                 Alamofire.request(localUrl!).response(completionHandler: { (response) in
                     let json = try? JSONSerialization.jsonObject(with: response.data!, options: [])
 
@@ -121,7 +113,9 @@ class LoginViewController: UIViewController {
     }
     
     @IBAction func logout(_ sender: Any) {
-        let deletepermission = GraphRequest(graphPath: "me/permissions/", parameters: [:], httpMethod: GraphRequestHTTPMethod.DELETE)
+        let deletepermission = GraphRequest(graphPath: "me/permissions/",
+                                            parameters: [:],
+                                            httpMethod: GraphRequestHTTPMethod.DELETE)
 //        deletepermission.start({(connection,result,error)-> Void in
 //            print(String(describing:"the delete permission is \(describing: result))"))
 //        })

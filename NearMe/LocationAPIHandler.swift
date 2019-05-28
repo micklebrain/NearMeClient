@@ -19,7 +19,7 @@ class LocationAPIHandler {
         
         let url = URL(string: "https://crystal-smalltalk.herokuapp.com/updateLocation?longitude=\(longitude)&latitude=\(latitude)&zipCode=\(zipCode)&building=\(buildingCleanse)")
         
-        let userDetails : Parameters = [
+        let userDetails: Parameters = [
             "firstname": user.firstName!,
             "username": user.username!,
             "facebookId": user.facebookId!,

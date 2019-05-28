@@ -12,9 +12,12 @@ import Foundation
 
 class FacebookManager {
     
-    func downloadFacebookPicture(facebookId : String) {
-        let graphRequest = GraphRequest(graphPath: "46", parameters: ["fields" : "id, name, email"],
-                                        accessToken: AccessToken.current, httpMethod: GraphRequestHTTPMethod.GET, apiVersion: .defaultVersion)
+    func downloadFacebookPicture(facebookId: String) {
+        let graphRequest = GraphRequest(graphPath: "46",
+                                        parameters: ["fields": "id, name, email"],
+                                        accessToken: AccessToken.current,
+                                        httpMethod: GraphRequestHTTPMethod.GET,
+                                        apiVersion: .defaultVersion)
         // Get current facebook profile
         // let graphRequest = GraphRequest(graphPath: "/me", parameters: ["fields" : "id, name, email"], accessToken: AccessToken.current, httpMethod: GraphRequestHTTPMethod.GET, apiVersion: "")
         

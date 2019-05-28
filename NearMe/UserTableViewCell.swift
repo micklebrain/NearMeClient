@@ -13,7 +13,7 @@ class UserTableViewCell: UITableViewCell {
     @IBOutlet weak var headshotViewImage: UIImageView!
     @IBOutlet weak var userDetails: UILabel!
 
-    var user : User?
+    var user: User?
 
     override func awakeFromNib() {
         super.awakeFromNib()

@@ -10,7 +10,7 @@ import UIKit
 
 class ProfileViewController: UIViewController {
     
-    var userSelected : User!
+    var userSelected: User!
     
     @IBOutlet weak var userDetailsLabel: UILabel!
     @IBOutlet weak var selectedUserProfileImage: UIImageView!

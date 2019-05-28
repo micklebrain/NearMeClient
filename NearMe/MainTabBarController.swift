@@ -10,8 +10,8 @@ import UIKit
 
 class MainTabBarController: UITabBarController {
     
-    var userloggedIn : User?
-    var selectedUser : User?
+    var userloggedIn: User?
+    var selectedUser: User?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,7 +23,6 @@ class MainTabBarController: UITabBarController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
     /*
     // MARK: - Navigation
 

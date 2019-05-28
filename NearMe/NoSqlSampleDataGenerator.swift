@@ -13,7 +13,6 @@ let NoSQLSampleDataGeneratorSampleDataNumberMinimum: UInt32 = 1111000000
 let NoSQLSampleDataGeneratorSampleDataNumberMaximum: UInt32 = 1111999999
 let NoSQLSampleDataGeneratorRandomNumberMaximum: UInt32 = NoSQLSampleDataGeneratorSampleDataNumberMaximum - NoSQLSampleDataGeneratorSampleDataNumberMinimum
 let NoSQLSampleDataGeneratorSampleDataPartition: UInt8 = 4
-
 var NoSQLSampleDataGeneratorSampleStringValues: [String] = ["apple", "banana", "orange", "pear", "pineapple", "lemon",
                                                             "cherry", "avocado", "blueberry", "raspberry", "grape", "watermelon", "papaya"]
 
@@ -25,7 +24,7 @@ class NoSQLSampleDataGenerator {
         return arc4random_uniform(NoSQLSampleDataGeneratorRandomNumberMaximum)
     }
     
-    // MARK:- Partition Methods
+    // MARK: - Partition Methods
     
     class func randomPartitionSampleNumber() -> NSNumber {
         return NSNumber(value: NoSQLSampleDataGeneratorSampleDataNumberMinimum + arc4random_uniform(UInt32(NoSQLSampleDataGeneratorSampleDataPartition)) + 1 as UInt32)

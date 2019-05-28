@@ -21,10 +21,10 @@ class NearbyPeopleViewController: UIViewController, WebSocketDelegate {
     var userLoggedIn: User!
     let section = ["Friends", "Strangers"]
     let filterOptions = ["Female", "Male"]
-    var locationManager : CLLocationManager!
+    var locationManager: CLLocationManager!
     var friendsAround: [User] = []
     var strangersAround = Set<User>()
-    var defaultHeadshot : UIImage!
+    var defaultHeadshot: UIImage!
     var headshots = [String: UIImage]()
     var currentUserLocation: CLLocation?
     var count = 0
@@ -113,7 +113,7 @@ class NearbyPeopleViewController: UIViewController, WebSocketDelegate {
         
     }
     
-    //MARK: WebSocket
+    // MARK: WebSocket
     func websocketDidConnect(socket: WebSocketClient) {
         socket.write(string: "Connected through IOS")
     }
@@ -166,7 +166,7 @@ class NearbyPeopleViewController: UIViewController, WebSocketDelegate {
         let facebookId = self.userLoggedIn?.facebookId ?? ""
         
         // Body for nearby users
-        let userDetails : Parameters = [
+        let userDetails: Parameters = [
             "firstname": firstName,
             "username": userName,
             "facebookId": facebookId,
@@ -182,7 +182,7 @@ class NearbyPeopleViewController: UIViewController, WebSocketDelegate {
         
         Alamofire.request(pullNearbyUsersUrl!, method: .post, parameters: userDetails, encoding: JSONEncoding.default)
 //            Alamofire.request(pullAllUsersUrl!, method: .get)
-            .responseJSON{ response in
+            .responseJSON { response in
                 if response.response?.statusCode == 200 {
                     if let json = response.result.value {
                         if let users = json as? [Any] {
@@ -193,8 +193,6 @@ class NearbyPeopleViewController: UIViewController, WebSocketDelegate {
                         self.count = users.count
                         let numberoccupied = "# Occupied: " + String(self.count)
                         self.peopleCounter.text = String(describing: numberoccupied)
-                        
-                        
                     
                         for someUser in users {
                             let userDetails = someUser as? [String: Any]
@@ -211,7 +209,7 @@ class NearbyPeopleViewController: UIViewController, WebSocketDelegate {
                                 
                                 self.friendsAround.append(newPerson)
                                 // TODO: Call on seperate thread
-                                self.getUserFBPicture(for: newPerson.facebookId!) { result in
+                                self.getUserFBPicture(for: newPerson.facebookId!) { _ in
                                     
                                 }
                             }
@@ -255,7 +253,7 @@ class NearbyPeopleViewController: UIViewController, WebSocketDelegate {
                                         friend.firstName = user["firstName"] as? String
                                         friend.lastName = user["lastName"] as? String
                                         friend.facebookId = user["facebookId"] as? String
-                                        self.getUserFBPicture(for: friend.facebookId!) { result in
+                                        self.getUserFBPicture(for: friend.facebookId!) { _ in
                                             
                                         }
                                         self.friendsAround.append(friend)
@@ -291,18 +289,19 @@ class NearbyPeopleViewController: UIViewController, WebSocketDelegate {
         let nathan2FBId = "111006779636650"
         let traceyFBid = "109582432994026"
         
-        if(FBSDKAccessToken.current() != nil)
-        {
+        if(FBSDKAccessToken.current() != nil) {
         
             FBSDKAccessToken.current()?.userID
             
-            let graphRequest = FBSDKGraphRequest(graphPath: nathanFBId, parameters: ["fields" : "id, name, email,picture"])
+            let graphRequest = FBSDKGraphRequest(graphPath: nathanFBId,
+                                                 parameters: ["fields": "id, name, email,picture"])
             
             let connection = FBSDKGraphRequestConnection()
             
-            connection.add(graphRequest, completionHandler: { (connection, result, error) -> Void in
+            connection.add(graphRequest,
+                           completionHandler: { (connection, result, _) -> Void in
                 if (connection?.urlResponse != nil && connection?.urlResponse.statusCode == 200) {
-                    let data = result as? [String : AnyObject]
+                    let data = result as? [String: AnyObject]
                     let name = data?["name"] as? String
                     let email = data?["email"] as? String
                     let picture = data?["picture"] as? Any
@@ -325,7 +324,7 @@ class NearbyPeopleViewController: UIViewController, WebSocketDelegate {
         activateLocationServices()
     }
     
-    func getUserFBPicture (for facebookId : String, completionHandler: @escaping (UIImage) -> Void) {
+    func getUserFBPicture (for facebookId: String, completionHandler: @escaping (UIImage) -> Void) {
         
         // Solve threading to update fb image when complete
         var headshot = #imageLiteral(resourceName: "empty-headshot")
@@ -336,7 +335,7 @@ class NearbyPeopleViewController: UIViewController, WebSocketDelegate {
         let url = URL(string: pictureUrl)
         
         if let url = url {
-            let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
+            let task = URLSession.shared.dataTask(with: url) { (data, _, error) in
                 if error != nil {
                     print(error!)
                 } else {
@@ -385,7 +384,7 @@ class NearbyPeopleViewController: UIViewController, WebSocketDelegate {
         locationManager = CLLocationManager()
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        locationManager.distanceFilter = kCLLocationAccuracyNearestTenMeters;
+        locationManager.distanceFilter = kCLLocationAccuracyNearestTenMeters
         locationManager.requestAlwaysAuthorization()
         
         if CLLocationManager.locationServicesEnabled() {
@@ -394,7 +393,7 @@ class NearbyPeopleViewController: UIViewController, WebSocketDelegate {
         
     }       
     
-    //  MARK: - Location tracking
+    // MARK: - Location tracking
     @IBAction func presenceSwitch(_ sender: Any) {
         self.tabBarController?.selectedIndex = 1
         self.userLoggedIn?.online = !self.userLoggedIn.online!
@@ -404,7 +403,7 @@ class NearbyPeopleViewController: UIViewController, WebSocketDelegate {
     func updateOnlineStatus () {
         let url = URL(string: "https://crystal-smalltalk.herokuapp.com/updateOnlineStatus")
         
-        let userDetails : Parameters = [
+        let userDetails: Parameters = [
             "facebookId": self.userLoggedIn.facebookId!,
             "online": false
         ]
@@ -426,12 +425,12 @@ class NearbyPeopleViewController: UIViewController, WebSocketDelegate {
             
             let locality = (userPlacemark.locality != nil) ? userPlacemark.locality : ""
             let postalCode = (userPlacemark.postalCode != nil) ? userPlacemark.postalCode : ""
-            let latitude:Double  = userLocation.coordinate.latitude
-            let longitutde:Double = userLocation.coordinate.longitude
+            let latitude: Double  = userLocation.coordinate.latitude
+            let longitutde: Double = userLocation.coordinate.longitude
             //  let administrativeArea = (containsPlacemark.administrativeArea != nil) ? containsPlacemark.administrativeArea : ""
             //  let country = (containsPlacemark.country != nil) ? containsPlacemark.country : ""
             
-            let userDetails : Parameters = [
+            let userDetails: Parameters = [
                 "username": self.userLoggedIn?.username ?? "",
                 "locality": locality ?? ""
             ]
@@ -440,7 +439,7 @@ class NearbyPeopleViewController: UIViewController, WebSocketDelegate {
             let wifiipAddress = Util.getIFAddresses()[1]
             let trackURL = "http://\(wifiipAddress):8080/track?longitude=\(longitutde)&latitude=\(latitude)"
             let herokuTrackURL = "https://crystal-smalltalk.herokuapp.com/track?longitude=\(longitutde)&latitude=\(latitude)&zipCode=\(postalCode!)"
-            Alamofire.request(herokuTrackURL, method: .post, parameters: userDetails, encoding: JSONEncoding.default).response { (response) in
+            Alamofire.request(herokuTrackURL, method: .post, parameters: userDetails, encoding: JSONEncoding.default).response { (_) in
             }
             
             //Update User's Location
@@ -457,7 +456,7 @@ class NearbyPeopleViewController: UIViewController, WebSocketDelegate {
 struct MyProfileRequest: GraphRequestProtocol {
     
     var graphPath: String
-    var parameters: [String : Any]?
+    var parameters: [String: Any]?
     var accessToken: AccessToken?
     var httpMethod: GraphRequestHTTPMethod = .GET
     var apiVersion: GraphAPIVersion = .defaultVersion
@@ -470,14 +469,14 @@ struct MyProfileRequest: GraphRequestProtocol {
     
 }
 
-extension NearbyPeopleViewController : CLLocationManagerDelegate {
+extension NearbyPeopleViewController: CLLocationManagerDelegate {
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         
-        let userLocation:CLLocation = locations[0] as CLLocation
+        let userLocation: CLLocation = locations[0] as CLLocation
         
         //Update to get user's current location not managers
-        CLGeocoder().reverseGeocodeLocation(userLocation, completionHandler: {(placemarks, error)->Void in
+        CLGeocoder().reverseGeocodeLocation(userLocation, completionHandler: {(placemarks, error) -> Void in
             
             if (error != nil) {
                 print("Reverse geocoder failed with error: " + (error?.localizedDescription)!)
@@ -500,7 +499,7 @@ extension NearbyPeopleViewController : CLLocationManagerDelegate {
     
 }
 
-extension NearbyPeopleViewController : UITableViewDataSource, UITableViewDelegate {
+extension NearbyPeopleViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return self.section[section]
@@ -556,8 +555,7 @@ extension NearbyPeopleViewController : UITableViewDataSource, UITableViewDelegat
                             result in
                             // TODO: Should not be called in main thread
                             DispatchQueue.main.async {
-                                if let cell = self.peopleNearbyTableView?.cellForRow(at: indexPath) as? UserTableViewCell?
-                                {
+                                if let cell = self.peopleNearbyTableView?.cellForRow(at: indexPath) as? UserTableViewCell? {
                                     cell?.headshotViewImage.image = result
                                     cell?.setNeedsLayout() // need to reload the view, which won't happen otherwise since this is in an async call
                                 }
@@ -589,7 +587,6 @@ extension NearbyPeopleViewController : UITableViewDataSource, UITableViewDelegat
           return cell
         }
         return UITableViewCell()
-        
         
     }
     

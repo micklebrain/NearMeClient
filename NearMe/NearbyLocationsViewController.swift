@@ -22,15 +22,15 @@ class NearbyLocationsViewController: UIViewController {
     @IBOutlet weak var floorNumber: UILabel!
     @IBOutlet weak var floorStepper: UIStepper!
     
-    var suggestedResturants : [GoogleLocation] = []
+    var suggestedResturants: [GoogleLocation] = []
     //Pull from Cache 
-    var resturantsAround : [String] = []
+    var resturantsAround: [String] = []
     
-    var latitude : Double?
-    var longitude : Double?
-    var radius : String?
-    var apiKey : String?
-    var locationManager : CLLocationManager!
+    var latitude: Double?
+    var longitude: Double?
+    var radius: String?
+    var apiKey: String?
+    var locationManager: CLLocationManager!
     var currentUserLocation: CLLocation?
     var placesClient: GMSPlacesClient!
     var zoomLevel: Float = 15.0
@@ -53,11 +53,10 @@ class NearbyLocationsViewController: UIViewController {
             
             pullfacebookInfo()
             getUsername()
-            
             locationManager = CLLocationManager()
             locationManager!.delegate = self
             locationManager!.desiredAccuracy = kCLLocationAccuracyBest
-            locationManager.distanceFilter = 50;
+            locationManager.distanceFilter = 50
             locationManager!.requestAlwaysAuthorization()
             placesClient = GMSPlacesClient.shared()
             
@@ -65,21 +64,19 @@ class NearbyLocationsViewController: UIViewController {
                 locationManager?.startUpdatingLocation()
             }
         }
-        
-        
     }
     
     private func getUsername() {
         
         let url = URL(string: "https://crystal-smalltalk.herokuapp.com/sync")
         
-        let userDetails : Parameters = [
+        let userDetails: Parameters = [
             "facebookId": self.userloggedIn.facebookId!
         ]
         
         Alamofire.request(url!, method: .post, parameters: userDetails, encoding: JSONEncoding.default)
-            .responseString{ response in
-                if let data = response.result.value{
+            .responseString { response in
+                if let data = response.result.value {
                     self.userloggedIn.username = data
                 }
         }
@@ -89,15 +86,14 @@ class NearbyLocationsViewController: UIViewController {
     private func pullfacebookInfo() {
         
         //Crashes without internet connection
-        if(FBSDKAccessToken.current() != nil)
-        {
+        if(FBSDKAccessToken.current() != nil) {
             // Graph Path : "me" is going to get current user logged in
-            let graphRequest = FBSDKGraphRequest(graphPath: "me", parameters: ["fields" : "id, name, email"])
+            let graphRequest = FBSDKGraphRequest(graphPath: "me", parameters: ["fields": "id, name, email"])
             let connection = FBSDKGraphRequestConnection()
             
-            connection.add(graphRequest, completionHandler: { (connection, result, error) -> Void in
+            connection.add(graphRequest, completionHandler: { (connection, result, _) -> Void in
                 if (connection?.urlResponse != nil && connection?.urlResponse.statusCode == 200) {
-                    if let data = result as? [String : AnyObject] {
+                    if let data = result as? [String: AnyObject] {
                         if let name = data["name"] as? String {
                         var splitName = name.components(separatedBy: " ")
                         let firstName = splitName.removeFirst()
@@ -105,7 +101,6 @@ class NearbyLocationsViewController: UIViewController {
     //                    let gender = data["gender"]
                         
                         let FBid = data["id"] as? String
-                        
                         
                         self.userloggedIn.firstName = firstName
                         self.userloggedIn.facebookId = FBid
@@ -123,7 +118,7 @@ class NearbyLocationsViewController: UIViewController {
         
         likelyPlaces.removeAll()
         
-        placesClient.currentPlace(callback:  { (placeLikelihoods, error) -> Void in
+        placesClient.currentPlace(callback: { (placeLikelihoods, error) -> Void in
             
             if let error = error {
                 print("Places Client error: \(error.localizedDescription)")
@@ -170,7 +165,7 @@ extension NearbyLocationsViewController: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         let location: CLLocation = locations.last!
         
-        let _ = GMSCameraPosition.camera(withLatitude: location.coordinate.latitude,
+        _ = GMSCameraPosition.camera(withLatitude: location.coordinate.latitude,
                                          longitude: location.coordinate.longitude,
                                          zoom: zoomLevel)
         
@@ -197,7 +192,7 @@ extension NearbyLocationsViewController: CLLocationManagerDelegate {
     
 }
 
-extension NearbyLocationsViewController : UITableViewDataSource, UITableViewDelegate {
+extension NearbyLocationsViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if likelyPlaces.count == 0 {
@@ -235,7 +230,6 @@ extension NearbyLocationsViewController : UITableViewDataSource, UITableViewDele
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         //Index out of range exception?
         selectedPlace = likelyPlaces[indexPath.row]
-        
         if let tbc = self.tabBarController as? MainTabBarController {
             tbc.userloggedIn = self.userloggedIn
             self.userloggedIn.buildingOccupied = placesTableView.cellForRow(at: indexPath)?.textLabel?.text
@@ -280,4 +274,3 @@ extension NearbyLocationsViewController: UIPickerViewDelegate, UIPickerViewDataS
     }
     
 }
-
