@@ -239,19 +239,19 @@
                                 </prototypes>
                             </tableView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Floor #:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EkU-HO-9Wi">
-                                <rect key="frame" x="68" y="622" width="59" height="21"/>
+                                <rect key="frame" x="68" y="684" width="59" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" maximumValue="100" translatesAutoresizingMaskIntoConstraints="NO" id="tni-nD-w2F">
-                                <rect key="frame" x="236" y="618" width="94" height="29"/>
+                                <rect key="frame" x="236" y="680" width="94" height="29"/>
                                 <connections>
                                     <action selector="floorChanged:" destination="4bN-pW-dVJ" eventType="valueChanged" id="TCf-Sa-iPc"/>
                                 </connections>
                             </stepper>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ezQ-Bo-clE">
-                                <rect key="frame" x="171" y="618" width="25" height="25"/>
+                                <rect key="frame" x="171" y="680" width="25" height="25"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="25" id="5fo-uT-vQ5"/>
                                 </constraints>
@@ -259,12 +259,26 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter Custom Location" textAlignment="center" minimumFontSize="21" translatesAutoresizingMaskIntoConstraints="NO" id="Kcb-DT-OCM">
-                                <rect key="frame" x="0.0" y="78" width="375" height="30"/>
+                            <textField opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter Custom Location" textAlignment="center" minimumFontSize="21" translatesAutoresizingMaskIntoConstraints="NO" id="Kcb-DT-OCM">
+                                <rect key="frame" x="0.0" y="78" width="293" height="30"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You are checked in at: " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qiF-i6-TAD">
+                                <rect key="frame" x="101" y="607" width="173" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qmH-i7-Y73">
+                                <rect key="frame" x="301" y="78" width="74" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Update"/>
+                                <connections>
+                                    <action selector="updateLocation:" destination="4bN-pW-dVJ" eventType="touchUpInside" id="299-Ve-Xw5"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -272,13 +286,15 @@
                             <constraint firstItem="F95-cI-TK7" firstAttribute="top" secondItem="Kcb-DT-OCM" secondAttribute="bottom" constant="8" symbolic="YES" id="3TA-ID-Gd9"/>
                             <constraint firstItem="Kcb-DT-OCM" firstAttribute="leading" secondItem="9dG-Mg-eID" secondAttribute="leading" id="5Vx-zY-Uny"/>
                             <constraint firstAttribute="trailing" secondItem="9dG-Mg-eID" secondAttribute="trailing" id="5qe-Sg-mpT"/>
+                            <constraint firstItem="qiF-i6-TAD" firstAttribute="centerX" secondItem="F95-cI-TK7" secondAttribute="centerX" id="7iC-0y-LU7"/>
                             <constraint firstItem="9dG-Mg-eID" firstAttribute="leading" secondItem="PMt-Jd-fcd" secondAttribute="leading" id="7kg-QI-q7u"/>
                             <constraint firstItem="tni-nD-w2F" firstAttribute="leading" secondItem="ezQ-Bo-clE" secondAttribute="trailing" constant="40" id="7zf-KN-R1b"/>
                             <constraint firstItem="EkU-HO-9Wi" firstAttribute="baseline" secondItem="ezQ-Bo-clE" secondAttribute="baseline" id="Eyr-M2-DVv"/>
                             <constraint firstItem="Kcb-DT-OCM" firstAttribute="trailing" secondItem="9dG-Mg-eID" secondAttribute="trailing" id="KK5-K6-7Pe"/>
                             <constraint firstItem="ezQ-Bo-clE" firstAttribute="top" secondItem="tni-nD-w2F" secondAttribute="top" id="SAg-Mk-eM8"/>
+                            <constraint firstItem="qiF-i6-TAD" firstAttribute="top" secondItem="F95-cI-TK7" secondAttribute="bottom" constant="30" id="XMT-Bx-l7V"/>
                             <constraint firstItem="9dG-Mg-eID" firstAttribute="trailing" secondItem="F95-cI-TK7" secondAttribute="trailing" id="en2-gk-Nus"/>
-                            <constraint firstItem="ezQ-Bo-clE" firstAttribute="top" secondItem="F95-cI-TK7" secondAttribute="bottom" constant="41" id="h87-hx-tRG"/>
+                            <constraint firstItem="ezQ-Bo-clE" firstAttribute="top" secondItem="F95-cI-TK7" secondAttribute="bottom" constant="103" id="h87-hx-tRG"/>
                             <constraint firstItem="EkU-HO-9Wi" firstAttribute="centerY" secondItem="tni-nD-w2F" secondAttribute="centerY" id="jcA-90-bOG"/>
                             <constraint firstItem="F95-cI-TK7" firstAttribute="top" secondItem="9dG-Mg-eID" secondAttribute="bottom" constant="38" id="kQq-QO-WHA"/>
                             <constraint firstItem="EkU-HO-9Wi" firstAttribute="leading" secondItem="PMt-Jd-fcd" secondAttribute="leadingMargin" constant="52" id="oDQ-jL-qJd"/>
@@ -291,6 +307,8 @@
                         <offsetWrapper key="titlePositionAdjustment" horizontal="0.0" vertical="0.0"/>
                     </tabBarItem>
                     <connections>
+                        <outlet property="currentLocationLabel" destination="qiF-i6-TAD" id="ypn-LZ-wi8"/>
+                        <outlet property="currentLocationTextField" destination="Kcb-DT-OCM" id="5w4-2d-g2C"/>
                         <outlet property="floorNumber" destination="ezQ-Bo-clE" id="6v5-p8-EQD"/>
                         <outlet property="floorStepper" destination="tni-nD-w2F" id="XmJ-68-hN4"/>
                         <outlet property="placesTableView" destination="F95-cI-TK7" id="z3k-h8-uMi"/>

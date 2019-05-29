@@ -21,6 +21,8 @@ class NearbyLocationsViewController: UIViewController {
     @IBOutlet weak var placesTableView: UITableView!
     @IBOutlet weak var floorNumber: UILabel!
     @IBOutlet weak var floorStepper: UIStepper!
+    @IBOutlet weak var currentLocationLabel: UILabel!
+    @IBOutlet weak var currentLocationTextField: UITextField!
     
     var suggestedResturants: [GoogleLocation] = []
     //Pull from Cache 
@@ -45,6 +47,8 @@ class NearbyLocationsViewController: UIViewController {
         
         super.viewDidLoad()
         
+        self.currentLocationTextField.delegate = self
+        
         if let tbc = self.tabBarController as? MainTabBarController {
         // Crashes After first logging in through facebook b/c null value
         
@@ -52,7 +56,9 @@ class NearbyLocationsViewController: UIViewController {
         self.userloggedIn = tbc.userloggedIn ?? newUser
             
             pullfacebookInfo()
-            getUsername()
+            AccountAPIHandler.getUsername(facebookId: self.userloggedIn.facebookId!, completion: ({ username in
+                self.userloggedIn.username = username
+            }))
             locationManager = CLLocationManager()
             locationManager!.delegate = self
             locationManager!.desiredAccuracy = kCLLocationAccuracyBest
@@ -64,23 +70,8 @@ class NearbyLocationsViewController: UIViewController {
                 locationManager?.startUpdatingLocation()
             }
         }
-    }
-    
-    private func getUsername() {
-        
-        let url = URL(string: "https://crystal-smalltalk.herokuapp.com/sync")
-        
-        let userDetails: Parameters = [
-            "facebookId": self.userloggedIn.facebookId!
-        ]
-        
-        Alamofire.request(url!, method: .post, parameters: userDetails, encoding: JSONEncoding.default)
-            .responseString { response in
-                if let data = response.result.value {
-                    self.userloggedIn.username = data
-                }
-        }
-        
+                
+        self.currentLocationLabel.text =  self.userloggedIn.buildingOccupied
     }
     
     private func pullfacebookInfo() {
@@ -135,11 +126,35 @@ class NearbyLocationsViewController: UIViewController {
                         self.likelyPlaces.append(place)
                     }
                 }
-                print("\(self.likelyPlaces.count) Likely places around: \n \(self.likelyPlaces)")
+                print("\(self.likelyPlaces.count) likely places around ")
+                print(self.likelyPlaces)
                 self.placesTableView.reloadData()
             }
             
         })
+        
+    }
+    
+    @IBAction func updateLocation(_ sender: Any) {
+        
+        let building = currentLocationTextField.text ?? ""
+        self.userloggedIn.buildingOccupied = building
+        let locality = self.userloggedIn.locality ?? ""
+        let longitude = self.userloggedIn.longitude ?? 0.0
+        let latitude = self.userloggedIn.latitude ?? 0.0
+        let postalCode = self.userloggedIn.postalCode ?? 0
+        
+        LocationAPIHandler.updateLocation(user: self.userloggedIn,
+                                          locality: locality,
+                                          longitude: longitude,
+                                          latitude: latitude,
+                                          building: building,
+                                          zipCode: postalCode)
+        
+        if let tbc = self.tabBarController as? MainTabBarController {
+            self.currentLocationTextField.text = ""
+            tbc.selectedIndex = 0
+        }
         
     }
     
@@ -301,6 +316,15 @@ extension NearbyLocationsViewController: UIPickerViewDelegate, UIPickerViewDataS
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         return resturantsAround[row]
+    }
+    
+}
+
+extension NearbyLocationsViewController: UITextFieldDelegate {
+    
+    func textFieldShouldReturn(_ scoreText: UITextField) -> Bool {
+        self.view.endEditing(true)
+        return true
     }
     
 }

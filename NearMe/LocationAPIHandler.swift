@@ -12,7 +12,12 @@ import Alamofire
 
 class LocationAPIHandler {
     
-    static func updateLocation(user: User, locality: String, longitude: Double, latitude: Double, building: String, zipCode: Int) {
+    static func updateLocation(user: User,
+                               locality: String,
+                               longitude: Double,
+                               latitude: Double,
+                               building: String,
+                               zipCode: Int) {
         
         _ = locality.replacingOccurrences(of: " ", with: "")
         let buildingCleanse = building.replacingOccurrences(of: " ", with: "")
@@ -28,7 +33,8 @@ class LocationAPIHandler {
         
         Alamofire.request(url!, method: .post, parameters: userDetails, encoding: JSONEncoding.default)
             .response { response in
-                print(response.response?.statusCode ?? "Status code not found")
+                print("Status code for update user location: ")
+                print(response.response?.statusCode  ?? "Status code not found")
         }
         
     }

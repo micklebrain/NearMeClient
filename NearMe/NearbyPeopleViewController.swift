@@ -71,20 +71,20 @@ class NearbyPeopleViewController: UIViewController, WebSocketDelegate {
         }
         
         self.refreshControl.addTarget(self, action: #selector(refreshUsersNearby), for: .valueChanged)
-        //Table View
+        // Table View
         
-        /*Location Services*/
+        /* Location Services */
         //Check if location services is allowed to update location
         activateLocationServices()
         
-        //Load first time
+        // Load first time
         refreshUsersNearby()
         
-        //Refresh Nearby Userevery 60 seconds
-//        self.timer = Timer.scheduledTimer(withTimeInterval: 10, repeats: true, block: { (Timer) in
-//            self.refreshUsersNearby()
-//        })
-        /*Location Services*/
+        // Refresh Nearby Userevery 60 seconds
+        // self.timer = Timer.scheduledTimer(withTimeInterval: 10, repeats: true, block: { (Timer) in
+        // self.refreshUsersNearby()
+        // })
+        /* Location Services */
         
     }
     
@@ -136,7 +136,6 @@ class NearbyPeopleViewController: UIViewController, WebSocketDelegate {
         self.strangersAround.removeAll()
         pullNearbyUsers()
         self.count = self.friendsAround.count + self.strangersAround.count
-        
         self.refreshControl.endRefreshing()
         self.actInd.stopAnimating()
         self.actInd.removeFromSuperview()
@@ -153,9 +152,9 @@ class NearbyPeopleViewController: UIViewController, WebSocketDelegate {
             UIActivityIndicatorView.Style.gray
         self.view.addSubview(actInd)
         self.actInd.startAnimating()
-        //Activity Indicator
+        // Activity Indicator
         
-        //User
+        // User
         userLoggedIn?.friends = ["Nathan"]
         
         let buildingOccupied = userLoggedIn?.buildingOccupied != nil ? userLoggedIn.buildingOccupied : ""
@@ -179,7 +178,7 @@ class NearbyPeopleViewController: UIViewController, WebSocketDelegate {
         let pullAllUsersUrl = URL(string: "https://crystal-smalltalk.herokuapp.com/pullAllUsers")
         
         Alamofire.request(pullNearbyUsersUrl!, method: .post, parameters: userDetails, encoding: JSONEncoding.default)
-//            Alamofire.request(pullAllUsersUrl!, method: .get)
+            // Alamofire.request(pullAllUsersUrl!, method: .get)
             .responseJSON { response in
                 if response.response?.statusCode == 200 {
                     if let json = response.result.value {
@@ -188,7 +187,7 @@ class NearbyPeopleViewController: UIViewController, WebSocketDelegate {
                         print("Users found nearby PostalCode: \(self.userLoggedIn.postalCode) Locality: \(self.userLoggedIn.buildingOccupied) Building Occupied: \(self.userLoggedIn.buildingOccupied)")
                         print(users)
                         
-                        self.count = users.count
+                        self.count = self.friendsAround.count + self.strangersAround.count
                         let numberoccupied = "# Occupied: " + String(self.count)
                         self.peopleCounter.text = String(describing: numberoccupied)
                     
@@ -273,8 +272,8 @@ class NearbyPeopleViewController: UIViewController, WebSocketDelegate {
                         person.lastName = "Around"
                         person.school = "None"
                         person.facebookId = "none"
-                        self.friendsAround.append(person)
-                        self.strangersAround.insert(person)
+//                        self.friendsAround.append(person)
+//                        self.strangersAround.insert(person)
                         self.actInd.stopAnimating()
                     }
                 }
@@ -346,8 +345,6 @@ class NearbyPeopleViewController: UIViewController, WebSocketDelegate {
                                 user.facebookId == facebookId
                             })!)
                             user.headshot = headshot
-                            self.friendsAround.append(user)
-                            
                             let index = self.friendsAround.count
                             let friendIndexPath = IndexPath(row: self.friendsAround.count, section: 0)
                             
@@ -357,7 +354,6 @@ class NearbyPeopleViewController: UIViewController, WebSocketDelegate {
                                     self.peopleNearbyTableView.reloadRows(at: [friendIndexPath], with: UITableView.RowAnimation.automatic)
                             } else {
                                 // TODO: If cell is not visible enque to download picture and reload cell
-                                
                                 }
                             }
                             completionHandler(headshot)
@@ -435,8 +431,10 @@ class NearbyPeopleViewController: UIViewController, WebSocketDelegate {
             
             //Track Location
             let wifiipAddress = Util.getIFAddresses()[1]
-            let trackURL = "http://\(wifiipAddress):8080/track?longitude=\(longitutde)&latitude=\(latitude)"
-            let herokuTrackURL = "https://crystal-smalltalk.herokuapp.com/track?longitude=\(longitutde)&latitude=\(latitude)&zipCode=\(postalCode!)"
+            let trackURL
+                = "http://\(wifiipAddress):8080/track?longitude=\(longitutde)&latitude=\(latitude)"
+            let herokuTrackURL
+                = "https://crystal-smalltalk.herokuapp.com/track?longitude=\(longitutde)&latitude=\(latitude)&zipCode=\(postalCode!)"
             Alamofire.request(herokuTrackURL, method: .post, parameters: userDetails, encoding: JSONEncoding.default).response { (_) in
             }
             
@@ -567,9 +565,6 @@ extension NearbyPeopleViewController: UITableViewDataSource, UITableViewDelegate
             let appUser = User()
             appUser.facebookId = self.friendsAround[friendsAround.index(self.friendsAround.startIndex, offsetBy: indexPath.row)].facebookId
             cell.user = appUser
-            
-            // Keeps flashing
-            // cell.connectButton.titleLabel?.text = "Reconnect"
         } else {
             cell.userDetails.text? = self.strangersAround[strangersAround.index(self.strangersAround.startIndex, offsetBy: indexPath.row)].firstName! + " " +
                 self.friendsAround[friendsAround.index(self.friendsAround.startIndex, offsetBy: indexPath.row)].lastName!

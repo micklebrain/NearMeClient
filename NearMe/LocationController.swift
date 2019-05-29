@@ -31,9 +31,9 @@ class LocationController: NSObject, CLLocationManagerDelegate {
         
         let userLocation: CLLocation = locations[0] as CLLocation
         
-        //Shouldnt have both
-        //    manager.stopUpdatingLocation()
-        //   locationManager.stopUpdatingLocation()
+        // Shouldnt have both
+        // manager.stopUpdatingLocation()
+        // locationManager.stopUpdatingLocation()
         
         //Update to get user's current location not managers
         CLGeocoder().reverseGeocodeLocation(userLocation, completionHandler: {(placemarks, error) -> Void in

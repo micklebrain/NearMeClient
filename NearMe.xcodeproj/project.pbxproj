@@ -56,6 +56,7 @@
 		2A9EE12C226D6A6800A3E280 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A9EE12B226D6A6700A3E280 /* LoginViewController.swift */; };
 		2A9EE12F226E4F5C00A3E280 /* FacebookManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A9EE12E226E4F5C00A3E280 /* FacebookManager.swift */; };
 		2A9EE131226E989D00A3E280 /* AccountManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A9EE130226E989D00A3E280 /* AccountManager.swift */; };
+		2AA16ACA229E197C00BF5413 /* AccountAPIHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AA16AC9229E197C00BF5413 /* AccountAPIHandler.swift */; };
 		2AA6F8362149C48300C18D8E /* NearbyPeopleVCTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AA6F8352149C48300C18D8E /* NearbyPeopleVCTest.swift */; };
 		2AD59DC1228A73F000E25E20 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 2AD59DC0228A73F000E25E20 /* .swiftlint.yml */; };
 		2AF7DF3C20B60EC3003EEFF9 /* UrlConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AF7DF3B20B60EC3003EEFF9 /* UrlConstants.swift */; };
@@ -150,6 +151,7 @@
 		2A9EE12E226E4F5C00A3E280 /* FacebookManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = FacebookManager.swift; path = ../../../NathanNguyen/NearMeClient/NearMe/FacebookManager.swift; sourceTree = "<group>"; };
 		2A9EE130226E989D00A3E280 /* AccountManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AccountManager.swift; path = ../../../NathanNguyen/NearMeClient/NearMe/AccountManager.swift; sourceTree = "<group>"; };
 		2A9F20132093D5B000E1B7E8 /* Bolts-ObjC-master */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "Bolts-ObjC-master"; path = "../Bolts-ObjC-master"; sourceTree = "<group>"; };
+		2AA16AC9229E197C00BF5413 /* AccountAPIHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AccountAPIHandler.swift; path = ../../../NathanNguyen/NearMeClient/NearMe/AccountAPIHandler.swift; sourceTree = "<group>"; };
 		2AA6F8352149C48300C18D8E /* NearbyPeopleVCTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NearbyPeopleVCTest.swift; sourceTree = "<group>"; };
 		2AD59DC0228A73F000E25E20 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text; name = .swiftlint.yml; path = ../../NathanNguyen/NearMeClient/.swiftlint.yml; sourceTree = "<group>"; };
 		2AF7DF3B20B60EC3003EEFF9 /* UrlConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UrlConstants.swift; sourceTree = "<group>"; };
@@ -245,6 +247,7 @@
 				2A27D5911FCFEAE200331A63 /* UserProfileViewController.swift */,
 				2A6934CD20732146009CBCB4 /* ProfileViewController.swift */,
 				2A9EE130226E989D00A3E280 /* AccountManager.swift */,
+				2AA16AC9229E197C00BF5413 /* AccountAPIHandler.swift */,
 			);
 			name = Users;
 			sourceTree = "<group>";
@@ -841,6 +844,7 @@
 				2A4DA950207D27830015E729 /* User.swift in Sources */,
 				A5A645EA1EA724DD00D411E1 /* EmployedPerson.swift in Sources */,
 				A5462D781EF0A4A6000970EB /* NearbyTableView.swift in Sources */,
+				2AA16ACA229E197C00BF5413 /* AccountAPIHandler.swift in Sources */,
 				A5E446531EDF6ECC00791822 /* AccountsTable.swift in Sources */,
 				2AFEBD3C226BE6FD0019F6A7 /* AuthViewController.swift in Sources */,
 				2A43C6E02017F6450082C69C /* Util.swift in Sources */,
