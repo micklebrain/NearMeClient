@@ -7,24 +7,16 @@ target 'NearMe' do
 
 # Pods for NearMe
 target :'NearMe' do
-    pod 'AWSCognito'
-    pod 'AWSCognitoIdentityProvider'
-    pod 'AWSDynamoDB'
-    pod 'AWSEC2'
-    pod 'AWSMobileAnalytics'
-    pod 'AWSS3'
-    pod 'AWSSES'
-    pod 'AWSSimpleDB'
-    pod 'Bolts'
-    pod 'AlamofireSwiftyJSON'
-    pod 'GooglePlaces'
-    pod 'GoogleMaps'
-    pod 'Alamofire'
+    pod 'Bolts', '~> 1.9.0'
+    pod 'Alamofire', '~> 4.8.2'
+    pod 'AlamofireSwiftyJSON', '~> 1.0.2'
+    pod 'FacebookCore', '~> 0.7.0'
+    pod 'FacebookLogin', '~> 0.7.0'
+    pod 'GooglePlaces', '~> 3.1.0'
+    pod 'GoogleMaps', '~> 3.1.0'
+    pod 'Socket.IO-Client-Swift', '~> 14.0.0'
     pod 'Starscream', '~> 3.0.2'
-    pod 'FacebookCore'
-    pod 'FacebookLogin'
-    pod 'SwiftLint'
-    pod 'Socket.IO-Client-Swift'
+    pod 'SwiftLint', '~> 0.32.0'
     #pod 'Bolts-Swift'
 end
 

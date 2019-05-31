@@ -161,16 +161,6 @@ strip_invalid_archs() {
 
 
 if [[ "$CONFIGURATION" == "Debug" ]]; then
-  install_framework "${BUILT_PRODUCTS_DIR}/AWSCognito/AWSCognito.framework"
-  install_framework "${BUILT_PRODUCTS_DIR}/AWSCognitoIdentityProvider/AWSCognitoIdentityProvider.framework"
-  install_framework "${BUILT_PRODUCTS_DIR}/AWSCognitoIdentityProviderASF/AWSCognitoIdentityProviderASF.framework"
-  install_framework "${BUILT_PRODUCTS_DIR}/AWSCore/AWSCore.framework"
-  install_framework "${BUILT_PRODUCTS_DIR}/AWSDynamoDB/AWSDynamoDB.framework"
-  install_framework "${BUILT_PRODUCTS_DIR}/AWSEC2/AWSEC2.framework"
-  install_framework "${BUILT_PRODUCTS_DIR}/AWSMobileAnalytics/AWSMobileAnalytics.framework"
-  install_framework "${BUILT_PRODUCTS_DIR}/AWSS3/AWSS3.framework"
-  install_framework "${BUILT_PRODUCTS_DIR}/AWSSES/AWSSES.framework"
-  install_framework "${BUILT_PRODUCTS_DIR}/AWSSimpleDB/AWSSimpleDB.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/AlamofireSwiftyJSON/AlamofireSwiftyJSON.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/Bolts/Bolts.framework"
@@ -183,16 +173,6 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
-  install_framework "${BUILT_PRODUCTS_DIR}/AWSCognito/AWSCognito.framework"
-  install_framework "${BUILT_PRODUCTS_DIR}/AWSCognitoIdentityProvider/AWSCognitoIdentityProvider.framework"
-  install_framework "${BUILT_PRODUCTS_DIR}/AWSCognitoIdentityProviderASF/AWSCognitoIdentityProviderASF.framework"
-  install_framework "${BUILT_PRODUCTS_DIR}/AWSCore/AWSCore.framework"
-  install_framework "${BUILT_PRODUCTS_DIR}/AWSDynamoDB/AWSDynamoDB.framework"
-  install_framework "${BUILT_PRODUCTS_DIR}/AWSEC2/AWSEC2.framework"
-  install_framework "${BUILT_PRODUCTS_DIR}/AWSMobileAnalytics/AWSMobileAnalytics.framework"
-  install_framework "${BUILT_PRODUCTS_DIR}/AWSS3/AWSS3.framework"
-  install_framework "${BUILT_PRODUCTS_DIR}/AWSSES/AWSSES.framework"
-  install_framework "${BUILT_PRODUCTS_DIR}/AWSSimpleDB/AWSSimpleDB.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/AlamofireSwiftyJSON/AlamofireSwiftyJSON.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/Bolts/Bolts.framework"

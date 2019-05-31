@@ -69,6 +69,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         // Override point for customization after application launch.
+        // TODO: Remove API Keys
         GMSServices.provideAPIKey("AIzaSyCwYvhhN4aTMMGjXZvkRQJBcYoCfS74Rw0")
         GMSPlacesClient.provideAPIKey("AIzaSyDNgLkA282boBZGcpNVuEsN9dJre7fjYeI")
         registerForPushNotifications()
