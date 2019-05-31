@@ -38,9 +38,9 @@ class NearbyPeopleViewController: UIViewController, WebSocketDelegate {
     
     @IBOutlet weak var peopleNearbyTableView: UITableView!
     @IBOutlet weak var peopleCounter: UILabel!
+    @IBOutlet weak var floorLabel: UILabel!
     @IBOutlet weak var presenceSwitch: UISwitch!
     @IBOutlet weak var currentLocation: UIButton!
-    @IBOutlet weak var floorLabel: UILabel!
     
     override func viewDidLoad() {
         
@@ -111,25 +111,7 @@ class NearbyPeopleViewController: UIViewController, WebSocketDelegate {
         
     }
     
-    // MARK: WebSocket
-    func websocketDidConnect(socket: WebSocketClient) {
-        socket.write(string: "Connected through IOS")
-    }
-    
-    func websocketDidDisconnect(socket: WebSocketClient, error: Error?) {
-        
-    }
-    
-    func websocketDidReceiveMessage(socket: WebSocketClient, text: String) {
-        
-    }
-    
-    func websocketDidReceiveData(socket: WebSocketClient, data: Data) {
-        
-    }
-    //WebSocket
-    
-    @objc func refreshUsersNearby () {
+    @objc func refreshUsersNearby() {
         
         //Implement caching
         self.friendsAround.removeAll()
@@ -142,7 +124,7 @@ class NearbyPeopleViewController: UIViewController, WebSocketDelegate {
         
     }
     
-    func pullNearbyUsers () {
+    func pullNearbyUsers() {
         
         //Activity Indicator
         actInd.frame = CGRect(x: 0.0, y: 0.0, width: 40.0, height: 40.0)
@@ -178,7 +160,7 @@ class NearbyPeopleViewController: UIViewController, WebSocketDelegate {
         let pullAllUsersUrl = URL(string: "https://crystal-smalltalk.herokuapp.com/pullAllUsers")
         
         Alamofire.request(pullNearbyUsersUrl!, method: .post, parameters: userDetails, encoding: JSONEncoding.default)
-            // Alamofire.request(pullAllUsersUrl!, method: .get)
+             // Alamofire.request(pullAllUsersUrl!, method: .get)
             .responseJSON { response in
                 if response.response?.statusCode == 200 {
                     if let json = response.result.value {
@@ -280,7 +262,7 @@ class NearbyPeopleViewController: UIViewController, WebSocketDelegate {
             }
     }
     
-    func pullFacebookInfo () {
+    func pullFacebookInfo() {
         
         let nathanFBId = "1367878021"
         let nathan2FBId = "111006779636650"
@@ -394,7 +376,7 @@ class NearbyPeopleViewController: UIViewController, WebSocketDelegate {
         updateOnlineStatus()
     }
     
-    func updateOnlineStatus () {
+    func updateOnlineStatus() {
         let url = URL(string: "https://crystal-smalltalk.herokuapp.com/updateOnlineStatus")
         
         let userDetails: Parameters = [
@@ -413,7 +395,7 @@ class NearbyPeopleViewController: UIViewController, WebSocketDelegate {
         }
     }
     
-    func trackUserLocation (placemark: CLPlacemark?, userLocation: CLLocation) {
+    func trackUserLocation(placemark: CLPlacemark?, userLocation: CLLocation) {
         
         if let userPlacemark = placemark {
             
@@ -446,6 +428,18 @@ class NearbyPeopleViewController: UIViewController, WebSocketDelegate {
             
         }
     }
+    
+    // MARK: WebSocket Chat
+    func websocketDidConnect(socket: WebSocketClient) {
+        socket.write(string: "Connected through IOS")
+    }
+    
+    func websocketDidDisconnect(socket: WebSocketClient, error: Error?) {}
+    
+    func websocketDidReceiveMessage(socket: WebSocketClient, text: String) {}
+    
+    func websocketDidReceiveData(socket: WebSocketClient, data: Data) {}
+    // WebSocket Chat
     
 }
 

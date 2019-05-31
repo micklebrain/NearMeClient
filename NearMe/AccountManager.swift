@@ -12,7 +12,9 @@ import Foundation
 class AccountManager {
     
     let allUsersUrl = URL(string: "https://crystal-smalltalk.herokuapp.com/pullAllUsers")
+    
     func pullUser(_ facebookId: String) {}
+    
     func pullAllUsers() -> Set<User> {
         // Alamofire.request(pullNearbyUsersUrl!,
         // method: .post,
@@ -50,14 +52,15 @@ class AccountManager {
 //                                }
 //                            }
                             }
-                            }
                         }
+                      }
                     }
                     //If happens show cached data
             } 
         }
         return Set<User>()
     }
+    
     func createAccount() {
 //        let _ = URL(string: "https://crystal-smalltalk.herokuapp.com/createAccount")
 //        
