@@ -77,10 +77,10 @@ class NearbyLocationsViewController: UIViewController {
     private func pullfacebookInfo() {
         
         //Crashes without internet connection
-        if(FBSDKAccessToken.current() != nil) {
+        if(AccessToken.current != nil) {
             // Graph Path : "me" is going to get current user logged in
-            let graphRequest = FBSDKGraphRequest(graphPath: "me", parameters: ["fields": "id, name, email"])
-            let connection = FBSDKGraphRequestConnection()
+            let graphRequest = GraphRequest(graphPath: "me", parameters: ["fields": "id, name, email"])
+            let connection = GraphRequestConnection()
             
             connection.add(graphRequest, completionHandler: { (connection, result, _) -> Void in
                 if (connection?.urlResponse != nil && connection?.urlResponse.statusCode == 200) {

@@ -23,9 +23,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                      openURL url: NSURL,
                      sourceApplication: String?,
                      annotation: AnyObject) -> Bool {
-        return FBSDKApplicationDelegate.sharedInstance().application(
+        return ApplicationDelegate.shared.application(
             application,
-            open: url as URL?,
+            open: (url as URL?)!,
             sourceApplication: sourceApplication,
             annotation: annotation)
     }
@@ -33,10 +33,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
         //Get current FBSDK Token before the view loads
-        if(FBSDKAccessToken.current() != nil) {
+        if(AccessToken.current != nil) {
             
-            let graphRequest = FBSDKGraphRequest(graphPath: "me", parameters: ["fields": "id, name, email"])
-            let connection = FBSDKGraphRequestConnection()
+            let graphRequest = GraphRequest(graphPath: "me", parameters: ["fields": "id, name, email"])
+            let connection = GraphRequestConnection()
 
             connection.add(graphRequest, completionHandler: { (_, result, _) -> Void in
                 let data = result as? [String: AnyObject]
@@ -72,7 +72,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         GMSServices.provideAPIKey("AIzaSyCwYvhhN4aTMMGjXZvkRQJBcYoCfS74Rw0")
         GMSPlacesClient.provideAPIKey("AIzaSyDNgLkA282boBZGcpNVuEsN9dJre7fjYeI")
         registerForPushNotifications()
-        return FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
+        return ApplicationDelegate.shared.application(application, didFinishLaunchingWithOptions: launchOptions)
         
     }
     
@@ -113,7 +113,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
-        return FBSDKApplicationDelegate.sharedInstance().application(application, open: url, sourceApplication: sourceApplication, annotation: annotation)
+        return ApplicationDelegate.shared.application(application, open: url, sourceApplication: sourceApplication, annotation: annotation)
     }
 
 //    func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
@@ -141,7 +141,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationDidBecomeActive(_ application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-        AppEventsLogger.activate(application)
+//        AppEventsLogger.activate(application)
 //        SocketIOManager.sharedInstance.establishConnection()
     }
 

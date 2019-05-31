@@ -10,14 +10,14 @@ import UIKit
 import FacebookLogin
 import FacebookCore
 import FBSDKLoginKit
-import SocketIO
+//import SocketIO
 
 class UserProfileViewController: ProfileViewController {
     
     @IBOutlet weak var userProfilePicture: UIImageView!
     @IBOutlet weak var userDetails: UILabel!
     var userDetailsText: String!
-    var socket: SocketIOClient?
+//    var socket: SocketIOClient?
     
     override func viewDidLoad() {
         
@@ -30,7 +30,7 @@ class UserProfileViewController: ProfileViewController {
         
         if let tbc = self.tabBarController as? MainTabBarController {
             self.userSelected = tbc.userloggedIn
-            self.userSelected.facebookId = FBSDKAccessToken.current()?.userID
+            self.userSelected.facebookId = AccessToken.current?.userID
         }
         
         if (self.userSelected != nil) {
@@ -42,11 +42,12 @@ class UserProfileViewController: ProfileViewController {
     
     private func pullFacebookInfo () {
         if((AccessToken.current) != nil) {
-            let graphRequest = GraphRequest(graphPath: self.userSelected.facebookId!,
+            let graphPath:String = self.userSelected.facebookId!
+            let graphRequest = GraphRequest(graphPath: graphPath,
                                             parameters: ["fields": "id, name, email"],
-                                            accessToken: AccessToken.current,
-                                            httpMethod: GraphRequestHTTPMethod.GET,
-                                            apiVersion: .defaultVersion)
+                                            tokenString: AccessToken.current?.tokenString,
+                                            version: nil,
+                                            httpMethod: HTTPMethod.get)
 // Get current facebook profile
 // let graphRequest = GraphRequest(graphPath: "/me",
 //            parameters: ["fields" : "id, name, email"],
@@ -55,32 +56,30 @@ class UserProfileViewController: ProfileViewController {
 //            apiVersion: "")
             
             let connection = GraphRequestConnection()
-            connection.add(graphRequest) { response, result in
-                
-                switch result {
-                case .success(let response):
+            connection.add(graphRequest) { result, data, error in
+                if error == nil {
+                    let response = data as? [String: Any]
+                        print("Facebook graph request Succeeded: \(response)")
+                        // let data = result as! [String : AnyObject]
+                    let facebookName = (response!["name"]) as? String
+                        var splitName = facebookName?.components(separatedBy: " ")
+                        // let FBid = (response.dictionaryValue?["id"]) as! String
+                        let userName = self.userSelected.username ?? ""
+                        let firstName = self.userSelected.firstName ?? ""
+                        let lastName = self.userSelected.lastName ?? ""
+                        let school = self.userSelected.school ?? ""
+                        self.userDetails.text?.append(
+                            "Username: " + userName + "\n")
+                        self.userDetails.text?.append(
+                            "Name: " + firstName + " " + lastName + "\n")
+                        self.userDetails.text?.append(
+                            "School: " + school + "\n")
+                        self.userDetails.text?.append("Instagram Username: " + "\n")
+                        self.userDetails.text?.append("Snapchat Username: ")
                     
-                    print("Facebook graph request Succeeded: \(response)")
-                    // let data = result as! [String : AnyObject]
-                    let facebookName = (response.dictionaryValue?["name"]) as? String
-                    var splitName = facebookName?.components(separatedBy: " ")
-                    // let FBid = (response.dictionaryValue?["id"]) as! String
-                    let userName = self.userSelected.username ?? ""
-                    let firstName = self.userSelected.firstName ?? ""
-                    let lastName = self.userSelected.lastName ?? ""
-                    let school = self.userSelected.school ?? ""
-                    self.userDetails.text?.append(
-                        "Username: " + userName + "\n")
-                    self.userDetails.text?.append(
-                        "Name: " + firstName + " " + lastName + "\n")
-                    self.userDetails.text?.append(
-                        "School: " + school + "\n")
-                    self.userDetails.text?.append("Instagram Username: " + "\n")
-                    self.userDetails.text?.append("Snapchat Username: ")
-                    
-                case .failed(let error):
-                    print(error)
-                    print("Failed to get facebook credential")
+                } else {
+                        print(error)
+                        print("Failed to get facebook credential")
                 }
                 
             }

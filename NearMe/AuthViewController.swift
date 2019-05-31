@@ -5,6 +5,8 @@
 
 import FacebookCore
 import FacebookLogin
+import FBSDKCoreKit
+import FBSDKLoginKit
 import UIKit
 
 class AuthViewController: UIViewController {
@@ -17,9 +19,9 @@ class AuthViewController: UIViewController {
     // Facebook login permissions
     // Add extra permissions you need
     // Remove permissions you don't need
-    private let readPermissions: [ReadPermission] = [ .publicProfile, .email, .userFriends, .custom("user_posts") ]
+    private let readPermissions: [Permission] = [ .publicProfile, .email, .userFriends, .custom("user_posts") ]
     
-    @IBAction func didTapLoginButton(_ sender: LoginButton) {
+    @IBAction func didTapLoginButton(_ sender: FacebookLoginButton) {
         // Regular login attempt. Add the code to handle the login by email and password.
         guard let email = usernameTextField.text, let pass = passwordTextField.text else {
             // It should never get here
@@ -31,7 +33,7 @@ class AuthViewController: UIViewController {
     @IBAction func didTapFacebookLoginButton(_ sender: Any) {
         // Facebook login attempt
         let loginManager = LoginManager()
-        loginManager.logIn(readPermissions: readPermissions,
+        loginManager.logIn(permissions: readPermissions,
                            viewController: self,
                            completion: didReceiveFacebookLoginResult)
     }
@@ -43,7 +45,7 @@ class AuthViewController: UIViewController {
     
     private func didReceiveFacebookLoginResult(loginResult: LoginResult) {
         switch loginResult {
-        case .success(grantedPermissions: _, declinedPermissions: _, token: let token):
+        case .success(granted: _, declined: _, token: let token):
             didLoginWithFacebook(token)
         case .failed: break
         default: break
@@ -61,7 +63,7 @@ class AuthViewController: UIViewController {
 //                }
 //            })
             self.userloggedIn = User()
-            self.userloggedIn.facebookId = token.userId
+            self.userloggedIn.facebookId = token.userID
             let wifiipAddress = Util.getIFAddresses()[1]
             var localUrlString = "http://\(wifiipAddress):8080/getAccount?facebookId="
             localUrlString.append(self.userloggedIn.facebookId ?? "")

@@ -1,5 +1,12 @@
-Version 3.0.3 - February 2019
+Version 3.1.0 - April 2019
 ==========================
+Resolved Issues:
+  - Indoor maps are now styled to match external maps.
+  - Fixes a crash around markup entities added to the map before the map was
+    ready to draw.
+
+Version 3.0.3 - February 2019
+=============================
 Resolved Issues:
   - Fixes the occasional rendering bug when the using polygon overlay feature.
 

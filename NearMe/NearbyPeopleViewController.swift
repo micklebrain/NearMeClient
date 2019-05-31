@@ -286,14 +286,14 @@ class NearbyPeopleViewController: UIViewController, WebSocketDelegate {
         let nathan2FBId = "111006779636650"
         let traceyFBid = "109582432994026"
         
-        if(FBSDKAccessToken.current() != nil) {
+        if(AccessToken.current != nil) {
         
-            FBSDKAccessToken.current()?.userID
+            AccessToken.current?.userID
             
-            let graphRequest = FBSDKGraphRequest(graphPath: nathanFBId,
+            let graphRequest = GraphRequest(graphPath: nathanFBId,
                                                  parameters: ["fields": "id, name, email,picture"])
             
-            let connection = FBSDKGraphRequestConnection()
+            let connection = GraphRequestConnection()
             
             connection.add(graphRequest,
                            completionHandler: { (connection, result, _) -> Void in
@@ -449,21 +449,21 @@ class NearbyPeopleViewController: UIViewController, WebSocketDelegate {
     
 }
 
-struct MyProfileRequest: GraphRequestProtocol {
-    
-    var graphPath: String
-    var parameters: [String: Any]?
-    var accessToken: AccessToken?
-    var httpMethod: GraphRequestHTTPMethod = .GET
-    var apiVersion: GraphAPIVersion = .defaultVersion
-    
-    struct Response: GraphResponseProtocol {
-        init(rawResponse: Any?) {
-            
-        }
-    }
-    
-}
+//struct MyProfileRequest: GraphRequestProtocol {
+//    
+//    var graphPath: String
+//    var parameters: [String: Any]?
+//    var accessToken: AccessToken?
+//    var httpMethod: GraphRequestHTTPMethod = .GET
+//    var apiVersion: GraphAPIVersion = .defaultVersion
+//    
+//    struct Response: GraphResponseProtocol {
+//        init(rawResponse: Any?) {
+//            
+//        }
+//    }
+//    
+//}
 
 extension NearbyPeopleViewController: CLLocationManagerDelegate {
     

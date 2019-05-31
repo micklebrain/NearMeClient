@@ -62,7 +62,7 @@
 		2AF7DF3C20B60EC3003EEFF9 /* UrlConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AF7DF3B20B60EC3003EEFF9 /* UrlConstants.swift */; };
 		2AFEBD3C226BE6FD0019F6A7 /* AuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AFEBD3B226BE6FD0019F6A7 /* AuthViewController.swift */; };
 		2AFEBD3E226BEB880019F6A7 /* FacebookLoginButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AFEBD3D226BEB880019F6A7 /* FacebookLoginButton.swift */; };
-		60595F858E966A818A50B089 /* Pods_NearMe_NearMe.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 204264C34B0F40E1FCB4EFC1 /* Pods_NearMe_NearMe.framework */; };
+		80DCDD67C907FE2892BAC083 /* Pods_NearMe_NearMe.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 371DD81D0A927FF2A4E7C10C /* Pods_NearMe_NearMe.framework */; };
 		A5281CC11EAEAF3D003B9489 /* NoSqlSampleDataGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5281CC01EAEAF3D003B9489 /* NoSqlSampleDataGenerator.swift */; };
 		A5281CC31EAEEBA8003B9489 /* NoSQLModelHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5281CC21EAEEBA8003B9489 /* NoSQLModelHelpers.swift */; };
 		A5462D761EF0A0ED000970EB /* NearbyLocationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5462D751EF0A0ED000970EB /* NearbyLocationsViewController.swift */; };
@@ -130,7 +130,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		204264C34B0F40E1FCB4EFC1 /* Pods_NearMe_NearMe.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NearMe_NearMe.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2A27D5911FCFEAE200331A63 /* UserProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileViewController.swift; sourceTree = "<group>"; };
 		2A37F9E62026CFDE00CF79E4 /* MainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
 		2A43C6DC2017F5360082C69C /* NearMe-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NearMe-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -158,6 +157,7 @@
 		2AFEBD3B226BE6FD0019F6A7 /* AuthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AuthViewController.swift; path = ../../../NathanNguyen/NearMeClient/NearMe/AuthViewController.swift; sourceTree = "<group>"; };
 		2AFEBD3D226BEB880019F6A7 /* FacebookLoginButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = FacebookLoginButton.swift; path = ../../../NathanNguyen/NearMeClient/NearMe/FacebookLoginButton.swift; sourceTree = "<group>"; };
 		367B6E6AAE824E61258E6144 /* Pods-NearMe.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NearMe.debug.xcconfig"; path = "Pods/Target Support Files/Pods-NearMe/Pods-NearMe.debug.xcconfig"; sourceTree = "<group>"; };
+		371DD81D0A927FF2A4E7C10C /* Pods_NearMe_NearMe.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NearMe_NearMe.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		76F2B9DC5B976E8CE124491E /* Pods-NearMeUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NearMeUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-NearMeUITests/Pods-NearMeUITests.release.xcconfig"; sourceTree = "<group>"; };
 		88F810D8B4B99448DE38E917 /* Pods-NearMe-NearMe.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NearMe-NearMe.debug.xcconfig"; path = "Pods/Target Support Files/Pods-NearMe-NearMe/Pods-NearMe-NearMe.debug.xcconfig"; sourceTree = "<group>"; };
 		89385DFBD3E5ACADB49CFA99 /* Pods_NearMeUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NearMeUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -218,7 +218,7 @@
 			files = (
 				A5CAABCC1EA95AB700A16E98 /* libz.tbd in Frameworks */,
 				A5CAABCA1EA95AA500A16E98 /* libsqlite3.tbd in Frameworks */,
-				60595F858E966A818A50B089 /* Pods_NearMe_NearMe.framework in Frameworks */,
+				80DCDD67C907FE2892BAC083 /* Pods_NearMe_NearMe.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -427,7 +427,7 @@
 				A5CAABC91EA95AA500A16E98 /* libsqlite3.tbd */,
 				8E50A159BFDC4030841FC8FA /* Pods_NearMeTests.framework */,
 				89385DFBD3E5ACADB49CFA99 /* Pods_NearMeUITests.framework */,
-				204264C34B0F40E1FCB4EFC1 /* Pods_NearMe_NearMe.framework */,
+				371DD81D0A927FF2A4E7C10C /* Pods_NearMe_NearMe.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -485,8 +485,8 @@
 				A5A645AB1EA6F4FB00D411E1 /* Resources */,
 				A58D4FB91EEE122C003A9365 /* ShellScript */,
 				A58D4FDE1EEEF8B6003A9365 /* Embed Frameworks */,
-				3BF34CE078EF8BE5ED38A40B /* [CP] Embed Pods Frameworks */,
-				32AA2CB22B25EA4F907B6576 /* [CP] Copy Pods Resources */,
+				3F1F34BEE39404A438C4DB90 /* [CP] Embed Pods Frameworks */,
+				6FBFE7D965BEB8666CC0F900 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -666,27 +666,7 @@
 			shellPath = /bin/sh;
 			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n#\"${PODS_ROOT}/SwiftLint/swiftlint\"\n";
 		};
-		32AA2CB22B25EA4F907B6576 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-NearMe-NearMe/Pods-NearMe-NearMe-resources.sh",
-				"${PODS_ROOT}/GoogleMaps/Maps/Frameworks/GoogleMaps.framework/Resources/GoogleMaps.bundle",
-				"${PODS_ROOT}/GooglePlaces/Frameworks/GooglePlaces.framework/Resources/GooglePlaces.bundle",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleMaps.bundle",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GooglePlaces.bundle",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-NearMe-NearMe/Pods-NearMe-NearMe-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		3BF34CE078EF8BE5ED38A40B /* [CP] Embed Pods Frameworks */ = {
+		3F1F34BEE39404A438C4DB90 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -758,6 +738,26 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		6FBFE7D965BEB8666CC0F900 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-NearMe-NearMe/Pods-NearMe-NearMe-resources.sh",
+				"${PODS_ROOT}/GoogleMaps/Maps/Frameworks/GoogleMaps.framework/Resources/GoogleMaps.bundle",
+				"${PODS_ROOT}/GooglePlaces/Frameworks/GooglePlaces.framework/Resources/GooglePlaces.bundle",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleMaps.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GooglePlaces.bundle",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-NearMe-NearMe/Pods-NearMe-NearMe-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		A58D4FB91EEE122C003A9365 /* ShellScript */ = {
