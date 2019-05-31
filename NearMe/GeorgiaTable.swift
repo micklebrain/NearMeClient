@@ -37,7 +37,7 @@ class GeorgiaTable: NSObject, Table {
             
             LocationsPrimaryIndex(),
             
-            LocationsCategories(),
+            LocationsCategories()
         ]
         if let sortKeyNamePossible = model.classForCoder.rangeKeyAttribute?() {
             sortKeyName = sortKeyNamePossible
@@ -47,4 +47,3 @@ class GeorgiaTable: NSObject, Table {
     }
     
 }
-

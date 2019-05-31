@@ -10,9 +10,9 @@ import Foundation
 import CoreLocation
 import UIKit
 
-enum Sex : String {
-    case male = "male"
-    case female = "female"
+enum Sex {
+    case male
+    case female 
 }
 
 enum RelationshipStatus {
@@ -25,28 +25,25 @@ func == (lhs: User, rhs: User) -> Bool {
     return lhs.hashValue == rhs.hashValue
 }
 
-class User : Hashable {
-    
-    //Account
-    var userId : NSNumber?
-    var username : String?
-    var password : String?
-    
-    //Individual
-    var firstName : String?
-    var middleName : String?
-    var lastName : String?
-    var sex : Sex?
-    
-    var friends : [String]?
-    var school : String?
-    var employer : String?
+class User: Hashable {
+    // Account
+    var userId: NSNumber?
+    var username: String?
+    var password: String?
+    // Individual
+    var firstName: String?
+    var middleName: String?
+    var lastName: String?
+    var sex: Sex?
+    var friends: [String]?
+    var school: String?
+    var employer: String?
     var headshot = #imageLiteral(resourceName: "empty-headshot.jpg")
-    var facebookId : String?
-    var online : Bool?
-    var profilePicture : UIImage?
+    var facebookId: String?
+    var online: Bool?
+    var profilePicture: UIImage?
     var friendRequests: [String]?
-    var address : String?
+    var address: String?
     //  var occupation : String?
     //  var relationshipStatus : String?
     //  var interests = [String]()
@@ -56,17 +53,16 @@ class User : Hashable {
     //  Location
     var lastLocation: CLLocation?
     var lastPlacemark: CLPlacemark?
-    var currentLocation : Location?
-    var location : CLLocation?
-    var postalCode: String?
+    var currentLocation: Location?
+    var location: CLLocation?
+    var postalCode: Int?
     var administrativeArea: String?
     var country: String?
     var locality: String?
-    var latitude: NSNumber?
-    var longitude: NSNumber?
+    var latitude: Double?
+    var longitude: Double?
     var buildingOccupied: String?
     var floor: Int!
-    
     var hashValue: Int {
         get {
             return (username?.hashValue)!

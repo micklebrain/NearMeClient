@@ -33,19 +33,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
         //Get current FBSDK Token before the view loads
-        if(FBSDKAccessToken.current() != nil)
-        {
+        if(FBSDKAccessToken.current() != nil) {
             
-            let graphRequest = FBSDKGraphRequest(graphPath: "me", parameters: ["fields" : "id, name, email"])
+            let graphRequest = FBSDKGraphRequest(graphPath: "me", parameters: ["fields": "id, name, email"])
             let connection = FBSDKGraphRequestConnection()
 
-            connection.add(graphRequest, completionHandler: { (connection, result, error) -> Void in
-                let data = result as? [String : AnyObject]
+            connection.add(graphRequest, completionHandler: { (_, result, _) -> Void in
+                let data = result as? [String: AnyObject]
                 let name = data?["name"] as? String
                 var splitName = name?.components(separatedBy: " ")
                 let firstName = splitName?[0]
                 let FBid = data?["id"] as? String
-                if let maintabbarVC:MainTabBarController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "MainTabBarController") as? MainTabBarController {
+                if let maintabbarVC: MainTabBarController = UIStoryboard(name: "Main",
+                                                                         bundle: nil).instantiateViewController(withIdentifier: "MainTabBarController") as? MainTabBarController {
 
                     let userloggedIn = User()
                     userloggedIn.facebookId = FBid
@@ -76,10 +76,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
     }
     
-    // Mark: - Notification settings
+    // MARK: - Notification settings
     func registerForPushNotifications () {
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) {
-            (granted, error) in
+            (granted, _) in
             guard granted else { return }
             self.getNotificationSettings()
         }
@@ -105,10 +105,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         print("Failed to register: \(error)")
     }
     
-    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any],
+    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any],
                                                    fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
         let aps = userInfo["aps"] as? [String: AnyObject]
-        let _ = aps?["content"] as? String
+        _ = aps?["content"] as? String
      
     }
     
@@ -161,7 +161,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
          error conditions that could cause the creation of the store to fail.
         */
         let container = NSPersistentContainer(name: "NearMe")
-        container.loadPersistentStores(completionHandler: { (storeDescription, error) in
+        container.loadPersistentStores(completionHandler: { (_, error) in
             if let error = error as NSError? {
                 // Replace this implementation with code to handle the error appropriately.
                 // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
@@ -189,7 +189,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 try context.save()
             } catch {
                 // Replace this implementation with code to handle the error appropriately.
-                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+                // fatalError() causes the application to generate a crash log and terminate.
+                // You should not use this function in a shipping application, although it may be useful during development.
                 let nserror = error as NSError
                 fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
             }
@@ -197,4 +198,3 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
 }
-

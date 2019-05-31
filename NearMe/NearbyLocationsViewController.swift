@@ -21,16 +21,18 @@ class NearbyLocationsViewController: UIViewController {
     @IBOutlet weak var placesTableView: UITableView!
     @IBOutlet weak var floorNumber: UILabel!
     @IBOutlet weak var floorStepper: UIStepper!
+    @IBOutlet weak var currentLocationLabel: UILabel!
+    @IBOutlet weak var currentLocationTextField: UITextField!
     
-    var suggestedResturants : [GoogleLocation] = []
+    var suggestedResturants: [GoogleLocation] = []
     //Pull from Cache 
-    var resturantsAround : [String] = []
+    var resturantsAround: [String] = []
     
-    var latitude : Double?
-    var longitude : Double?
-    var radius : String?
-    var apiKey : String?
-    var locationManager : CLLocationManager!
+    var latitude: Double?
+    var longitude: Double?
+    var radius: String?
+    var apiKey: String?
+    var locationManager: CLLocationManager!
     var currentUserLocation: CLLocation?
     var placesClient: GMSPlacesClient!
     var zoomLevel: Float = 15.0
@@ -45,6 +47,8 @@ class NearbyLocationsViewController: UIViewController {
         
         super.viewDidLoad()
         
+        self.currentLocationTextField.delegate = self
+        
         if let tbc = self.tabBarController as? MainTabBarController {
         // Crashes After first logging in through facebook b/c null value
         
@@ -52,12 +56,13 @@ class NearbyLocationsViewController: UIViewController {
         self.userloggedIn = tbc.userloggedIn ?? newUser
             
             pullfacebookInfo()
-            getUsername()
-            
+            AccountAPIHandler.getUsername(facebookId: self.userloggedIn.facebookId!, completion: ({ username in
+                self.userloggedIn.username = username
+            }))
             locationManager = CLLocationManager()
             locationManager!.delegate = self
             locationManager!.desiredAccuracy = kCLLocationAccuracyBest
-            locationManager.distanceFilter = 50;
+            locationManager.distanceFilter = 50
             locationManager!.requestAlwaysAuthorization()
             placesClient = GMSPlacesClient.shared()
             
@@ -65,39 +70,21 @@ class NearbyLocationsViewController: UIViewController {
                 locationManager?.startUpdatingLocation()
             }
         }
-        
-        
-    }
-    
-    private func getUsername() {
-        
-        let url = URL(string: "https://crystal-smalltalk.herokuapp.com/sync")
-        
-        let userDetails : Parameters = [
-            "facebookId": self.userloggedIn.facebookId!
-        ]
-        
-        Alamofire.request(url!, method: .post, parameters: userDetails, encoding: JSONEncoding.default)
-            .responseString{ response in
-                if let data = response.result.value{
-                    self.userloggedIn.username = data
-                }
-        }
-        
+                
+        self.currentLocationLabel.text =  self.userloggedIn.buildingOccupied
     }
     
     private func pullfacebookInfo() {
         
         //Crashes without internet connection
-        if(FBSDKAccessToken.current() != nil)
-        {
+        if(FBSDKAccessToken.current() != nil) {
             // Graph Path : "me" is going to get current user logged in
-            let graphRequest = FBSDKGraphRequest(graphPath: "me", parameters: ["fields" : "id, name, email"])
+            let graphRequest = FBSDKGraphRequest(graphPath: "me", parameters: ["fields": "id, name, email"])
             let connection = FBSDKGraphRequestConnection()
             
-            connection.add(graphRequest, completionHandler: { (connection, result, error) -> Void in
+            connection.add(graphRequest, completionHandler: { (connection, result, _) -> Void in
                 if (connection?.urlResponse != nil && connection?.urlResponse.statusCode == 200) {
-                    if let data = result as? [String : AnyObject] {
+                    if let data = result as? [String: AnyObject] {
                         if let name = data["name"] as? String {
                         var splitName = name.components(separatedBy: " ")
                         let firstName = splitName.removeFirst()
@@ -105,7 +92,6 @@ class NearbyLocationsViewController: UIViewController {
     //                    let gender = data["gender"]
                         
                         let FBid = data["id"] as? String
-                        
                         
                         self.userloggedIn.firstName = firstName
                         self.userloggedIn.facebookId = FBid
@@ -123,7 +109,7 @@ class NearbyLocationsViewController: UIViewController {
         
         likelyPlaces.removeAll()
         
-        placesClient.currentPlace(callback:  { (placeLikelihoods, error) -> Void in
+        placesClient.currentPlace(callback: { (placeLikelihoods, error) -> Void in
             
             if let error = error {
                 print("Places Client error: \(error.localizedDescription)")
@@ -140,11 +126,35 @@ class NearbyLocationsViewController: UIViewController {
                         self.likelyPlaces.append(place)
                     }
                 }
-                print("\(self.likelyPlaces.count) Likely places around: \n \(self.likelyPlaces)")
+                print("\(self.likelyPlaces.count) likely places around ")
+                print(self.likelyPlaces)
                 self.placesTableView.reloadData()
             }
             
         })
+        
+    }
+    
+    @IBAction func updateLocation(_ sender: Any) {
+        
+        let building = currentLocationTextField.text ?? ""
+        self.userloggedIn.buildingOccupied = building
+        let locality = self.userloggedIn.locality ?? ""
+        let longitude = self.userloggedIn.longitude ?? 0.0
+        let latitude = self.userloggedIn.latitude ?? 0.0
+        let postalCode = self.userloggedIn.postalCode ?? 0
+        
+        LocationAPIHandler.updateLocation(user: self.userloggedIn,
+                                          locality: locality,
+                                          longitude: longitude,
+                                          latitude: latitude,
+                                          building: building,
+                                          zipCode: postalCode)
+        
+        if let tbc = self.tabBarController as? MainTabBarController {
+            self.currentLocationTextField.text = ""
+            tbc.selectedIndex = 0
+        }
         
     }
     
@@ -155,31 +165,6 @@ class NearbyLocationsViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
-    }
-    
-    func updateLocation(locality: String) {
-        
-        _ = locality.replacingOccurrences(of: " ", with: "")
-        
-        let url = URL(string: "https://crystal-smalltalk.herokuapp.com/updateLocation")
-        
-        let userDetails : Parameters = [
-            "firstname": self.userloggedIn.firstName!,
-            "username": self.userloggedIn.username!,
-            "facebookId": self.userloggedIn.facebookId!,
-            "locality": locality
-        ]
-        
-        if let tbc = self.tabBarController as? MainTabBarController {
-        tbc.userloggedIn?.buildingOccupied = locality
-        }
-        
-        Alamofire.request(url!, method: .post, parameters: userDetails, encoding: JSONEncoding.default)
-            .response { response in
-                print(response.response?.statusCode ?? "Status code not found")
-        }
-        
-        
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -193,11 +178,38 @@ class NearbyLocationsViewController: UIViewController {
 extension NearbyLocationsViewController: CLLocationManagerDelegate {
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        let location: CLLocation = locations.last!
+//        let location: CLLocation = locations.last!
+//
+//        self.userloggedIn.latitude = location.coordinate.latitude
+//        self.userloggedIn.longitude = location.coordinate.longitude
+//
+//        _ = GMSCameraPosition.camera(withLatitude: location.coordinate.latitude,
+//                                         longitude: location.coordinate.longitude,
+//                                         zoom: zoomLevel)
         
-        let _ = GMSCameraPosition.camera(withLatitude: location.coordinate.latitude,
-                                         longitude: location.coordinate.longitude,
-                                         zoom: zoomLevel)
+        let userLocation: CLLocation = locations[0] as CLLocation
+        
+        //Update to get user's current location not managers
+        CLGeocoder().reverseGeocodeLocation(userLocation, completionHandler: {(placemarks, error) -> Void in
+            
+            if (error != nil) {
+                print("Reverse geocoder failed with error: " + (error?.localizedDescription)!)
+                return
+            }
+            
+            if (placemarks?.count)! > 0 {
+                let pm = placemarks?[0]
+                // TODO: Dosnt always update location
+                let latitude = pm?.location?.coordinate.latitude
+                let longitude = pm?.location?.coordinate.longitude
+                self.userloggedIn.latitude = latitude
+                self.userloggedIn.longitude = longitude
+                self.userloggedIn.locality = pm?.locality
+                self.userloggedIn.postalCode = Int ((pm?.postalCode)!)
+            } else {
+                print("Problem with the data received from geocoder")
+            }
+        })
         
         listLikelyPlaces()
     }
@@ -212,6 +224,8 @@ extension NearbyLocationsViewController: CLLocationManagerDelegate {
             print("Location status not determined.")
         case .authorizedAlways: fallthrough
         case .authorizedWhenInUse: print("Application is authorized to use location")
+        @unknown default:
+            fatalError()
         }
     }
     
@@ -222,7 +236,7 @@ extension NearbyLocationsViewController: CLLocationManagerDelegate {
     
 }
 
-extension NearbyLocationsViewController : UITableViewDataSource, UITableViewDelegate {
+extension NearbyLocationsViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if likelyPlaces.count == 0 {
@@ -260,14 +274,24 @@ extension NearbyLocationsViewController : UITableViewDataSource, UITableViewDele
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         //Index out of range exception?
         selectedPlace = likelyPlaces[indexPath.row]
-        
         if let tbc = self.tabBarController as? MainTabBarController {
             tbc.userloggedIn = self.userloggedIn
             self.userloggedIn.buildingOccupied = placesTableView.cellForRow(at: indexPath)?.textLabel?.text
             self.userloggedIn.floor = Int(floorNumber.text!)
             
-            updateLocation(locality: (self.userloggedIn.buildingOccupied)!)
-            tbc.selectedIndex = 1
+            let longitude = self.userloggedIn.longitude ?? 0
+            let latitude = self.userloggedIn.latitude ?? 0
+            let postalCode = self.userloggedIn.postalCode ?? 0
+            let locality = self.userloggedIn.locality ?? ""
+            
+            LocationAPIHandler.updateLocation(user: self.userloggedIn,
+                                              locality: locality,
+                                              longitude: longitude,
+                                              latitude: latitude,
+                                              building: (selectedPlace?.name)!,
+                                              zipCode: postalCode)
+            
+            tbc.selectedIndex = 0
         }
         
     }
@@ -296,3 +320,11 @@ extension NearbyLocationsViewController: UIPickerViewDelegate, UIPickerViewDataS
     
 }
 
+extension NearbyLocationsViewController: UITextFieldDelegate {
+    
+    func textFieldShouldReturn(_ scoreText: UITextField) -> Bool {
+        self.view.endEditing(true)
+        return true
+    }
+    
+}

@@ -11,8 +11,8 @@ import CoreLocation
 
 class Location {
     
-    var location : CLLocation?
-    var lastLocation : String?
+    var location: CLLocation?
+    var lastLocation: String?
     var postalCode: String?
     var administrativeArea: String?
     var country: String?

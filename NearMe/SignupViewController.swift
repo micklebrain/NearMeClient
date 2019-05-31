@@ -11,39 +11,30 @@ import Alamofire
 import AlamofireSwiftyJSON
 
 class SignupViewController: UIViewController {
-   
     @IBOutlet weak var firstNameTextField: UITextField!
     @IBOutlet weak var lastNameTextField: UITextField!
     @IBOutlet weak var usernameTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
-    
     let urlProtocol = "http://"
     let localDomain = "localhost:8080/"
-
     override func viewDidLoad() {
         
         super.viewDidLoad()
         
     }
-    
     func createAccount () {
-        
-        let _ = URL(string: "https://crystal-smalltalk.herokuapp.com/createAccount")
-        
+        _ = URL(string: "https://crystal-smalltalk.herokuapp.com/createAccount")
         let localUrl = URL(string: "http://localhost:8080/createAccount")
-        
-        let userDetails : Parameters = [
+        let userDetails: Parameters = [
             "firstName": firstNameTextField.text!,
             "lastName": lastNameTextField.text!,
             "userName": usernameTextField.text!
             //"password": passwordTextField.text!,
         ]
-        
         Alamofire.request(localUrl!, method: .post, parameters: userDetails, encoding: JSONEncoding.default)
             .response { response in
                 print(response.response?.statusCode ?? 500)
         }
-        
     }
 
     @IBAction func signUp(_ sender: Any) {

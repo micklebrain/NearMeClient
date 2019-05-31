@@ -16,7 +16,7 @@ class UserProfileViewController: ProfileViewController {
     
     @IBOutlet weak var userProfilePicture: UIImageView!
     @IBOutlet weak var userDetails: UILabel!
-    var userDetailsText : String!
+    var userDetailsText: String!
     var socket: SocketIOClient?
     
     override func viewDidLoad() {
@@ -43,7 +43,7 @@ class UserProfileViewController: ProfileViewController {
     private func pullFacebookInfo () {
         if((AccessToken.current) != nil) {
             let graphRequest = GraphRequest(graphPath: self.userSelected.facebookId!,
-                                            parameters: ["fields" : "id, name, email"],
+                                            parameters: ["fields": "id, name, email"],
                                             accessToken: AccessToken.current,
                                             httpMethod: GraphRequestHTTPMethod.GET,
                                             apiVersion: .defaultVersion)
@@ -61,16 +61,14 @@ class UserProfileViewController: ProfileViewController {
                 case .success(let response):
                     
                     print("Facebook graph request Succeeded: \(response)")
-//                    let data = result as! [String : AnyObject]
+                    // let data = result as! [String : AnyObject]
                     let facebookName = (response.dictionaryValue?["name"]) as? String
                     var splitName = facebookName?.components(separatedBy: " ")
-//                    let FBid = (response.dictionaryValue?["id"]) as! String
-                    
+                    // let FBid = (response.dictionaryValue?["id"]) as! String
                     let userName = self.userSelected.username ?? ""
                     let firstName = self.userSelected.firstName ?? ""
                     let lastName = self.userSelected.lastName ?? ""
                     let school = self.userSelected.school ?? ""
-                    
                     self.userDetails.text?.append(
                         "Username: " + userName + "\n")
                     self.userDetails.text?.append(
@@ -100,7 +98,7 @@ class UserProfileViewController: ProfileViewController {
         let url = URL(string: pictureUrl)
         
         if let url = url {
-            let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
+            let task = URLSession.shared.dataTask(with: url) { (data, _, error) in
                 if error != nil {
                     print(error!)
                 } else {
@@ -119,7 +117,8 @@ class UserProfileViewController: ProfileViewController {
     }
     
     @IBAction func logout(_ sender: Any) {
-        if let loginVC:AuthViewController = UIStoryboard(name: "Access", bundle: nil).instantiateViewController(withIdentifier: "AuthViewController") as? AuthViewController {
+        if let loginVC: AuthViewController = UIStoryboard(name: "Access",
+                                                          bundle: nil).instantiateViewController(withIdentifier: "AuthViewController") as? AuthViewController {
         
         AccessToken.current = nil
         
@@ -131,15 +130,13 @@ class UserProfileViewController: ProfileViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
     /*
      // MARK: - Navigation
-     
      // In a storyboard-based application, you will often want to do a little preparation before navigation
      override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
      // Get the new view controller using segue.destinationViewController.
      // Pass the selected object to the new view controller.
      }
-     */
+    */
     
 }

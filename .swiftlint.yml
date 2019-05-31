@@ -1,3 +1,10 @@
+line_length:
+ignores_comments: true
+
+disabled_rules: # rule identifiers to exclude from running
+- trailing_whitespace
+
 excluded: # paths to ignore during linting. Takes precedence over `included`.
 - Carthage
 - Pods
+

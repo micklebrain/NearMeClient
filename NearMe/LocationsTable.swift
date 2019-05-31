@@ -35,10 +35,8 @@ class LocationsTable: NSObject, Table {
         partitionKeyName = model.classForCoder.hashKeyAttribute()
         partitionKeyType = "String"
         indexes = [
-            
             LocationsPrimaryIndex(),
-            
-            LocationsCategories(),
+            LocationsCategories()
         ]
         if let sortKeyNamePossible = model.classForCoder.rangeKeyAttribute?() {
             sortKeyName = sortKeyNamePossible
@@ -100,8 +98,8 @@ class LocationsTable: NSObject, Table {
         let scanExpression = AWSDynamoDBScanExpression()
         
         scanExpression.filterExpression = "#userId = :userId"
-        scanExpression.expressionAttributeNames = ["#userId": "userId" ,]
-        scanExpression.expressionAttributeValues = [":userId": "us-east-1:f010eb24-60f4-4896-b08b-6ce65e35fb39" ,]
+        scanExpression.expressionAttributeNames = ["#userId": "userId" ]
+        scanExpression.expressionAttributeValues = [":userId": "us-east-1:f010eb24-60f4-4896-b08b-6ce65e35fb39"]
         
         objectMapper.scan(Locations.self, expression: scanExpression) { (response: AWSDynamoDBPaginatedOutput?, error: Error?) in
             DispatchQueue.main.async(execute: {
@@ -116,7 +114,6 @@ class LocationsTable: NSObject, Table {
         let group: DispatchGroup = DispatchGroup()
         let numberOfObjects = 20
         
-        
         let itemForGet: Locations! = Locations()
         
         itemForGet._userId = AWSIdentityManager.default().identityId!
@@ -125,10 +122,7 @@ class LocationsTable: NSObject, Table {
         itemForGet._latitude = NoSQLSampleDataGenerator.randomSampleNumber()
         itemForGet._longitude = NoSQLSampleDataGenerator.randomSampleNumber()
         itemForGet._name = NoSQLSampleDataGenerator.randomSampleStringWithAttributeName("name")
-        
-        
         group.enter()
-        
         
         objectMapper.save(itemForGet, completionHandler: {(error: Error?) -> Void in
             if let error = error as NSError? {
@@ -164,8 +158,7 @@ class LocationsTable: NSObject, Table {
         group.notify(queue: DispatchQueue.main, execute: {
             if errors.count > 0 {
                 completionHandler(errors)
-            }
-            else {
+            } else {
                 completionHandler(nil)
             }
         })
@@ -176,12 +169,12 @@ class LocationsTable: NSObject, Table {
         let queryExpression = AWSDynamoDBQueryExpression()
         queryExpression.keyConditionExpression = "#userId = :userId"
         queryExpression.expressionAttributeNames = ["#userId": "userId"]
-        queryExpression.expressionAttributeValues = [":userId": AWSIdentityManager.default().identityId!,]
+        queryExpression.expressionAttributeValues = [":userId": AWSIdentityManager.default().identityId!]
         
         objectMapper.query(Locations.self, expression: queryExpression) { (response: AWSDynamoDBPaginatedOutput?, error: Error?) in
             if let error = error as NSError? {
                 DispatchQueue.main.async(execute: {
-                    completionHandler([error]);
+                    completionHandler([error])
                 })
             } else {
                 var errors: [NSError] = []
@@ -200,8 +193,7 @@ class LocationsTable: NSObject, Table {
                 group.notify(queue: DispatchQueue.main, execute: {
                     if errors.count > 0 {
                         completionHandler(errors)
-                    }
-                    else {
+                    } else {
                         completionHandler(nil)
                     }
                 })
@@ -211,7 +203,6 @@ class LocationsTable: NSObject, Table {
     
     func updateItem(_ item: AWSDynamoDBObjectModel, completionHandler: @escaping (_ error: NSError?) -> Void) {
         let objectMapper = AWSDynamoDBObjectMapper.default()
-        
         
         if let itemToUpdate: Locations = item as? Locations {
         
@@ -250,7 +241,7 @@ class LocationsPrimaryIndex: NSObject, Index {
             QueryWithPartitionKey,
             QueryWithPartitionKeyAndFilter,
             QueryWithPartitionKeyAndSortKey,
-            QueryWithPartitionKeyAndSortKeyAndFilter,
+            QueryWithPartitionKeyAndSortKeyAndFilter
         ]
     }
     
@@ -264,8 +255,8 @@ class LocationsPrimaryIndex: NSObject, Index {
         let queryExpression = AWSDynamoDBQueryExpression()
         
         queryExpression.keyConditionExpression = "#userId = :userId"
-        queryExpression.expressionAttributeNames = ["#userId": "userId",]
-        queryExpression.expressionAttributeValues = [":userId": "us-east-1:4b61e13c-d551-4242-9ccf-fc300788885f",]
+        queryExpression.expressionAttributeNames = ["#userId": "userId"]
+        queryExpression.expressionAttributeValues = [":userId": "us-east-1:4b61e13c-d551-4242-9ccf-fc300788885f"]
         
         objectMapper.query(Locations.self, expression: queryExpression) { (response: AWSDynamoDBPaginatedOutput?, error: Error?) in
             DispatchQueue.main.async(execute: {
@@ -288,17 +279,16 @@ class LocationsPrimaryIndex: NSObject, Index {
         queryExpression.keyConditionExpression = "#userId = :userId"
         //  queryExpression.filterExpression = "#username = :username"
         queryExpression.expressionAttributeNames = [
-            "#userId": "userId",
+            "#userId": "userId"
         //   "#username": "username",
         ]
         queryExpression.expressionAttributeValues = [
             //":userId": AWSIdentityManager.default().identityId!,
             // Dont use userId
-                ":userId": "us-east-1:b3625c1e-f62e-4e01-8dde-ee5f2603949e",
+                ":userId": "us-east-1:b3625c1e-f62e-4e01-8dde-ee5f2603949e"
             // ":userId": "us-east-1:4b61e13c-d551-4242-9ccf-fc300788885f",
-            //  ":username": "tester",
+            //  ":username": "tester"
         ]
-        
         
         objectMapper.query(Locations.self, expression: queryExpression, completionHandler: {(response: AWSDynamoDBPaginatedOutput?, error: Error?) in
             DispatchQueue.main.async(execute: {
@@ -320,13 +310,12 @@ class LocationsPrimaryIndex: NSObject, Index {
         queryExpression.keyConditionExpression = "#userId = :userId AND #itemId < :itemId"
         queryExpression.expressionAttributeNames = [
             "#userId": "userId",
-            "#itemId": "itemId",
+            "#itemId": "itemId"
         ]
         queryExpression.expressionAttributeValues = [
             ":userId": AWSIdentityManager.default().identityId!,
-            ":itemId": "demo-itemId-500000",
+            ":itemId": "demo-itemId-500000"
         ]
-        
         
         objectMapper.query(Locations.self, expression: queryExpression, completionHandler: {(response: AWSDynamoDBPaginatedOutput?, error: Error?) -> Void in
             DispatchQueue.main.async(execute: {
@@ -351,14 +340,13 @@ class LocationsPrimaryIndex: NSObject, Index {
         queryExpression.expressionAttributeNames = [
             "#userId": "userId",
             "#itemId": "itemId",
-            "#latitude": "latitude",
+            "#latitude": "latitude"
         ]
         queryExpression.expressionAttributeValues = [
             ":userId": AWSIdentityManager.default().identityId!,
             ":itemId": "demo-itemId-500000",
-            ":latitude": 1111500000,
+            ":latitude": 1111500000
         ]
-        
         
         objectMapper.query(Locations.self, expression: queryExpression, completionHandler: {(response: AWSDynamoDBPaginatedOutput?, error: Error?) in
             DispatchQueue.main.async(execute: {
@@ -380,7 +368,7 @@ class LocationsCategories: NSObject, Index {
             QueryWithPartitionKey,
             QueryWithPartitionKeyAndFilter,
             QueryWithPartitionKeyAndSortKey,
-            QueryWithPartitionKeyAndSortKeyAndFilter,
+            QueryWithPartitionKeyAndSortKeyAndFilter
         ]
     }
     
@@ -393,11 +381,10 @@ class LocationsCategories: NSObject, Index {
         let objectMapper = AWSDynamoDBObjectMapper.default()
         let queryExpression = AWSDynamoDBQueryExpression()
         
-        
         queryExpression.indexName = "Categories"
         queryExpression.keyConditionExpression = "#category = :category"
-        queryExpression.expressionAttributeNames = ["#category": "category",]
-        queryExpression.expressionAttributeValues = [":category": "demo-category-1",]
+        queryExpression.expressionAttributeNames = ["#category": "category"]
+        queryExpression.expressionAttributeValues = [":category": "demo-category-1"]
         
         objectMapper.query(Locations.self, expression: queryExpression) { (response: AWSDynamoDBPaginatedOutput?, error: Error?) in
             DispatchQueue.main.async(execute: {
@@ -416,19 +403,17 @@ class LocationsCategories: NSObject, Index {
         let objectMapper = AWSDynamoDBObjectMapper.default()
         let queryExpression = AWSDynamoDBQueryExpression()
         
-        
         queryExpression.indexName = "Categories"
         queryExpression.keyConditionExpression = "#category = :category"
         queryExpression.filterExpression = "#itemId > :itemId"
         queryExpression.expressionAttributeNames = [
             "#category": "category",
-            "#itemId": "itemId",
+            "#itemId": "itemId"
         ]
         queryExpression.expressionAttributeValues = [
             ":category": "demo-category-3",
-            ":itemId": "demo-itemId-500000",
+            ":itemId": "demo-itemId-500000"
         ]
-        
         
         objectMapper.query(Locations.self, expression: queryExpression, completionHandler: {(response: AWSDynamoDBPaginatedOutput?, error: Error?) in
             DispatchQueue.main.async(execute: {
@@ -447,18 +432,16 @@ class LocationsCategories: NSObject, Index {
         let objectMapper = AWSDynamoDBObjectMapper.default()
         let queryExpression = AWSDynamoDBQueryExpression()
         
-        
         queryExpression.indexName = "Categories"
         queryExpression.keyConditionExpression = "#category = :category AND #longitude < :longitude"
         queryExpression.expressionAttributeNames = [
             "#category": "category",
-            "#longitude": "longitude",
+            "#longitude": "longitude"
         ]
         queryExpression.expressionAttributeValues = [
             ":category": "demo-category-3",
-            ":longitude": 1111500000,
+            ":longitude": 1111500000
         ]
-        
         
         objectMapper.query(Locations.self, expression: queryExpression, completionHandler: {(response: AWSDynamoDBPaginatedOutput?, error: Error?) -> Void in
             DispatchQueue.main.async(execute: {
@@ -478,23 +461,23 @@ class LocationsCategories: NSObject, Index {
         let objectMapper = AWSDynamoDBObjectMapper.default()
         let queryExpression = AWSDynamoDBQueryExpression()
         
-        
         queryExpression.indexName = "Categories"
         queryExpression.keyConditionExpression = "#category = :category AND #longitude < :longitude"
         queryExpression.filterExpression = "#itemId > :itemId"
         queryExpression.expressionAttributeNames = [
             "#category": "category",
             "#longitude": "longitude",
-            "#itemId": "itemId",
+            "#itemId": "itemId"
         ]
         queryExpression.expressionAttributeValues = [
             ":category": "demo-category-3",
             ":longitude": 1111500000,
-            ":itemId": "demo-itemId-500000",
+            ":itemId": "demo-itemId-500000"
         ]
         
-        
-        objectMapper.query(Locations.self, expression: queryExpression, completionHandler: {(response: AWSDynamoDBPaginatedOutput?, error: Error?) in
+        objectMapper.query(Locations.self,
+                           expression: queryExpression,
+                           completionHandler: {(response: AWSDynamoDBPaginatedOutput?, error: Error?) in
             DispatchQueue.main.async(execute: {
                 completionHandler(response, error as NSError?)
             })
