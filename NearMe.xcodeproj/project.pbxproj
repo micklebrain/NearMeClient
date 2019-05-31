@@ -62,7 +62,6 @@
 		2AF7DF3C20B60EC3003EEFF9 /* UrlConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AF7DF3B20B60EC3003EEFF9 /* UrlConstants.swift */; };
 		2AFEBD3C226BE6FD0019F6A7 /* AuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AFEBD3B226BE6FD0019F6A7 /* AuthViewController.swift */; };
 		2AFEBD3E226BEB880019F6A7 /* FacebookLoginButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AFEBD3D226BEB880019F6A7 /* FacebookLoginButton.swift */; };
-		60595F858E966A818A50B089 /* Pods_NearMe_NearMe.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 204264C34B0F40E1FCB4EFC1 /* Pods_NearMe_NearMe.framework */; };
 		A5281CC11EAEAF3D003B9489 /* NoSqlSampleDataGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5281CC01EAEAF3D003B9489 /* NoSqlSampleDataGenerator.swift */; };
 		A5281CC31EAEEBA8003B9489 /* NoSQLModelHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5281CC21EAEEBA8003B9489 /* NoSQLModelHelpers.swift */; };
 		A5462D761EF0A0ED000970EB /* NearbyLocationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5462D751EF0A0ED000970EB /* NearbyLocationsViewController.swift */; };
@@ -86,6 +85,7 @@
 		A5E446531EDF6ECC00791822 /* AccountsTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E446521EDF6ECC00791822 /* AccountsTable.swift */; };
 		A5F0431E1F0E932F00D0BBAD /* googleLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5F0431D1F0E932F00D0BBAD /* googleLocation.swift */; };
 		A81AAC9FEBAC53EDDDDE887B /* Pods_NearMeTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E50A159BFDC4030841FC8FA /* Pods_NearMeTests.framework */; };
+		E31778D55CCBA5C60D1BA947 /* Pods_NearMe_NearMe.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7BC86B3AEC72F2FE37849E5 /* Pods_NearMe_NearMe.framework */; };
 		FAB61DED7A6316E6FF26E5D7 /* Pods_NearMeUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 89385DFBD3E5ACADB49CFA99 /* Pods_NearMeUITests.framework */; };
 /* End PBXBuildFile section */
 
@@ -130,7 +130,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		204264C34B0F40E1FCB4EFC1 /* Pods_NearMe_NearMe.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NearMe_NearMe.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2A27D5911FCFEAE200331A63 /* UserProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileViewController.swift; sourceTree = "<group>"; };
 		2A37F9E62026CFDE00CF79E4 /* MainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
 		2A43C6DC2017F5360082C69C /* NearMe-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NearMe-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -198,6 +197,7 @@
 		A5E446521EDF6ECC00791822 /* AccountsTable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountsTable.swift; sourceTree = "<group>"; };
 		A5F0431D1F0E932F00D0BBAD /* googleLocation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = googleLocation.swift; sourceTree = "<group>"; };
 		B4E065AB22BA44167177A62E /* Pods-NearMeTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NearMeTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-NearMeTests/Pods-NearMeTests.debug.xcconfig"; sourceTree = "<group>"; };
+		B7BC86B3AEC72F2FE37849E5 /* Pods_NearMe_NearMe.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NearMe_NearMe.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BDD40AEF01C44B856CF0D421 /* Pods-NearMeTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NearMeTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-NearMeTests/Pods-NearMeTests.release.xcconfig"; sourceTree = "<group>"; };
 		C66A447769ED4DF80371EC7D /* Pods-NearMe-NearMe.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NearMe-NearMe.release.xcconfig"; path = "Pods/Target Support Files/Pods-NearMe-NearMe/Pods-NearMe-NearMe.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -218,7 +218,7 @@
 			files = (
 				A5CAABCC1EA95AB700A16E98 /* libz.tbd in Frameworks */,
 				A5CAABCA1EA95AA500A16E98 /* libsqlite3.tbd in Frameworks */,
-				60595F858E966A818A50B089 /* Pods_NearMe_NearMe.framework in Frameworks */,
+				E31778D55CCBA5C60D1BA947 /* Pods_NearMe_NearMe.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -427,7 +427,7 @@
 				A5CAABC91EA95AA500A16E98 /* libsqlite3.tbd */,
 				8E50A159BFDC4030841FC8FA /* Pods_NearMeTests.framework */,
 				89385DFBD3E5ACADB49CFA99 /* Pods_NearMeUITests.framework */,
-				204264C34B0F40E1FCB4EFC1 /* Pods_NearMe_NearMe.framework */,
+				B7BC86B3AEC72F2FE37849E5 /* Pods_NearMe_NearMe.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -485,8 +485,8 @@
 				A5A645AB1EA6F4FB00D411E1 /* Resources */,
 				A58D4FB91EEE122C003A9365 /* ShellScript */,
 				A58D4FDE1EEEF8B6003A9365 /* Embed Frameworks */,
-				3BF34CE078EF8BE5ED38A40B /* [CP] Embed Pods Frameworks */,
-				32AA2CB22B25EA4F907B6576 /* [CP] Copy Pods Resources */,
+				084FD3BE67B43035DC41C745 /* [CP] Embed Pods Frameworks */,
+				253DE1FE7577F895199B4D50 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -635,6 +635,42 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		084FD3BE67B43035DC41C745 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-NearMe-NearMe/Pods-NearMe-NearMe-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/AlamofireSwiftyJSON/AlamofireSwiftyJSON.framework",
+				"${BUILT_PRODUCTS_DIR}/Bolts/Bolts.framework",
+				"${BUILT_PRODUCTS_DIR}/FBSDKCoreKit/FBSDKCoreKit.framework",
+				"${BUILT_PRODUCTS_DIR}/FBSDKLoginKit/FBSDKLoginKit.framework",
+				"${BUILT_PRODUCTS_DIR}/FacebookCore/FacebookCore.framework",
+				"${BUILT_PRODUCTS_DIR}/FacebookLogin/FacebookLogin.framework",
+				"${BUILT_PRODUCTS_DIR}/Socket.IO-Client-Swift/SocketIO.framework",
+				"${BUILT_PRODUCTS_DIR}/Starscream/Starscream.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AlamofireSwiftyJSON.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Bolts.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKCoreKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKLoginKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FacebookCore.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FacebookLogin.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SocketIO.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Starscream.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-NearMe-NearMe/Pods-NearMe-NearMe-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		0F4CD9F2D5DC8E4749D60AD2 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -653,20 +689,7 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		2A9EE11C226D505600A3E280 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n#\"${PODS_ROOT}/SwiftLint/swiftlint\"\n";
-		};
-		32AA2CB22B25EA4F907B6576 /* [CP] Copy Pods Resources */ = {
+		253DE1FE7577F895199B4D50 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -686,61 +709,18 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-NearMe-NearMe/Pods-NearMe-NearMe-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		3BF34CE078EF8BE5ED38A40B /* [CP] Embed Pods Frameworks */ = {
+		2A9EE11C226D505600A3E280 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-NearMe-NearMe/Pods-NearMe-NearMe-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/AWSCognito/AWSCognito.framework",
-				"${BUILT_PRODUCTS_DIR}/AWSCognitoIdentityProvider/AWSCognitoIdentityProvider.framework",
-				"${BUILT_PRODUCTS_DIR}/AWSCognitoIdentityProviderASF/AWSCognitoIdentityProviderASF.framework",
-				"${BUILT_PRODUCTS_DIR}/AWSCore/AWSCore.framework",
-				"${BUILT_PRODUCTS_DIR}/AWSDynamoDB/AWSDynamoDB.framework",
-				"${BUILT_PRODUCTS_DIR}/AWSEC2/AWSEC2.framework",
-				"${BUILT_PRODUCTS_DIR}/AWSMobileAnalytics/AWSMobileAnalytics.framework",
-				"${BUILT_PRODUCTS_DIR}/AWSS3/AWSS3.framework",
-				"${BUILT_PRODUCTS_DIR}/AWSSES/AWSSES.framework",
-				"${BUILT_PRODUCTS_DIR}/AWSSimpleDB/AWSSimpleDB.framework",
-				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
-				"${BUILT_PRODUCTS_DIR}/AlamofireSwiftyJSON/AlamofireSwiftyJSON.framework",
-				"${BUILT_PRODUCTS_DIR}/Bolts/Bolts.framework",
-				"${BUILT_PRODUCTS_DIR}/FBSDKCoreKit/FBSDKCoreKit.framework",
-				"${BUILT_PRODUCTS_DIR}/FBSDKLoginKit/FBSDKLoginKit.framework",
-				"${BUILT_PRODUCTS_DIR}/FacebookCore/FacebookCore.framework",
-				"${BUILT_PRODUCTS_DIR}/FacebookLogin/FacebookLogin.framework",
-				"${BUILT_PRODUCTS_DIR}/Socket.IO-Client-Swift/SocketIO.framework",
-				"${BUILT_PRODUCTS_DIR}/Starscream/Starscream.framework",
-				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
 			);
-			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AWSCognito.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AWSCognitoIdentityProvider.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AWSCognitoIdentityProviderASF.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AWSCore.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AWSDynamoDB.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AWSEC2.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AWSMobileAnalytics.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AWSS3.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AWSSES.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AWSSimpleDB.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AlamofireSwiftyJSON.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Bolts.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKCoreKit.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKLoginKit.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FacebookCore.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FacebookLogin.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SocketIO.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Starscream.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-NearMe-NearMe/Pods-NearMe-NearMe-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n#\"${PODS_ROOT}/SwiftLint/swiftlint\"\n";
 		};
 		696D62229EB91D9C5FAC5B1D /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1136,22 +1116,6 @@
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
-					"-framework",
-					"\"AWSCognito\"",
-					"-framework",
-					"\"AWSCognitoIdentityProvider\"",
-					"-framework",
-					"\"AWSCore\"",
-					"-framework",
-					"\"AWSDynamoDB\"",
-					"-framework",
-					"\"AWSMobileAnalytics\"",
-					"-framework",
-					"\"AWSS3\"",
-					"-framework",
-					"\"AWSSES\"",
-					"-framework",
-					"\"AWSSimpleDB\"",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.crystal.NearMe;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1179,22 +1143,6 @@
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
-					"-framework",
-					"\"AWSCognito\"",
-					"-framework",
-					"\"AWSCognitoIdentityProvider\"",
-					"-framework",
-					"\"AWSCore\"",
-					"-framework",
-					"\"AWSDynamoDB\"",
-					"-framework",
-					"\"AWSMobileAnalytics\"",
-					"-framework",
-					"\"AWSS3\"",
-					"-framework",
-					"\"AWSSES\"",
-					"-framework",
-					"\"AWSSimpleDB\"",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.crystal.NearMe;
 				PRODUCT_NAME = "$(TARGET_NAME)";

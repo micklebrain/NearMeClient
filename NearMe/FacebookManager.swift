@@ -8,6 +8,8 @@
 
 import FacebookCore
 import FacebookLogin
+import FBSDKCoreKit
+import FBSDKLoginKit
 import Foundation
 
 class FacebookManager {
@@ -15,9 +17,10 @@ class FacebookManager {
     func downloadFacebookPicture(facebookId: String) {
         let graphRequest = GraphRequest(graphPath: "46",
                                         parameters: ["fields": "id, name, email"],
-                                        accessToken: AccessToken.current,
-                                        httpMethod: GraphRequestHTTPMethod.GET,
-                                        apiVersion: .defaultVersion)
+                                        tokenString: AccessToken.current?.tokenString,
+                                        version: nil,
+                                        httpMethod: HTTPMethod.get)
+    
         // Get current facebook profile
         // let graphRequest = GraphRequest(graphPath: "/me",
         //                                 parameters: ["fields" : "id, name, email"],
@@ -26,32 +29,28 @@ class FacebookManager {
         //                                 apiVersion: "")
         
         let connection = GraphRequestConnection()
-        connection.add(graphRequest) { response, result in
-            
-            switch result {
-            case .success(let response):
-                
+        connection.add(graphRequest, completionHandler: { result, data, graphError in
+            if graphError == nil {
+                let response = data as? [String:Any]
                 print("Custom Graph Request Succeeded: \(response)")
-                print("My facebook id is \(String(describing: response.dictionaryValue?["id"]))")
-                print("My name is \(String(describing: response.dictionaryValue?["name"]))")
+//                print("My facebook id is \(String(describing: response["id"]))")
+//                print("My name is \(String(describing: response.dictionaryValue?["name"]))")
                 //                    let data = result as! [String : AnyObject]
-                guard let facebookName = (response.dictionaryValue?["name"]) as? String else {
+                guard let facebookName = (response!["name"]) as? String else {
                     return
                 }
                 var splitName = facebookName.components(separatedBy: " ")
                 splitName.removeFirst()
                 print("logged in user name is \(String(describing: facebookName))")
                 
-                if let FBid = (response.dictionaryValue?["id"]) as? String {
+                if let FBid = (response!["id"]) as? String {
                     print("Facebook id is \(String(describing: FBid))")
                 }
-                
-            case .failed(let error):
-                print(error)
-                print("Failed to get facebook credential")
+            } else {
+                    print(graphError)
+                    print("Failed to get facebook credential")
             }
-            
-        }
+        })
         connection.start()
     }
     

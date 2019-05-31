@@ -2,7 +2,7 @@
 
 [![Swift Version](https://img.shields.io/badge/Swift-5.0.x-orange.svg)](https://swift.org)
 [![Platforms](https://img.shields.io/cocoapods/p/FacebookCore.svg)](https://cocoapods.org/pods/FacebookCore)
-[![Build Status](https://travis-ci.org/facebook/facebook-sdk-swift.svg?branch=master)](https://travis-ci.org/facebook/facebook-sdk-swift)
+[![Build Status](https://travis-ci.org/facebook/facebook-swift-sdk.svg?branch=master)](https://travis-ci.org/facebook/facebook-swift-sdk)
 
 [![CocoaPods](https://img.shields.io/cocoapods/v/FacebookCore.svg)](https://cocoapods.org/pods/FacebookCore)
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
@@ -69,10 +69,10 @@ brew upgrade carthage
 Add the following line to your Cartfile:
 
 ```bash
-github "facebook/facebook-sdk-swift"
+github "facebook/facebook-swift-sdk"
 
 # If you run into issues, try targeting the master branch
-github "facebook/facebook-sdk-swift" "master"
+github "facebook/facebook-swift-sdk" "master"
 ```
 
 Run `carthage update`.
@@ -85,7 +85,6 @@ At a minimum, you'll need to drag & drop the following frameworks from `Carthage
 
 - `FacebookCore.framework`
 - `FBSDKCoreKit.framework`
-- `Bolts.framework`
 
 To use Login with Facebook:
 
@@ -112,7 +111,6 @@ On your application targets' `Build Phases` tab:
 ```bash
 $(SRCROOT)/Carthage/Build/iOS/FacebookCore.framework
 $(SRCROOT)/Carthage/Build/iOS/FBSDKCoreKit.framework
-$(SRCROOT)/Carthage/Build/iOS/Bolts.framework
 ```
 
 ### Using Facebook SDK as a sub-project
@@ -129,8 +127,7 @@ your own.
 - Add the `FacebookCore.framework`, `FacebookLogin.framework`, and `FacebookShare.framework` build products from the
   sub-project to your applications `Link Frameworks and Libraries` and `Embedded Binaries` sections.
 
-Don't forget to also embed/link `FBSDKCoreKit.framework`, `FBSDKLoginKit.framework`, `FBSDKShareKit.framework` and
-`Bolts.framework` too!
+Don't forget to also embed/link `FBSDKCoreKit.framework`, `FBSDKLoginKit.framework`, and `FBSDKShareKit.framework`.
 
 ## Modules
 
@@ -142,7 +139,7 @@ They also currently depend upon the Facebook SDK for iOS, although this may chan
 
 [![FacebookCore on CocoaPods](https://img.shields.io/cocoapods/v/FacebookCore.svg)](https://cocoapods.org/pods/FacebookCore)
 
-Depends on `FBSDKCoreKit.framework` and `Bolts.framework`.
+Depends on `FBSDKCoreKit.framework`.
 
 The following types are included, with enhancements for Swift:
 
@@ -237,9 +234,9 @@ Now a struct, use a type-safe `Promotion` property, instead of separate `promoti
 
 Facebook SDK in Swift is still in beta, and we would love to hear your thoughts and feedback on it.
 
-- **Have an idea or feature request?** [Open an issue](https://github.com/facebook/facebook-sdk-swift/issues/new). Tell
+- **Have an idea or feature request?** [Open an issue](https://github.com/facebook/facebook-swift-sdk/issues/new). Tell
   us more about the feature or an idea and why you think it's relevant.
-- **Have a bug to report?** [Open an issue](https://github.com/facebook/facebook-sdk-swift/issues/new). If possible,
+- **Have a bug to report?** [Open an issue](https://github.com/facebook/facebook-swift-sdk/issues/new). If possible,
   include the version of the SDK you are using, and any technical details.
 - **Need help with your code?** Join [Facebook Developers Group](https://www.facebook.com/groups/fbdevelopers) on
   Facebook or ask questions on [Stack Overflow](https://facebook.stackoverflow.com).
@@ -253,4 +250,4 @@ submitting a Pull Request.
 ## License
 
 Facebook SDK in Swift is MIT licensed, as found in the
-[`LICENSE`](https://github.com/facebook/facebook-sdk-swift/blob/master/LICENSE) file.
+[`LICENSE`](https://github.com/facebook/facebook-swift-sdk/blob/master/LICENSE) file.

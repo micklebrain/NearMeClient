@@ -1,3 +1,15 @@
+Version 3.1.0 - April 2019
+==========================
+Improvements:
+  - Improved GMSAddressComponents API.
+    Now returns array of types associated to each address component.
+    Deprecates the older singular type in favor of the new array of types.
+  - Improved Error Handling.
+    Now returns common error messages from the server back to clients.
+
+Resolved Issues:
+  - Fixed inaccurate references of Places API in code exposed to public.
+
 Version 3.0.1 - January 2019
 ==========================
 Resolved Issues:

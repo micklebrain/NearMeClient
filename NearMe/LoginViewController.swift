@@ -9,13 +9,15 @@
 import Alamofire
 import FacebookLogin
 import FacebookCore
+import FBSDKCoreKit
+import FBSDKLoginKit
 import SwiftyJSON
 import UIKit
 
 class LoginViewController: UIViewController {
     
     var userloggedIn: User!
-    var loginButton: LoginButton!
+    var loginButton: FBLoginButton!
    
     @IBOutlet weak var username: UITextField!
     @IBOutlet weak var password: UITextField!
@@ -29,12 +31,13 @@ class LoginViewController: UIViewController {
             // This request dosnt happen fast enough
             
            let connection = GraphRequestConnection()
-           
-            connection.add(GraphRequest(graphPath: "/me")) { _, result in
-                
-                switch result {
-                case .success(_):
-                    
+            
+//            connection.add(graphRequest, completionHandler: { data, response, error in
+            
+            let graphRequest = GraphRequest(graphPath: "/me")
+            
+            connection.add(graphRequest, completionHandler: { _ , result, error in
+                if error == nil {
                     let data = result as? [String: AnyObject]
                     let name = data?["name"] as? String
                     var splitName = name?.components(separatedBy: " ")
@@ -55,16 +58,16 @@ class LoginViewController: UIViewController {
                         
                         self.present(maintabbarVC, animated: false, completion: nil)
                     }
-                case .failed(let error):
+                } else {
                     print("Graph Request Failed: \(error)")
                 }
-            }
+            })
             connection.start()
         }
         password.resignFirstResponder()
         
         //Facebook login button
-        self.loginButton = LoginButton(readPermissions: [ .publicProfile, .email, .userFriends ])
+        self.loginButton = FBLoginButton(type: UIButton.ButtonType.roundedRect)
         loginButton.center = view.center
     
     }
@@ -72,17 +75,17 @@ class LoginViewController: UIViewController {
     @IBAction func loginFacebook(_ sender: Any) {
         // TODO: Add loading activity indicator for slow request response
         let loginManager = LoginManager()
-        loginManager.logIn(readPermissions: [ .publicProfile, .email, .userFriends ], viewController: self) { (loginResult) in
+        loginManager.logIn(permissions: [ .publicProfile, .email, .userFriends ], viewController: self) { (loginResult) in
             switch loginResult {
             case.cancelled:
                 print("Login to Facebook has been canceled")
             case.failed(let error):
                 print("Ooops")
-            case.success(grantedPermissions: _, declinedPermissions: _, token: let token):
+            case.success(granted: _, declined: _, token: let token):
                 //Pull user's information from granted permissions
                 if let maintabbarVC: MainTabBarController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "MainTabBarController") as? MainTabBarController {
                     self.userloggedIn = User()
-                    self.userloggedIn.facebookId = token.userId
+                    self.userloggedIn.facebookId = token.userID
                     
                     let wifiipAddress = Util.getIFAddresses()[1]
                     var localUrlString = "http://\(wifiipAddress):8080/account?facebookId="
@@ -115,7 +118,7 @@ class LoginViewController: UIViewController {
     @IBAction func logout(_ sender: Any) {
         let deletepermission = GraphRequest(graphPath: "me/permissions/",
                                             parameters: [:],
-                                            httpMethod: GraphRequestHTTPMethod.DELETE)
+                                            httpMethod: HTTPMethod.delete)
 //        deletepermission.start({(connection,result,error)-> Void in
 //            print(String(describing:"the delete permission is \(describing: result))"))
 //        })
