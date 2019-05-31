@@ -24,10 +24,10 @@ class NearbyPeopleViewController: UIViewController, WebSocketDelegate {
     var locationManager: CLLocationManager!
     var friendsAround: [User] = []
     var strangersAround = Set<User>()
+    var count = 0
     var defaultHeadshot: UIImage!
     var headshots = [String: UIImage]()
     var currentUserLocation: CLLocation?
-    var count = 0
     var actInd = UIActivityIndicatorView()
     var profileImage: UIImage?
     var timer = Timer()
@@ -159,8 +159,8 @@ class NearbyPeopleViewController: UIViewController, WebSocketDelegate {
         let pullNearbyUsersUrl = URL(string: "https://crystal-smalltalk.herokuapp.com/pullNearbyUsers?locality=SanFrancisco&zipCode=10036")
         let pullAllUsersUrl = URL(string: "https://crystal-smalltalk.herokuapp.com/pullAllUsers")
         
-        Alamofire.request(pullNearbyUsersUrl!, method: .post, parameters: userDetails, encoding: JSONEncoding.default)
-             // Alamofire.request(pullAllUsersUrl!, method: .get)
+//        Alamofire.request(pullNearbyUsersUrl!, method: .post, parameters: userDetails, encoding: JSONEncoding.default)
+              Alamofire.request(pullAllUsersUrl!, method: .get)
             .responseJSON { response in
                 if response.response?.statusCode == 200 {
                     if let json = response.result.value {
@@ -177,21 +177,16 @@ class NearbyPeopleViewController: UIViewController, WebSocketDelegate {
                             let userDetails = someUser as? [String: Any]
                             let newPerson = User()
                             if let facebookId: String = userDetails?["facebookId"] as? String {
-            
-                            if (facebookId != self.userLoggedIn?.facebookId) {
-                                newPerson.username = userDetails?["username"] as? String
-                                newPerson.firstName = userDetails?["firstname"] as? String
-                                newPerson.lastName = userDetails?["lastname"] as? String
-                                newPerson.facebookId = userDetails?["facebookId"] as? String
-                                newPerson.school = userDetails?["school"] as? String
-                                newPerson.employer = userDetails?["employer"] as? String
-                                
-                                self.friendsAround.append(newPerson)
-                                // TODO: Call on seperate thread
-                                self.getUserFBPicture(for: newPerson.facebookId!) { _ in
+                                if (facebookId != self.userLoggedIn?.facebookId) {
+                                    newPerson.username = userDetails?["username"] as? String
+                                    newPerson.firstName = userDetails?["firstname"] as? String
+                                    newPerson.lastName = userDetails?["lastname"] as? String
+                                    newPerson.facebookId = userDetails?["facebookId"] as? String
+                                    newPerson.school = userDetails?["school"] as? String
+                                    newPerson.employer = userDetails?["employer"] as? String
                                     
+                                    self.friendsAround.append(newPerson)
                                 }
-                            }
                             }
                             
                             if (self.userCacheURL != nil) {
@@ -322,8 +317,7 @@ class NearbyPeopleViewController: UIViewController, WebSocketDelegate {
                         if (UIImage(data: usableData) != nil) {
                             headshot = UIImage(data: usableData)!
                             self.headshots[facebookId] = headshot
-                            let user = self.friendsAround.remove(at:
-                            self.friendsAround.firstIndex(where: { (user) -> Bool in
+                            let user = self.friendsAround.remove(at: self.friendsAround.firstIndex(where: { (user) -> Bool in
                                 user.facebookId == facebookId
                             })!)
                             user.headshot = headshot
