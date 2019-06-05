@@ -6,15 +6,15 @@
 //  Copyright © 2017 Nathan Nguyen. All rights reserved.
 //
 
-import UIKit
+import Alamofire
 import CoreLocation
 import FacebookCore
 import FacebookLogin
-import Alamofire
-import SwiftyJSON
 import FBSDKLoginKit
 import GooglePlaces
 import Starscream
+import SwiftyJSON
+import UIKit
 
 class NearbyPeopleViewController: UIViewController, WebSocketDelegate {
     
@@ -23,7 +23,8 @@ class NearbyPeopleViewController: UIViewController, WebSocketDelegate {
     let filterOptions = ["Female", "Male"]
     var locationManager: CLLocationManager!
     var friendsAround: [User] = []
-    var strangersAround = Set<User>()
+    var strangersAround: [User] = []
+//    var strangersAround = Set<User>()
     var count = 0
     var defaultHeadshot: UIImage!
     var headshots = [String: UIImage]()
@@ -185,7 +186,7 @@ class NearbyPeopleViewController: UIViewController, WebSocketDelegate {
                                     newPerson.school = userDetails?["school"] as? String
                                     newPerson.employer = userDetails?["employer"] as? String
                                     
-                                    self.friendsAround.append(newPerson)
+                                    self.strangersAround.append(newPerson)
                                 }
                             }
                             
@@ -227,9 +228,6 @@ class NearbyPeopleViewController: UIViewController, WebSocketDelegate {
                                         friend.firstName = user["firstName"] as? String
                                         friend.lastName = user["lastName"] as? String
                                         friend.facebookId = user["facebookId"] as? String
-                                        self.getUserFBPicture(for: friend.facebookId!) { _ in
-                                            
-                                        }
                                         self.friendsAround.append(friend)
                                     }
                                 }
@@ -298,13 +296,15 @@ class NearbyPeopleViewController: UIViewController, WebSocketDelegate {
         activateLocationServices()
     }
     
-    func getUserFBPicture (for facebookId: String, completionHandler: @escaping (UIImage) -> Void) {
+    func getUserFBPicture (for facebookId: String, from group: [User], completionHandler: @escaping (UIImage) -> Void) {
         
         // Solve threading to update fb image when complete
         var headshot = #imageLiteral(resourceName: "empty-headshot")
         var pictureUrl = "http://graph.facebook.com/"
         pictureUrl += facebookId
         pictureUrl += "/picture?type=large"
+        
+        var users: [User] = group
         
         let url = URL(string: pictureUrl)
         
@@ -317,7 +317,7 @@ class NearbyPeopleViewController: UIViewController, WebSocketDelegate {
                         if (UIImage(data: usableData) != nil) {
                             headshot = UIImage(data: usableData)!
                             self.headshots[facebookId] = headshot
-                            let user = self.friendsAround.remove(at: self.friendsAround.firstIndex(where: { (user) -> Bool in
+                            let user = users.remove(at: users.firstIndex(where: { (user) -> Bool in
                                 user.facebookId == facebookId
                             })!)
                             user.headshot = headshot
@@ -437,7 +437,7 @@ class NearbyPeopleViewController: UIViewController, WebSocketDelegate {
     
 }
 
-//struct MyProfileRequest: GraphRequestProtocol {
+//  struct MyProfileRequest: GraphRequestProtocol {
 //    
 //    var graphPath: String
 //    var parameters: [String: Any]?
@@ -451,7 +451,7 @@ class NearbyPeopleViewController: UIViewController, WebSocketDelegate {
 //        }
 //    }
 //    
-//}
+//  }
 
 extension NearbyPeopleViewController: CLLocationManagerDelegate {
     
@@ -508,6 +508,7 @@ extension NearbyPeopleViewController: UITableViewDataSource, UITableViewDelegate
         self.refreshControl.endRefreshing()
         self.actInd.stopAnimating()
         
+        // Get Friends then strangers
         if (indexPath.section == 0) {
             
             cell.userDetails.numberOfLines = 0
@@ -535,7 +536,7 @@ extension NearbyPeopleViewController: UITableViewDataSource, UITableViewDelegate
                 if let userImage = self.headshots[facebookId] {
                     cell.headshotViewImage.image = userImage
                 } else {
-                        getUserFBPicture(for: facebookId) {
+                    getUserFBPicture(for: facebookId, from: self.friendsAround) {
                             result in
                             // TODO: Should not be called in main thread
                             DispatchQueue.main.async {
@@ -554,15 +555,48 @@ extension NearbyPeopleViewController: UITableViewDataSource, UITableViewDelegate
             appUser.facebookId = self.friendsAround[friendsAround.index(self.friendsAround.startIndex, offsetBy: indexPath.row)].facebookId
             cell.user = appUser
         } else {
-            cell.userDetails.text? = self.strangersAround[strangersAround.index(self.strangersAround.startIndex, offsetBy: indexPath.row)].firstName! + " " +
-                self.friendsAround[friendsAround.index(self.friendsAround.startIndex, offsetBy: indexPath.row)].lastName!
-            cell.headshotViewImage.image = self.strangersAround[strangersAround.index(self.strangersAround.startIndex, offsetBy: indexPath.row)].headshot
-            cell.userDetails.text? = self.friendsAround[friendsAround.index(self.friendsAround.startIndex, offsetBy: indexPath.row)].school!
-            cell.headshotViewImage.layer.cornerRadius = 15.0
-            cell.headshotViewImage.layer.borderWidth = 3
-            cell.headshotViewImage.layer.borderColor = UIColor.black.cgColor
+            cell.userDetails.numberOfLines = 0
+            
+            cell.userDetails.text? =
+                self.strangersAround[strangersAround.index(self.strangersAround.startIndex, offsetBy: indexPath.row)].firstName! + " " +
+                self.strangersAround[strangersAround.index(self.strangersAround.startIndex, offsetBy: indexPath.row)].lastName! + "\n"
+            
+            cell.userDetails.text? +=
+                self.strangersAround[strangersAround.index(self.friendsAround.startIndex, offsetBy: indexPath.row)].school! + "\n"
+            
+            cell.userDetails.text? +=
+                self.strangersAround[strangersAround.index(self.friendsAround.startIndex, offsetBy: indexPath.row)].employer!
+            
+            // cell.schoolLabel.text = self.friendsAround[friendsAround.index(self.friendsAround.startIndex, offsetBy: indexPath.row)].school!
+            
+            if let facebookId = self.strangersAround[strangersAround.index(self.strangersAround.startIndex, offsetBy: indexPath.row)].facebookId {
+                
+                let headshotCornerRadius = CGFloat(15.0)
+                let headshotBorderWidth = CGFloat(3)
+                cell.headshotViewImage.layer.cornerRadius = headshotCornerRadius
+                cell.headshotViewImage.layer.borderWidth = headshotBorderWidth
+                cell.headshotViewImage.layer.borderColor = UIColor.black.cgColor
+                
+                if let userImage = self.headshots[facebookId] {
+                    cell.headshotViewImage.image = userImage
+                } else {
+                    getUserFBPicture(for: facebookId, from: self.strangersAround) {
+                        result in
+                        // TODO: Should not be called in main thread
+                        DispatchQueue.main.async {
+                            if let cell = self.peopleNearbyTableView?.cellForRow(at: indexPath) as? UserTableViewCell? {
+                                cell?.headshotViewImage.image = result
+                                cell?.setNeedsLayout() // need to reload the view, which won't happen otherwise since this is in an async call
+                            }
+                        }
+                    }
+                }
+            } else {
+                print("Facebook ID not found")
+            }
+            
             let appUser = User()
-            appUser.facebookId = self.friendsAround[friendsAround.index(self.friendsAround.startIndex, offsetBy: indexPath.row)].facebookId
+            appUser.facebookId = self.strangersAround[strangersAround.index(self.strangersAround.startIndex, offsetBy: indexPath.row)].facebookId
             cell.user = appUser
         }
           return cell
