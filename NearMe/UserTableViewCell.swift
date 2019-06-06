@@ -25,5 +25,9 @@ class UserTableViewCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
+    
+    override func prepareForReuse() {
+        headshotViewImage.image = nil
+    }
 
 }

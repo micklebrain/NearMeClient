@@ -20,7 +20,7 @@ class NearbyPeopleViewController: UIViewController, WebSocketDelegate {
     
     var userLoggedIn: User!
     let section = ["Friends", "Strangers"]
-    let filterOptions = ["Female", "Male"]
+    let filterOptions = ["Any", "Stanford", "Harvard"]
     var locationManager: CLLocationManager!
     var friendsAround: [User] = []
     var strangersAround: [User] = []
@@ -42,28 +42,30 @@ class NearbyPeopleViewController: UIViewController, WebSocketDelegate {
     @IBOutlet weak var floorLabel: UILabel!
     @IBOutlet weak var presenceSwitch: UISwitch!
     @IBOutlet weak var currentLocation: UIButton!
+    @IBOutlet weak var filterPickerView: UIPickerView!
     
     override func viewDidLoad() {
         
         super.viewDidLoad()
         
-        //Current User Info
+        // Current User Info
         if let tbc = self.tabBarController as? MainTabBarController {
             self.userLoggedIn = tbc.userloggedIn
         }
         pullFacebookInfo()
-        //Current User Info
+        // Current User Info
         
         let checkedInLocation = self.userLoggedIn.buildingOccupied ?? "Check In"
         self.currentLocation.setTitle(checkedInLocation, for: .normal)
         
-        //Table View
+        // Table View
         self.peopleNearbyTableView.delegate = self
         self.peopleNearbyTableView.dataSource = self
         
-        self.peopleNearbyTableView.decelerationRate = .fast
+        self.filterPickerView.dataSource = self
+        self.filterPickerView.delegate = self
         
-        //self.floorLabel.text?.append(String(userLoggedIn.floor))
+        // self.floorLabel.text?.append(String(userLoggedIn.floor))
         
         if #available(iOS 10.0, *) {
             self.peopleNearbyTableView.refreshControl = refreshControl
@@ -261,7 +263,7 @@ class NearbyPeopleViewController: UIViewController, WebSocketDelegate {
         let nathan2FBId = "111006779636650"
         let traceyFBid = "109582432994026"
         
-        if(AccessToken.current != nil) {
+        if (AccessToken.current != nil) {
         
             AccessToken.current?.userID
             
@@ -274,10 +276,6 @@ class NearbyPeopleViewController: UIViewController, WebSocketDelegate {
                            completionHandler: { (connection, result, _) -> Void in
                 if (connection?.urlResponse != nil && connection?.urlResponse.statusCode == 200) {
                     let data = result as? [String: AnyObject]
-                    let name = data?["name"] as? String
-                    let email = data?["email"] as? String
-                    let picture = data?["picture"] as? Any
-                    let FBid = data?["id"] as? String
                 }
             })
             connection.start()
@@ -470,8 +468,6 @@ extension NearbyPeopleViewController: CLLocationManagerDelegate {
             if (placemarks?.count)! > 0 {
                 let pm = placemarks?[0]
                 //TODO: Dosnt always update location
-                var latitude = pm?.location?.coordinate.latitude
-                var longitude = pm?.location?.coordinate.longitude
                 self.trackUserLocation(placemark: pm, userLocation: userLocation)
                 self.view.setNeedsDisplay()
             } else {
@@ -659,4 +655,11 @@ extension NearbyPeopleViewController: UIPickerViewDataSource, UIPickerViewDelega
         return filterOptions[row]
     }
     
+    func pickerView(_ pickerView: UIPickerView,
+                             didSelectRow row: Int,
+                             inComponent component: Int) {
+        print(filterOptions[row])
+    }
+    
 }
+
