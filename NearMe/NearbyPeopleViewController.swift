@@ -553,18 +553,30 @@ extension NearbyPeopleViewController: UITableViewDataSource, UITableViewDelegate
         } else {
             cell.userDetails.numberOfLines = 0
             
+            let firstName = self.strangersAround[strangersAround.index(self.strangersAround.startIndex, offsetBy: indexPath.row)].firstName!
+            let lastName = self.strangersAround[strangersAround.index(self.strangersAround.startIndex, offsetBy: indexPath.row)].lastName!
+            let school = self.strangersAround[strangersAround.index(self.friendsAround.startIndex, offsetBy: indexPath.row)].school!
+            let employer = self.strangersAround[strangersAround.index(self.friendsAround.startIndex, offsetBy: indexPath.row)].employer!
+            let facebookId = self.strangersAround[strangersAround.index(self.strangersAround.startIndex, offsetBy: indexPath.row)].facebookId
+            
+            let user = User()
+            user.facebookId = facebookId
+            user.firstName = firstName
+            user.lastName = lastName
+            user.school = school
+            user.employer = employer
+            cell.user = user
+            
             cell.userDetails.text? =
-                self.strangersAround[strangersAround.index(self.strangersAround.startIndex, offsetBy: indexPath.row)].firstName! + " " +
-                self.strangersAround[strangersAround.index(self.strangersAround.startIndex, offsetBy: indexPath.row)].lastName! + "\n"
+                firstName + " " +
+                lastName + "\n"
             
             cell.userDetails.text? +=
-                self.strangersAround[strangersAround.index(self.friendsAround.startIndex, offsetBy: indexPath.row)].school! + "\n"
+                school + "\n"
             
             cell.userDetails.text? +=
-                self.strangersAround[strangersAround.index(self.friendsAround.startIndex, offsetBy: indexPath.row)].employer!
-            
-            // cell.schoolLabel.text = self.friendsAround[friendsAround.index(self.friendsAround.startIndex, offsetBy: indexPath.row)].school!
-            
+                employer
+        
             if let facebookId = self.strangersAround[strangersAround.index(self.strangersAround.startIndex, offsetBy: indexPath.row)].facebookId {
                 
                 let headshotCornerRadius = CGFloat(15.0)
@@ -590,10 +602,7 @@ extension NearbyPeopleViewController: UITableViewDataSource, UITableViewDelegate
             } else {
                 print("Facebook ID not found")
             }
-            
-            let appUser = User()
-            appUser.facebookId = self.strangersAround[strangersAround.index(self.strangersAround.startIndex, offsetBy: indexPath.row)].facebookId
-            cell.user = appUser
+        
         }
           return cell
         }
@@ -605,15 +614,19 @@ extension NearbyPeopleViewController: UITableViewDataSource, UITableViewDelegate
         if let profileVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "SelectProfileViewController") as? ProfileViewController {
             let selectedUser = User()
             let selectedCell = peopleNearbyTableView.cellForRow(at: indexPath) as? UserTableViewCell
-            selectedUser.firstName = selectedCell?.userDetails.text
+            selectedUser.firstName = selectedCell?.user?.firstName
+            selectedUser.lastName = selectedCell?.user?.lastName
+            selectedUser.school = selectedCell?.user?.school
+            selectedUser.employer = selectedCell?.user?.employer
+            selectedUser.facebookId = selectedCell?.user?.facebookId
             selectedUser.location = userLoggedIn?.location
             selectedUser.headshot = selectedCell?.headshotViewImage.image ?? defaultHeadshot
-            selectedUser.facebookId = selectedCell?.user?.facebookId
             profileVC.userSelected = selectedUser
         
             if let maintabVC = self.tabBarController as? MainTabBarController {
                 maintabVC.userloggedIn = self.userLoggedIn
                 self.tabBarController?.modalPresentationStyle = .popover
+                
                 self.tabBarController?.present(profileVC, animated: false, completion: nil)
             }
         }

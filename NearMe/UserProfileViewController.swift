@@ -21,8 +21,7 @@ class UserProfileViewController: ProfileViewController {
     
     override func viewDidLoad() {
         
-//        socket = SocketIOClient(manager: NSURL(string: "https://chat-smalltalk.herokuapp.com/"), nsp: "")
-//        
+//        socket = SocketIOClient(manager: NSURL(string: "https://chat-smalltalk.herokuapp.com/"), nsp: "")        
 //        SocketIOManager.sharedInstance.connectToServerWithNickname(nickname: "Nathan", completionHandler: () -> Void)
 //        SocketIOManager.sharedInstance.sendMessage(message: "Well Hello", withNickname: "Nathan")
         
