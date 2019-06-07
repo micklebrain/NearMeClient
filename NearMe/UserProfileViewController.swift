@@ -15,8 +15,12 @@ import FBSDKLoginKit
 class UserProfileViewController: ProfileViewController {
     
     @IBOutlet weak var userProfilePicture: UIImageView!
-    @IBOutlet weak var userDetails: UILabel!
-    var userDetailsText: String!
+    
+    @IBOutlet weak var firstNameLabel: UILabel!
+    @IBOutlet weak var lastNameLabel: UILabel!
+    @IBOutlet weak var snapchatLabel: UILabel!
+    @IBOutlet weak var instagramLabel: UILabel!
+    
 //    var socket: SocketIOClient?
     
     override func viewDidLoad() {
@@ -24,8 +28,6 @@ class UserProfileViewController: ProfileViewController {
 //        socket = SocketIOClient(manager: NSURL(string: "https://chat-smalltalk.herokuapp.com/"), nsp: "")        
 //        SocketIOManager.sharedInstance.connectToServerWithNickname(nickname: "Nathan", completionHandler: () -> Void)
 //        SocketIOManager.sharedInstance.sendMessage(message: "Well Hello", withNickname: "Nathan")
-        
-        self.userDetails.numberOfLines = 0
         
         if let tbc = self.tabBarController as? MainTabBarController {
             self.userSelected = tbc.userloggedIn
@@ -67,14 +69,14 @@ class UserProfileViewController: ProfileViewController {
                         let firstName = self.userSelected.firstName ?? ""
                         let lastName = self.userSelected.lastName ?? ""
                         let school = self.userSelected.school ?? ""
-                        self.userDetails.text?.append(
-                            "Username: " + userName + "\n")
-                        self.userDetails.text?.append(
-                            "Name: " + firstName + " " + lastName + "\n")
-                        self.userDetails.text?.append(
-                            "School: " + school + "\n")
-                        self.userDetails.text?.append("Instagram Username: " + "\n")
-                        self.userDetails.text?.append("Snapchat Username: ")
+//                        self.userDetails.text?.append(
+//                            "Username: " + userName + "\n")
+                        self.firstNameLabel.text?.append(
+                            firstName)
+                        self.lastNameLabel.text?.append(
+                            lastName)
+//                        self.userDetails.text?.append("Instagram Username: " + "\n")
+//                        self.userDetails.text?.append("Snapchat Username: ")
                     
                 } else {
                         print(error)

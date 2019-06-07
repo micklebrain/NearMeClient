@@ -11,23 +11,24 @@ import UIKit
 class ProfileViewController: UIViewController {
     
     var userSelected: User!
+    @IBOutlet weak var firstName: UILabel!
+    @IBOutlet weak var lastName: UILabel!
+    @IBOutlet weak var snapChat: UILabel!
+    @IBOutlet weak var instagram: UILabel!
     
-    @IBOutlet weak var userDetailsLabel: UILabel!
     @IBOutlet weak var selectedUserProfileImage: UIImageView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        userDetailsLabel.numberOfLines = 0
-        
         if (userSelected != nil) {
-            userDetailsLabel.text? =
-                userSelected.firstName! + " " +
-                userSelected.lastName! + "\n"
-            userDetailsLabel.text? +=
-                userSelected.school! + "\n"
-            userDetailsLabel.text? +=
-            userSelected.employer!
+            self.firstName.text =
+                userSelected.firstName!
+            self.firstName.text = userSelected.lastName!
+//            userDetailsLabel.text? +=
+//                userSelected.school! + "\n"
+//            userDetailsLabel.text? +=
+//            userSelected.employer!
             self.selectedUserProfileImage.image = userSelected.headshot
         }
         // Do any additional setup after loading the view.
