@@ -277,7 +277,6 @@ extension NearbyLocationsViewController: UITableViewDataSource, UITableViewDeleg
         if let tbc = self.tabBarController as? MainTabBarController {
             tbc.userloggedIn = self.userloggedIn
             self.userloggedIn.buildingOccupied = placesTableView.cellForRow(at: indexPath)?.textLabel?.text
-            self.userloggedIn.floor = Int(floorNumber.text!)
             
             let longitude = self.userloggedIn.longitude ?? 0
             let latitude = self.userloggedIn.latitude ?? 0

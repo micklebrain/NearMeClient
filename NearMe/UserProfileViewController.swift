@@ -16,10 +16,11 @@ class UserProfileViewController: ProfileViewController {
     
     @IBOutlet weak var userProfilePicture: UIImageView!
     
-    @IBOutlet weak var firstNameLabel: UILabel!
-    @IBOutlet weak var lastNameLabel: UILabel!
-    @IBOutlet weak var snapchatLabel: UILabel!
-    @IBOutlet weak var instagramLabel: UILabel!
+    @IBOutlet weak var firstNameTextField: UITextField!
+    @IBOutlet weak var lastNameTextField: UITextField!
+    @IBOutlet weak var instagramTextField: UITextField!
+    @IBOutlet weak var snapchatTextField: UITextField!
+    
     
 //    var socket: SocketIOClient?
     
@@ -28,6 +29,9 @@ class UserProfileViewController: ProfileViewController {
 //        socket = SocketIOClient(manager: NSURL(string: "https://chat-smalltalk.herokuapp.com/"), nsp: "")        
 //        SocketIOManager.sharedInstance.connectToServerWithNickname(nickname: "Nathan", completionHandler: () -> Void)
 //        SocketIOManager.sharedInstance.sendMessage(message: "Well Hello", withNickname: "Nathan")
+        
+        self.firstNameTextField.isUserInteractionEnabled = false
+        self.firstNameTextField.isUserInteractionEnabled = false
         
         if let tbc = self.tabBarController as? MainTabBarController {
             self.userSelected = tbc.userloggedIn
@@ -71,9 +75,11 @@ class UserProfileViewController: ProfileViewController {
                         let school = self.userSelected.school ?? ""
 //                        self.userDetails.text?.append(
 //                            "Username: " + userName + "\n")
-                        self.firstNameLabel.text?.append(
+                    self.firstNameTextField.isUserInteractionEnabled = true
+                    self.lastNameTextField.isUserInteractionEnabled = true
+                        self.firstNameTextField.text?.append(
                             firstName)
-                        self.lastNameLabel.text?.append(
+                        self.lastNameTextField.text?.append(
                             lastName)
 //                        self.userDetails.text?.append("Instagram Username: " + "\n")
 //                        self.userDetails.text?.append("Snapchat Username: ")
@@ -126,6 +132,10 @@ class UserProfileViewController: ProfileViewController {
         }
     }
     
+    @IBAction func editProfile(_ sender: Any) {
+        self.firstNameTextField.isUserInteractionEnabled = true
+        self.firstNameTextField.isUserInteractionEnabled = true
+    }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

@@ -42,7 +42,7 @@ class NearbyPeopleViewController: UIViewController, WebSocketDelegate {
     @IBOutlet weak var floorLabel: UILabel!
     @IBOutlet weak var presenceSwitch: UISwitch!
     @IBOutlet weak var currentLocation: UIButton!
-    @IBOutlet weak var filterPickerView: UIPickerView!
+//    @IBOutlet weak var filterPickerView: UIPickerView!
     
     override func viewDidLoad() {
         
@@ -62,8 +62,8 @@ class NearbyPeopleViewController: UIViewController, WebSocketDelegate {
         self.peopleNearbyTableView.delegate = self
         self.peopleNearbyTableView.dataSource = self
         
-        self.filterPickerView.dataSource = self
-        self.filterPickerView.delegate = self
+//        self.filterPickerView.dataSource = self
+//        self.filterPickerView.delegate = self
         
         // self.floorLabel.text?.append(String(userLoggedIn.floor))
         
@@ -570,6 +570,12 @@ extension NearbyPeopleViewController: UITableViewDataSource, UITableViewDelegate
             cell.userDetails.text? =
                 firstName + " " +
                 lastName + "\n"
+            
+//            cell.userDetails.text? =
+//                "Instagram: \n"
+//            
+//            cell.userDetails.text? =
+//            "Snapchat: \n"
             
             cell.userDetails.text? +=
                 school + "\n"
