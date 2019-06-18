@@ -100,6 +100,7 @@ class AuthViewController: UIViewController {
             }
         }
     }
+    
     private func didLogin(method: String, info: String) {
         let message = "Successfully logged in with \(method). " + info
         let alert = UIAlertController(title: "Success", message: message, preferredStyle: UIAlertController.Style.alert)

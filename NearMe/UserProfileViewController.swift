@@ -30,8 +30,13 @@ class UserProfileViewController: ProfileViewController {
 //        SocketIOManager.sharedInstance.connectToServerWithNickname(nickname: "Nathan", completionHandler: () -> Void)
 //        SocketIOManager.sharedInstance.sendMessage(message: "Well Hello", withNickname: "Nathan")
         
+        self.firstNameTextField.delegate = self
+        self.lastNameTextField.delegate = self
+        
         self.firstNameTextField.isUserInteractionEnabled = false
         self.firstNameTextField.isUserInteractionEnabled = false
+        self.firstNameTextField.isEnabled = false
+        self.lastNameTextField.isEnabled = false
         
         if let tbc = self.tabBarController as? MainTabBarController {
             self.userSelected = tbc.userloggedIn
@@ -135,6 +140,8 @@ class UserProfileViewController: ProfileViewController {
     @IBAction func editProfile(_ sender: Any) {
         self.firstNameTextField.isUserInteractionEnabled = true
         self.firstNameTextField.isUserInteractionEnabled = true
+        self.firstNameTextField.isEnabled = true
+        self.lastNameTextField.isEnabled = true
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -149,5 +156,13 @@ class UserProfileViewController: ProfileViewController {
      // Pass the selected object to the new view controller.
      }
     */
+    
+}
+
+extension UserProfileViewController : UITextFieldDelegate {
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        return true
+    }
     
 }

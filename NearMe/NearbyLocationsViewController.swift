@@ -127,7 +127,13 @@ class NearbyLocationsViewController: UIViewController {
                     }
                 }
                 print("\(self.likelyPlaces.count) likely places around ")
-                print(self.likelyPlaces)
+//                print(self.likelyPlaces)
+                
+                // Print Places
+                for place in self.likelyPlaces {
+                    print(place.name)
+                }
+                
                 self.placesTableView.reloadData()
             }
             

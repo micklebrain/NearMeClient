@@ -32,8 +32,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
-        //Get current FBSDK Token before the view loads
-        if(AccessToken.current != nil) {
+        if let accessToken = AccessToken.current {
             
             let graphRequest = GraphRequest(graphPath: "me", parameters: ["fields": "id, name, email"])
             let connection = GraphRequestConnection()

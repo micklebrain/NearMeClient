@@ -80,7 +80,8 @@ class LoginViewController: UIViewController {
             case.cancelled:
                 print("Login to Facebook has been canceled")
             case.failed(let error):
-                print("Ooops")
+                let alertVC = UIAlertController(title: "Login to facebook", message: "Login to facebook", preferredStyle: .alert)
+                self.present(alertVC, animated: false, completion: nil)
             case.success(granted: _, declined: _, token: let token):
                 //Pull user's information from granted permissions
                 if let maintabbarVC: MainTabBarController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "MainTabBarController") as? MainTabBarController {
