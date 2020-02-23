@@ -83,7 +83,7 @@ class NearbyLocationsViewController: UIViewController {
             let connection = GraphRequestConnection()
             
             connection.add(graphRequest, completionHandler: { (connection, result, _) -> Void in
-                if (connection?.urlResponse != nil && connection?.urlResponse.statusCode == 200) {
+                if (connection?.urlResponse != nil && connection?.urlResponse?.statusCode == 200) {
                     if let data = result as? [String: AnyObject] {
                         if let name = data["name"] as? String {
                         var splitName = name.components(separatedBy: " ")
@@ -131,7 +131,7 @@ class NearbyLocationsViewController: UIViewController {
                 
                 // Print Places
                 for place in self.likelyPlaces {
-                    print(place.name)
+                    print(place.name!)
                 }
                 
                 self.placesTableView.reloadData()

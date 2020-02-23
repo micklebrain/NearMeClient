@@ -32,31 +32,39 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
+        ApplicationDelegate.shared.application(application, didFinishLaunchingWithOptions: launchOptions)
+        
         if let accessToken = AccessToken.current {
+            
+            print("User logged in through single sign on")
+            print("Facebook access token: \(accessToken.tokenString)")
             
             let graphRequest = GraphRequest(graphPath: "me", parameters: ["fields": "id, name, email"])
             let connection = GraphRequestConnection()
 
+            // TODO: Do not make async
             connection.add(graphRequest, completionHandler: { (_, result, _) -> Void in
                 let data = result as? [String: AnyObject]
                 let name = data?["name"] as? String
                 var splitName = name?.components(separatedBy: " ")
                 let firstName = splitName?[0]
                 let FBid = data?["id"] as? String
-                if let maintabbarVC: MainTabBarController = UIStoryboard(name: "Main",
-                                                                         bundle: nil).instantiateViewController(withIdentifier: "MainTabBarController") as? MainTabBarController {
-
-                    let userloggedIn = User()
-                    userloggedIn.facebookId = FBid
-                    userloggedIn.firstName = firstName
-
-                    maintabbarVC.userloggedIn = userloggedIn
-
-                    self.window?.rootViewController = maintabbarVC
-                    self.window?.makeKeyAndVisible()
-                }
+                print("Name:  \(name)")
+                print("FBid:  \(FBid)")
             })
             connection.start()
+            if let maintabbarVC: MainTabBarController = UIStoryboard(name: "Main",
+                                                                     bundle: nil).instantiateViewController(withIdentifier: "MainTabBarController") as? MainTabBarController {
+
+                let userloggedIn = User()
+//                userloggedIn.facebookId = FBid
+//                userloggedIn.firstName = firstName
+
+                maintabbarVC.userloggedIn = userloggedIn
+
+                self.window?.rootViewController = maintabbarVC
+                self.window?.makeKeyAndVisible()
+            }
         } else {
             
             let storyboard = UIStoryboard(name: "Access", bundle: nil)
@@ -72,8 +80,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         GMSServices.provideAPIKey("AIzaSyCwYvhhN4aTMMGjXZvkRQJBcYoCfS74Rw0")
         GMSPlacesClient.provideAPIKey("AIzaSyDNgLkA282boBZGcpNVuEsN9dJre7fjYeI")
         registerForPushNotifications()
-        return ApplicationDelegate.shared.application(application, didFinishLaunchingWithOptions: launchOptions)
+        return true
         
+    }
+    
+    func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
+      return ApplicationDelegate.shared.application(app, open: url, options: options)
     }
     
     // MARK: - Notification settings
@@ -113,6 +125,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
+    
         return ApplicationDelegate.shared.application(application, open: url, sourceApplication: sourceApplication, annotation: annotation)
     }
 
@@ -143,6 +156,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
 //        AppEventsLogger.activate(application)
 //        SocketIOManager.sharedInstance.establishConnection()
+        AppEvents.activateApp()
     }
 
     func applicationWillTerminate(_ application: UIApplication) {

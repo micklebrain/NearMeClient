@@ -133,6 +133,7 @@ class UserProfileViewController: ProfileViewController {
         
         AccessToken.current = nil
         
+        loginVC.modalPresentationStyle = .fullScreen
         self.present(loginVC, animated: false, completion: nil)
         }
     }
@@ -143,6 +144,7 @@ class UserProfileViewController: ProfileViewController {
         self.firstNameTextField.isEnabled = true
         self.lastNameTextField.isEnabled = true
     }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

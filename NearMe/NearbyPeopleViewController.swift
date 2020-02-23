@@ -157,13 +157,13 @@ class NearbyPeopleViewController: UIViewController, WebSocketDelegate {
         let wifiipAddress = Util.getIFAddresses()[1]
         let usersLocality = userLoggedIn.locality ?? ""
         let localPullNearbyUsersUrlString = "http://\(wifiipAddress):8080/pullNearbyUsers?locality=NewYork"
-        let localPullNearbyUsersUrl = URL(string: "http://localhost:8080/pullNearbyUsers?locality=SanFrancisco&zipCode=11104")
+//        let localPullNearbyUsersUrl = URL(string: "http://localhost:8080/pullNearbyUsers?locality=SanFrancisco&zipCode=11104")
 //        let localPullNearbyUsersUrl = URL(string: localPullNearbyUsersUrlString)
         let pullNearbyUsersUrl = URL(string: "https://crystal-smalltalk.herokuapp.com/pullNearbyUsers?locality=SanFrancisco&zipCode=10036")
         let pullAllUsersUrl = URL(string: "https://crystal-smalltalk.herokuapp.com/pullAllUsers")
         
-//        Alamofire.request(pullNearbyUsersUrl!, method: .post, parameters: userDetails, encoding: JSONEncoding.default)
-              Alamofire.request(pullAllUsersUrl!, method: .get)
+        Alamofire.request(pullNearbyUsersUrl!, method: .post, parameters: userDetails, encoding: JSONEncoding.default)
+//              Alamofire.request(pullAllUsersUrl!, method: .get)
             .responseJSON { response in
                 if response.response?.statusCode == 200 {
                     if let json = response.result.value {
@@ -173,8 +173,12 @@ class NearbyPeopleViewController: UIViewController, WebSocketDelegate {
                         print(users)
                         
                         self.count = self.friendsAround.count + self.strangersAround.count
-                        let numberoccupied = "# Occupied: " + String(self.count)
-                        self.peopleCounter.text = String(describing: numberoccupied)
+                        var numberoccupied = "# Occupied: " + String(self.count)
+                        if (self.userLoggedIn.buildingOccupied == nil) {
+                            self.peopleCounter.text = "Check in to see who is around"
+                        } else {
+                            self.peopleCounter.text = String(describing: numberoccupied)
+                        }
                     
                         for someUser in users {
                             let userDetails = someUser as? [String: Any]
@@ -274,7 +278,7 @@ class NearbyPeopleViewController: UIViewController, WebSocketDelegate {
             
             connection.add(graphRequest,
                            completionHandler: { (connection, result, _) -> Void in
-                if (connection?.urlResponse != nil && connection?.urlResponse.statusCode == 200) {
+                            if (connection?.urlResponse != nil && connection?.urlResponse?.statusCode == 200) {
                     let data = result as? [String: AnyObject]
                 }
             })
@@ -498,7 +502,7 @@ extension NearbyPeopleViewController: UITableViewDataSource, UITableViewDelegate
         }
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let cell = tableView.dequeueReusableCell(withIdentifier: "UserCell", for: indexPath) as? UserTableViewCell {
         
         self.refreshControl.endRefreshing()

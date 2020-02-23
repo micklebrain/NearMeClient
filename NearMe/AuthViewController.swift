@@ -9,7 +9,7 @@ import FBSDKCoreKit
 import FBSDKLoginKit
 import UIKit
 
-class AuthViewController: UIViewController {
+class AuthViewController: UIViewController, LoginButtonDelegate {
     
     @IBOutlet var usernameTextField: UITextField!
     @IBOutlet var passwordTextField: UITextField!
@@ -21,38 +21,70 @@ class AuthViewController: UIViewController {
     // Remove permissions you don't need
     private let readPermissions: [Permission] = [ .publicProfile, .email, .userFriends, .custom("user_posts") ]
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        let loginButton = FBLoginButton(permissions: [ .publicProfile ])
+        loginButton.center = view.center
+        
+//        let logingButton = FBLoginButton(
+//            permissions: [ .publicProfile, .email, .userFriends ]
+//        )
+//
+//        logingButton.delegate = self
+//        logingButton.center = view.center
+//
+//        view.addSubview(logingButton)
+    }
+    
+
+    func loginButton(_ loginButton: FBLoginButton, didCompleteWith result: LoginManagerLoginResult?, error: Error?) {
+
+        print("Trying to loging")
+//            let loginManager = LoginManager()
+//                loginManager.logIn(permissions: readPermissions,
+//                                   viewController: self,
+//                                   completion: didLoginWithFacebook)
+//        if (error == nil) {
+//            print(result)
+//            didLoginWithFacebook(result!.token!)
+//        } else {
+//            print("Cannot authenticate with facebook")
+//            print(error)
+//        }
+
+    }
+    
+    func loginButtonDidLogOut(_ loginButton: FBLoginButton) {
+        print("Logging Out")
+    }
+    
     @IBAction func didTapLoginButton(_ sender: FacebookLoginButton) {
         // Regular login attempt. Add the code to handle the login by email and password.
         guard let email = usernameTextField.text, let pass = passwordTextField.text else {
             // It should never get here
             return
         }
-        didLogin(method: "email and password", info: "Email: \(email) \n Password: \(pass)")
+//        didLogin(method: "email and password", info: "Email: \(email) \n Password: \(pass)")
     }
     
     @IBAction func didTapFacebookLoginButton(_ sender: Any) {
         // Facebook login attempt
         let loginManager = LoginManager()
-        loginManager.logIn(permissions: readPermissions,
-                           viewController: self,
-                           completion: didReceiveFacebookLoginResult)
+        loginManager.logOut()
+        loginManager.logIn(permissions: readPermissions, viewController: self) { (loginResult) in
+            print(AccessToken.current)
+            print(loginResult)
+            self.didLoginWithFacebook()
+        }
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         usernameTextField.resignFirstResponder()
         passwordTextField.resignFirstResponder()
     }
-    
-    private func didReceiveFacebookLoginResult(loginResult: LoginResult) {
-        switch loginResult {
-        case .success(granted: _, declined: _, token: let token):
-            didLoginWithFacebook(token)
-        case .failed: break
-        default: break
-        }
-    }
-    
-    private func didLoginWithFacebook(_ token: AccessToken) {
+
+    private func didLoginWithFacebook(){
         // Successful log in with Facebook
         if let accessToken = AccessToken.current {
 //            let facebookAPIManager = FacebookAPIManager(accessToken: accessToken)
@@ -63,7 +95,7 @@ class AuthViewController: UIViewController {
 //                }
 //            })
             self.userloggedIn = User()
-            self.userloggedIn.facebookId = token.userID
+//            self.userloggedIn.facebookId = token.userID
             let wifiipAddress = Util.getIFAddresses()[1]
             var localUrlString = "http://\(wifiipAddress):8080/getAccount?facebookId="
             localUrlString.append(self.userloggedIn.facebookId ?? "")
@@ -92,19 +124,35 @@ class AuthViewController: UIViewController {
                 self.userloggedIn.firstName = "Nathan"
                 self.userloggedIn.lastName = "Nguyen"
                 maintabbarVC.userloggedIn = self.userloggedIn
-                print("Logging in with user: ")
-                print("FacebookId: " + self.userloggedIn.facebookId!)
-                print("First Name: " + self.userloggedIn.firstName!)
-                print("Last Name: " + self.userloggedIn.lastName!)
+                maintabbarVC.modalPresentationStyle = .fullScreen
+//                print("Logging in with user: ")
+//                print("FacebookId: " + self.userloggedIn.facebookId!)
+//                print("First Name: " + self.userloggedIn.firstName!)
+//                print("Last Name: " + self.userloggedIn.lastName!)
                 self.present(maintabbarVC, animated: false, completion: nil)
             }
         }
     }
-    
+
     private func didLogin(method: String, info: String) {
         let message = "Successfully logged in with \(method). " + info
         let alert = UIAlertController(title: "Success", message: message, preferredStyle: UIAlertController.Style.alert)
         alert.addAction(UIAlertAction(title: "Done", style: UIAlertAction.Style.default, handler: nil))
-        self.present(alert, animated: true, completion: nil)
+        // self.present(alert, animated: true, completion: nil)
+
+        self.userloggedIn = User()
+
+        if let maintabbarVC: MainTabBarController = UIStoryboard(name: "Main",
+                                                                bundle: nil).instantiateViewController(
+                                                                    withIdentifier: "MainTabBarController") as? MainTabBarController {
+            // Hardcoded
+            self.userloggedIn.username = "SFNathan"
+            self.userloggedIn.firstName = "Nathan"
+            self.userloggedIn.lastName = "Nguyen"
+            self.userloggedIn.facebookId = "2063411443892257"
+            maintabbarVC.userloggedIn = self.userloggedIn
+            maintabbarVC.modalPresentationStyle = .fullScreen
+            show(maintabbarVC, sender: self)
+        }
     }
 }

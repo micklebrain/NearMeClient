@@ -10,8 +10,8 @@ target :'NearMe' do
     pod 'Bolts', '~> 1.9.0'
     pod 'Alamofire', '~> 4.8.2'
     pod 'AlamofireSwiftyJSON', '~> 1.0.2'
-    pod 'FacebookCore', '~> 0.7.0'
-    pod 'FacebookLogin', '~> 0.7.0'
+    pod 'FacebookCore',
+    pod 'FacebookLogin',
     pod 'GooglePlaces', '~> 3.1.0'
     pod 'GoogleMaps', '~> 3.1.0'
     pod 'Socket.IO-Client-Swift', '~> 14.0.0'
