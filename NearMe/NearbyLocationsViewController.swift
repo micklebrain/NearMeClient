@@ -51,10 +51,11 @@ class NearbyLocationsViewController: UIViewController {
         
         if let tbc = self.tabBarController as? MainTabBarController {
         // Crashes After first logging in through facebook b/c null value
+    
+            let newUser = User()
+            self.userloggedIn = tbc.userloggedIn ?? newUser
         
-        let newUser = User()
-        self.userloggedIn = tbc.userloggedIn ?? newUser
-            
+            self.userloggedIn.facebookId = AccessToken.current?.userID
             pullfacebookInfo()
             AccountAPIHandler.getUsername(facebookId: self.userloggedIn.facebookId!, completion: ({ username in
                 self.userloggedIn.username = username
