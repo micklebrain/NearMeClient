@@ -17,9 +17,8 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #import <Foundation/Foundation.h>
-#import <UIKit/UIKit.h>
 
-#import "../Basics/Internal/FBSDKBasicUtility+Internal.h"
+#import "FBSDKCoreKit+Internal.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -111,13 +110,6 @@ NS_SWIFT_NAME(InternalUtility)
                      path:(NSString *)path
           queryParameters:(NSDictionary<NSString *, NSString *> *)queryParameters
                     error:(NSError *__autoreleasing *)errorRef;
-
-/**
- Gzip data with default compression level if possible.
- @param data The raw data.
- @return nil if unable to gzip the data, otherwise gzipped data.
- */
-+ (NSData *)gzip:(NSData *)data;
 
 /**
   Parses an FB url's query params (and potentially fragment) into a dictionary.
@@ -215,11 +207,11 @@ NS_SWIFT_NAME(InternalUtility)
  @param errorRef If an error occurs, upon return contains an NSError object that describes the problem.
  @return The URL.
  */
-+ (NSURL *)URLWithScheme:(NSString *)scheme
-                    host:(NSString *)host
-                    path:(NSString *)path
-         queryParameters:(NSDictionary *)queryParameters
-                   error:(NSError *__autoreleasing *)errorRef;
++ (nullable NSURL *)URLWithScheme:(NSString *)scheme
+                             host:(NSString *)host
+                             path:(NSString *)path
+                  queryParameters:(NSDictionary *)queryParameters
+                            error:(NSError *__autoreleasing *)errorRef;
 
 /**
  *  Deletes all the cookies in the NSHTTPCookieStorage for Facebook web dialogs
@@ -273,7 +265,7 @@ NS_SWIFT_NAME(InternalUtility)
 /**
   Attempts to find the first UIViewController in the view's responder chain. Returns nil if not found.
  */
-+ (UIViewController *)viewControllerForView:(UIView *)view;
++ (nullable UIViewController *)viewControllerForView:(UIView *)view;
 
 /**
   returns true if the url scheme is registered in the CFBundleURLTypes
@@ -283,17 +275,17 @@ NS_SWIFT_NAME(InternalUtility)
 /**
  returns the current key window
  */
-+ (UIWindow *)findWindow;
++ (nullable UIWindow *)findWindow;
 
 /**
   returns currently displayed top view controller.
  */
-+ (UIViewController *)topMostViewController;
++ (nullable UIViewController *)topMostViewController;
 
 /**
   Converts NSData to a hexadecimal UTF8 String.
  */
-+ (NSString *)hexadecimalStringFromData:(NSData *)data;
++ (nullable NSString *)hexadecimalStringFromData:(NSData *)data;
 
 /*
   Checks if the permission is a publish permission.
