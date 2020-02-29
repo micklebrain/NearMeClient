@@ -49,8 +49,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 var splitName = name?.components(separatedBy: " ")
                 let firstName = splitName?[0]
                 let FBid = data?["id"] as? String
-                print("Name:  \(name)")
-                print("FBid:  \(FBid)")
+                print("Name:  \(name!)")
+                print("FBid:  \(FBid!)")
             })
             connection.start()
             if let maintabbarVC: MainTabBarController = UIStoryboard(name: "Main",

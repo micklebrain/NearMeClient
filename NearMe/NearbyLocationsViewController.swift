@@ -72,7 +72,7 @@ class NearbyLocationsViewController: UIViewController {
             }
         }
                 
-        self.currentLocationLabel.text =  self.userloggedIn.buildingOccupied
+//        self.currentLocationLabel.text =  self.userloggedIn.buildingOccupied
     }
     
     private func pullfacebookInfo() {

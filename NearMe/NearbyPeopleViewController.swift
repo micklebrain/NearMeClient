@@ -169,8 +169,9 @@ class NearbyPeopleViewController: UIViewController, WebSocketDelegate {
                     if let json = response.result.value {
                         if let users = json as? [Any] {
                         
-                        print("Users found nearby PostalCode: \(self.userLoggedIn.postalCode) Locality: \(self.userLoggedIn.buildingOccupied) Building Occupied: \(self.userLoggedIn.buildingOccupied)")
-                        print(users)
+                        print("Users found nearby PostalCode: \(self.userLoggedIn.postalCode)\nLocality: \(self.userLoggedIn.buildingOccupied)\n" +
+                            "Building Occupied: \(self.userLoggedIn.buildingOccupied)")
+                        print("Users Nearby: \(users)")
                         
                         self.count = self.friendsAround.count + self.strangersAround.count
                         var numberoccupied = "# Occupied: " + String(self.count)
